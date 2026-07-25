@@ -1,0 +1,104 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Vendasta Marketplace API V1 Endpoints account user API
+  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+servers:
+- url: https://developers.vendasta.com/api/v1
+  description: Production Server
+- url: https://developers-demo.vendasta.com/api/v1
+  description: Demo Server
+security:
+- BearerAuth: []
+tags:
+- name: user
+  description: The User APIs allow you to perform operations against Vendasta Users. Each user has a unique identifier in the format UID-{}. This ID is guaranteed to stay the same, while the email associated to a user may change. At any given time, an email is unique to a specific user but over time it is possible for the email to change between user ids.
+paths:
+  /user/{user_id}:
+    get:
+      tags:
+      - user
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: The total response time, in milliseconds.
+                  data:
+                    $ref: '#/components/schemas/user'
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access user.
+        '404':
+          description: User not found
+      parameters:
+      - required: true
+        description: A unique user ID that can be used to identify and reference a user.
+        in: path
+        name: user_id
+        schema:
+          type: string
+      summary: Get User
+  /user/{user_id}/permissions/{account_id}:
+    head:
+      tags:
+      - user
+      responses:
+        '200':
+          description: User has permissions to the given account.
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: User does not have permission to the account.
+        '404':
+          description: Account not found.
+      parameters:
+      - required: true
+        description: A unique user ID that can be used to identify and reference a user.
+        in: path
+        name: user_id
+        schema:
+          type: string
+      - required: true
+        description: A unique account ID that can be used to identify and reference an account.
+        in: path
+        name: account_id
+        schema:
+          type: string
+      summary: Check User Access to an Account
+components:
+  schemas:
+    user:
+      required:
+      - id
+      - partner_id
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        work_phone:
+          type: string
+        email:
+          type: string
+        email_verified:
+          type: boolean
+        accounts:
+          items:
+            type: string
+          type: array
+        partner_id:
+          type: string
+        id:
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

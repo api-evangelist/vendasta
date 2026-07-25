@@ -1,0 +1,278 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Vendasta Marketplace API V1 Endpoints account executive_report API
+  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+servers:
+- url: https://developers.vendasta.com/api/v1
+  description: Production Server
+- url: https://developers-demo.vendasta.com/api/v1
+  description: Demo Server
+security:
+- BearerAuth: []
+tags:
+- name: executive_report
+  description: The executive report APIs are used to submit data to the executive report for a single app on an account.
+paths:
+  /executive_report/weekly/:
+    post:
+      tags:
+      - executive_report
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid parameter
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: App doesn't have access to the account
+        '404':
+          description: Account not found
+      summary: Create Weekly Executive Report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - category
+              - account_id
+              - report_date
+              - report_data
+              properties:
+                category:
+                  type: string
+                  description: The Local Marketing Index category this app belongs to
+                  enum:
+                  - LISTINGS
+                  - REPUTATION
+                  - SOCIAL
+                  - WEBSITE
+                  - SEO
+                  - ADVERTISING
+                  - OTHER
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                report_date:
+                  type: string
+                  format: date
+                  description: The last day of the week that the data is being submitted for(This API defines the last day of the week as Sunday). Submissions will only be accepted for the current and previous week.
+                report_data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/executive_report_data'
+              type: object
+      description: Submit data to populate the [Executive Report](https://support.vendasta.com/hc/en-us/articles/4406961302935) with cards aggregated for the past Week. See [Guide](https://developers.vendasta.com/vendor/64ecf7b9ac031-executive-report) for further details.
+      operationId: ''
+  /executive_report/monthly/:
+    post:
+      tags:
+      - executive_report
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid parameter
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: App doesn't have access to the account
+        '404':
+          description: Account not found
+      summary: Create Monthly Executive Report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - category
+              - account_id
+              - report_date
+              - report_data
+              properties:
+                category:
+                  type: string
+                  description: The Local Marketing Index category this app belongs to
+                  enum:
+                  - LISTINGS
+                  - REPUTATION
+                  - SOCIAL
+                  - WEBSITE
+                  - SEO
+                  - ADVERTISING
+                  - CONTENT_AND_EXPERIENCE
+                  - OTHER
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                report_date:
+                  type: string
+                  format: date
+                  description: The first day of the month for that the data is being submitted for. Submissions will only be accepted for the current month and previous month.
+                report_data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/executive_report_data'
+              type: object
+        required: true
+      description: Submit data to populate the [Executive Report](https://support.vendasta.com/hc/en-us/articles/4406961302935) with cards aggregated for the past Month. See [Guide](https://developers.vendasta.com/vendor/64ecf7b9ac031-executive-report) for further details.
+components:
+  schemas:
+    executive_report_data:
+      required:
+      - template_type
+      - unique_id
+      properties:
+        template_type:
+          type: string
+          description: The card template to be used
+          enum:
+          - BASIC_NUMBER
+          - NUMBER_WITH_CHANGE
+          - CALL_TO_ACTION
+          - BASIC_LIST
+          - INFO_LIST
+          - BAR_CHART
+          - LINE_GRAPH
+          - WORD_CLOUD
+        unique_id:
+          type: string
+          description: The ID to be given to a card.
+        title:
+          type: string
+          description: The title of the card.
+        description:
+          type: string
+          description: The description of what the card is displaying.
+        width:
+          type: string
+          description: The width of the card.
+          enum:
+          - HALF
+          - FULL
+        next_url:
+          type: string
+          description: A click through link for deep linking from the card - will display in the top right corner if provided.
+        next_url_label:
+          type: string
+          description: Label for next_url
+        value:
+          type: string
+          description: The base number to display for the card - this value will apply to several different card types - BASIC_NUMBER, NUMBER_WITH_CHANGE.
+        change:
+          type: string
+          description: The change in the value from the previous reporting period.
+        format:
+          type: string
+          description: The format of the value. Also formats the change stat (except for FRACTION)
+          enum:
+          - NUMBER
+          - PERCENT
+          - TIME
+          - FRACTION
+        precision:
+          type: integer
+          description: The amount of decimals applied to the value and change stats.
+        list:
+          type: array
+          items:
+            type: object
+            properties:
+              header:
+                type: string
+                description: The title of the list item.
+              body:
+                type: string
+                description: The content of the list item.
+              footer:
+                type: string
+                description: The footer of the list item.
+              info_text:
+                type: string
+                description: Extra information about the list item. Info section is displayed on the right of the list item.
+              info_text_color:
+                type: string
+                description: The color of the info text.
+                enum:
+                - BLACK
+                - WHITE
+                - GRAY
+                - RED
+                - GREEN
+                - BLUE
+                - YELLOW
+                - PURPLE
+                - ORANGE
+              info_text_icon:
+                type: string
+                description: 'The Google Material icon code/name - see: https://material.io/tools/icons/?style=baseline'
+              image_url:
+                type: string
+                description: The URL of the image to be displayed on the left of the list item
+        bar_chart:
+          type: array
+          items:
+            type: object
+            properties:
+              label:
+                type: string
+                description: The label of the individual bar.
+              value:
+                type: string
+                description: The value of the individual bar.
+              fill_percent:
+                type: integer
+                description: How much of the bar is colored in. Integer from 0-100
+              fill_color:
+                type: string
+                description: The color of the bar.
+                enum:
+                - BLACK
+                - WHITE
+                - GRAY
+                - RED
+                - GREEN
+                - BLUE
+                - YELLOW
+                - PURPLE
+                - ORANGE
+        word_cloud_list:
+          type: array
+          items:
+            type: object
+            properties:
+              sentiment:
+                type: integer
+                description: Sentiment discibes whether the phrase is displayed in a positive or negative manner. An integer from 0-1000, >=700 GREEN, >= 400 BLUE, >400 RED
+              text:
+                type: string
+                description: Word or Phrase do be displayed in word cloud
+              weight:
+                type: integer
+                description: An integer between 1 and 1000. Weight determines how large the phrase is in comparison to other phrases.
+        line_graph:
+          type: array
+          items:
+            type: object
+            properties:
+              label:
+                type: string
+                description: The Label for an individual line. Appears in a legend below graph.
+              point:
+                type: array
+                description: Array containing the points to populate the line
+                items:
+                  type: object
+                  properties:
+                    x:
+                      type: number
+                      description: Timestamp in milliseconds since epoch. The X axis labels for time will automatically scale based on the timestamps provided.
+                    y:
+                      type: number
+                      description: Value to determine path of line on chart. Labels for Y axis will automatically scale based on the values provided.
+      type: object
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

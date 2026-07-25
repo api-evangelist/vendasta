@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Vendasta Marketplace API V1 Endpoints account marketplace_app API
+  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+servers:
+- url: https://developers.vendasta.com/api/v1
+  description: Production Server
+- url: https://developers-demo.vendasta.com/api/v1
+  description: Demo Server
+security:
+- BearerAuth: []
+tags:
+- name: marketplace_app
+  description: The Marketplace App APIs allow you to perform actions against your applications, as well as certain operations against all marketplace apps.
+paths:
+  /marketplace_app/{marketplace_app_id}:
+    get:
+      tags:
+      - marketplace_app
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: The total response time, in milliseconds.
+                  data:
+                    $ref: '#/components/schemas/marketplace_application'
+        '401':
+          description: Invalid Authentication
+        '404':
+          description: Marketplace App not found
+      parameters:
+      - required: true
+        description: A unique identifier for each Marketplace Application. This is automatically generated upon application creation.
+        in: path
+        name: marketplace_app_id
+        schema:
+          type: string
+      summary: Get Marketplace Application
+      description: ''
+components:
+  schemas:
+    marketplace_application:
+      required:
+      - entry_url
+      - id
+      - name
+      - vendor
+      properties:
+        vendor:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        entry_url:
+          type: string
+        id:
+          type: string
+        icon:
+          type: string
+      type: object
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

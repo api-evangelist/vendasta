@@ -1,0 +1,74 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Vendasta Marketplace API V1 Endpoints account oauth API
+  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+servers:
+- url: https://developers.vendasta.com/api/v1
+  description: Production Server
+- url: https://developers-demo.vendasta.com/api/v1
+  description: Demo Server
+security:
+- BearerAuth: []
+tags:
+- name: oauth
+  description: The OAuth APIs allow applications to retrieve a bearer token that must be supplied with all API calls. See the Authentication documentation for more details.
+paths:
+  /oauth/token:
+    post:
+      security: []
+      tags:
+      - oauth
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: The total response time, in milliseconds.
+                  data:
+                    $ref: '#/components/schemas/access_token'
+        '400':
+          description: Invalid JSON Web token
+        '404':
+          description: App ID not found
+      summary: Get OAuth Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - grant_type
+              - assertion
+              properties:
+                grant_type:
+                  type: string
+                  description: 'Use the following string, URL-encoded as necessary: urn:ietf:params:oauth:grant-type:jwt-bearer'
+                assertion:
+                  type: string
+                  description: The JWT, including signature
+        required: true
+components:
+  schemas:
+    access_token:
+      required:
+      - access_token
+      - token_type
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+        expires:
+          type: integer
+          description: Unix Timestamp
+      type: object
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

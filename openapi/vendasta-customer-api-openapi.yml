@@ -1,0 +1,514 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Vendasta Marketplace API V1 Endpoints account customer API
+  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+servers:
+- url: https://developers.vendasta.com/api/v1
+  description: Production Server
+- url: https://developers-demo.vendasta.com/api/v1
+  description: Demo Server
+security:
+- BearerAuth: []
+tags:
+- name: customer
+  description: The Customer APIs allow you to perform actions against customers of the account that your application has been added to.
+paths:
+  /customer:
+    post:
+      tags:
+      - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: The total response time, in milliseconds.
+                  data:
+                    type: object
+                    properties:
+                      customer:
+                        $ref: '#/components/schemas/return_customer'
+                      conflicting_customer_id:
+                        type: string
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+      summary: Create Customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account. IF NOT PROVIDED, use  Associate Customer IDs to add after the fact.
+                id:
+                  type: string
+                  description: A unique ID that can be used to identify and reference a customer. Each app may define their own ID corresponding to the ID in their system.
+                email:
+                  type: array
+                  description: Email address
+                  items:
+                    type: string
+                phone:
+                  type: array
+                  description: Phone number - Must be in [E164](https://www.twilio.com/docs/glossary/what-e164) format
+                  items:
+                    type: string
+                address:
+                  type: string
+                  description: Address
+                city:
+                  type: string
+                  description: City
+                country:
+                  type: string
+                  description: Country
+                state:
+                  type: string
+                  description: State
+                first_name:
+                  type: string
+                  description: First name - cannot contain commas or semi-colons
+                last_name:
+                  type: string
+                  description: Last name - cannot contain commas or semi-colons
+                permission_to_contact:
+                  type: boolean
+                  description: Whether or not you have permission to contact this customer
+                assigned_rep_first_name:
+                  type: string
+                  description: First name of the Rep/Salesperson associated with customer
+                assigned_rep_last_name:
+                  type: string
+                  description: Last name of the Rep/Salesperson associated with customer
+              required:
+              - account_id
+        required: true
+      deprecated: true
+      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).
+  /customer/list-customers:
+    post:
+      tags:
+      - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: The total response time, in milliseconds.
+                  data:
+                    type: object
+                    properties:
+                      next_cursor:
+                        type: string
+                      has_more:
+                        type: boolean
+                      total_results:
+                        type: integer
+                      customers:
+                        items:
+                          $ref: '#/components/schemas/return_customer'
+                        type: array
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+      summary: List Customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                page_size:
+                  type: integer
+                  description: Amount of results per page
+                cursor:
+                  type: string
+                  description: If your prior request returned the maximum number of records allowed by `page_size` the response will have included a cursor value that can be provided here to get the next batch.
+                sort_options:
+                  $ref: '#/components/schemas/sort_options'
+                search_term:
+                  type: string
+                  description: 'When provided the list of customers will be filtered to only those where the search term is found in one of the `first_name`, `last_name`, `email` or `phone` fields. '
+                filters:
+                  $ref: '#/components/schemas/filters'
+              required:
+              - account_id
+        required: true
+      deprecated: true
+      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).
+  /customer/get-customer:
+    post:
+      tags:
+      - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: The total response time, in milliseconds.
+                  data:
+                    type: object
+                    properties:
+                      customer:
+                        $ref: '#/components/schemas/return_customer'
+                      conflicting_customer_id:
+                        type: string
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+      summary: Get Customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: string
+                  description: The `vendor_customer_id` provided at time of customer creation, or at time of association if the customer has a different origin.
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+              required:
+              - customer_id
+              - account_id
+        required: true
+      description: Returns a single customer record based on a `vendor_customer_id`. If the id is not unique, the newest record with that id will be returned.
+      deprecated: true
+  /customer/associate-id:
+    post:
+      tags:
+      - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: The total response time, in milliseconds.
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+      summary: Associate Customer IDs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - customer_id
+              - vendor_customer_id
+              properties:
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                customer_id:
+                  type: string
+                  description: A unique string indicating which customer to create an ID mapping for
+                vendor_customer_id:
+                  type: string
+                  description: A string indicating what value to return with the customer for api interactions
+        required: true
+      deprecated: true
+      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).
+  /customer/update-customer:
+    post:
+      tags:
+      - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: The total response time, in milliseconds.
+                  data:
+                    type: object
+                    properties:
+                      customer:
+                        $ref: '#/components/schemas/customer'
+                      conflicting_customer_id:
+                        type: string
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+        '404':
+          description: ContactID not found for customer you are attempting to update
+      summary: Update Customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - account_id
+              - id
+              properties:
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                id:
+                  type: string
+                  description: Must be the vendor_customer_id for the customer you are  attempting to update. If this is not set for your App, use the Associate Customer ID endpoint to add your id before updating customer.
+                email:
+                  items:
+                    type: string
+                  type: array
+                  description: Email address
+                phone:
+                  items:
+                    type: string
+                  type: array
+                  description: Phone number - Must be in [E164](https://www.twilio.com/docs/glossary/what-e164) format
+                address:
+                  type: string
+                  description: Address
+                city:
+                  type: string
+                  description: City
+                country:
+                  type: string
+                  description: Country
+                state:
+                  type: string
+                  description: State
+                first_name:
+                  type: string
+                  description: First name - cannot contain commas or semi-colons
+                last_name:
+                  type: string
+                  description: Last name - cannot contain commas or semi-colons
+                permission_to_contact:
+                  type: boolean
+                  description: Whether or not you have permission to contact this customer
+                assigned_rep_first_name:
+                  type: string
+                  description: First name of the Rep/Salesperson associated with customer
+                assigned_rep_last_name:
+                  type: string
+                  description: Last name of the Rep/Salesperson associated with customer
+        required: true
+      deprecated: true
+      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).
+  /customer/delete-customer:
+    post:
+      tags:
+      - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: The total response time, in milliseconds.
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+      summary: Delete Customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - customer_id
+              - account_id
+              properties:
+                customer_id:
+                  type: string
+                  description: A unique ID (Vendor's customerID) indicating which customer to delete.
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+        required: true
+      deprecated: true
+      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).
+components:
+  schemas:
+    return_customer:
+      type: object
+      properties:
+        city:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        account_id:
+          type: string
+        country:
+          type: string
+        customer_id:
+          type: string
+          description: The platform assigned ID used to identify this contact record.
+        phone:
+          type: array
+          items:
+            type: string
+        state:
+          type: string
+        address:
+          type: string
+        email:
+          type: array
+          items:
+            type: string
+        origins:
+          type: array
+          items:
+            type: string
+        assigned_rep_first_name:
+          type: string
+        assigned_rep_last_name:
+          type: string
+        permission_to_contact:
+          type: string
+          format: date-time
+          description: The last time the product or business indicated that this contact granted them permission to contact them.
+        vendor_customer_id:
+          type: string
+          description: The ID you specified when creating the contact. This will likely coorispond to an ID in your system. If not provided it will be set to the `customer_id`.
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        deleted:
+          type: string
+          format: date-time
+    filters:
+      type: object
+      properties:
+        source:
+          type: array
+          description: Only include contacts that were created from one of the specified app ids.
+          items:
+            type: string
+            example: MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV
+        created:
+          type: object
+          description: Only return contacts that were created between the specified times.
+          properties:
+            begin_range:
+              type: string
+              format: date-time
+            end_range:
+              type: string
+              format: date-time
+        tag:
+          type: array
+          description: Only return contacts with at least one of the specified tags. See `nagate_tags`.
+          items:
+            type: string
+        negate_tags:
+          type: boolean
+          description: When true contacts who have any of the specified tags will not be returned.
+          default: false
+    customer:
+      required:
+      - account_id
+      - customer_id
+      properties:
+        city:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        account_id:
+          type: string
+        country:
+          type: string
+        customer_id:
+          type: string
+        phone:
+          items:
+            type: string
+          type: array
+        state:
+          type: string
+        address:
+          type: string
+        email:
+          items:
+            type: string
+          type: array
+      type: object
+    sort_options:
+      type: object
+      description: Optionally specify a field to sort the results by and a direction
+      properties:
+        field:
+          type: string
+          description: Which field should the list be sorted on?
+          enum:
+          - Name
+          - Created
+          - FirstName
+          - LastName
+        direction:
+          type: string
+          description: What direction should the field be sorted in?
+          enum:
+          - Ascending
+          - Descending
+      required:
+      - field
+      - direction
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

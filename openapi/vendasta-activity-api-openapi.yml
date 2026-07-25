@@ -1,0 +1,122 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Vendasta Marketplace API V1 Endpoints account activity API
+  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+servers:
+- url: https://developers.vendasta.com/api/v1
+  description: Production Server
+- url: https://developers-demo.vendasta.com/api/v1
+  description: Demo Server
+security:
+- BearerAuth: []
+tags:
+- name: activity
+  description: 'The Activity API lets you inform us of new activity from your Marketplace App.  It will be displayed in the user''s activity stream and used for notifications.  Note: This endpoint has duplicate detection.  Within an hour boundary (E.g. 3:00am to 3:59am), we will only generate a single activity object on our servers for messages we deem "identical".  We compare title, content, account_id, link, media_url, activity_type, and template_data.  This is subject to change.'
+paths:
+  /activity/:
+    post:
+      tags:
+      - activity
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: The total response time, in milliseconds.
+                  data:
+                    $ref: '#/components/schemas/activity'
+        '400':
+          description: Invalid activity for app, missing title, or link wasn't a full URL
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: App doesn't have access to the account
+        '404':
+          description: Account not found
+      summary: Create Activity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                activity_type:
+                  type: string
+                  description: The activity type. This must be preregistered with Vendasta.
+                title:
+                  type: string
+                  description: The activity title.
+                link:
+                  type: string
+                  description: The URL visited when the user interacts with the activity.Must include the protocol (http or https).
+                content:
+                  type: string
+                  description: The activity content.
+                media_url:
+                  type: string
+                  description: The activity image URL. Must include the protocol (http or https).
+                settings_tags:
+                  type: string
+                  description: Settings tags for the activity
+                requires_platform_auth:
+                  type: boolean
+                  description: Whether the link is public or requires Vendasta authentication. If `false` the `link` will be redirected to as an absolute url rather than added as a NextUrl to the SSO EntryUrl.
+                template_data:
+                  type: object
+                  description: json object *REQURIED IN PAYLOD IF Activity Type email configuration is `Instant`(may be left empty {} ifthere is no template_data to be sent)
+              required:
+              - account_id
+              - activity_type
+              - title
+              - link
+        required: true
+      description: Submit an `Activity` for an Event that occured within your App, or a prompt for action that needs to be taken within your App. See the [Guide](https://developers.vendasta.com/vendor/4cb70950bb594-activity-stream) for details.
+      operationId: ''
+components:
+  schemas:
+    activity:
+      type: object
+      properties:
+        activity_id:
+          type: string
+        account_id:
+          type: string
+          description: A unique account ID that can be used to identify and reference an account.
+        created:
+          type: string
+        settings_tags:
+          type: array
+          items:
+            type: string
+        title:
+          type: string
+        content:
+          type: string
+        link:
+          type: string
+        media_url:
+          type: string
+        activity_type:
+          type: string
+        template_data:
+          type: object
+      required:
+      - activity_id
+      - account_id
+      - created
+      - title
+      - link
+      - activity_type
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

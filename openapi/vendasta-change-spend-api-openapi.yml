@@ -1,0 +1,68 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: Vendasta Marketplace API V1 Endpoints account change_spend API
+  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+servers:
+- url: https://developers.vendasta.com/api/v1
+  description: Production Server
+- url: https://developers-demo.vendasta.com/api/v1
+  description: Demo Server
+security:
+- BearerAuth: []
+tags:
+- name: change_spend
+  description: The Change Spend APIs allow interact with change spend requests, like resolving them by approving or rejecting
+paths:
+  /change_spend/resolve:
+    parameters: []
+    post:
+      tags:
+      - change_spend
+      responses:
+        '200':
+          description: Accepted
+        '400':
+          description: Bad request - invalid parameters in the body of the request
+        '401':
+          description: Invalid authentication
+        '403':
+          description: Permission denied
+        '500':
+          description: Internal server error
+      summary: Resolve a Change Spend Request - by approving or rejecting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - activation_id
+              - account_id
+              - approved
+              - change_request_id
+              properties:
+                activation_id:
+                  type: string
+                  description: A unique ID that can be used to identify a specific activation record related to the change spend.
+                account_id:
+                  type: string
+                  description: A unique ID that can be used to identify an account.
+                item_id:
+                  type: string
+                  description: Field for specifying the add-on ID if the change request is for an add-on.
+                approved:
+                  type: boolean
+                  description: A boolean value representing whether the change spend has been approved or rejected.
+                change_request_id:
+                  type: string
+                  description: A unique ID that can be used to identify the change spend.
+                rejection_reason:
+                  type: string
+                  description: If approved is false, you must give a reason for rejecting the change spend.
+        required: true
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
