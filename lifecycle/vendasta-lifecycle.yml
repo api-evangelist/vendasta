@@ -1,0 +1,24 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.vendasta.com/
+notes: >-
+  Vendasta operates a public status page and versions its Marketplace API in the URI path (v1),
+  with a separate Early Access set of platform APIs surfaced in the Developer Center. No formal
+  RFC 8594 Sunset/Deprecation header policy page was found (searched 2026-07-21); no operations
+  in the current spec are marked deprecated.
+versioning:
+  scheme: uri-path
+  current: v1
+  docs: https://developers.vendasta.com/api/v1
+  channels:
+  - name: Legacy Marketplace API
+    docs: https://developers.vendasta.com/api
+  - name: Platform / Early Access APIs
+    docs: https://developers.vendasta.com/platform
+status_page: https://status.vendasta.com/
+deprecation:
+  policy_url: null
+  sunset_header: false
+sla:
+  url: null
+deprecated_operations: []

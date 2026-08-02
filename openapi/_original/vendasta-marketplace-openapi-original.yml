@@ -1,0 +1,2257 @@
+openapi: 3.0.0
+servers:
+  - url: 'https://developers.vendasta.com/api/v1'
+    description: Production Server
+  - url: 'https://developers-demo.vendasta.com/api/v1'
+    description: Demo Server
+info:
+  version: '1.0'
+  title: Vendasta Marketplace API V1 Endpoints
+security:
+  - BearerAuth: []
+paths:
+  /oauth/token:
+    post:
+      security: []
+      tags:
+        - oauth
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/access_token'
+        '400':
+          description: Invalid JSON Web token
+        '404':
+          description: App ID not found
+      summary: Get OAuth Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - grant_type
+                - assertion
+              properties:
+                grant_type:
+                  type: string
+                  description: 'Use the following string, URL-encoded as necessary: urn:ietf:params:oauth:grant-type:jwt-bearer'
+                assertion:
+                  type: string
+                  description: 'The JWT, including signature'
+        required: true
+  /account/:
+    get:
+      tags:
+        - account
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/account'
+                  next_url:
+                    type: string
+                    description: 'The URL to call to fetch the next page of results, if there are any.'
+                  total_results:
+                    type: integer
+                    description: The total number of results (across all pages).
+        '401':
+          description: Invalid Authentication
+      parameters:
+        - description: Must be a positive integer.
+          name: page_size
+          in: query
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          schema:
+            type: string
+      summary: List Accounts
+  '/account/{account_id}':
+    get:
+      tags:
+        - account
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/account'
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+        '404':
+          description: Account not found
+      parameters:
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+      summary: Get Account
+  '/account/{account_id}/richdata':
+    get:
+      tags:
+        - account
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/account_richdata'
+        '201':
+          description: Created
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+        '404':
+          description: Account not found
+      parameters:
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+      summary: Get Account - Rich Data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/xml:
+            schema:
+              type: object
+              properties: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties: {}
+      description: Retreive extended account data such as hours of operation and images.
+    parameters:
+      - schema:
+          type: string
+        name: account_id
+        in: path
+        required: true
+  '/account/{account_id}/settings':
+    get:
+      tags:
+        - account
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/account_settings'
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+        '404':
+          description: Account settings not found
+      parameters:
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+      summary: Get Account Settings
+      description: |-
+        Partners can have sub-accounts for branding purposes called Markets. Every Account must be assigned to a Market, even if it is the `default` Market. The majority of Partners have only the single default Market. The `platform_settings` object returns the partner branding data for the specific partner_id/market_id combo. 
+
+        Ensure that you set your branding data at either the Account, or the Market level. If it is configured per partner_id, it will end in a breach of white-label for users in any Market other than that of the latest activated Account!
+
+        <!-- theme: warning -->
+        > There is no webhook at this time for providing updates to partner branding. Therefore a Vendor should periodically poll this API for each of their Accounts to ensure they have the most up to date branding information.
+  '/account/{account_id}/session-transfer':
+    get:
+      tags:
+        - account
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/session_transfer_url'
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to retrieve a session transfer url.
+        '404':
+          description: Url not found
+      parameters:
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+      summary: Get Session Transfer URL
+  '/account/{account_id}/users':
+    get:
+      tags:
+        - account
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/associated_user'
+        '400':
+          description: Invalid Request
+      parameters:
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+      summary: List Users
+  '/account/{account_id}/addons':
+    get:
+      tags:
+        - account
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/active_addon'
+        '400':
+          description: Invalid Request
+      parameters:
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+      summary: List Activated Addons
+  '/account/{account_id}/file-group/':
+    post:
+      tags:
+        - account
+      parameters:
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/file_group'
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+        '404':
+          description: Account not found
+      summary: Create a File Group
+      requestBody:
+        $ref: '#/components/requestBodies/Body'
+      description: |-
+        Creates a collection of files, which are available to the Partner in Partner Center, and the End Business in Business App. 
+
+        The Activity will automatically be posted to the Activity Stream in Business App alerting users that they have a new file ready to download, and will include the supplied `description`.
+
+        Note* This feature differs between the UI, and API. You must host the files and supply the urls when using the API. But if you use the file group system via the Vendor Center UI, you upload the files, and Vendasta will host them.
+    get:
+      tags:
+        - account
+      parameters:
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+        - description: Must be a positive integer.
+          name: page_size
+          in: query
+          schema:
+            type: integer
+        - name: cursor
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/file_group'
+                  next_url:
+                    type: string
+                    description: 'The URL to call to fetch the next page of results, if there are any.'
+                  total_results:
+                    type: integer
+                    description: The total number of results (across all pages).
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+        '404':
+          description: Account not found
+      summary: List File Groups
+  '/account/{account_id}/file-group/{file_group_id}/':
+    put:
+      tags:
+        - account
+      parameters:
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+        - required: true
+          description: The ID of the file group to update.
+          in: path
+          name: file_group_id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/file_group'
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+        '404':
+          description: Account or file group not found
+      summary: Replace a File Group
+      requestBody:
+        $ref: '#/components/requestBodies/Body'
+      description: |-
+        This replaces the entire contents of a file group, so if you are looking to update a file group, ensure your including what is already in place along with your addition. Note* This feature differs between the UI, and API. You must host the files and supply the urls when using the API. But if you use the file group system via the Vendor Center UI, you upload the files, and Vendasta will host them.
+
+        Unlike the File Group create, the replace action will not trigger an Activity to be sent to the Activity Stream.
+    delete:
+      tags:
+        - account
+      parameters:
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+        - required: true
+          description: The ID of the file group to delete.
+          in: path
+          name: file_group_id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/file_group'
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+        '404':
+          description: Account or file group not found
+      summary: Delete a File Group
+    get:
+      tags:
+        - account
+      parameters:
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+        - required: true
+          description: The ID of the file group to delete.
+          in: path
+          name: file_group_id
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/file_group'
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+        '404':
+          description: Account or file group not found
+      summary: Get a File Group
+  /activity/:
+    post:
+      tags:
+        - activity
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/activity'
+        '400':
+          description: 'Invalid activity for app, missing title, or link wasn''t a full URL'
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: App doesn't have access to the account
+        '404':
+          description: Account not found
+      summary: Create Activity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                activity_type:
+                  type: string
+                  description: The activity type. This must be preregistered with Vendasta.
+                title:
+                  type: string
+                  description: The activity title.
+                link:
+                  type: string
+                  description: The URL visited when the user interacts with the activity.Must include the protocol (http or https).
+                content:
+                  type: string
+                  description: The activity content.
+                media_url:
+                  type: string
+                  description: The activity image URL. Must include the protocol (http or https).
+                settings_tags:
+                  type: string
+                  description: Settings tags for the activity
+                requires_platform_auth:
+                  type: boolean
+                  description: Whether the link is public or requires Vendasta authentication. If `false` the `link` will be redirected to as an absolute url rather than added as a NextUrl to the SSO EntryUrl.
+                template_data:
+                  type: object
+                  description: 'json object *REQURIED IN PAYLOD IF Activity Type email configuration is `Instant`(may be left empty {} ifthere is no template_data to be sent)'
+              required:
+                - account_id
+                - activity_type
+                - title
+                - link
+        required: true
+      description: 'Submit an `Activity` for an Event that occured within your App, or a prompt for action that needs to be taken within your App. See the [Guide](https://developers.vendasta.com/vendor/4cb70950bb594-activity-stream) for details.'
+      operationId: ''
+  /customer:
+    post:
+      tags:
+        - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    type: object
+                    properties:
+                      customer:
+                        $ref: '#/components/schemas/return_customer'
+                      conflicting_customer_id:
+                        type: string
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+      summary: Create Customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_id:
+                  type: string
+                  description: 'A unique account ID that can be used to identify and reference an account. IF NOT PROVIDED, use  Associate Customer IDs to add after the fact.'
+                id:
+                  type: string
+                  description: A unique ID that can be used to identify and reference a customer. Each app may define their own ID corresponding to the ID in their system.
+                email:
+                  type: array
+                  description: Email address
+                  items:
+                    type: string
+                phone:
+                  type: array
+                  description: 'Phone number - Must be in [E164](https://www.twilio.com/docs/glossary/what-e164) format'
+                  items:
+                    type: string
+                address:
+                  type: string
+                  description: Address
+                city:
+                  type: string
+                  description: City
+                country:
+                  type: string
+                  description: Country
+                state:
+                  type: string
+                  description: State
+                first_name:
+                  type: string
+                  description: First name - cannot contain commas or semi-colons
+                last_name:
+                  type: string
+                  description: Last name - cannot contain commas or semi-colons
+                permission_to_contact:
+                  type: boolean
+                  description: Whether or not you have permission to contact this customer
+                assigned_rep_first_name:
+                  type: string
+                  description: First name of the Rep/Salesperson associated with customer
+                assigned_rep_last_name:
+                  type: string
+                  description: Last name of the Rep/Salesperson associated with customer
+              required:
+                - account_id
+        required: true
+      deprecated: true
+      description: 'Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).'
+  /customer/list-customers:
+    post:
+      tags:
+        - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    type: object
+                    properties:
+                      next_cursor:
+                        type: string
+                      has_more:
+                        type: boolean
+                      total_results:
+                        type: integer
+                      customers:
+                        items:
+                          $ref: '#/components/schemas/return_customer'
+                        type: array
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+      summary: List Customers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                page_size:
+                  type: integer
+                  description: Amount of results per page
+                cursor:
+                  type: string
+                  description: If your prior request returned the maximum number of records allowed by `page_size` the response will have included a cursor value that can be provided here to get the next batch.
+                sort_options:
+                  $ref: '#/components/schemas/sort_options'
+                search_term:
+                  type: string
+                  description: 'When provided the list of customers will be filtered to only those where the search term is found in one of the `first_name`, `last_name`, `email` or `phone` fields. '
+                filters:
+                  $ref: '#/components/schemas/filters'
+              required:
+                - account_id
+        required: true
+      deprecated: true
+      description: 'Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).'
+  /customer/get-customer:
+    post:
+      tags:
+        - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    type: object
+                    properties:
+                      customer:
+                        $ref: '#/components/schemas/return_customer'
+                      conflicting_customer_id:
+                        type: string
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+      summary: Get Customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: string
+                  description: 'The `vendor_customer_id` provided at time of customer creation, or at time of association if the customer has a different origin.'
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+              required:
+                - customer_id
+                - account_id
+        required: true
+      description: 'Returns a single customer record based on a `vendor_customer_id`. If the id is not unique, the newest record with that id will be returned.'
+      deprecated: true
+  /customer/associate-id:
+    post:
+      tags:
+        - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+      summary: Associate Customer IDs
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - customer_id
+                - vendor_customer_id
+              properties:
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                customer_id:
+                  type: string
+                  description: A unique string indicating which customer to create an ID mapping for
+                vendor_customer_id:
+                  type: string
+                  description: A string indicating what value to return with the customer for api interactions
+        required: true
+      deprecated: true
+      description: 'Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).'
+  /customer/update-customer:
+    post:
+      tags:
+        - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    type: object
+                    properties:
+                      customer:
+                        $ref: '#/components/schemas/customer'
+                      conflicting_customer_id:
+                        type: string
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+        '404':
+          description: ContactID not found for customer you are attempting to update
+      summary: Update Customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - account_id
+                - id
+              properties:
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                id:
+                  type: string
+                  description: 'Must be the vendor_customer_id for the customer you are  attempting to update. If this is not set for your App, use the Associate Customer ID endpoint to add your id before updating customer.'
+                email:
+                  items:
+                    type: string
+                  type: array
+                  description: Email address
+                phone:
+                  items:
+                    type: string
+                  type: array
+                  description: 'Phone number - Must be in [E164](https://www.twilio.com/docs/glossary/what-e164) format'
+                address:
+                  type: string
+                  description: Address
+                city:
+                  type: string
+                  description: City
+                country:
+                  type: string
+                  description: Country
+                state:
+                  type: string
+                  description: State
+                first_name:
+                  type: string
+                  description: First name - cannot contain commas or semi-colons
+                last_name:
+                  type: string
+                  description: Last name - cannot contain commas or semi-colons
+                permission_to_contact:
+                  type: boolean
+                  description: Whether or not you have permission to contact this customer
+                assigned_rep_first_name:
+                  type: string
+                  description: First name of the Rep/Salesperson associated with customer
+                assigned_rep_last_name:
+                  type: string
+                  description: Last name of the Rep/Salesperson associated with customer
+        required: true
+      deprecated: true
+      description: 'Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).'
+  /customer/delete-customer:
+    post:
+      tags:
+        - customer
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+        '400':
+          description: Bad Request
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access account.
+      summary: Delete Customer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - customer_id
+                - account_id
+              properties:
+                customer_id:
+                  type: string
+                  description: A unique ID (Vendor's customerID) indicating which customer to delete.
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+        required: true
+      deprecated: true
+      description: 'Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).'
+  '/marketplace_app/{marketplace_app_id}':
+    get:
+      tags:
+        - marketplace_app
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/marketplace_application'
+        '401':
+          description: Invalid Authentication
+        '404':
+          description: Marketplace App not found
+      parameters:
+        - required: true
+          description: A unique identifier for each Marketplace Application. This is automatically generated upon application creation.
+          in: path
+          name: marketplace_app_id
+          schema:
+            type: string
+      summary: Get Marketplace Application
+      description: ''
+  /activation/resolve/:
+    post:
+      tags:
+        - account
+      responses:
+        '202':
+          description: Accepted
+        '401':
+          description: Invalid Authentication
+      summary: Resolve a Pending Activation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                activation_id:
+                  type: string
+                  description: A unique ID that can be used to identify a specific activation record.
+                business_id:
+                  type: string
+                  description: 'A unique ID that can be used to identify a business location. This is equivalent to the `account_id`. In legacy apis, it may be referred to as `accountId`, or `accountGroupId`.'
+                addon_id:
+                  type: string
+                  description: A unique ID used to identify a marketplace addon.
+                approved:
+                  type: boolean
+                  description: A boolean value representing whether the activation has been approved or rejected.
+                rejection_reason:
+                  type: string
+                  description: 'If approved is false, you must give a reason for rejecting the activation.'
+              required:
+                - activation_id
+                - business_id
+                - approved
+        required: true
+  /activation/list-pending/:
+    get:
+      tags:
+        - account
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/pending_activation'
+                  next_url:
+                    type: string
+                    description: 'The URL to call to fetch the next page of results, if there are any.'
+        '400':
+          description: Invalid Input
+        '401':
+          description: Invalid Authentication
+      parameters:
+        - required: false
+          description: A unique ID used to identify a marketplace addon.
+          in: query
+          name: addon_id
+          schema:
+            type: string
+        - required: false
+          description: The maximum number of entries you want returned.
+          in: query
+          name: page_size
+          schema:
+            type: integer
+        - required: false
+          description: Used for pagination.
+          in: query
+          name: cursor
+          schema:
+            type: string
+      summary: List Pending Activations
+  '/user/{user_id}':
+    get:
+      tags:
+        - user
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  took:
+                    type: integer
+                    description: 'The total response time, in milliseconds.'
+                  data:
+                    $ref: '#/components/schemas/user'
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: Not authorized to access user.
+        '404':
+          description: User not found
+      parameters:
+        - required: true
+          description: A unique user ID that can be used to identify and reference a user.
+          in: path
+          name: user_id
+          schema:
+            type: string
+      summary: Get User
+  '/user/{user_id}/permissions/{account_id}':
+    head:
+      tags:
+        - user
+      responses:
+        '200':
+          description: User has permissions to the given account.
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: User does not have permission to the account.
+        '404':
+          description: Account not found.
+      parameters:
+        - required: true
+          description: A unique user ID that can be used to identify and reference a user.
+          in: path
+          name: user_id
+          schema:
+            type: string
+        - required: true
+          description: A unique account ID that can be used to identify and reference an account.
+          in: path
+          name: account_id
+          schema:
+            type: string
+      summary: Check User Access to an Account
+  /executive_report/weekly/:
+    post:
+      tags:
+        - executive_report
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid parameter
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: App doesn't have access to the account
+        '404':
+          description: Account not found
+      summary: Create Weekly Executive Report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - category
+                - account_id
+                - report_date
+                - report_data
+              properties:
+                category:
+                  type: string
+                  description: The Local Marketing Index category this app belongs to
+                  enum:
+                    - LISTINGS
+                    - REPUTATION
+                    - SOCIAL
+                    - WEBSITE
+                    - SEO
+                    - ADVERTISING
+                    - OTHER
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                report_date:
+                  type: string
+                  format: date
+                  description: The last day of the week that the data is being submitted for(This API defines the last day of the week as Sunday). Submissions will only be accepted for the current and previous week.
+                report_data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/executive_report_data'
+              type: object
+      description: 'Submit data to populate the [Executive Report](https://support.vendasta.com/hc/en-us/articles/4406961302935) with cards aggregated for the past Week. See [Guide](https://developers.vendasta.com/vendor/64ecf7b9ac031-executive-report) for further details.'
+      operationId: ''
+  /executive_report/monthly/:
+    post:
+      tags:
+        - executive_report
+      responses:
+        '200':
+          description: Success
+        '400':
+          description: Invalid parameter
+        '401':
+          description: Invalid Authentication
+        '403':
+          description: App doesn't have access to the account
+        '404':
+          description: Account not found
+      summary: Create Monthly Executive Report
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - category
+                - account_id
+                - report_date
+                - report_data
+              properties:
+                category:
+                  type: string
+                  description: The Local Marketing Index category this app belongs to
+                  enum:
+                    - LISTINGS
+                    - REPUTATION
+                    - SOCIAL
+                    - WEBSITE
+                    - SEO
+                    - ADVERTISING
+                    - CONTENT_AND_EXPERIENCE
+                    - OTHER
+                account_id:
+                  type: string
+                  description: A unique account ID that can be used to identify and reference an account.
+                report_date:
+                  type: string
+                  format: date
+                  description: The first day of the month for that the data is being submitted for. Submissions will only be accepted for the current month and previous month.
+                report_data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/executive_report_data'
+              type: object
+        required: true
+      description: 'Submit data to populate the [Executive Report](https://support.vendasta.com/hc/en-us/articles/4406961302935) with cards aggregated for the past Month. See [Guide](https://developers.vendasta.com/vendor/64ecf7b9ac031-executive-report) for further details.'
+  /change_spend/resolve:
+    post:
+      tags:
+        - change_spend
+      responses:
+        '200':
+          description: Accepted
+        '400':
+          description: Bad request - invalid parameters in the body of the request
+        '401':
+          description: Invalid authentication
+        '403':
+          description: Permission denied
+        '500':
+          description: Internal server error
+      summary: Resolve a Change Spend Request - by approving or rejecting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - activation_id
+                - account_id
+                - approved
+                - change_request_id
+              properties:
+                activation_id:
+                  type: string
+                  description: A unique ID that can be used to identify a specific activation record related to the change spend.
+                account_id:
+                  type: string
+                  description: A unique ID that can be used to identify an account.
+                item_id:
+                  type: string
+                  description: Field for specifying the add-on ID if the change request is for an add-on.
+                approved:
+                  type: boolean
+                  description: A boolean value representing whether the change spend has been approved or rejected.
+                change_request_id:
+                  type: string
+                  description: A unique ID that can be used to identify the change spend.
+                rejection_reason:
+                  type: string
+                  description: 'If approved is false, you must give a reason for rejecting the change spend.'
+        required: true
+    parameters: []
+tags:
+  - name: oauth
+    description: The OAuth APIs allow applications to retrieve a bearer token that must be supplied with all API calls. See the Authentication documentation for more details.
+  - name: account
+    description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+  - name: user
+    description: 'The User APIs allow you to perform operations against Vendasta Users. Each user has a unique identifier in the format UID-{}. This ID is guaranteed to stay the same, while the email associated to a user may change. At any given time, an email is unique to a specific user but over time it is possible for the email to change between user ids.'
+  - name: marketplace_app
+    description: 'The Marketplace App APIs allow you to perform actions against your applications, as well as certain operations against all marketplace apps.'
+  - name: activity
+    description: 'The Activity API lets you inform us of new activity from your Marketplace App.  It will be displayed in the user''s activity stream and used for notifications.  Note: This endpoint has duplicate detection.  Within an hour boundary (E.g. 3:00am to 3:59am), we will only generate a single activity object on our servers for messages we deem "identical".  We compare title, content, account_id, link, media_url, activity_type, and template_data.  This is subject to change.'
+  - name: executive_report
+    description: The executive report APIs are used to submit data to the executive report for a single app on an account.
+  - name: customer
+    description: The Customer APIs allow you to perform actions against customers of the account that your application has been added to.
+  - name: change_spend
+    description: 'The Change Spend APIs allow interact with change spend requests, like resolving them by approving or rejecting'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    sort_options:
+      type: object
+      description: Optionally specify a field to sort the results by and a direction
+      properties:
+        field:
+          type: string
+          description: Which field should the list be sorted on?
+          enum:
+            - Name
+            - Created
+            - FirstName
+            - LastName
+        direction:
+          type: string
+          description: What direction should the field be sorted in?
+          enum:
+            - Ascending
+            - Descending
+      required:
+        - field
+        - direction
+    pending_activation:
+      type: object
+      properties:
+        addon_id:
+          type: string
+        app_id:
+          type: string
+        business_id:
+          type: string
+          description: 'A unique ID that can be used to identify a business location. This is equivalent to the `account_id`. In legacy apis, it may be referred to as `accountId`, or `accountGroupId`.'
+        activation_id:
+          type: string
+        created_date:
+          type: string
+    filters:
+      type: object
+      properties:
+        source:
+          type: array
+          description: Only include contacts that were created from one of the specified app ids.
+          items:
+            type: string
+            example: MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV
+        created:
+          type: object
+          description: Only return contacts that were created between the specified times.
+          properties:
+            begin_range:
+              type: string
+              format: date-time
+            end_range:
+              type: string
+              format: date-time
+        tag:
+          type: array
+          description: Only return contacts with at least one of the specified tags. See `nagate_tags`.
+          items:
+            type: string
+        negate_tags:
+          type: boolean
+          description: When true contacts who have any of the specified tags will not be returned.
+          default: false
+    return_customer:
+      type: object
+      properties:
+        city:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        account_id:
+          type: string
+        country:
+          type: string
+        customer_id:
+          type: string
+          description: The platform assigned ID used to identify this contact record.
+        phone:
+          type: array
+          items:
+            type: string
+        state:
+          type: string
+        address:
+          type: string
+        email:
+          type: array
+          items:
+            type: string
+        origins:
+          type: array
+          items:
+            type: string
+        assigned_rep_first_name:
+          type: string
+        assigned_rep_last_name:
+          type: string
+        permission_to_contact:
+          type: string
+          format: date-time
+          description: The last time the product or business indicated that this contact granted them permission to contact them.
+        vendor_customer_id:
+          type: string
+          description: The ID you specified when creating the contact. This will likely coorispond to an ID in your system. If not provided it will be set to the `customer_id`.
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        deleted:
+          type: string
+          format: date-time
+    executive_report_data:
+      required:
+        - template_type
+        - unique_id
+      properties:
+        template_type:
+          type: string
+          description: The card template to be used
+          enum:
+            - BASIC_NUMBER
+            - NUMBER_WITH_CHANGE
+            - CALL_TO_ACTION
+            - BASIC_LIST
+            - INFO_LIST
+            - BAR_CHART
+            - LINE_GRAPH
+            - WORD_CLOUD
+        unique_id:
+          type: string
+          description: The ID to be given to a card.
+        title:
+          type: string
+          description: The title of the card.
+        description:
+          type: string
+          description: The description of what the card is displaying.
+        width:
+          type: string
+          description: The width of the card.
+          enum:
+            - HALF
+            - FULL
+        next_url:
+          type: string
+          description: A click through link for deep linking from the card - will display in the top right corner if provided.
+        next_url_label:
+          type: string
+          description: Label for next_url
+        value:
+          type: string
+          description: 'The base number to display for the card - this value will apply to several different card types - BASIC_NUMBER, NUMBER_WITH_CHANGE.'
+        change:
+          type: string
+          description: The change in the value from the previous reporting period.
+        format:
+          type: string
+          description: The format of the value. Also formats the change stat (except for FRACTION)
+          enum:
+            - NUMBER
+            - PERCENT
+            - TIME
+            - FRACTION
+        precision:
+          type: integer
+          description: The amount of decimals applied to the value and change stats.
+        list:
+          type: array
+          items:
+            type: object
+            properties:
+              header:
+                type: string
+                description: The title of the list item.
+              body:
+                type: string
+                description: The content of the list item.
+              footer:
+                type: string
+                description: The footer of the list item.
+              info_text:
+                type: string
+                description: Extra information about the list item. Info section is displayed on the right of the list item.
+              info_text_color:
+                type: string
+                description: The color of the info text.
+                enum:
+                  - BLACK
+                  - WHITE
+                  - GRAY
+                  - RED
+                  - GREEN
+                  - BLUE
+                  - YELLOW
+                  - PURPLE
+                  - ORANGE
+              info_text_icon:
+                type: string
+                description: 'The Google Material icon code/name - see: https://material.io/tools/icons/?style=baseline'
+              image_url:
+                type: string
+                description: The URL of the image to be displayed on the left of the list item
+        bar_chart:
+          type: array
+          items:
+            type: object
+            properties:
+              label:
+                type: string
+                description: The label of the individual bar.
+              value:
+                type: string
+                description: The value of the individual bar.
+              fill_percent:
+                type: integer
+                description: How much of the bar is colored in. Integer from 0-100
+              fill_color:
+                type: string
+                description: The color of the bar.
+                enum:
+                  - BLACK
+                  - WHITE
+                  - GRAY
+                  - RED
+                  - GREEN
+                  - BLUE
+                  - YELLOW
+                  - PURPLE
+                  - ORANGE
+        word_cloud_list:
+          type: array
+          items:
+            type: object
+            properties:
+              sentiment:
+                type: integer
+                description: 'Sentiment discibes whether the phrase is displayed in a positive or negative manner. An integer from 0-1000, >=700 GREEN, >= 400 BLUE, >400 RED'
+              text:
+                type: string
+                description: Word or Phrase do be displayed in word cloud
+              weight:
+                type: integer
+                description: An integer between 1 and 1000. Weight determines how large the phrase is in comparison to other phrases.
+        line_graph:
+          type: array
+          items:
+            type: object
+            properties:
+              label:
+                type: string
+                description: The Label for an individual line. Appears in a legend below graph.
+              point:
+                type: array
+                description: Array containing the points to populate the line
+                items:
+                  type: object
+                  properties:
+                    x:
+                      type: number
+                      description: Timestamp in milliseconds since epoch. The X axis labels for time will automatically scale based on the timestamps provided.
+                    'y':
+                      type: number
+                      description: Value to determine path of line on chart. Labels for Y axis will automatically scale based on the values provided.
+      type: object
+    account:
+      required:
+        - company_name
+        - id
+        - partner_id
+      properties:
+        call_tracking_number:
+          items:
+            type: string
+          type: array
+        deleted_flag:
+          type: boolean
+        contact_first_name:
+          type: string
+        common_name:
+          items:
+            type: string
+          type: array
+        timezone:
+          type: string
+        work_number:
+          items:
+            type: string
+          type: array
+        partner_id:
+          type: string
+        id:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        market_id:
+          type: string
+        deleted:
+          type: string
+          format: date-time
+        state:
+          type: string
+        company_name:
+          type: string
+        latitude:
+          type: number
+        foursquare_url:
+          type: string
+        tax_ids:
+          items:
+            type: string
+          type: array
+        website:
+          type: string
+        rss_url:
+          type: string
+        updated:
+          type: string
+          format: date-time
+        twitter_url:
+          type: string
+        facebook_url:
+          type: string
+        fax_number:
+          type: string
+        contact_email:
+          type: string
+        address:
+          type: string
+        youtube_url:
+          type: string
+        instagram_url:
+          type: string
+        key_person:
+          items:
+            type: string
+          type: array
+        pinterest_url:
+          type: string
+        contact_last_name:
+          type: string
+        cell_number:
+          type: string
+        country:
+          type: string
+        created:
+          type: string
+          format: date-time
+        linkedin_url:
+          type: string
+        longitude:
+          type: number
+        sales_person_id:
+          type: string
+        googleplus_url:
+          type: string
+        service_area_business_flag:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: string
+        seo_category:
+          type: array
+          items:
+            type: string
+        email:
+          type: string
+      type: object
+    account_richdata:
+      description: ''
+      type: object
+      properties:
+        brands_carried:
+          type: array
+          items:
+            required: []
+            properties: {}
+        call_tracking_number:
+          type: array
+          items:
+            required: []
+            properties: {}
+        common_name:
+          type: array
+          items:
+            required: []
+            properties: {}
+        deleted_flag:
+          type: boolean
+        contact_first_name: {}
+        images:
+          type: object
+          properties:
+            logo:
+              type: string
+              minLength: 1
+            primary:
+              type: string
+              minLength: 1
+          required:
+            - logo
+            - primary
+        timezone:
+          type: string
+          minLength: 1
+        work_number:
+          type: array
+          items:
+            required: []
+            properties: {}
+        partner_id:
+          type: string
+          minLength: 1
+        id:
+          type: string
+          minLength: 1
+        city:
+          type: string
+          minLength: 1
+        zip:
+          type: string
+          minLength: 1
+        market_id:
+          type: string
+          minLength: 1
+        twitter_url:
+          type: string
+          minLength: 1
+        state:
+          type: string
+          minLength: 1
+        company_name:
+          type: string
+          minLength: 1
+        latitude:
+          type: number
+        foursquare_url:
+          type: string
+          minLength: 1
+        service_area_business_flag:
+          type: boolean
+        address2:
+          type: string
+          minLength: 1
+        tax_ids:
+          type: array
+          items:
+            required: []
+            properties: {}
+        website:
+          type: string
+          minLength: 1
+        rss_url:
+          type: string
+          minLength: 1
+        updated:
+          type: string
+          minLength: 1
+        description:
+          type: string
+          minLength: 1
+        deleted: {}
+        facebook_url:
+          type: string
+          minLength: 1
+        fax_number:
+          type: string
+          minLength: 1
+        short_description:
+          type: string
+          minLength: 1
+        contact_email: {}
+        address:
+          type: string
+          minLength: 1
+        youtube_url:
+          type: string
+          minLength: 1
+        instagram_url:
+          type: string
+          minLength: 1
+        key_person:
+          type: array
+          items:
+            required: []
+            properties: {}
+        pinterest_url:
+          type: string
+          minLength: 1
+        contact_last_name: {}
+        cell_number:
+          type: string
+          minLength: 1
+        customer_identifier:
+          type: string
+          minLength: 1
+        created:
+          type: string
+          minLength: 1
+        linkedin_url:
+          type: string
+          minLength: 1
+        longitude:
+          type: number
+        sales_person_id:
+          type: string
+          minLength: 1
+        toll_free_number:
+          type: string
+          minLength: 1
+        googleplus_url: {}
+        services_offered:
+          type: array
+          items:
+            required: []
+            properties: {}
+        hours_of_operation:
+          type: array
+          uniqueItems: true
+          minItems: 1
+          items:
+            required:
+              - closes
+              - opens
+            properties:
+              closes:
+                type: string
+                minLength: 1
+              opens:
+                type: string
+                minLength: 1
+              day_of_week:
+                type: array
+                items:
+                  required: []
+                  properties: {}
+              description: {}
+        landmark:
+          type: string
+          minLength: 1
+        country:
+          type: string
+          minLength: 1
+        tags:
+          type: array
+          items:
+            type: string
+        seo_category:
+          type: array
+          items:
+            type: string
+        email:
+          type: string
+        service_availability:
+          type: object
+          properties:
+            delivery:
+              type: string
+              enum:
+                - 'Y'
+                - 'N'
+            no_contact_delivery:
+              type: string
+              enum:
+                - 'Y'
+                - 'N'
+            in_store_pickup:
+              type: string
+              enum:
+                - 'Y'
+                - 'N'
+            curbside_pickup:
+              type: string
+              enum:
+                - 'Y'
+                - 'N'
+            appointments_only:
+              type: string
+              enum:
+                - 'Y'
+                - 'N'
+            closed_status:
+              type: string
+              enum:
+                - Unspecified
+                - Open
+                - Limited
+                - Temporary
+                - Permanent
+            closed_status_date:
+              type: string
+              format: date
+        payment_methods:
+          type: array
+          items:
+            type: string
+            enum:
+              - American Express
+              - Android Pay
+              - Apple Pay
+              - Cash
+              - Check
+              - Debit
+              - Diners Club
+              - Discover
+              - MasterCard
+              - PayPal
+              - Samsung Pay
+              - Store Card
+              - Travelers Checks
+              - Visa
+              - CCS
+              - Sodexo
+              - GoPay
+              - V PAY
+              - Financing
+              - Invoice
+              - PaySec
+              - Bitcoin
+      required:
+        - brands_carried
+        - call_tracking_number
+        - common_name
+        - deleted_flag
+        - images
+        - timezone
+        - work_number
+        - partner_id
+        - id
+        - city
+        - zip
+        - market_id
+        - twitter_url
+        - state
+        - company_name
+        - latitude
+        - foursquare_url
+        - service_area_business_flag
+        - address2
+        - tax_ids
+        - website
+        - rss_url
+        - updated
+        - description
+        - facebook_url
+        - fax_number
+        - short_description
+        - address
+        - youtube_url
+        - instagram_url
+        - key_person
+        - pinterest_url
+        - cell_number
+        - customer_identifier
+        - created
+        - linkedin_url
+        - longitude
+        - sales_person_id
+        - toll_free_number
+        - services_offered
+        - hours_of_operation
+        - landmark
+        - country
+        - tags
+        - seo_category
+        - email
+        - payment_methods
+        - service_availability
+      x-examples:
+        example-1:
+          brands_carried:
+            - Catan Studio
+            - Starling games
+          call_tracking_number:
+            - '18005555555'
+          common_name:
+            - KingMe
+          deleted_flag: false
+          contact_first_name: null
+          images:
+            logo: 'https://media-prod.apigateway.co/image/get/4d684615-b530-420f-b4b1-b82ebcee894e'
+            primary: 'https://media-prod.apigateway.co/image/get/7533de51-4ef9-4f9d-b0b5-672145c7b5bb'
+          timezone: America/Regina
+          work_number:
+            - +1 306-652-5464
+          partner_id: VNDR
+          id: AG-M3PB8CJP2J
+          city: Saskatoon
+          zip: S7M 0X6
+          market_id: default
+          twitter_url: 'https://www.twitter.com/kingme'
+          state: SK
+          company_name: King Me Boardgamery and Cafe
+          latitude: 52.1259659
+          foursquare_url: 'https://www.foursquare.com/kingme'
+          service_area_business_flag: false
+          address2: '42'
+          tax_ids:
+            - food
+            - 'restaurants:cafes'
+          website: 'https://www.kingmeboardgamery.com/'
+          rss_url: 'http://iamawesome.com'
+          updated: 'Fri, 10 Sep 2021 19:49:53 -0000'
+          description: 'Come and play boardgames with your friends while eating and drinking, and free popcorn'
+          deleted: null
+          facebook_url: 'https://www.facebook.com/kingmeboardgamery/'
+          fax_number: '1800343433258298'
+          short_description: Board game cafe
+          contact_email: null
+          address: 527 20th Street West
+          youtube_url: 'https://www.youtube.com/kingmeboardgamery'
+          instagram_url: 'https://www.instagram.com/kingme'
+          key_person: []
+          pinterest_url: 'https://www.pinterest.com/kingme'
+          contact_last_name: null
+          cell_number: '3065555555'
+          customer_identifier: kingme-test
+          created: 'Fri, 17 Jan 2020 17:59:47 -0000'
+          linkedin_url: 'https://www.linkedin.com/kingme'
+          longitude: -106.6776856
+          sales_person_id: UID-d1985535-f7f2-4529-ab47-2932110c46fe
+          toll_free_number: '18004444444'
+          googleplus_url: null
+          services_offered:
+            - board games
+            - popcorn
+          hours_of_operation:
+            - closes: '22:00:00'
+              opens: '12:00:00'
+              day_of_week:
+                - Sunday
+              description: null
+            - closes: '23:00:00'
+              opens: '17:00:00'
+              day_of_week:
+                - Monday
+              description: null
+            - closes: '23:00:00'
+              opens: '17:00:00'
+              day_of_week:
+                - Tuesday
+              description: null
+            - closes: '23:00:00'
+              opens: '17:00:00'
+              day_of_week:
+                - Wednesday
+              description: null
+            - closes: '01:00:00'
+              opens: '15:00:00'
+              day_of_week:
+                - Thursday
+              description: null
+            - closes: '01:00:00'
+              opens: '15:00:00'
+              day_of_week:
+                - Friday
+              description: null
+            - closes: '01:00:00'
+              opens: '10:00:00'
+              day_of_week:
+                - Saturday
+              description: null
+            - closes: null
+              opens: null
+              day_of_week:
+                - PublicHolidays
+              description: Open 24 hours
+          landmark: 20th Street
+          country: CA
+    account_settings:
+      required:
+        - account_id
+      properties:
+        account_id:
+          type: string
+        partner_id:
+          type: string
+        market_id:
+          type: string
+        platform_settings:
+          type: object
+          properties:
+            partner_name:
+              type: string
+            partner_logo_url:
+              type: string
+            partner_primary_branding_hex_color:
+              type: string
+        white_label_active:
+          type: boolean
+      type: object
+    access_token:
+      required:
+        - access_token
+        - token_type
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+        expires:
+          type: integer
+          description: Unix Timestamp
+      type: object
+    customer:
+      required:
+        - account_id
+        - customer_id
+      properties:
+        city:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        account_id:
+          type: string
+        country:
+          type: string
+        customer_id:
+          type: string
+        phone:
+          items:
+            type: string
+          type: array
+        state:
+          type: string
+        address:
+          type: string
+        email:
+          items:
+            type: string
+          type: array
+      type: object
+    marketplace_application:
+      required:
+        - entry_url
+        - id
+        - name
+        - vendor
+      properties:
+        vendor:
+          type: string
+        description:
+          type: string
+        name:
+          type: string
+        entry_url:
+          type: string
+        id:
+          type: string
+        icon:
+          type: string
+      type: object
+    user:
+      required:
+        - id
+        - partner_id
+      properties:
+        first_name:
+          type: string
+        last_name:
+          type: string
+        work_phone:
+          type: string
+        email:
+          type: string
+        email_verified:
+          type: boolean
+        accounts:
+          items:
+            type: string
+          type: array
+        partner_id:
+          type: string
+        id:
+          type: string
+      type: object
+    activity:
+      type: object
+      properties:
+        activity_id:
+          type: string
+        account_id:
+          type: string
+          description: A unique account ID that can be used to identify and reference an account.
+        created:
+          type: string
+        settings_tags:
+          type: array
+          items:
+            type: string
+        title:
+          type: string
+        content:
+          type: string
+        link:
+          type: string
+        media_url:
+          type: string
+        activity_type:
+          type: string
+        template_data:
+          type: object
+      required:
+        - activity_id
+        - account_id
+        - created
+        - title
+        - link
+        - activity_type
+    session_transfer_url:
+      required:
+        - session_transfer_url
+      properties:
+        session_transfer_url:
+          type: string
+      type: object
+    associated_user:
+      type: object
+      properties:
+        user_id:
+          type: string
+    active_addon:
+      type: object
+      properties:
+        addon_id:
+          type: string
+        activation_id:
+          type: string
+    file_group:
+      type: object
+      properties:
+        account_id:
+          type: string
+        file_group_id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        created:
+          type: string
+        modified:
+          type: string
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              url:
+                type: string
+  requestBodies:
+    Body:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - title
+              - files
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+              files:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    url:
+                      type: string
+      required: true

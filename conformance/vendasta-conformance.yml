@@ -1,0 +1,33 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vendasta-marketplace-openapi-original.yml
+notes: >-
+  Standards conformance for the Vendasta Marketplace API V1, derived from the OpenAPI plus the
+  published trust center (SOC 2). Compliance program is captured in security/vendasta-trust-center.yml.
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: openapi 3.0.0 document published at developers.vendasta.com/api/v1/openapi.yaml
+- id: oauth2
+  conforms: true
+  evidence: POST /oauth/token issues bearer access tokens (two-legged OAuth2 client credentials)
+- id: rest
+  conforms: true
+  evidence: predictable resource-oriented URL structure over HTTPS
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: error responses use plain HTTP status codes, not application/problem+json
+- id: cursor-pagination
+  conforms: true
+  evidence: list endpoints use page_size + opaque cursor with a pagination response object
+- id: soc2
+  conforms: true
+  evidence: SOC 2 named on the Vendasta trust center (trust.vendasta.com)
+- id: json-api
+  conforms: false
+- id: fhir-r4
+  conforms: false
+- id: scim2
+  conforms: false
+- id: odata
+  conforms: false

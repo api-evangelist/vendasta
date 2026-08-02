@@ -1,8 +1,14 @@
 aid: vendasta
 name: Vendasta
-description: 'Vendasta is a company surfaced as a portfolio company of foundry-group and added to the
-  API Evangelist network as a stub for enrichment. Sector: saas. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: 'Vendasta is an end-to-end commerce and operating platform that lets agencies,
+  media companies, banks, telcos and other channel partners sell digital products and services
+  to small and medium-sized businesses under their own brand. The platform bundles a white-label
+  Marketplace of resellable products, a Business App client dashboard, CRM and sales pipeline,
+  marketing automation, billing and an AI-powered concierge. Vendasta''s public Marketplace
+  API V1 is a REST API secured with OAuth2 bearer tokens that lets partners manage accounts,
+  users, customers, activated add-ons, activities, executive reports, file groups and pending
+  activations programmatically, plus a set of Early Access platform APIs and per-service SDKs
+  for deeper integrations. Headquartered in Saskatoon, Canada, Vendasta was founded in 2008.'
 url: https://raw.githubusercontent.com/api-evangelist/vendasta/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -10,18 +16,202 @@ x-backed-by:
 - foundry-group
 x-tier: stub
 x-tier-reason: portfolio-lead
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 18
+  pass: local-v1
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
+image: https://www.vendasta.com/wp-content/uploads/2021/03/vendasta-logo.png
 tags:
 - Company
-- Saas
-apis: []
+- SaaS
+- Marketplace
+- SMB
+- White Label
+- Reseller
+- Marketing
+- CRM
+- Digital Agency
+- Platform
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: vendasta:vendasta-account-api
+  name: Vendasta account API
+  description: >-
+    The Account APIs allow you to perform actions against a single account that your application has been
+    added to.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - account
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-account-api-openapi.yml
+- aid: vendasta:vendasta-activity-api
+  name: Vendasta activity API
+  description: >-
+    The Activity API lets you inform us of new activity from your Marketplace App.  It will be displayed
+    in the user's activity stream and used for notifications.  Note: This endpoint has duplicate detection.  Within
+    an hour boundary (E.g. 3:00am to 3:59am), we will only generate a single activity object on our servers
+    for messages we deem "identical".  We compare title, content, account_id, link, media_url, activity_type,
+    and template_data.  This is subject to change.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - activity
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-activity-api-openapi.yml
+- aid: vendasta:vendasta-change-spend-api
+  name: Vendasta change_spend API
+  description: >-
+    The Change Spend APIs allow interact with change spend requests, like resolving them by approving
+    or rejecting
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - change_spend
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-change-spend-api-openapi.yml
+- aid: vendasta:vendasta-customer-api
+  name: Vendasta customer API
+  description: >-
+    The Customer APIs allow you to perform actions against customers of the account that your application
+    has been added to.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - customer
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-customer-api-openapi.yml
+- aid: vendasta:vendasta-executive-report-api
+  name: Vendasta executive_report API
+  description: >-
+    The executive report APIs are used to submit data to the executive report for a single app on an account.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - executive_report
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-executive-report-api-openapi.yml
+- aid: vendasta:vendasta-marketplace-app-api
+  name: Vendasta marketplace_app API
+  description: >-
+    The Marketplace App APIs allow you to perform actions against your applications, as well as certain
+    operations against all marketplace apps.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - marketplace_app
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-marketplace-app-api-openapi.yml
+- aid: vendasta:vendasta-oauth-api
+  name: Vendasta oauth API
+  description: >-
+    The OAuth APIs allow applications to retrieve a bearer token that must be supplied with all API calls.
+    See the Authentication documentation for more details.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - oauth
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-oauth-api-openapi.yml
+- aid: vendasta:vendasta-user-api
+  name: Vendasta user API
+  description: >-
+    The User APIs allow you to perform operations against Vendasta Users. Each user has a unique identifier
+    in the format UID-{}. This ID is guaranteed to stay the same, while the email associated to a user
+    may change. At any given time, an email is unique to a specific user but over time it is possible
+    for the email to change between user ids.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - user
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-user-api-openapi.yml
 common:
+- type: TrustCenter
+  url: security/vendasta-trust-center.yml
+- type: VulnerabilityDisclosure
+  url: security/vendasta-vulnerability-disclosure.yml
+- type: DomainSecurity
+  url: security/vendasta-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/vendasta-agentic-access.yml
+- type: Authentication
+  url: authentication/vendasta-authentication.yml
+- type: Packages
+  url: packages/vendasta-packages.yml
+- type: SDKs
+  url: packages/vendasta-packages.yml
+- type: MCPServer
+  url: mcp/vendasta-mcp.yml
+- type: LLMsTxt
+  url: llms/vendasta-llms.txt
+- type: Overlay
+  url: overlays/vendasta-marketplace-overlay.yaml
+- type: Conformance
+  url: conformance/vendasta-conformance.yml
+- type: ErrorCatalog
+  url: errors/vendasta-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/vendasta-lifecycle.yml
+- type: Conventions
+  url: conventions/vendasta-conventions.yml
+- type: DataModel
+  url: data-model/vendasta-data-model.yml
+- type: Sandbox
+  url: sandbox/vendasta-sandbox.yml
+- type: AgentSkill
+  url: skills/_index.yml
 - type: Website
   url: https://www.vendasta.com
+- type: DeveloperPortal
+  url: https://developers.vendasta.com/
+- type: Documentation
+  url: https://developers.vendasta.com/vendor
+- type: APIReference
+  url: https://developers.vendasta.com/api/v1
+- type: GettingStarted
+  url: https://developers.vendasta.com/vendor
+- type: Security
+  url: https://www.vendasta.com/security/responsible-disclosure
+- type: Compliance
+  url: https://trust.vendasta.com/
+- type: Support
+  url: https://support.vendasta.com/
+- type: Blog
+  url: https://www.vendasta.com/blog/
+- type: Pricing
+  url: https://www.vendasta.com/pricing/
+- type: TermsOfService
+  url: https://trust.vendasta.com/resources?name=terms-of-service
+- type: PrivacyPolicy
+  url: https://trust.vendasta.com/resources?name=customer-privacy-policy
+- type: StatusPage
+  url: https://status.vendasta.com/

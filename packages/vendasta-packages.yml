@@ -1,0 +1,71 @@
+generated: '2026-07-21'
+method: searched
+source: https://www.npmjs.com/~vendasta
+notes: >-
+  Vendasta publishes a family of first-party client SDK libraries to npm under the @vendasta
+  scope (one package per platform service) plus a legacy top-level vendasta-sdk. These are the
+  official client libraries partners consume from the Vendasta frontend/integration stack.
+  No first-party PyPI, Maven, NuGet, RubyGems, Packagist or crates.io package was found for
+  Vendasta (searched 2026-07-21). @pipedream/vendasta exists but is a third-party (Pipedream)
+  integration and is not listed as official.
+packages:
+- language: javascript
+  registry: npm
+  name: vendasta-sdk
+  url: https://www.npmjs.com/package/vendasta-sdk
+  install: npm install vendasta-sdk
+  official: true
+  latest: 0.7.5
+- language: javascript
+  registry: npm
+  name: "@vendasta/core"
+  url: https://www.npmjs.com/package/@vendasta/core
+  install: npm install @vendasta/core
+  official: true
+  latest: 55.0.3
+- language: javascript
+  registry: npm
+  name: "@vendasta/iamv2"
+  url: https://www.npmjs.com/package/@vendasta/iamv2
+  install: npm install @vendasta/iamv2
+  official: true
+  latest: 2.15.1
+- language: javascript
+  registry: npm
+  name: "@vendasta/campaigns"
+  url: https://www.npmjs.com/package/@vendasta/campaigns
+  install: npm install @vendasta/campaigns
+  official: true
+- language: javascript
+  registry: npm
+  name: "@vendasta/email"
+  url: https://www.npmjs.com/package/@vendasta/email
+  install: npm install @vendasta/email
+  official: true
+- language: javascript
+  registry: npm
+  name: "@vendasta/conversation"
+  url: https://www.npmjs.com/package/@vendasta/conversation
+  install: npm install @vendasta/conversation
+  official: true
+- language: javascript
+  registry: npm
+  name: "@vendasta/meetings"
+  url: https://www.npmjs.com/package/@vendasta/meetings
+  install: npm install @vendasta/meetings
+  official: true
+- language: php
+  registry: github
+  name: accounts-php-sdk
+  url: https://github.com/vendasta/accounts-php-sdk
+  official: true
+- language: php
+  registry: github
+  name: account-group-php-sdk
+  url: https://github.com/vendasta/account-group-php-sdk
+  official: true
+- language: php
+  registry: github
+  name: sales-orders-php-sdk
+  url: https://github.com/vendasta/sales-orders-php-sdk
+  official: true

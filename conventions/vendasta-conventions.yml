@@ -1,0 +1,37 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vendasta-marketplace-openapi-original.yml
+notes: >-
+  Cross-cutting request/response semantics for the Vendasta Marketplace API V1, derived from the
+  OpenAPI and confirmed conventions. Vendasta APIs are REST with a predictable URL structure.
+authentication:
+  style: oauth2-bearer
+  detail: >-
+    Two-legged OAuth2. Exchange client credentials at POST /oauth/token for an access_token
+    (token_type=Bearer, expires as a Unix timestamp), then send `Authorization: Bearer <token>`
+    on every call. See authentication/vendasta-authentication.yml.
+pagination:
+  style: cursor
+  request_params: [page_size, cursor]
+  response_field: pagination
+  detail: >-
+    List endpoints (e.g. GET /account/) accept page_size and an opaque cursor; the response
+    carries a pagination object whose next cursor is passed back to fetch the following page.
+idempotency:
+  supported: false
+  detail: No idempotency-key header or parameter is documented in the spec.
+versioning:
+  style: uri-path
+  detail: Version is carried in the base path (/api/v1). See lifecycle/vendasta-lifecycle.yml.
+error_envelope:
+  style: http-status
+  detail: >-
+    Standard HTTP status codes (400/401/403/404/500). No application/problem+json envelope is
+    declared. See errors/vendasta-problem-types.yml.
+rate_limiting:
+  signaled: unknown
+  detail: No rate-limit headers are documented in the current spec.
+request_tracing:
+  request_id_header: unknown
+metadata:
+  detail: Some resources (e.g. accounts, customers) carry structured settings/rich-data objects.

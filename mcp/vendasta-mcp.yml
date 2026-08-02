@@ -1,0 +1,91 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/vendasta-marketplace-openapi-original.yml
+notes: >-
+  No official hosted/remote MCP server was found for Vendasta (searched npm @modelcontextprotocol,
+  MCP registries and docs, 2026-07-21). This is a DERIVED candidate tool surface generated from
+  the Vendasta Marketplace API V1 operations. operationIds are assigned by API Evangelist because
+  the source spec does not declare them (see overlays/vendasta-marketplace-overlay.yaml).
+server:
+  name: vendasta
+  transport: http
+tools:
+- name: list_accounts
+  description: List accounts (cursor-paginated via page_size + cursor).
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /account/
+- name: get_account
+  description: Get a single account by account_id.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /account/{account_id}
+- name: get_account_rich_data
+  description: Get an account's rich data profile.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /account/{account_id}/richdata
+- name: get_account_settings
+  description: Get an account's settings.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /account/{account_id}/settings
+- name: get_session_transfer_url
+  description: Get a session-transfer URL for an account.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /account/{account_id}/session-transfer
+- name: list_account_users
+  description: List users on an account.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /account/{account_id}/users
+- name: list_activated_addons
+  description: List activated add-ons on an account.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /account/{account_id}/addons
+- name: create_file_group
+  description: Create a file group on an account.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /account/{account_id}/file-group/
+- name: list_file_groups
+  description: List file groups on an account.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /account/{account_id}/file-group/
+- name: get_file_group
+  description: Get a single file group.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /account/{account_id}/file-group/{file_group_id}/
+- name: replace_file_group
+  description: Replace a file group.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#PUT /account/{account_id}/file-group/{file_group_id}/
+- name: delete_file_group
+  description: Delete a file group.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#DELETE /account/{account_id}/file-group/{file_group_id}/
+- name: create_activity
+  description: Create an activity record.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /activity/
+- name: create_customer
+  description: Create a customer.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /customer
+- name: list_customers
+  description: List customers.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /customer/list-customers
+- name: get_customer
+  description: Get a customer.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /customer/get-customer
+- name: associate_customer_ids
+  description: Associate customer IDs.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /customer/associate-id
+- name: update_customer
+  description: Update a customer.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /customer/update-customer
+- name: delete_customer
+  description: Delete a customer.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /customer/delete-customer
+- name: get_marketplace_application
+  description: Get a marketplace application by id.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /marketplace_app/{marketplace_app_id}
+- name: resolve_pending_activation
+  description: Resolve a pending activation.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /activation/resolve/
+- name: list_pending_activations
+  description: List pending activations.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /activation/list-pending/
+- name: get_user
+  description: Get a user by user_id.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#GET /user/{user_id}
+- name: create_weekly_executive_report
+  description: Create a weekly executive report.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /executive_report/weekly/
+- name: create_monthly_executive_report
+  description: Create a monthly executive report.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /executive_report/monthly/
+- name: resolve_change_spend_request
+  description: Resolve (approve or reject) a change-spend request.
+  source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /change_spend/resolve

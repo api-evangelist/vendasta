@@ -1,0 +1,12 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vendasta-marketplace-openapi-original.yml
+summary:
+  types:
+  - http
+schemes:
+- name: BearerAuth
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/vendasta-marketplace-openapi-original.yml

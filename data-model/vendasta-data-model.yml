@@ -1,0 +1,75 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vendasta-marketplace-openapi-original.yml
+notes: >-
+  Entity-relationship graph derived from the Vendasta Marketplace API V1 schemas and the
+  id-reference fields in its operations (account_id, user_id, file_group_id, marketplace_app_id,
+  customer). Relationships inferred from path structure and schema references.
+entities:
+- name: account
+  description: A managed business account on the Vendasta platform.
+  id_field: account_id
+- name: user
+  description: A user belonging to an account.
+  id_field: user_id
+- name: customer
+  description: A customer record (partner-facing CRM entity).
+- name: file_group
+  description: A group of files attached to an account.
+  id_field: file_group_id
+- name: active_addon
+  description: An add-on/product activated on an account.
+- name: marketplace_application
+  description: A product listed in the Vendasta Marketplace.
+  id_field: marketplace_app_id
+- name: activity
+  description: An activity/event record.
+- name: pending_activation
+  description: A pending product activation awaiting resolution.
+- name: executive_report_data
+  description: A generated weekly or monthly executive report.
+- name: account_richdata
+  description: Extended rich-data profile for an account.
+- name: account_settings
+  description: Settings profile for an account.
+relationships:
+- from: user
+  to: account
+  type: belongs_to
+  via: account_id
+- from: file_group
+  to: account
+  type: belongs_to
+  via: account_id
+- from: active_addon
+  to: account
+  type: belongs_to
+  via: account_id
+- from: account
+  to: user
+  type: has_many
+  via: account_id
+- from: account
+  to: file_group
+  type: has_many
+  via: account_id
+- from: account
+  to: active_addon
+  type: has_many
+  via: account_id
+- from: account
+  to: account_richdata
+  type: has_one
+  via: account_id
+- from: account
+  to: account_settings
+  type: has_one
+  via: account_id
+- from: pending_activation
+  to: account
+  type: belongs_to
+  via: account_id
+- from: executive_report_data
+  to: account
+  type: belongs_to
+  via: account_id

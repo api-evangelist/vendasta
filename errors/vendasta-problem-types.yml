@@ -1,0 +1,39 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/vendasta-marketplace-openapi-original.yml
+format: http-status
+notes: >-
+  Derived from the HTTP status responses declared across the Vendasta Marketplace API V1 spec.
+  The spec does not declare an application/problem+json (RFC 9457) error schema, so these are
+  captured as plain HTTP status semantics. Titles/remediation are the standard meaning of each
+  status as used by the API; probe the developer docs error reference to enrich if published.
+problems:
+- status: 400
+  title: Bad Request
+  meaning: The request was malformed or failed validation.
+  remediation: Check required parameters, body schema and value formats against the spec.
+- status: 401
+  title: Unauthorized
+  meaning: Missing, expired or invalid OAuth2 bearer access token.
+  remediation: "Obtain a fresh token from POST /oauth/token and send it as Authorization: Bearer <token>."
+- status: 403
+  title: Forbidden
+  meaning: The authenticated caller lacks permission for the requested resource.
+  remediation: Verify the partner/account scope of the credentials being used.
+- status: 404
+  title: Not Found
+  meaning: The referenced resource (account, user, customer, file group, etc.) does not exist.
+  remediation: Verify the id/path segment; the resource may have been deleted or belongs to another partner.
+- status: 500
+  title: Internal Server Error
+  meaning: An unexpected error occurred on the Vendasta side.
+  remediation: Retry with backoff; if persistent, contact Vendasta support.
+observed_on:
+  '200': ['GET /account/', 'GET /account/{account_id}', 'POST /customer']
+  '201': ['POST /account/{account_id}/file-group/', 'POST /activity/']
+  '202': ['POST /executive_report/weekly/', 'POST /executive_report/monthly/']
+  '400': ['POST /oauth/token', 'POST /customer', 'POST /change_spend/resolve']
+  '401': ['GET /account/', 'GET /account/{account_id}']
+  '403': ['POST /change_spend/resolve']
+  '404': ['GET /account/{account_id}', 'GET /user/{user_id}']
+  '500': ['POST /customer']

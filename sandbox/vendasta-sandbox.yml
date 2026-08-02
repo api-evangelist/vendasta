@@ -1,0 +1,17 @@
+generated: '2026-07-21'
+method: searched
+source: openapi/vendasta-marketplace-openapi-original.yml
+notes: >-
+  Vendasta publishes a dedicated Demo (sandbox) server alongside production in its OpenAPI
+  servers[] list, letting partners exercise the Marketplace API V1 against non-production data
+  with the same OAuth2 bearer flow. No public test cards/tokens are documented (this is not a
+  payments API); the separation is environment-based via distinct base hosts and credentials.
+environments:
+- name: Production Server
+  base_url: https://developers.vendasta.com/api/v1
+- name: Demo Server
+  base_url: https://developers-demo.vendasta.com/api/v1
+  role: sandbox
+auth:
+  detail: Same two-legged OAuth2 (POST /oauth/token -> Bearer) as production; use demo credentials.
+test_values: []

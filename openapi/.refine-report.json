@@ -1,0 +1,28 @@
+{
+  "provider": "vendasta",
+  "sources": [
+    "vendasta-account-api-openapi.yml",
+    "vendasta-activity-api-openapi.yml",
+    "vendasta-change-spend-api-openapi.yml",
+    "vendasta-customer-api-openapi.yml",
+    "vendasta-executive-report-api-openapi.yml",
+    "vendasta-marketplace-app-api-openapi.yml",
+    "vendasta-oauth-api-openapi.yml",
+    "vendasta-user-api-openapi.yml"
+  ],
+  "outputs": [
+    "vendasta-account-api-openapi.yml",
+    "vendasta-activity-api-openapi.yml",
+    "vendasta-change-spend-api-openapi.yml",
+    "vendasta-customer-api-openapi.yml",
+    "vendasta-executive-report-api-openapi.yml",
+    "vendasta-marketplace-app-api-openapi.yml",
+    "vendasta-oauth-api-openapi.yml",
+    "vendasta-user-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

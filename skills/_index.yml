@@ -1,0 +1,16 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/vendasta-marketplace-openapi-original.yml
+notes: >-
+  Agent Skills generated from the Vendasta Marketplace API V1 operations. operationIds are
+  assigned in overlays/vendasta-marketplace-overlay.yaml because the source spec omits them; each
+  skill step also cites the concrete METHOD + path. No provider-published skills/AGENTS.md was found.
+skills:
+- file: vendasta-manage-account.md
+  name: Manage a Vendasta account and its users
+  api: openapi/vendasta-marketplace-openapi-original.yml
+  operations: [getOAuthToken, listAccounts, getAccount, listAccountUsers, getAccountSettings, listActivatedAddons]
+- file: vendasta-manage-customers.md
+  name: Create and manage Vendasta customers
+  api: openapi/vendasta-marketplace-openapi-original.yml
+  operations: [getOAuthToken, createCustomer, listCustomers, getCustomer, updateCustomer, deleteCustomer]

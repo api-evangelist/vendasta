@@ -1,0 +1,53 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Vendasta Marketplace API V1
+  version: 1.0.0
+extends: openapi/vendasta-marketplace-openapi-original.yml
+x-generated: '2026-07-21'
+x-method: generated
+x-source: openapi/vendasta-marketplace-openapi-original.yml
+x-notes: >-
+  The source spec declares no operationIds. This overlay assigns stable operationIds (used by
+  our derived MCP tool surface and Agent Skills) and records API Evangelist metadata. It never
+  mutates the harvested original spec.
+actions:
+- target: $.info
+  update:
+    x-apievangelist-rating: 3
+    x-apievangelist-review: https://apievangelist.com/
+- target: $.paths['/oauth/token'].post
+  update: { operationId: getOAuthToken }
+- target: $.paths['/account/'].get
+  update: { operationId: listAccounts }
+- target: $.paths['/account/{account_id}'].get
+  update: { operationId: getAccount }
+- target: $.paths['/account/{account_id}/richdata'].get
+  update: { operationId: getAccountRichData }
+- target: $.paths['/account/{account_id}/settings'].get
+  update: { operationId: getAccountSettings }
+- target: $.paths['/account/{account_id}/session-transfer'].get
+  update: { operationId: getSessionTransferURL }
+- target: $.paths['/account/{account_id}/users'].get
+  update: { operationId: listAccountUsers }
+- target: $.paths['/account/{account_id}/addons'].get
+  update: { operationId: listActivatedAddons }
+- target: $.paths['/activity/'].post
+  update: { operationId: createActivity }
+- target: $.paths['/customer'].post
+  update: { operationId: createCustomer }
+- target: $.paths['/customer/list-customers'].post
+  update: { operationId: listCustomers }
+- target: $.paths['/customer/get-customer'].post
+  update: { operationId: getCustomer }
+- target: $.paths['/customer/update-customer'].post
+  update: { operationId: updateCustomer }
+- target: $.paths['/customer/delete-customer'].post
+  update: { operationId: deleteCustomer }
+- target: $.paths['/marketplace_app/{marketplace_app_id}'].get
+  update: { operationId: getMarketplaceApplication }
+- target: $.paths['/user/{user_id}'].get
+  update: { operationId: getUser }
+- target: $.paths['/executive_report/weekly/'].post
+  update: { operationId: createWeeklyExecutiveReport }
+- target: $.paths['/executive_report/monthly/'].post
+  update: { operationId: createMonthlyExecutiveReport }
