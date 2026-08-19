@@ -1,0 +1,67 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/vendasta/api-gateway-docs
+notes: >-
+  Vendasta publishes NO platform-wide API rate limit. The only numeric limits it documents are
+  product-specific, and they are carried inside the OpenAPI operation descriptions of the AI
+  Knowledge (embeddings) API rather than on a dedicated limits page. No rate-limit response headers
+  (X-RateLimit-*, RateLimit-*, Retry-After) are declared anywhere in any of the 31 Vendasta OpenAPI
+  documents in this repo, and no operation declares a 429 response — so an agent cannot read a
+  remaining-quota signal at runtime and can only detect exhaustion from the bare HTTP 429 status.
+  The webhook delivery timeouts and retry backoff below are the provider's outbound-direction
+  limits, published in the Marketplace webhook reference; they are recorded here because they bound
+  how fast an integration must respond, but they are not request rate limits.
+limit_count: 2
+response_headers: []
+headers_documented: false
+status_on_exhaustion: 429
+limits:
+- id: ai-knowledge-write-per-account-group
+  api: AI Knowledge (embeddings)
+  scope: per-account-group
+  applies_to:
+  - Knowledge_UpsertKnowledge
+  - Knowledge_CreateKnowledgeFileUpload
+  - Knowledge_RemoveKnowledge
+  limit: 10
+  unit: requests
+  window: 1 minute
+  refill: continuous
+  burst: null
+  status_on_exhaustion: 429
+  source: openapi/vendasta-ai-knowledge-openapi.json
+  quote: >-
+    All write requests (Upsert Knowledge, Create Knowledge File Upload, and Remove Knowledge
+    together) share one rate limit. The write budget of each account group refills continuously,
+    at 10 requests per minute.
+- id: ai-knowledge-write-partner-ceiling
+  api: AI Knowledge (embeddings)
+  scope: per-partner
+  applies_to:
+  - Knowledge_UpsertKnowledge
+  - Knowledge_CreateKnowledgeFileUpload
+  - Knowledge_RemoveKnowledge
+  limit: 100
+  unit: requests
+  window: 1 minute
+  burst: null
+  status_on_exhaustion: 429
+  source: openapi/vendasta-ai-knowledge-openapi.json
+  quote: >-
+    A partner-wide ceiling of 100 requests per minute applies to all account groups together. A
+    request over either limit fails with HTTP 429. Writes to the partner's own knowledge base count
+    only against the partner-wide ceiling.
+webhook_delivery:
+  note: >-
+    Outbound direction — how long the consumer has to respond before Vendasta retries. Published in
+    the Marketplace webhook reference.
+  source: https://github.com/vendasta/marketplace-documentation/blob/master/docs/Other/marketplace_webhooks.md
+  rules:
+  - {webhook: Purchase webhooks, timeout: 30s, retry: backoff doubles from 30s to a maximum spacing of one hour}
+  - {webhook: All other Marketplace webhooks, timeout: 10s, retry: backoff doubles from 60s to a maximum spacing of one hour}
+  - {webhook: Automation "Send a webhook" action, timeout: 60s, retry: resent when response exceeds 60s, HTTP >= 500, or the connection breaks}
+gaps:
+- No published rate limit for the Platform REST APIs, CRM, SCIM, Reputation, Social, Local SEO, Advertising or Customer Voice APIs.
+- No rate-limit response headers declared in any spec; exhaustion is only observable as HTTP 429.
+- No documented Retry-After on 429.
+checked: '2026-08-13'

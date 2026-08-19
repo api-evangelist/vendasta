@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vendasta Marketplace API V1 Endpoints account activity API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "activity",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Activity",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/activity/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit an `Activity` for an Event that occured within your App, or a prompt for action that needs to be taken within your App. See the [Guide](https://developers.vendasta.com/vendor/4cb70950bb594-activity-stream) for details."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

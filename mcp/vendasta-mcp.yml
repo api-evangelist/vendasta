@@ -1,12 +1,16 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: derived
 status: candidate
 source: openapi/vendasta-marketplace-openapi-original.yml
-notes: >-
-  No official hosted/remote MCP server was found for Vendasta (searched npm @modelcontextprotocol,
-  MCP registries and docs, 2026-07-21). This is a DERIVED candidate tool surface generated from
-  the Vendasta Marketplace API V1 operations. operationIds are assigned by API Evangelist because
-  the source spec does not declare them (see overlays/vendasta-marketplace-overlay.yaml).
+notes: 'No official hosted/remote MCP server was found for Vendasta (searched npm @modelcontextprotocol, MCP registries
+  and docs, 2026-07-21). This is a DERIVED candidate tool surface generated from the Vendasta Marketplace API V1
+  operations. operationIds are assigned by API Evangelist because the source spec does not declare them (see overlays/vendasta-marketplace-overlay.yaml).
+  RE-SEARCHED 2026-08-13: still no official hosted or stdio MCP server for Vendasta — nothing on npm under @vendasta
+  or @modelcontextprotocol, nothing in the MCP registries, nothing in either Vendasta documentation repo (vendasta/api-gateway-docs,
+  vendasta/marketplace-documentation) and nothing in the provider-published llms.txt at www.vendasta.com/llms.txt.
+  Note the candidate tool list below still covers only the legacy Marketplace API V1; this round harvested 30 further
+  first-party OpenAPI documents for the API Gateway (347 operations in total, see agentic-access/) which are NOT
+  yet reflected here.'
 server:
   name: vendasta
   transport: http
@@ -89,3 +93,10 @@ tools:
 - name: resolve_change_spend_request
   description: Resolve (approve or reject) a change-spend request.
   source_operation: openapi/vendasta-marketplace-openapi-original.yml#POST /change_spend/resolve
+deployment:
+  mode: none
+  verified: derived
+  tools: 26
+  checked: '2026-08-13'
+  source: re-searched npm, MCP registries, both Vendasta docs repos, provider llms.txt
+  auth: unknown

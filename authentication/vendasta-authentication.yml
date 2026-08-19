@@ -1,12 +1,156 @@
-generated: '2026-07-21'
-method: derived
-source: openapi/vendasta-marketplace-openapi-original.yml
+generated: '2026-08-13'
+method: searched
+source: https://github.com/vendasta/api-gateway-docs/tree/master/docs/Authorization
+docs: https://developers.vendasta.com/platform
+notes: >-
+  Vendasta runs TWO unrelated authentication surfaces and they must not be conflated. (1) The API
+  Gateway (prod.apigateway.co) — every request carries an OAuth2 bearer access token issued by
+  Vendasta's own authorization server at sso-api-prod.apigateway.co, in one of two models: 2-legged
+  "Service Accounts" (RS256-signed JWT assertion exchanged for a token, machine-to-machine, admin
+  level) or 3-legged "Service Providers" (OpenID Connect authorizationCode, acts on behalf of a real
+  user at that user's access level). Scopes are documented per operation — see
+  scopes/vendasta-scopes.yml (73 scopes). (2) The legacy Marketplace API V1
+  (developers.vendasta.com/api/v1) — a two-legged client-credentials exchange at POST /oauth/token
+  returning an UNSCOPED bearer token, declared in that spec only as `BearerAuth`. Vendasta also
+  operates a SCIM 2.0 endpoint that takes the same gateway bearer token.
+  OWNERSHIP: apigateway.co is Vendasta's API domain — Vendasta's own docs say "Vendasta APIs expect
+  an Access Token provided as a Bearer Token in the Authorization HTTP header" and give the example
+  `curl https://sso-api-prod.apigateway.co/oauth2/user-info`, and every spec here is published from
+  Vendasta's own GitHub org.
 summary:
-  types:
-  - http
+  types: [oauth2, http, openIdConnect]
+  api_key_in: []
+  oauth2_flows: [authorizationCode, jwt-bearer-assertion]
+  scope_count: 73
+  header: 'Authorization: Bearer <access_token>'
+models:
+- id: service-account-2-legged
+  name: Service Accounts (2-legged OAuth2)
+  kind: jwt-bearer-assertion
+  detail: >-
+    Create a service account in Partner Center, download an RSA key pair as JSON, sign an assertion
+    (alg RS256, kid from the key file) with iss/sub = the service account client_email, aud =
+    https://iam-prod.apigateway.co, iat, exp (recommended <= 10 minutes) and a space-separated
+    `scope` claim, then POST it to the token_uri for an access token.
+  token_uri: https://sso-api-prod.apigateway.co/oauth2/token
+  audience: https://iam-prod.apigateway.co
+  signing_alg: RS256
+  access_level: administrator (a hidden platform user owned by your app)
+  docs: https://github.com/vendasta/api-gateway-docs/blob/master/docs/Authorization/2-legged-oauth/UsingAServiceAccount.md
+- id: service-provider-3-legged
+  name: Service Providers (3-legged OAuth2 / OpenID Connect)
+  kind: authorizationCode
+  detail: >-
+    Standard OIDC authorization-code flow; the app acts on behalf of a user at that user's own level
+    of access. A new token must be obtained when the requested scope set changes.
+  authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+  tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+  userinfo: https://sso-api-prod.apigateway.co/oauth2/user-info
+  oidc_scopes: [openid, profile, email, phone, address]
+- id: marketplace-v1-bearer
+  name: Marketplace API V1 bearer token
+  kind: client-credentials
+  detail: >-
+    Legacy Marketplace vendor API. POST /oauth/token exchanges client credentials for an access_token
+    (token_type Bearer, expiry as a Unix timestamp); the token is unscoped.
+  token_uri: https://developers.vendasta.com/api/v1/oauth/token
+  docs: https://developers.vendasta.com/vendor/ZG9jOjIxNzM0NjA4-api-authentication
+environments:
+- {name: production, authorization_server: https://sso-api-prod.apigateway.co, api: https://prod.apigateway.co}
+- {name: demo, authorization_server: https://sso-api-demo.apigateway.co, api: https://demo.apigateway.co}
 schemes:
+- name: OAuth2Prod
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+    tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+  - openapi/vendasta-scim-openapi.yml
+  - openapi/vendasta-crm-rest-openapi.json
+  - openapi/vendasta-local-seo-openapi.yml
+  - openapi/vendasta-advertising-openapi.yml
+  - openapi/vendasta-business-openapi.yml
+  - openapi/vendasta-customer-voice-openapi.yml
+  - openapi/vendasta-reputation-openapi.yml
+  - openapi/vendasta-social-openapi.yml
+- name: OAuth2Demo
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+    tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+  - openapi/vendasta-scim-openapi.yml
+  - openapi/vendasta-crm-rest-openapi.json
+  - openapi/vendasta-local-seo-openapi.yml
+  - openapi/vendasta-advertising-openapi.yml
+  - openapi/vendasta-business-openapi.yml
+  - openapi/vendasta-customer-voice-openapi.yml
+  - openapi/vendasta-reputation-openapi.yml
+  - openapi/vendasta-social-openapi.yml
+- name: OAuth2
+  type: oauth2
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+    tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+  note: The scheme name used by the 20 gRPC-gateway product specs (prod.apigateway.co/grpc).
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+  - openapi/vendasta-ai-knowledge-openapi.json
+  - openapi/vendasta-ai-employees-openapi.json
+  - openapi/vendasta-reputation-grpc-openapi.json
+  - openapi/vendasta-listing-products-openapi.json
+  - openapi/vendasta-meetings-openapi.json
+  - openapi/vendasta-forms-openapi.json
+  - openapi/vendasta-social-posts-openapi.json
+  - openapi/vendasta-social-drafts-openapi.json
+  - openapi/vendasta-sales-orders-openapi.json
+  - openapi/vendasta-conversation-openapi.json
+  - openapi/vendasta-composer-openapi.json
+  - openapi/vendasta-vanalytics-openapi.json
+  - openapi/vendasta-multi-location-analytics-openapi.json
+  - openapi/vendasta-wordpress-hosting-openapi.json
+  - openapi/vendasta-wsp-admin-center-openapi.json
+  - openapi/vendasta-wsp-monitor-openapi.json
+  - openapi/vendasta-wsp-site-info-openapi.json
+  - openapi/vendasta-wsp-support-tools-openapi.json
+  - openapi/vendasta-wsp-wp-manager-openapi.json
+- name: JWT
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+  - openapi/vendasta-local-seo-openapi.yml
+  - openapi/vendasta-advertising-openapi.yml
+  - openapi/vendasta-business-openapi.yml
+  - openapi/vendasta-customer-voice-openapi.yml
+  - openapi/vendasta-reputation-openapi.yml
+  - openapi/vendasta-social-openapi.yml
+  - openapi/vendasta-glossary-openapi.yml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  note: SCIM 2.0 endpoint.
+  sources:
+  - openapi/vendasta-scim-openapi.yml
 - name: BearerAuth
   type: http
   scheme: bearer
+  note: Legacy Marketplace API V1 — unscoped token from POST /oauth/token.
   sources:
-  - openapi/vendasta-marketplace-openapi-original.yml
+  - openapi/_original/vendasta-marketplace-openapi-original.yml
+sso:
+  detail: >-
+    Vendasta additionally supports Identity Provider (IdP) SSO so a partner can authenticate SMB
+    users in their own system and hand them into Business App, and SAML SSO for Marketplace vendor
+    apps. Single logout is supported.
+  docs:
+  - https://github.com/vendasta/api-gateway-docs/blob/master/docs/SSO/Overview.md
+  - https://github.com/vendasta/api-gateway-docs/blob/master/docs/SSO/Implementing-Oauth2-IDP.md
+  - https://github.com/vendasta/marketplace-documentation/blob/master/docs/Guides/guide_to_setup_saml_sso.md
+checked: '2026-08-13'

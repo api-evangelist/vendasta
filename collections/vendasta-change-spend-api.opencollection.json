@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vendasta Marketplace API V1 Endpoints account change_spend API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "change_spend",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Resolve a Change Spend Request - by approving or rejecting",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/change_spend/resolve",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resolve a Change Spend Request - by approving or rejecting"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

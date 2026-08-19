@@ -1,17 +1,76 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
-source: openapi/vendasta-marketplace-openapi-original.yml
+source: https://github.com/vendasta/api-gateway-docs/blob/master/docs/Guides/Guides-Overview.md
+docs: https://developers.vendasta.com/platform
 notes: >-
-  Vendasta publishes a dedicated Demo (sandbox) server alongside production in its OpenAPI
-  servers[] list, letting partners exercise the Marketplace API V1 against non-production data
-  with the same OAuth2 bearer flow. No public test cards/tokens are documented (this is not a
-  payments API); the separation is environment-based via distinct base hosts and credentials.
+  Vendasta operates a full parallel DEMO environment, not a test-mode flag: a separate API host, a
+  separate authorization server, and separate credentials. It is declared in the servers[] block of
+  every gateway spec and of the Marketplace V1 spec. The catch — and it is the material one for a
+  developer — is that a demo instance is NOT self-serve: "We provide a 'demo' environment where you
+  are free to test your integrations without worrying about messing up your data. Please contact
+  support@vendasta.com to have an instance set up." There are no test cards, magic identifiers or
+  hosted test tokens (this is not a payments API); isolation is environment-based. Marketplace vendors
+  additionally get a Vendor Center Testing Page that fires dummy PURCHASE webhook payloads at a URL
+  you supply.
+self_serve: false
+provisioning:
+  method: email request
+  contact: support@vendasta.com
+  quote: >-
+    We provide a "demo" environment where you are free to test your integrations without worrying
+    about messing up your data. Please contact support@vendasta.com to have an instance set up.
 environments:
-- name: Production Server
-  base_url: https://developers.vendasta.com/api/v1
-- name: Demo Server
-  base_url: https://developers-demo.vendasta.com/api/v1
+- name: Production
+  role: live
+  api_base: https://prod.apigateway.co
+  authorization_server: https://sso-api-prod.apigateway.co
+  audience: https://iam-prod.apigateway.co
+  scheme: OAuth2Prod
+- name: Demo
   role: sandbox
+  api_base: https://demo.apigateway.co
+  authorization_server: https://sso-api-demo.apigateway.co
+  scheme: OAuth2Demo
+- name: Production (Marketplace API V1)
+  role: live
+  api_base: https://developers.vendasta.com/api/v1
+- name: Demo (Marketplace API V1)
+  role: sandbox
+  api_base: https://developers-demo.vendasta.com/api/v1
+- name: Local
+  role: local-development
+  api_base: http://localhost:11001
+  note: Declared in every gateway spec's servers[] as a templated {local} plus an explicit localhost entry.
 auth:
-  detail: Same two-legged OAuth2 (POST /oauth/token -> Bearer) as production; use demo credentials.
+  detail: >-
+    Identical flows to production; demo credentials and a demo service account are required. The demo
+    OAuth2 scheme carries the same 73-scope vocabulary as production — the split is environmental,
+    not permission-based.
+mock_server:
+  available: true
+  detail: >-
+    Operations with x-lifecycle status `proposed` "can only be used with the mock server" — Vendasta
+    ships proposed-but-unbuilt operations against a mock so partners can code and give feedback
+    before the real implementation exists.
+  applies_to:
+  - patch-users-id
+  - list-automations
+  - get-subscriptionAssignments-by-id
+  - cancel-subscriptionAssignments-by-id
+  - restore-subscriptionAssignments-by-id
+webhook_testing:
+  tool: Vendor Center Testing Page
+  url: https://vendors.vendasta.com
+  detail: >-
+    Sends dummy PURCHASE webhook payloads to a URL you enter (webhook.site / RequestBin suggested).
+    Payloads are signed with the test issuer claim "Vendasta Marketplace Test". Order-form payloads
+    cannot be simulated — the product must be test-activated in the platform.
+cli_helper:
+  name: access-token
+  language: go
+  url: https://github.com/vendasta/api-gateway-docs/tree/master/examples/go/access-token
+  detail: >-
+    First-party command-line helper for minting a service-account access token, published for
+    debugging and for the "try it now" controls in the developer center.
 test_values: []
+checked: '2026-08-13'

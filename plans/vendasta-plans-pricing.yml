@@ -1,0 +1,86 @@
+generated: '2026-08-13'
+method: searched
+source: https://www.vendasta.com/pricing/
+notes: >-
+  Vendasta's platform subscription itself is $0; partners commit to a monthly minimum spend on
+  qualifying products and Vendasta gates platform capability by tier. API access is NOT available on
+  the entry Starter tier — it starts at Professional, which is the single most important commercial
+  fact for a developer evaluating this platform. Seat counts, Snapshot Report allotments and
+  conversation-intelligence minutes are the metered quotas; each has a published overage price.
+  Prices are USD as published on the public pricing page.
+currency: USD
+plan_count: 4
+api_access_tier: Professional
+plans:
+- name: Starter
+  price: 0
+  currency: USD
+  billing_period: monthly
+  contract: none
+  monthly_minimum:
+    amount: 99
+    currency: USD
+    detail: $99/month of qualifying products
+  included:
+    team_member_seats: 1
+    snapshot_reports_per_month: 10
+    conversation_intelligence_minutes_per_month: 250
+    branding: co-branded with Vendasta
+    features: [CRM, automations, integrations]
+  api_access: false
+  overage:
+  - {item: additional seat, price: 30, currency: USD, period: monthly}
+  - {item: additional Snapshot Report, price: 2, currency: USD, period: per report}
+- name: Professional
+  price: 0
+  currency: USD
+  billing_period: monthly
+  contract: 1-year
+  monthly_minimum:
+    amount: 499
+    currency: USD
+    detail: $499/month of qualifying products
+  included:
+    team_member_seats: 5
+    snapshot_reports_per_month: 25
+    conversation_intelligence_minutes_per_month: 500
+    branding: white-label client portal
+    features: [all Starter features, API access, Yesware Pro email tracking, 100 enrichment credits]
+  api_access: true
+  overage:
+  - {item: additional seat, price: 35, currency: USD, period: monthly}
+  - {item: additional Snapshot Report, price: 2, currency: USD, period: per report}
+- name: Premium
+  price: 0
+  currency: USD
+  billing_period: monthly
+  contract: 1-year
+  monthly_minimum:
+    amount: 999
+    currency: USD
+    detail: $999/month of qualifying products
+  included:
+    team_member_seats: 10
+    snapshot_reports_per_month: 50
+    conversation_intelligence_minutes_per_month: 1000
+    branding: multi-location client portal
+    features: [all Professional features, Yesware Premium unlimited tracking, 300 enrichment credits, unlimited campaigns]
+  api_access: true
+  overage:
+  - {item: additional seat, price: 65, currency: USD, period: monthly}
+  - {item: additional Snapshot Report, price: 2, currency: USD, period: per report}
+- name: Custom Enterprise
+  price: null
+  currency: USD
+  billing_period: monthly-or-annual
+  contract: 1-year
+  monthly_minimum:
+    amount: null
+    detail: custom volume pricing, contact sales
+  included:
+    team_member_seats: custom
+    features: [all Premium features, priority support, wholesale product pricing, invoiced billing, volume commitment discounts]
+  api_access: true
+  overage: []
+  sales_contact: https://www.vendasta.com/pricing/
+checked: '2026-08-13'

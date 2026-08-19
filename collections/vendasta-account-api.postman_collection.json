@@ -1,0 +1,3312 @@
+{
+  "item": [
+    {
+      "id": "2be0db3a-50ca-4d57-b72e-dbfef5d5e6ec",
+      "name": "account",
+      "description": {
+        "content": "The Account APIs allow you to perform actions against a single account that your application has been added to.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3c111f22-56b2-4835-90d6-6628e343a5fb",
+          "name": "List Accounts",
+          "request": {
+            "name": "List Accounts",
+            "description": {},
+            "url": {
+              "path": [
+                "account",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Must be a positive integer."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "8ccbdfca-4362-4b28-94ec-d4edcd3ebfbe",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 4071,\n  \"data\": [\n    {\n      \"company_name\": \"string\",\n      \"id\": \"string\",\n      \"partner_id\": \"string\",\n      \"call_tracking_number\": [\n        \"string\",\n        \"string\"\n      ],\n      \"deleted_flag\": false,\n      \"contact_first_name\": \"string\",\n      \"common_name\": [\n        \"string\",\n        \"string\"\n      ],\n      \"timezone\": \"string\",\n      \"work_number\": [\n        \"string\",\n        \"string\"\n      ],\n      \"city\": \"string\",\n      \"zip\": \"string\",\n      \"market_id\": \"string\",\n      \"deleted\": \"2022-04-29T02:56:19.983Z\",\n      \"state\": \"string\",\n      \"latitude\": 8309.61431183966,\n      \"foursquare_url\": \"string\",\n      \"tax_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"website\": \"string\",\n      \"rss_url\": \"string\",\n      \"updated\": \"1949-08-12T10:24:31.404Z\",\n      \"twitter_url\": \"string\",\n      \"facebook_url\": \"string\",\n      \"fax_number\": \"string\",\n      \"contact_email\": \"string\",\n      \"address\": \"string\",\n      \"youtube_url\": \"string\",\n      \"instagram_url\": \"string\",\n      \"key_person\": [\n        \"string\",\n        \"string\"\n      ],\n      \"pinterest_url\": \"string\",\n      \"contact_last_name\": \"string\",\n      \"cell_number\": \"string\",\n      \"country\": \"string\",\n      \"created\": \"1968-04-02T03:20:00.969Z\",\n      \"linkedin_url\": \"string\",\n      \"longitude\": 9530.779525239814,\n      \"sales_person_id\": \"string\",\n      \"googleplus_url\": \"string\",\n      \"service_area_business_flag\": false,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"seo_category\": [\n        \"string\",\n        \"string\"\n      ],\n      \"email\": \"string\"\n    },\n    {\n      \"company_name\": \"string\",\n      \"id\": \"string\",\n      \"partner_id\": \"string\",\n      \"call_tracking_number\": [\n        \"string\",\n        \"string\"\n      ],\n      \"deleted_flag\": true,\n      \"contact_first_name\": \"string\",\n      \"common_name\": [\n        \"string\",\n        \"string\"\n      ],\n      \"timezone\": \"string\",\n      \"work_number\": [\n        \"string\",\n        \"string\"\n      ],\n      \"city\": \"string\",\n      \"zip\": \"string\",\n      \"market_id\": \"string\",\n      \"deleted\": \"1948-05-10T00:18:52.815Z\",\n      \"state\": \"string\",\n      \"latitude\": 6309.445849813038,\n      \"foursquare_url\": \"string\",\n      \"tax_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"website\": \"string\",\n      \"rss_url\": \"string\",\n      \"updated\": \"2002-03-18T01:18:38.344Z\",\n      \"twitter_url\": \"string\",\n      \"facebook_url\": \"string\",\n      \"fax_number\": \"string\",\n      \"contact_email\": \"string\",\n      \"address\": \"string\",\n      \"youtube_url\": \"string\",\n      \"instagram_url\": \"string\",\n      \"key_person\": [\n        \"string\",\n        \"string\"\n      ],\n      \"pinterest_url\": \"string\",\n      \"contact_last_name\": \"string\",\n      \"cell_number\": \"string\",\n      \"country\": \"string\",\n      \"created\": \"1985-02-11T00:03:26.055Z\",\n      \"linkedin_url\": \"string\",\n      \"longitude\": 2224.250563763991,\n      \"sales_person_id\": \"string\",\n      \"googleplus_url\": \"string\",\n      \"service_area_business_flag\": false,\n      \"tags\": [\n        \"string\",\n        \"string\"\n      ],\n      \"seo_category\": [\n        \"string\",\n        \"string\"\n      ],\n      \"email\": \"string\"\n    }\n  ],\n  \"next_url\": \"string\",\n  \"total_results\": 1012\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2caa7db2-75db-4030-86af-d2fdeb0318c4",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "eab9f152-681e-4752-806a-0d46e6a75851",
+          "name": "Get Account",
+          "request": {
+            "name": "Get Account",
+            "description": {},
+            "url": {
+              "path": [
+                "account",
+                ":account_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d90bab88-4335-4776-ae4e-4adbec1ae9b0",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 7608,\n  \"data\": {\n    \"company_name\": \"string\",\n    \"id\": \"string\",\n    \"partner_id\": \"string\",\n    \"call_tracking_number\": [\n      \"string\",\n      \"string\"\n    ],\n    \"deleted_flag\": false,\n    \"contact_first_name\": \"string\",\n    \"common_name\": [\n      \"string\",\n      \"string\"\n    ],\n    \"timezone\": \"string\",\n    \"work_number\": [\n      \"string\",\n      \"string\"\n    ],\n    \"city\": \"string\",\n    \"zip\": \"string\",\n    \"market_id\": \"string\",\n    \"deleted\": \"2013-04-14T10:20:17.997Z\",\n    \"state\": \"string\",\n    \"latitude\": 318.53864000617295,\n    \"foursquare_url\": \"string\",\n    \"tax_ids\": [\n      \"string\",\n      \"string\"\n    ],\n    \"website\": \"string\",\n    \"rss_url\": \"string\",\n    \"updated\": \"2022-11-12T23:22:47.614Z\",\n    \"twitter_url\": \"string\",\n    \"facebook_url\": \"string\",\n    \"fax_number\": \"string\",\n    \"contact_email\": \"string\",\n    \"address\": \"string\",\n    \"youtube_url\": \"string\",\n    \"instagram_url\": \"string\",\n    \"key_person\": [\n      \"string\",\n      \"string\"\n    ],\n    \"pinterest_url\": \"string\",\n    \"contact_last_name\": \"string\",\n    \"cell_number\": \"string\",\n    \"country\": \"string\",\n    \"created\": \"2012-04-09T00:15:27.940Z\",\n    \"linkedin_url\": \"string\",\n    \"longitude\": 6605.654423743117,\n    \"sales_person_id\": \"string\",\n    \"googleplus_url\": \"string\",\n    \"service_area_business_flag\": true,\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"seo_category\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f9e9b0ef-9e6c-4d34-972d-efc86ded8ede",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1897161d-496d-4436-8396-5d9d1315167d",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4f0c9108-5b48-4914-9912-4f660afa62c0",
+              "name": "Account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "79f3a7bd-977a-4f2f-b745-68efd1853b9b",
+          "name": "Get Account - Rich Data",
+          "request": {
+            "name": "Get Account - Rich Data",
+            "description": {
+              "content": "Retreive extended account data such as hours of operation and images.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account",
+                ":account_id",
+                "richdata"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            }
+          },
+          "response": [
+            {
+              "id": "cffd719b-934d-45c3-a0d3-5a906305a4e3",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "richdata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 8254,\n  \"data\": {\n    \"brands_carried\": [],\n    \"call_tracking_number\": [],\n    \"common_name\": [],\n    \"deleted_flag\": true,\n    \"images\": {\n      \"logo\": \"string\",\n      \"primary\": \"string\"\n    },\n    \"timezone\": \"string\",\n    \"work_number\": [],\n    \"partner_id\": \"string\",\n    \"id\": \"string\",\n    \"city\": \"string\",\n    \"zip\": \"string\",\n    \"market_id\": \"string\",\n    \"twitter_url\": \"string\",\n    \"state\": \"string\",\n    \"company_name\": \"string\",\n    \"latitude\": 1282.832187842663,\n    \"foursquare_url\": \"string\",\n    \"service_area_business_flag\": false,\n    \"address2\": \"string\",\n    \"tax_ids\": [],\n    \"website\": \"string\",\n    \"rss_url\": \"string\",\n    \"updated\": \"string\",\n    \"description\": \"string\",\n    \"facebook_url\": \"string\",\n    \"fax_number\": \"string\",\n    \"short_description\": \"string\",\n    \"address\": \"str\",\n    \"youtube_url\": \"string\",\n    \"instagram_url\": \"string\",\n    \"key_person\": [],\n    \"pinterest_url\": \"string\",\n    \"cell_number\": \"string\",\n    \"customer_identifier\": \"string\",\n    \"created\": \"string\",\n    \"linkedin_url\": \"string\",\n    \"longitude\": 8657.930759710127,\n    \"sales_person_id\": \"string\",\n    \"toll_free_number\": \"string\",\n    \"services_offered\": [],\n    \"hours_of_operation\": [\n      {\n        \"closes\": \"string\",\n        \"opens\": \"string\",\n        \"description\": \"\"\n      }\n    ],\n    \"landmark\": \"string\",\n    \"country\": \"string\",\n    \"tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"seo_category\": [\n      \"string\",\n      \"string\"\n    ],\n    \"email\": \"string\",\n    \"payment_methods\": [\n      \"Visa\",\n      \"Check\"\n    ],\n    \"service_availability\": {\n      \"delivery\": \"N\",\n      \"no_contact_delivery\": \"Y\",\n      \"in_store_pickup\": \"N\",\n      \"curbside_pickup\": \"N\",\n      \"appointments_only\": \"N\",\n      \"closed_status\": \"Limited\",\n      \"closed_status_date\": \"1969-08-21\"\n    },\n    \"contact_first_name\": \"\",\n    \"deleted\": \"\",\n    \"contact_email\": \"\",\n    \"contact_last_name\": \"\",\n    \"googleplus_url\": \"\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e5fd06b2-f411-4966-a7db-32d3fbece62e",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "richdata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea1478a3-9d4a-41df-85cd-88603639c3ba",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "richdata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ec87bf86-7a53-48d4-8a33-7ca3a3f7d626",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "richdata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4a861a79-8e5b-46c4-a0f3-ca58b925f3ec",
+              "name": "Account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "richdata"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": []
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "972e0dbe-c905-4d74-9921-bbea8e4f83d5",
+          "name": "Get Account Settings",
+          "request": {
+            "name": "Get Account Settings",
+            "description": {
+              "content": "Partners can have sub-accounts for branding purposes called Markets. Every Account must be assigned to a Market, even if it is the `default` Market. The majority of Partners have only the single default Market. The `platform_settings` object returns the partner branding data for the specific partner_id/market_id combo. \n\nEnsure that you set your branding data at either the Account, or the Market level. If it is configured per partner_id, it will end in a breach of white-label for users in any Market other than that of the latest activated Account!\n\n<!-- theme: warning -->\n> There is no webhook at this time for providing updates to partner branding. Therefore a Vendor should periodically poll this API for each of their Accounts to ensure they have the most up to date branding information.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account",
+                ":account_id",
+                "settings"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f7584370-1862-48f3-9e9e-a3a06deeda58",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 4509,\n  \"data\": {\n    \"account_id\": \"string\",\n    \"partner_id\": \"string\",\n    \"market_id\": \"string\",\n    \"platform_settings\": {\n      \"partner_name\": \"string\",\n      \"partner_logo_url\": \"string\",\n      \"partner_primary_branding_hex_color\": \"string\"\n    },\n    \"white_label_active\": true\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3b92934f-a58e-4c6f-917a-938a191a0b37",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "18833c20-b454-4c65-90e8-838e2a3413bc",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4e60c6a2-21ec-41af-a025-ae9523c2a78e",
+              "name": "Account settings not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "settings"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ddbe4649-96ec-4c63-bb47-9ee6e6ccee81",
+          "name": "Get Session Transfer URL",
+          "request": {
+            "name": "Get Session Transfer URL",
+            "description": {},
+            "url": {
+              "path": [
+                "account",
+                ":account_id",
+                "session-transfer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "12481a8f-e1ca-4a18-a4db-f1e9afdf0702",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "session-transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 9733,\n  \"data\": {\n    \"session_transfer_url\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a9092770-cb79-40eb-8fed-080394f320fe",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "session-transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "631aa303-5e73-4b12-a53f-d38494a21a8a",
+              "name": "Not authorized to retrieve a session transfer url.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "session-transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0e33ead6-7cdc-43a3-b359-4d62eaf982e7",
+              "name": "Url not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "session-transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bf3d259d-4169-4894-bd55-d2290ffbfb28",
+          "name": "List Users",
+          "request": {
+            "name": "List Users",
+            "description": {},
+            "url": {
+              "path": [
+                "account",
+                ":account_id",
+                "users"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "57a18b19-f9ed-4835-bbb6-63e25e6d93c8",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 5785,\n  \"data\": [\n    {\n      \"user_id\": \"string\"\n    },\n    {\n      \"user_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a59e4c28-e602-4a86-a8a1-edfed9fef3b8",
+              "name": "Invalid Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "users"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "471d19b8-5d2a-43cb-8af1-9d913edafac1",
+          "name": "List Activated Addons",
+          "request": {
+            "name": "List Activated Addons",
+            "description": {},
+            "url": {
+              "path": [
+                "account",
+                ":account_id",
+                "addons"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cedfa4bd-dc91-49ef-9571-b81fb57e3e54",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "addons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 3840,\n  \"data\": [\n    {\n      \"addon_id\": \"string\",\n      \"activation_id\": \"string\"\n    },\n    {\n      \"addon_id\": \"string\",\n      \"activation_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e61fc6b0-cce9-4e21-ad88-ffc93477e9af",
+              "name": "Invalid Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "addons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1c4f0eb9-7b26-4cc4-a9da-ecfedcc9f682",
+          "name": "Create a File Group",
+          "request": {
+            "name": "Create a File Group",
+            "description": {
+              "content": "Creates a collection of files, which are available to the Partner in Partner Center, and the End Business in Business App. \n\nThe Activity will automatically be posted to the Activity Stream in Business App alerting users that they have a new file ready to download, and will include the supplied `description`.\n\nNote* This feature differs between the UI, and API. You must host the files and supply the urls when using the API. But if you use the file group system via the Vendor Center UI, you upload the files, and Vendasta will host them.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account",
+                ":account_id",
+                "file-group",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"files\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f51a1299-d3ed-490a-8323-5ae21f5dba50",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 2360,\n  \"data\": {\n    \"account_id\": \"string\",\n    \"file_group_id\": \"string\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"created\": \"string\",\n    \"modified\": \"string\",\n    \"files\": [\n      {\n        \"name\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"name\": \"string\",\n        \"url\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "12d6e1f2-d0d3-4911-90a2-e1ac46c377f1",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0442f75b-12e3-4e44-8118-f95b58a7e611",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f4161b53-9419-41e8-a2d5-18522b5ab0a4",
+              "name": "Account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "463486d3-fb1b-4ef8-a316-e150868979b9",
+          "name": "List File Groups",
+          "request": {
+            "name": "List File Groups",
+            "description": {},
+            "url": {
+              "path": [
+                "account",
+                ":account_id",
+                "file-group",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Must be a positive integer."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1bed2f84-deaa-4d6d-8a5c-44a06c311654",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 3458,\n  \"data\": [\n    {\n      \"account_id\": \"string\",\n      \"file_group_id\": \"string\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"created\": \"string\",\n      \"modified\": \"string\",\n      \"files\": [\n        {\n          \"name\": \"string\",\n          \"url\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"url\": \"string\"\n        }\n      ]\n    },\n    {\n      \"account_id\": \"string\",\n      \"file_group_id\": \"string\",\n      \"title\": \"string\",\n      \"description\": \"string\",\n      \"created\": \"string\",\n      \"modified\": \"string\",\n      \"files\": [\n        {\n          \"name\": \"string\",\n          \"url\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"url\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"next_url\": \"string\",\n  \"total_results\": 1059\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca51c1a3-ad78-479a-8580-3af423e286a8",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "33dca48b-2b9b-46cb-aad4-2a1b153f9857",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a1faa88d-af2d-41ce-b9d9-7641c9c313ac",
+              "name": "Account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0248c786-432f-42bb-96be-f2d2cef71db5",
+          "name": "Replace a File Group",
+          "request": {
+            "name": "Replace a File Group",
+            "description": {
+              "content": "This replaces the entire contents of a file group, so if you are looking to update a file group, ensure your including what is already in place along with your addition. Note* This feature differs between the UI, and API. You must host the files and supply the urls when using the API. But if you use the file group system via the Vendor Center UI, you upload the files, and Vendasta will host them.\n\nUnlike the File Group create, the replace action will not trigger an Activity to be sent to the Activity Stream.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "account",
+                ":account_id",
+                "file-group",
+                ":file_group_id",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "file_group_id",
+                  "description": "(Required) The ID of the file group to update."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"<string>\",\n  \"files\": [\n    {\n      \"name\": \"<string>\",\n      \"url\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"url\": \"<string>\"\n    }\n  ],\n  \"description\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f68f17df-d2b2-4aba-ba6f-8d1140ccdd44",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 4591,\n  \"data\": {\n    \"account_id\": \"string\",\n    \"file_group_id\": \"string\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"created\": \"string\",\n    \"modified\": \"string\",\n    \"files\": [\n      {\n        \"name\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"name\": \"string\",\n        \"url\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cc7aec18-ddd5-4bad-9136-7718c9925cc1",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea0fd8f8-a652-4d0e-8790-690b0421cad9",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8e9d2b5a-f1b0-40d4-ba56-e2f2ed74c8b9",
+              "name": "Account or file group not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to update."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ef8fc028-829f-4792-853f-87b4f52a7892",
+          "name": "Delete a File Group",
+          "request": {
+            "name": "Delete a File Group",
+            "description": {},
+            "url": {
+              "path": [
+                "account",
+                ":account_id",
+                "file-group",
+                ":file_group_id",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "file_group_id",
+                  "description": "(Required) The ID of the file group to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "767a1ddd-3bb0-4869-b219-273025036e44",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 4591,\n  \"data\": {\n    \"account_id\": \"string\",\n    \"file_group_id\": \"string\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"created\": \"string\",\n    \"modified\": \"string\",\n    \"files\": [\n      {\n        \"name\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"name\": \"string\",\n        \"url\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "305538bb-cebb-4fe6-b6aa-f6b88ad5d018",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4e07e914-0903-4138-96d0-7df6c248fa08",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cd118d29-2fd9-4713-9633-c3ef5e891714",
+              "name": "Account or file group not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9fbffd00-2299-4c86-86cc-a5f8672511e4",
+          "name": "Get a File Group",
+          "request": {
+            "name": "Get a File Group",
+            "description": {},
+            "url": {
+              "path": [
+                "account",
+                ":account_id",
+                "file-group",
+                ":file_group_id",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "account_id",
+                  "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "file_group_id",
+                  "description": "(Required) The ID of the file group to delete."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "66ab6656-8378-4b05-9a82-3425c46c3fe2",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 4591,\n  \"data\": {\n    \"account_id\": \"string\",\n    \"file_group_id\": \"string\",\n    \"title\": \"string\",\n    \"description\": \"string\",\n    \"created\": \"string\",\n    \"modified\": \"string\",\n    \"files\": [\n      {\n        \"name\": \"string\",\n        \"url\": \"string\"\n      },\n      {\n        \"name\": \"string\",\n        \"url\": \"string\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "907767f6-0038-4020-a43e-406aae8a699a",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "27df1cbc-e0e6-4908-91e1-f94c013b4146",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "acb8a344-dba1-45d8-9075-30aabaa0e6f2",
+              "name": "Account or file group not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "account",
+                    ":account_id",
+                    "file-group",
+                    ":file_group_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "account_id",
+                      "description": "(Required) A unique account ID that can be used to identify and reference an account."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "file_group_id",
+                      "description": "(Required) The ID of the file group to delete."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f0cb93eb-8a8f-4d79-ac9d-57ecc22d041d",
+          "name": "Resolve a Pending Activation",
+          "request": {
+            "name": "Resolve a Pending Activation",
+            "description": {},
+            "url": {
+              "path": [
+                "activation",
+                "resolve",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activation_id\": \"<string>\",\n  \"business_id\": \"<string>\",\n  \"approved\": \"<boolean>\",\n  \"addon_id\": \"<string>\",\n  \"rejection_reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e01a100f-fde3-49d5-ae8f-27663b4b8c83",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activation",
+                    "resolve",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activation_id\": \"<string>\",\n  \"business_id\": \"<string>\",\n  \"approved\": \"<boolean>\",\n  \"addon_id\": \"<string>\",\n  \"rejection_reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2aa3c6b7-7166-402f-b7d5-f8817941d01d",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activation",
+                    "resolve",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activation_id\": \"<string>\",\n  \"business_id\": \"<string>\",\n  \"approved\": \"<boolean>\",\n  \"addon_id\": \"<string>\",\n  \"rejection_reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c007c694-eed1-4f8f-9a68-ba710e50f202",
+          "name": "List Pending Activations",
+          "request": {
+            "name": "List Pending Activations",
+            "description": {},
+            "url": {
+              "path": [
+                "activation",
+                "list-pending",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "addon_id",
+                  "value": "<string>",
+                  "description": "A unique ID used to identify a marketplace addon."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "The maximum number of entries you want returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "cursor",
+                  "value": "<string>",
+                  "description": "Used for pagination."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "6a9e84f7-d322-4f10-9cb4-aed5a11d0449",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activation",
+                    "list-pending",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addon_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 2233,\n  \"data\": [\n    {\n      \"addon_id\": \"string\",\n      \"app_id\": \"string\",\n      \"business_id\": \"string\",\n      \"activation_id\": \"string\",\n      \"created_date\": \"string\"\n    },\n    {\n      \"addon_id\": \"string\",\n      \"app_id\": \"string\",\n      \"business_id\": \"string\",\n      \"activation_id\": \"string\",\n      \"created_date\": \"string\"\n    }\n  ],\n  \"next_url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "07aee684-271a-4367-b712-8637b4519962",
+              "name": "Invalid Input",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activation",
+                    "list-pending",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addon_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "605409da-8ebf-4e59-a944-3de0e4c9793c",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activation",
+                    "list-pending",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "addon_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "cursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developers.vendasta.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "793b24fa-009a-4f5f-b0e7-3d7448b237d0",
+    "name": "Vendasta Marketplace API V1 Endpoints account API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account APIs allow you to perform actions against a single account that your application has been added to.",
+      "type": "text/plain"
+    }
+  }
+}

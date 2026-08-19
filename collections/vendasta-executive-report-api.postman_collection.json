@@ -1,0 +1,623 @@
+{
+  "item": [
+    {
+      "id": "26ef9e89-1ab6-48f7-8e9d-0e43bd51fa8e",
+      "name": "executive_report",
+      "description": {
+        "content": "The executive report APIs are used to submit data to the executive report for a single app on an account.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "f4964ec9-5316-4bd9-9032-b0f058222089",
+          "name": "Create Weekly Executive Report",
+          "request": {
+            "name": "Create Weekly Executive Report",
+            "description": {
+              "content": "Submit data to populate the [Executive Report](https://support.vendasta.com/hc/en-us/articles/4406961302935) with cards aggregated for the past Week. See [Guide](https://developers.vendasta.com/vendor/64ecf7b9ac031-executive-report) for further details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executive_report",
+                "weekly",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "633f01b8-2709-463c-a6f2-71f9ab90f90e",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executive_report",
+                    "weekly",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2ca644fc-ea4d-420a-88bd-b4fa64349116",
+              "name": "Invalid parameter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executive_report",
+                    "weekly",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a4bee173-741b-4934-970f-8cd6fb5c7c54",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executive_report",
+                    "weekly",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4da8cdec-98da-4847-9ee6-c151239fd67c",
+              "name": "App doesn't have access to the account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executive_report",
+                    "weekly",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1485d697-7350-4a1f-9a06-c6b533546948",
+              "name": "Account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executive_report",
+                    "weekly",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "50301391-fa07-4713-8e3c-2f4b8934adf1",
+          "name": "Create Monthly Executive Report",
+          "request": {
+            "name": "Create Monthly Executive Report",
+            "description": {
+              "content": "Submit data to populate the [Executive Report](https://support.vendasta.com/hc/en-us/articles/4406961302935) with cards aggregated for the past Month. See [Guide](https://developers.vendasta.com/vendor/64ecf7b9ac031-executive-report) for further details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "executive_report",
+                "monthly",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "74594990-d995-4952-940a-ac73663c8a6d",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executive_report",
+                    "monthly",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "67a1bd58-4946-4c89-8578-9b25f8b4788b",
+              "name": "Invalid parameter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executive_report",
+                    "monthly",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "670f0571-33fd-4380-81b2-a16d37307bc5",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executive_report",
+                    "monthly",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "17155e80-ff08-4915-bd28-d5662ccac49f",
+              "name": "App doesn't have access to the account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executive_report",
+                    "monthly",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5833bc70-1f19-4338-8b2b-a702220fe0c3",
+              "name": "Account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "executive_report",
+                    "monthly",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"category\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"report_date\": \"<date>\",\n  \"report_data\": [\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"template_type\": \"<string>\",\n      \"unique_id\": \"<string>\",\n      \"title\": \"<string>\",\n      \"description\": \"<string>\",\n      \"width\": \"<string>\",\n      \"next_url\": \"<string>\",\n      \"next_url_label\": \"<string>\",\n      \"value\": \"<string>\",\n      \"change\": \"<string>\",\n      \"format\": \"<string>\",\n      \"precision\": \"<integer>\",\n      \"list\": [\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        },\n        {\n          \"header\": \"<string>\",\n          \"body\": \"<string>\",\n          \"footer\": \"<string>\",\n          \"info_text\": \"<string>\",\n          \"info_text_color\": \"<string>\",\n          \"info_text_icon\": \"<string>\",\n          \"image_url\": \"<string>\"\n        }\n      ],\n      \"bar_chart\": [\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        },\n        {\n          \"label\": \"<string>\",\n          \"value\": \"<string>\",\n          \"fill_percent\": \"<integer>\",\n          \"fill_color\": \"<string>\"\n        }\n      ],\n      \"word_cloud_list\": [\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        },\n        {\n          \"sentiment\": \"<integer>\",\n          \"text\": \"<string>\",\n          \"weight\": \"<integer>\"\n        }\n      ],\n      \"line_graph\": [\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        },\n        {\n          \"label\": \"<string>\",\n          \"point\": [\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            },\n            {\n              \"x\": \"<number>\",\n              \"y\": \"<number>\"\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developers.vendasta.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "80c7c48b-9e7c-401b-9336-dae1ca4c65cf",
+    "name": "Vendasta Marketplace API V1 Endpoints account executive_report API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account APIs allow you to perform actions against a single account that your application has been added to.",
+      "type": "text/plain"
+    }
+  }
+}

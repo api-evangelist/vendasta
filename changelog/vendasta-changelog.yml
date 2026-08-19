@@ -1,0 +1,90 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/vendasta/api-gateway-docs/blob/master/docs/Overview/Changelog.md
+docs: https://developers.vendasta.com/platform
+notes: >-
+  The Vendasta API Gateway keeps a dated change log as part of its published documentation source
+  (the Stoplight project behind developers.vendasta.com/platform). It is a running list of announced
+  changes, not a release-tag history — Vendasta deliberately does not version its Platform REST APIs
+  (info.version is literally "Evergreen"); maturity is tracked per operation/field with the
+  `x-lifecycle` extension instead. See lifecycle/vendasta-lifecycle.yml. 40 dated entries run from
+  2020-12-02 to 2025-11-18; the recent window is captured below. NOTE the log is not current with the
+  platform: no entry has been published since 2025-11-18 even though the specs themselves are still
+  being edited (the api-gateway-docs repo pushed on 2026-08-13).
+scheme: dated-entries
+versioning: evergreen
+current_version: Evergreen
+entry_count_total: 40
+first_entry: '2020-12-02'
+latest_entry: '2025-11-18'
+entries:
+- date: '2025-11-18'
+  breaking: true
+  removals:
+  - Removed get and create sales contacts (/platform/salesContacts) — replaced with CRM contacts.
+  - Removed proposal builder APIs. The product is no longer supported.
+- date: '2025-07-14'
+  breaking: false
+  highlights:
+  - Update references from "Social Marketing" to "Social AI".
+- date: '2024-10-03'
+  breaking: false
+  deprecations:
+  - Deprecation of the Customer List API. No new development should occur against it; the Platform CRM API (Trusted Tester) replaces it.
+- date: '2024-02-27'
+  breaking: false
+  deprecations:
+  - Mark `seoKeywords` field as deprecated in the `SalesAccount` resource.
+- date: '2023-10-24'
+  breaking: false
+  additions:
+  - Add Reputation AI Premium edition ID under Find SKU.
+- date: '2023-08-28'
+  breaking: false
+  highlights:
+  - Product name for Listing Builder updated to Local SEO; new editions and Additional Keyword addon SKUs added.
+- date: '2023-06-01'
+  breaking: false
+  additions:
+  - Listing profile update and get operations added to the Listing APIs.
+- date: '2023-03-28'
+  breaking: false
+  additions:
+  - Read scopes added to businessLocations/get and orders/get.
+- date: '2022-12-23'
+  breaking: false
+  additions:
+  - Tags on sales orders — orders can be grouped by tag and tags used as automation trigger filters.
+- date: '2022-11-19'
+  breaking: false
+  additions:
+  - Business categories are now optional when creating a business location or sales account (default "other").
+  - Automatic price lookup — send only the SKU on order line items and amount/intervalCode are set from configured retail prices.
+  - Salesperson field added to the orders model.
+- date: '2022-08-17'
+  breaking: false
+  additions:
+  - List Partner Activatable Products proposed (GET /partnerActivatableProducts).
+- date: '2022-08-08'
+  breaking: false
+  additions:
+  - Proposal Builder create/update/get/list operations added to the Platform APIs.
+- date: '2022-07-22'
+  breaking: false
+  additions:
+  - Customer Voice review-request template management (create/update/get/list/delete).
+  - Delete a contact from Customer List.
+- date: '2022-07-21'
+  breaking: false
+  additions:
+  - Country and country-region list operations (GET /countries, GET /countryRegions).
+- date: '2022-07-18'
+  breaking: false
+  additions:
+  - Customer list management — list, update and get operations on the business customers resource.
+- date: '2022-06-23'
+  breaking: false
+  additions:
+  - Create sales orders with a statusCode of `submitted` or `draft` instead of immediate activation.
+  - List subscription assignments to determine what products are active for a business location.
+checked: '2026-08-13'

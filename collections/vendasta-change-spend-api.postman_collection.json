@@ -1,0 +1,323 @@
+{
+  "item": [
+    {
+      "id": "c96a770b-ae5e-4f2c-a808-4d0fdd0853b6",
+      "name": "change_spend",
+      "description": {
+        "content": "The Change Spend APIs allow interact with change spend requests, like resolving them by approving or rejecting",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "19e79cb0-3a38-4414-9bd3-c821ccb1db7d",
+          "name": "Resolve a Change Spend Request - by approving or rejecting",
+          "request": {
+            "name": "Resolve a Change Spend Request - by approving or rejecting",
+            "description": {},
+            "url": {
+              "path": [
+                "change_spend",
+                "resolve"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"activation_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"approved\": \"<boolean>\",\n  \"change_request_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"rejection_reason\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "720a548a-912b-4be4-86af-430a83464ff3",
+              "name": "Accepted",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "change_spend",
+                    "resolve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activation_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"approved\": \"<boolean>\",\n  \"change_request_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"rejection_reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "da4be668-808f-4f5d-aa80-bed6b16c0f3b",
+              "name": "Bad request - invalid parameters in the body of the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "change_spend",
+                    "resolve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activation_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"approved\": \"<boolean>\",\n  \"change_request_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"rejection_reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d6d2bf1f-b0c1-4f17-99db-dd4afd3f156f",
+              "name": "Invalid authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "change_spend",
+                    "resolve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activation_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"approved\": \"<boolean>\",\n  \"change_request_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"rejection_reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3da383b1-1f8f-4a25-944b-59ee5e40f6a3",
+              "name": "Permission denied",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "change_spend",
+                    "resolve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activation_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"approved\": \"<boolean>\",\n  \"change_request_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"rejection_reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "99a24b57-59a3-41cc-8b6b-cc6e53b44bfd",
+              "name": "Internal server error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "change_spend",
+                    "resolve"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"activation_id\": \"<string>\",\n  \"account_id\": \"<string>\",\n  \"approved\": \"<boolean>\",\n  \"change_request_id\": \"<string>\",\n  \"item_id\": \"<string>\",\n  \"rejection_reason\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developers.vendasta.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5200bb3a-ff8c-4e2d-a7d5-a2da2d23ca8c",
+    "name": "Vendasta Marketplace API V1 Endpoints account change_spend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account APIs allow you to perform actions against a single account that your application has been added to.",
+      "type": "text/plain"
+    }
+  }
+}

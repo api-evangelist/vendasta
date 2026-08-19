@@ -1,0 +1,68 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/vendasta/api-gateway-docs/blob/master/docs/Overview/Intro.md
+docs: https://prod.apigateway.co/docs/errorTypes/
+notes: >-
+  The Vendasta API Gateway does NOT use RFC 9457 problem+json. It uses the JSON:API errors envelope,
+  and it publishes a per-error-type documentation page — every error object carries
+  `links.about` = https://prod.apigateway.co/docs/errorTypes/{code}, which is the closest thing
+  Vendasta has to an error registry. The full set of codes a given operation can return is published
+  in that operation's `x-errors` attribute in the docs. The codes listed below are the ones Vendasta
+  states verbatim in its published documentation; the registry itself is served behind
+  prod.apigateway.co/docs and is not enumerable anonymously (the host 404s unauthenticated), so this
+  catalog is deliberately partial rather than guessed at. Vendasta's own guidance is to read
+  `x-errors` on the operation you are calling. This file complements
+  errors/vendasta-problem-types.yml, which covers the legacy Marketplace API V1.
+format: json-api-errors
+content_type: application/vnd.api+json
+envelope:
+  root: errors
+  entry_fields:
+  - {field: status, detail: HTTP status as a string, e.g. "422"}
+  - {field: code, detail: The specific platform error that occurred — the machine-readable key}
+  - {field: title, detail: Short human-readable summary}
+  - {field: detail, detail: Specific human-readable explanation of this occurrence}
+  - {field: source.parameter, detail: The offending query parameter, when applicable}
+  - {field: meta, detail: Structured context, e.g. resourceType, param, paramValue}
+  - {field: links.about, detail: 'https://prod.apigateway.co/docs/errorTypes/{code}'}
+  - {field: links.docs, detail: 'https://prod.apigateway.co/docs/#operation/{operationId}'}
+discovery:
+  per_operation_extension: x-errors
+  detail: >-
+    "You can find a complete list of possible errors for the operation in the `x-errors` attribute of
+    the documentation."
+  registry_url_template: https://prod.apigateway.co/docs/errorTypes/{code}
+errors:
+- code: MalformedRequestBody
+  status: 422
+  title: Malformed request body
+  detail_example: 'Could not deserialize terms from body: unexpected comma at line 20'
+  about: https://prod.apigateway.co/docs/errorTypes/MalformedRequestBody
+  remediation: Fix the JSON:API request body; meta.paramValue names the parse failure.
+  source: docs/Overview/Intro.md
+- code: QueryParameterBadValue
+  status: 422
+  title: Query parameter value not allowed
+  detail_example: "The query parameter 'page[size]' does not support the value 'lastName' for this request."
+  about: https://prod.apigateway.co/docs/errorTypes/QueryParameterBadValue
+  remediation: Use a value the operation accepts for the parameter named in source.parameter / meta.param.
+  source: docs/Overview/Intro.md
+declared_status_codes:
+  source: openapi/vendasta-platform-openapi.yml
+  note: >-
+    The Platform spec declares very few error responses — 500 on one operation and 404 on one
+    operation across 54 operations. Success codes 200/201/202/204 are declared throughout. This is a
+    real contract gap: the error envelope is well specified in prose but almost never bound to an
+    operation in the machine-readable spec.
+  codes: {'200': 44, '201': 5, '202': 2, '204': 40, '404': 1, '500': 1}
+webhook_rejection_envelope:
+  applies_to: Marketplace purchase webhooks (consumer -> Vendasta direction)
+  source: https://github.com/vendasta/marketplace-documentation/blob/master/docs/Other/marketplace_webhooks.md
+  fields:
+  - {field: error_code, detail: A code meaningful to the vendor, used when Vendasta asks about a rejection}
+  - {field: message, detail: A message for Vendasta developers to help debug what went wrong}
+  - {field: human_readable_message, detail: Displayed directly to the customer beside the reject date}
+  note: >-
+    Returned by the VENDOR on a 3xx/4xx response to a purchase webhook. A 3xx/4xx is not retried and
+    resolves the activation as `rejected`; a 5xx leaves the activation pending and is retried.
+checked: '2026-08-13'

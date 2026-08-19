@@ -1,24 +1,82 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
-source: https://developers.vendasta.com/
+source: https://github.com/vendasta/api-gateway-docs/blob/master/docs/Overview/Versioning.md
+docs: https://developers.vendasta.com/platform
 notes: >-
-  Vendasta operates a public status page and versions its Marketplace API in the URI path (v1),
-  with a separate Early Access set of platform APIs surfaced in the Developer Center. No formal
-  RFC 8594 Sunset/Deprecation header policy page was found (searched 2026-07-21); no operations
-  in the current spec are marked deprecated.
+  Vendasta publishes a genuine, written deprecation policy — one of the more explicit in the catalog.
+  It refuses API versioning outright ("Evergreen") and instead assigns a maturity status to EVERY
+  operation, parameter and attribute via an `x-lifecycle` OpenAPI extension, with dated `deprecated`
+  and `proposedRemoval` fields on anything being retired. The commitment is 2 years of notice between
+  announcing a deprecation and removing a GA item, and 30 days for an Early Access item. There is a
+  public status page and a dated change log. The gap: no RFC 8594 Sunset/Deprecation HTTP headers are
+  emitted, and no SLA/uptime target is published — deprecation is discoverable only by reading the
+  spec or by sending the `fields` query parameter, which triggers Vendasta's warning system.
+  Note also the strategic state of the surface: the Guides overview states the Platform APIs "are now
+  in maintenance mode. Beyond the CRM API there will be little further development on these APIs",
+  and a gRPC reverse-proxy gateway is announced as "Coming Soon".
 versioning:
-  scheme: uri-path
-  current: v1
-  docs: https://developers.vendasta.com/api/v1
+  scheme: evergreen
+  current: Evergreen
+  docs: https://github.com/vendasta/api-gateway-docs/blob/master/docs/Overview/Versioning.md
+  detail: >-
+    "No one likes having to update their entire system from one version to the next. That is why we
+    designed our API to continuously evolve. Each operation, parameter and attribute has its own
+    lifecycle defined in the documentation as an `x-lifecycle` property."
   channels:
-  - name: Legacy Marketplace API
-    docs: https://developers.vendasta.com/api
-  - name: Platform / Early Access APIs
-    docs: https://developers.vendasta.com/platform
-status_page: https://status.vendasta.com/
+  - {name: Platform / gateway REST APIs, docs: https://developers.vendasta.com/platform, status: maintenance-mode}
+  - {name: Marketplace API V1 (vendor), docs: https://developers.vendasta.com/vendor, scheme: uri-path, current: v1}
+  - {name: Legacy APIs, docs: https://developers.vendasta.com/api/legacy, status: not-recommended-for-new-integrations}
+  - {name: gRPC reverse-proxy gateway, status: announced-coming-soon}
+maturity_ladder:
+  extension: x-lifecycle
+  statuses:
+  - {status: proposed, detail: Under consideration; usable only against the mock server.}
+  - {status: trustedTester, detail: Newly built, rapid iteration with selected partners; breaking changes possible and communicated directly.}
+  - {status: earlyAccess, detail: Complete and stabilizing — the public beta. 30 days notice aimed for on breaking changes; promotes to GA after 90 days of stability.}
+  - {status: generalAvailability, detail: Proven under load. Backward-compatible additions only.}
+  - {status: deprecated, detail: Still usable; 2 years of support between announcement and removal for items that reached GA.}
+  - {status: removed, detail: Sunset; no longer callable.}
 deprecation:
-  policy_url: null
+  policy_url: https://github.com/vendasta/api-gateway-docs/blob/master/docs/Overview/Versioning.md
+  published: true
+  notice_period_ga: 2 years
+  notice_period_early_access: 30 days
   sunset_header: false
+  deprecation_header: false
+  dated_fields: [deprecated, proposedRemoval, description]
+  warning_system:
+    param: fields
+    detail: >-
+      Sending the `fields` query parameter on every read lets Vendasta warn you when you are using a
+      field that has been deprecated on that resource.
 sla:
   url: null
+  uptime_target: null
+status_page: https://status.vendasta.com/
+change_log: changelog/vendasta-changelog.yml
+support_contact: support@vendasta.com
+operation_maturity:
+  source: openapi/vendasta-platform-openapi.yml
+  counts: {trustedTester: 49, proposed: 5, earlyAccess: 0, generalAvailability: 0}
+  note: >-
+    Not one Platform REST operation has reached General Availability. 49 of 54 are still
+    `trustedTester` — the status Vendasta itself defines as subject to breaking change — and 5 are
+    `proposed` (mock server only). Consumers should read that as a beta surface, not a stable one.
+  proposed_operations:
+  - patch-users-id
+  - list-automations
+  - get-subscriptionAssignments-by-id
+  - cancel-subscriptionAssignments-by-id
+  - restore-subscriptionAssignments-by-id
 deprecated_operations: []
+deprecated_fields:
+- {item: businessLocations.attributes.address.stateCode, deprecated: '2021-10-04', proposed_removal: '2021-11-04', replacement: regionCode}
+- {item: businessLocations.attributes.address.zip, deprecated: '2021-10-04', proposed_removal: '2021-11-04', replacement: postalCode}
+- {item: users.attributes.address.streetAddress, deprecated: '2021-10-04', proposed_removal: '2021-11-04', replacement: line1}
+- {item: users.attributes.address.additionalAddress, deprecated: '2021-10-04', proposed_removal: '2021-11-04', replacement: line2}
+- {item: salesAccounts.attributes.seoKeywords, deprecated: '2024-02-26', proposed_removal: '2024-03-11', replacement: Local SEO product keywords}
+removed_surfaces:
+- {date: '2025-11-18', item: /platform/salesContacts get + create, replacement: CRM contacts}
+- {date: '2025-11-18', item: Proposal builder APIs, replacement: none — product no longer supported}
+- {date: '2024-10-03', item: Customer List API, status: deprecated, replacement: Platform CRM API}
+checked: '2026-08-13'

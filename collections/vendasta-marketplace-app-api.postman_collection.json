@@ -1,0 +1,233 @@
+{
+  "item": [
+    {
+      "id": "510f6db9-cc97-4c6a-94d3-efc00478cae7",
+      "name": "marketplace_app",
+      "description": {
+        "content": "The Marketplace App APIs allow you to perform actions against your applications, as well as certain operations against all marketplace apps.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "69836138-71d2-4557-9a56-7b1abed783d3",
+          "name": "Get Marketplace Application",
+          "request": {
+            "name": "Get Marketplace Application",
+            "description": {
+              "content": "",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "marketplace_app",
+                ":marketplace_app_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "marketplace_app_id",
+                  "description": "(Required) A unique identifier for each Marketplace Application. This is automatically generated upon application creation."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "610cbda4-34b8-4380-a776-db385119e506",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "marketplace_app",
+                    ":marketplace_app_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "marketplace_app_id",
+                      "description": "(Required) A unique identifier for each Marketplace Application. This is automatically generated upon application creation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 4620,\n  \"data\": {\n    \"entry_url\": \"string\",\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"vendor\": \"string\",\n    \"description\": \"string\",\n    \"icon\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8199d2eb-e518-43ba-8ae3-826e9a211859",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "marketplace_app",
+                    ":marketplace_app_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "marketplace_app_id",
+                      "description": "(Required) A unique identifier for each Marketplace Application. This is automatically generated upon application creation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "15055c0d-4e19-461a-b3d7-bd250f1fb6fc",
+              "name": "Marketplace App not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "marketplace_app",
+                    ":marketplace_app_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "marketplace_app_id",
+                      "description": "(Required) A unique identifier for each Marketplace Application. This is automatically generated upon application creation."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developers.vendasta.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1b1c44f6-80cd-41f4-ac7f-a3d95dc88367",
+    "name": "Vendasta Marketplace API V1 Endpoints account marketplace_app API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account APIs allow you to perform actions against a single account that your application has been added to.",
+      "type": "text/plain"
+    }
+  }
+}

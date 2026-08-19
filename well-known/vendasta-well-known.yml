@@ -1,0 +1,63 @@
+generated: '2026-08-13'
+method: probed
+source: live probe of every Vendasta host in apis.yml + OpenAPI servers[]
+notes: >-
+  No /.well-known/ document is served by Vendasta on any host. developers.vendasta.com and
+  developers-demo.vendasta.com are Angular single-page applications whose catch-all route answers
+  HTTP 200 with the Developer Center HTML shell for EVERY /.well-known/* path — that is a soft 200,
+  not a document, and is recorded as a miss. www.vendasta.com returns a real 404 for every path, and
+  api.vendasta.com returns a real 404 (App Engine HTTPNotFound). No WellKnown or SecurityTxt pointer
+  is emitted from this probe because Vendasta serves no such document. Note that Vendasta's OAuth2
+  authorization server lives at sso-api-prod.apigateway.co but publishes no RFC 8414 / OIDC discovery
+  document at the well-known path either.
+hosts:
+- host: https://developers.vendasta.com
+  soft_200: true
+  detail: SPA catch-all returns the Developer Center HTML shell (65,385 bytes) for every path.
+  documents:
+  - {path: /.well-known/security.txt, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/openid-configuration, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/oauth-authorization-server, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/oauth-protected-resource, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/api-catalog, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/ai-plugin.json, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/agent-card.json, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/agent.json, status: 200, content: text/html, result: miss-html-shell}
+- host: https://developers-demo.vendasta.com
+  soft_200: true
+  detail: Same SPA catch-all as production.
+  documents:
+  - {path: /.well-known/security.txt, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/openid-configuration, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/oauth-authorization-server, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/api-catalog, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/ai-plugin.json, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/agent-card.json, status: 200, content: text/html, result: miss-html-shell}
+  - {path: /.well-known/agent.json, status: 200, content: text/html, result: miss-html-shell}
+- host: https://www.vendasta.com
+  soft_200: false
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/oauth-protected-resource, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://api.vendasta.com
+  soft_200: false
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/oauth-authorization-server, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+summary:
+  documents_found: 0
+  security_txt: false
+  agent_card: false
+  well_known_pointer_emitted: false
+checked: '2026-08-13'

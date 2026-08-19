@@ -1,0 +1,499 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/vendasta/api-gateway-docs
+docs: https://developers.vendasta.com/platform/f6cb51f2ee2f1-authorization
+notes: OAuth2 scopes for the Vendasta API Gateway, read from the securitySchemes and per-operation security[] requirements
+  of the 30 first-party OpenAPI documents Vendasta publishes in its own GitHub org (github.com/vendasta/api-gateway-docs)
+  and renders at developers.vendasta.com/platform. Vendasta declares two parallel oauth2 schemes per spec — OAuth2Demo
+  against sso-api-demo.apigateway.co and OAuth2Prod against sso-api-prod.apigateway.co — carrying the SAME scope
+  vocabulary, so the demo/prod split is an environment split, not a permission split. Both use the authorizationCode
+  flow (3-legged "Service Providers"); the 2-legged "Service Account" flow issues a token over the same scope set.
+  The legacy Marketplace API V1 (developers.vendasta.com/api/v1) has no scope surface — it uses an unscoped bearer
+  token.
+flows:
+- name: OAuth
+  flow: authorizationCode
+  authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+  tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+  specs: 1
+- name: OAuth2
+  flow: authorizationCode
+  authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+  tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+  specs: 20
+- name: OAuth2Demo
+  flow: authorizationCode
+  authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+  tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+  specs: 9
+- name: OAuth2Prod
+  flow: authorizationCode
+  authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+  tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+  specs: 9
+scope_count: 73
+scopes:
+- scope: address
+  description: Allows readonly access to the address of the current user.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: adintel
+  description: null
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-advertising-openapi.yml
+- scope: admin
+  description: Allows the application to perform administrative tasks that you have access to across the platform
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-listing-products-openapi.json
+  - openapi/vendasta-wsp-admin-center-openapi.json
+  - openapi/vendasta-wsp-support-tools-openapi.json
+- scope: advertising
+  description: Access to the Advertising Intelligence REST API
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-advertising-openapi.yml
+- scope: ai-assistant
+  description: Allows the application to manage your AI assistants
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-ai-employees-openapi.json
+- scope: ai-assistant:read
+  description: Allows the application view-only access to your AI Assistants
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-ai-employees-openapi.json
+- scope: automation:read
+  description: Read only access to automations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: business
+  description: Allows the application to manage your business profiles
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+  - openapi/vendasta-reputation-openapi.yml
+  - openapi/vendasta-social-openapi.yml
+  - openapi/vendasta-vanalytics-openapi.json
+- scope: business-app
+  description: Allows the application to manage all features of Business App
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-conversation-openapi.json
+  - openapi/vendasta-forms-openapi.json
+  - openapi/vendasta-listing-products-openapi.json
+  - openapi/vendasta-meetings-openapi.json
+  - openapi/vendasta-multi-location-analytics-openapi.json
+  - openapi/vendasta-reputation-grpc-openapi.json
+  - openapi/vendasta-social-drafts-openapi.json
+  - openapi/vendasta-social-posts-openapi.json
+  - openapi/vendasta-wordpress-hosting-openapi.json
+  - openapi/vendasta-wsp-monitor-openapi.json
+- scope: business.metrics
+  description: Allows the application to manage business metrics
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-vanalytics-openapi.json
+- scope: business:read
+  description: Allows the application view-only access to your business profiles
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+  - openapi/vendasta-vanalytics-openapi.json
+- scope: conversation
+  description: Allows the application to manage conversations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-conversation-openapi.json
+- scope: conversation.widget
+  description: Allows the application to manage conversation widgets
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-conversation-openapi.json
+- scope: conversation:read
+  description: Allows the application view-only access to conversations
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-conversation-openapi.json
+- scope: crm
+  description: Allows the application to manage all data in your CRM
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.association
+  description: Allows the application to manage associations in your CRM
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.association:read
+  description: Allows the application view-only access to associations in your CRM
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.company
+  description: Allows the application to manage your CRM companies
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.company:read
+  description: Allows the application view-only access to CRM companies
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.contact
+  description: Allows the application to manage your CRM contacts
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.contact:read
+  description: Allows the application view-only access to CRM contacts
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.contacts.read
+  description: read contacts
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: crm.contacts.write
+  description: write contacts
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: crm.custom-object
+  description: Allows the application to manage your CRM custom objects
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.custom-object:read
+  description: Allows the application view-only access to CRM custom objects
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.customers.read
+  description: read customers
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: crm.customers.write
+  description: write customers
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: crm.opportunity
+  description: Allows the application to manage your CRM opportunities
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.opportunity:read
+  description: Allows the application view-only access to CRM opportunities
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.schema
+  description: Allows the application to manage your CRM object schemas
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: crm.schema:read
+  description: Allows the application view-only access to CRM object schemas
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-crm-grpc-openapi.json
+- scope: customers
+  description: Allows the application to manage the customers for the business location(s) that you manage
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-business-openapi.yml
+  - openapi/vendasta-crm-rest-openapi.json
+- scope: email
+  description: Allows readonly access to the email of the current user.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: finance.partners.read
+  description: read partners
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: financial
+  description: Read-write access to financial details
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: hr.employees.read
+  description: read employees
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: hr.roles.read
+  description: read roles
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: hr.roles.write
+  description: write roles
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: hr.teams.read
+  description: read teams
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: knowledge
+  description: Allows the application to manage the knowledge available to AI Employees on your accounts
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-ai-knowledge-openapi.json
+- scope: knowledge:read
+  description: Allows the application view-only access to the knowledge available to AI Employees on your accounts
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-ai-knowledge-openapi.json
+- scope: listing
+  description: Access to the Local SEO REST API
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-local-seo-openapi.yml
+- scope: meeting
+  description: Allows the application to book and manage meetings for your business(es)
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-meetings-openapi.json
+- scope: openid
+  description: Allows getting the user id of the current user
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: order
+  description: Allows the application to manage orders
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+  - openapi/vendasta-sales-orders-openapi.json
+- scope: order:read
+  description: Allows the application view-only access to orders
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+  - openapi/vendasta-sales-orders-openapi.json
+- scope: partner:read
+  description: Allows the application view-only access to your platform setup information
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+  - openapi/vendasta-wordpress-hosting-openapi.json
+- scope: phone
+  description: Allows readonly access to the phone numbers of the current user.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: product
+  description: Read access to the product details
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: product.packages.read
+  description: read packages
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: product.products.read
+  description: read products
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: profile
+  description: Readonly access to the user profile, including name, locale, and language preferences.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: reputation
+  description: Allows the application to manage reputation reports for your clients' businesses
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-reputation-grpc-openapi.json
+  - openapi/vendasta-reputation-openapi.yml
+- scope: reputation.nps:read
+  description: Allows the application view-only access to NPS data for the business locations you have access to
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-reputation-grpc-openapi.json
+- scope: reputation.review:read
+  description: Allows the application view-only access to retrieve reviews for the business locations you have access
+    to
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-reputation-grpc-openapi.json
+- scope: reviews
+  description: Read-write access to review request APIs
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-customer-voice-openapi.yml
+- scope: sales.account
+  description: Allows read-write access to account records
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: sales.contact
+  description: Read-write access to sales contact details
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: sales.leads.read
+  description: read leads
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: sales.opportunities.read
+  description: read opportunities
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: sales.orders.read
+  description: read orders
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: sales.proposals
+  description: Allows read-write access to proposals
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: self.user.admin
+  description: Allows editing the profile, contact info and profile image for the current user.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: self.user.contact:read
+  description: Read access to the contact info (email, phone, address) of the current user.
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: social
+  description: Read-write access to Social AI APIs
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-social-openapi.yml
+- scope: terms.write
+  description: write terms
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-glossary-openapi.yml
+- scope: user.admin
+  description: Read-write access to manage all users
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+  - openapi/vendasta-scim-openapi.yml
+- scope: user.contact:read
+  description: Read access to the contact info (email, phone, address) of all categories of users
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: user.list
+  description: 'Allows searching for users based on a set of filters. (ex: email, name, category, organization).
+    Without this scope an exact user id is required.'
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: user.permission
+  description: Read-write access to the permission info (accessible locations, features and roles) of all categories
+    of users
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: user.permission:read
+  description: Read access to the permission info (accessible locations, features and roles) of all categories of
+    users
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+- scope: user.profile:read
+  description: Read access to the profile fields of all categories of users
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-platform-openapi.yml
+  - openapi/vendasta-scim-openapi.yml
+- scope: user:read
+  description: Allows the application view-only access to all of your users in the platform
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/vendasta-wsp-support-tools-openapi.json

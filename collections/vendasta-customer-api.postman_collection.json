@@ -1,0 +1,1554 @@
+{
+  "item": [
+    {
+      "id": "ec890a72-0ebb-4dfb-bd7e-9fdfc7729b52",
+      "name": "customer",
+      "description": {
+        "content": "The Customer APIs allow you to perform actions against customers of the account that your application has been added to.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ca731a79-d54b-4365-a894-9c4ad2ca5f36",
+          "name": "Create Customer",
+          "request": {
+            "name": "Create Customer",
+            "description": {
+              "content": "Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_id\": \"<string>\",\n  \"id\": \"<string>\",\n  \"email\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"permission_to_contact\": \"<boolean>\",\n  \"assigned_rep_first_name\": \"<string>\",\n  \"assigned_rep_last_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ce04a447-2f2d-4079-be95-205905466fb5",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"id\": \"<string>\",\n  \"email\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"permission_to_contact\": \"<boolean>\",\n  \"assigned_rep_first_name\": \"<string>\",\n  \"assigned_rep_last_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 6667,\n  \"data\": {\n    \"customer\": {\n      \"city\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"account_id\": \"string\",\n      \"country\": \"string\",\n      \"customer_id\": \"string\",\n      \"phone\": [\n        \"string\",\n        \"string\"\n      ],\n      \"state\": \"string\",\n      \"address\": \"string\",\n      \"email\": [\n        \"string\",\n        \"string\"\n      ],\n      \"origins\": [\n        \"string\",\n        \"string\"\n      ],\n      \"assigned_rep_first_name\": \"string\",\n      \"assigned_rep_last_name\": \"string\",\n      \"permission_to_contact\": \"1957-10-11T20:34:07.458Z\",\n      \"vendor_customer_id\": \"string\",\n      \"created\": \"2001-10-11T00:25:25.088Z\",\n      \"updated\": \"1973-12-21T07:42:03.232Z\",\n      \"deleted\": \"1948-07-30T16:10:45.316Z\"\n    },\n    \"conflicting_customer_id\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b13f9c34-3bb6-4062-aeff-1d4b5dd91328",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"id\": \"<string>\",\n  \"email\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"permission_to_contact\": \"<boolean>\",\n  \"assigned_rep_first_name\": \"<string>\",\n  \"assigned_rep_last_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b52917d5-dff2-4cbe-a9b7-e177dddcd72d",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"id\": \"<string>\",\n  \"email\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"permission_to_contact\": \"<boolean>\",\n  \"assigned_rep_first_name\": \"<string>\",\n  \"assigned_rep_last_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0e41689c-c708-47f1-801c-6b236454801a",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"id\": \"<string>\",\n  \"email\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"permission_to_contact\": \"<boolean>\",\n  \"assigned_rep_first_name\": \"<string>\",\n  \"assigned_rep_last_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ddf32d7b-8bce-4cbb-b19b-9d7d7916b108",
+          "name": "List Customers",
+          "request": {
+            "name": "List Customers",
+            "description": {
+              "content": "Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer",
+                "list-customers"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_id\": \"<string>\",\n  \"page_size\": \"<integer>\",\n  \"cursor\": \"<string>\",\n  \"sort_options\": {\n    \"field\": \"<string>\",\n    \"direction\": \"<string>\"\n  },\n  \"search_term\": \"<string>\",\n  \"filters\": {\n    \"source\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"created\": {\n      \"begin_range\": \"<dateTime>\",\n      \"end_range\": \"<dateTime>\"\n    },\n    \"tag\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"negate_tags\": false\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "17d2dea6-d446-494b-9351-589e723ed6a4",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "list-customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"page_size\": \"<integer>\",\n  \"cursor\": \"<string>\",\n  \"sort_options\": {\n    \"field\": \"<string>\",\n    \"direction\": \"<string>\"\n  },\n  \"search_term\": \"<string>\",\n  \"filters\": {\n    \"source\": [\n      \"MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV\",\n      \"MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV\"\n    ],\n    \"created\": {\n      \"begin_range\": \"<dateTime>\",\n      \"end_range\": \"<dateTime>\"\n    },\n    \"tag\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"negate_tags\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 2270,\n  \"data\": {\n    \"next_cursor\": \"string\",\n    \"has_more\": true,\n    \"total_results\": 8492,\n    \"customers\": [\n      {\n        \"city\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"account_id\": \"string\",\n        \"country\": \"string\",\n        \"customer_id\": \"string\",\n        \"phone\": [\n          \"string\",\n          \"string\"\n        ],\n        \"state\": \"string\",\n        \"address\": \"string\",\n        \"email\": [\n          \"string\",\n          \"string\"\n        ],\n        \"origins\": [\n          \"string\",\n          \"string\"\n        ],\n        \"assigned_rep_first_name\": \"string\",\n        \"assigned_rep_last_name\": \"string\",\n        \"permission_to_contact\": \"1964-01-19T07:02:46.640Z\",\n        \"vendor_customer_id\": \"string\",\n        \"created\": \"2008-07-19T07:11:24.765Z\",\n        \"updated\": \"1958-02-15T16:21:19.997Z\",\n        \"deleted\": \"2001-01-19T05:31:31.312Z\"\n      },\n      {\n        \"city\": \"string\",\n        \"first_name\": \"string\",\n        \"last_name\": \"string\",\n        \"account_id\": \"string\",\n        \"country\": \"string\",\n        \"customer_id\": \"string\",\n        \"phone\": [\n          \"string\",\n          \"string\"\n        ],\n        \"state\": \"string\",\n        \"address\": \"string\",\n        \"email\": [\n          \"string\",\n          \"string\"\n        ],\n        \"origins\": [\n          \"string\",\n          \"string\"\n        ],\n        \"assigned_rep_first_name\": \"string\",\n        \"assigned_rep_last_name\": \"string\",\n        \"permission_to_contact\": \"1955-03-11T23:53:53.354Z\",\n        \"vendor_customer_id\": \"string\",\n        \"created\": \"1966-01-06T06:14:47.734Z\",\n        \"updated\": \"1990-02-19T15:11:30.701Z\",\n        \"deleted\": \"1957-07-28T04:02:17.304Z\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b7e08fa4-e749-42f9-a0c0-4e14e79a21a6",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "list-customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"page_size\": \"<integer>\",\n  \"cursor\": \"<string>\",\n  \"sort_options\": {\n    \"field\": \"<string>\",\n    \"direction\": \"<string>\"\n  },\n  \"search_term\": \"<string>\",\n  \"filters\": {\n    \"source\": [\n      \"MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV\",\n      \"MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV\"\n    ],\n    \"created\": {\n      \"begin_range\": \"<dateTime>\",\n      \"end_range\": \"<dateTime>\"\n    },\n    \"tag\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"negate_tags\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d41345df-64c4-4fbf-85d0-79afda896d78",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "list-customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"page_size\": \"<integer>\",\n  \"cursor\": \"<string>\",\n  \"sort_options\": {\n    \"field\": \"<string>\",\n    \"direction\": \"<string>\"\n  },\n  \"search_term\": \"<string>\",\n  \"filters\": {\n    \"source\": [\n      \"MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV\",\n      \"MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV\"\n    ],\n    \"created\": {\n      \"begin_range\": \"<dateTime>\",\n      \"end_range\": \"<dateTime>\"\n    },\n    \"tag\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"negate_tags\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "193e35ef-ea9c-4cad-af59-940b1298d56b",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "list-customers"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"page_size\": \"<integer>\",\n  \"cursor\": \"<string>\",\n  \"sort_options\": {\n    \"field\": \"<string>\",\n    \"direction\": \"<string>\"\n  },\n  \"search_term\": \"<string>\",\n  \"filters\": {\n    \"source\": [\n      \"MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV\",\n      \"MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV\"\n    ],\n    \"created\": {\n      \"begin_range\": \"<dateTime>\",\n      \"end_range\": \"<dateTime>\"\n    },\n    \"tag\": [\n      \"<string>\",\n      \"<string>\"\n    ],\n    \"negate_tags\": false\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da9eae31-77c7-47a2-b5cc-512752378636",
+          "name": "Get Customer",
+          "request": {
+            "name": "Get Customer",
+            "description": {
+              "content": "Returns a single customer record based on a `vendor_customer_id`. If the id is not unique, the newest record with that id will be returned.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer",
+                "get-customer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8fd5437f-b7eb-4361-9c6b-7fea907f7163",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "get-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 6015,\n  \"data\": {\n    \"customer\": {\n      \"city\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"account_id\": \"string\",\n      \"country\": \"string\",\n      \"customer_id\": \"string\",\n      \"phone\": [\n        \"string\",\n        \"string\"\n      ],\n      \"state\": \"string\",\n      \"address\": \"string\",\n      \"email\": [\n        \"string\",\n        \"string\"\n      ],\n      \"origins\": [\n        \"string\",\n        \"string\"\n      ],\n      \"assigned_rep_first_name\": \"string\",\n      \"assigned_rep_last_name\": \"string\",\n      \"permission_to_contact\": \"1986-09-23T21:28:55.724Z\",\n      \"vendor_customer_id\": \"string\",\n      \"created\": \"2010-03-25T02:44:09.467Z\",\n      \"updated\": \"1980-10-19T13:09:27.503Z\",\n      \"deleted\": \"1978-11-19T15:09:07.345Z\"\n    },\n    \"conflicting_customer_id\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7475d095-311f-44da-96d7-877c4b6b4c31",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "get-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ca6b24d2-120e-444d-9405-0ee45602aaa1",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "get-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e401346b-8340-408d-a824-118640e33499",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "get-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d0749cdd-adc5-4862-a743-e54e3962a56a",
+          "name": "Associate Customer IDs",
+          "request": {
+            "name": "Associate Customer IDs",
+            "description": {
+              "content": "Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer",
+                "associate-id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": \"<string>\",\n  \"vendor_customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "94dfdf52-9e05-498e-bd3e-6827016b9d35",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "associate-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"vendor_customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 8338\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "544c8147-f9c2-41a0-8372-cc9a31c3ff47",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "associate-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"vendor_customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2510470d-0e55-4a04-84ad-256921e571ed",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "associate-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"vendor_customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9c07dc23-8da4-469c-a0e6-c48a062442c1",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "associate-id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"vendor_customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af6bff67-1fb0-4818-ace4-22796bd45c5d",
+          "name": "Update Customer",
+          "request": {
+            "name": "Update Customer",
+            "description": {
+              "content": "Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer",
+                "update-customer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_id\": \"<string>\",\n  \"id\": \"<string>\",\n  \"email\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"permission_to_contact\": \"<boolean>\",\n  \"assigned_rep_first_name\": \"<string>\",\n  \"assigned_rep_last_name\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "76e0f972-0709-4e66-9eb7-8396be3fe04d",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "update-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"id\": \"<string>\",\n  \"email\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"permission_to_contact\": \"<boolean>\",\n  \"assigned_rep_first_name\": \"<string>\",\n  \"assigned_rep_last_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 8151,\n  \"data\": {\n    \"customer\": {\n      \"account_id\": \"string\",\n      \"customer_id\": \"string\",\n      \"city\": \"string\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"country\": \"string\",\n      \"phone\": [\n        \"string\",\n        \"string\"\n      ],\n      \"state\": \"string\",\n      \"address\": \"string\",\n      \"email\": [\n        \"string\",\n        \"string\"\n      ]\n    },\n    \"conflicting_customer_id\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5c383e4a-6e9a-40c2-9a38-f5cd9a434018",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "update-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"id\": \"<string>\",\n  \"email\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"permission_to_contact\": \"<boolean>\",\n  \"assigned_rep_first_name\": \"<string>\",\n  \"assigned_rep_last_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e3467e19-f658-4a6f-a31a-d4d4381b0923",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "update-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"id\": \"<string>\",\n  \"email\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"permission_to_contact\": \"<boolean>\",\n  \"assigned_rep_first_name\": \"<string>\",\n  \"assigned_rep_last_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d47b1018-2856-422b-91b5-1463453c566d",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "update-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"id\": \"<string>\",\n  \"email\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"permission_to_contact\": \"<boolean>\",\n  \"assigned_rep_first_name\": \"<string>\",\n  \"assigned_rep_last_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9c998855-9271-4373-a6f8-a7fcb885595a",
+              "name": "ContactID not found for customer you are attempting to update",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "update-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"id\": \"<string>\",\n  \"email\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"address\": \"<string>\",\n  \"city\": \"<string>\",\n  \"country\": \"<string>\",\n  \"state\": \"<string>\",\n  \"first_name\": \"<string>\",\n  \"last_name\": \"<string>\",\n  \"permission_to_contact\": \"<boolean>\",\n  \"assigned_rep_first_name\": \"<string>\",\n  \"assigned_rep_last_name\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4ee6b011-dd3f-4cfd-90cd-7a4351d94919",
+          "name": "Delete Customer",
+          "request": {
+            "name": "Delete Customer",
+            "description": {
+              "content": "Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "customer",
+                "delete-customer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "288b962b-f232-4566-8b94-2f7bb768f539",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "delete-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 8338\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cf91d5c-6ac5-499f-81f6-4ae4798fc4e1",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "delete-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "53e39433-54ed-4106-bec2-7a52a129ba8b",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "delete-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b5998156-697f-4048-9c00-5a94ca98176d",
+              "name": "Not authorized to access account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "customer",
+                    "delete-customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"<string>\",\n  \"account_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developers.vendasta.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "51d91d9f-fd16-4716-ae64-d2cf88971d44",
+    "name": "Vendasta Marketplace API V1 Endpoints account customer API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account APIs allow you to perform actions against a single account that your application has been added to.",
+      "type": "text/plain"
+    }
+  }
+}

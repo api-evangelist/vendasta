@@ -1,0 +1,168 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/vendasta/marketplace-documentation/blob/master/docs/Other/marketplace_webhooks.md
+docs: https://developers.vendasta.com/vendor
+notes: >-
+  Vendasta publishes NO AsyncAPI document — searched the developer center, both documentation GitHub
+  repos (vendasta/marketplace-documentation, vendasta/api-gateway-docs) and /asyncapi.yaml on every
+  host, 2026-08-13. It does publish a real, well-specified webhook surface in two distinct shapes,
+  captured here as the event catalog: (1) MARKETPLACE webhooks — 8 provider-defined event types
+  pushed to a URL a vendor registers in Vendor Center, delivered as an RS256-signed JWT sent as
+  text/plain in the POST body, with the platform's RSA public key published for verification; and
+  (2) the AUTOMATION "Send a webhook" action — a partner-configured outbound HTTP call whose query
+  params, headers, cookies and JSON body the partner defines, with response data passed to the next
+  automation step. Registration is UI-only for both: "Webhooks are registered by placing a url in the
+  Integration page of an App in Vendor Center. API registration is not available." That is the single
+  biggest agent-readiness gap on this surface — an agent cannot subscribe programmatically.
+spec_type: none
+asyncapi_published: false
+webhooks_published: true
+transport:
+  protocol: https
+  method: POST
+  content_type: text/plain
+  body: JWT signed base64 string sent as plaintext raw in the POST body
+  signature:
+    format: JWT
+    algorithm: RS256
+    key_type: RSA public key
+    issuer_claim: Vendasta Marketplace
+    test_issuer_claim: Vendasta Marketplace Test
+    public_key_published: true
+    public_key_location: https://github.com/vendasta/marketplace-documentation/blob/master/docs/Other/marketplace_webhooks.md
+    verification_note: >-
+      Always verify the `iss` claim is 'Vendasta Marketplace' (or 'Vendasta Marketplace Test' for
+      payloads sent from the Vendor Center testing tool). The payload sits under the namespaced claim
+      "vendasta.com/marketplace/webhook".
+  payload_claim: vendasta.com/marketplace/webhook
+registration:
+  method: ui-only
+  location: https://vendors.vendasta.com
+  api_registration: false
+  quote: >-
+    Webhooks are registered by placing a url in the Integration page of an App in Vendor Center. API
+    registration is not available.
+delivery:
+  timeouts:
+  - {webhook: Purchase webhooks, timeout: 30s, retry: backoff doubles from 30s to a maximum spacing of approximately one hour}
+  - {webhook: All other Marketplace webhooks, timeout: 10s, retry: backoff doubles from 60s to a maximum spacing of approximately one hour}
+  response_contract:
+  - {status: 2xx, result: Success — do not retry}
+  - {status: 3xx-4xx, result: 'Permanent error — no retry. For purchase webhooks the activation resolves as `rejected`.'}
+  - {status: 5xx, result: Transient error — retried. For purchase webhooks the activation stays pending.}
+  rejection_body_fields: [error_code, message, human_readable_message]
+events:
+- name: Product Purchase Hook
+  webhook_id: purchase
+  actions: [provisioned, change-edition, de-provisioned]
+  description: >-
+    Fired every time billing information about an account changes with respect to your product.
+  payload_fields:
+  - webhook_id
+  - action
+  - account
+  - order_form
+  - partner_id
+  - market_id
+  - activation_id
+  - order_form_submission_id
+  - vendor_order_id
+  - edition_id
+  - app_id
+  - variable_price
+  variable_price_fields:
+    received_from_reseller: [value, currency, frequency]
+    sent_to_vendor: [converted_value, conversion_currency, conversion_rate]
+- name: Add-Ons Purchase Hook
+  actions: [provisioned, de-provisioned]
+  description: Fired when billing information changes with respect to an Add-on for your product.
+  payload_fields:
+  - webhook_id
+  - action
+  - account
+  - order_form
+  - market_id
+  - addon_id
+  - activation_id
+  - order_form_submission_id
+  - variable_price
+  - activation_time
+  - deactivation_time
+  - partner_id
+  - app_id
+- name: Cancelation Webhook
+  webhook_id: Cancel-Product
+  actions: [cancel, undo-cancel]
+  description: Fired when a product is canceled or a cancellation is undone.
+  payload_fields:
+  - account_group_id
+  - activation_id
+  - activation_time
+  - cancellation_time
+  - deactivation_time
+  - cancellation_choices
+  - cancellation_comment
+  - webhook_id
+  - action
+- name: Logout Webhook
+  webhook_id: logout
+  description: >-
+    Fired when a user session is invalidated by timeout or an explicit logout; instructs the app to
+    remove that session from its session store. session_id is a one-way hash of the Vendasta session id.
+  payload_fields: [webhook_id, session_id, user_id, partner_id, market_id]
+- name: Account Update Webhook
+  webhook_id: account
+  actions: [update]
+  description: >-
+    Fired every time account information changes (address, phone, etc.). Intended for keeping a local
+    account cache. Only CORE account data is in the payload; extended data (images, description,
+    toll-free number, services offered, hours of operation, landmark) must be pulled from Get Account
+    Rich Data.
+  payload_fields: [webhook_id, action, account, partner_id, market_id]
+- name: User Permission Webhook
+  actions: [permission-granted, permission-revoked]
+  description: >-
+    Fired when permission is granted or revoked for an account that uses any of your products.
+    Intended for keeping a local cache of users and the accounts they can access. Note the user_id
+    here is the `legacy_user_id` from the OIDC user-info endpoint.
+- name: Customer Webhook
+  status: deprecated
+  actions: [create, update, delete]
+  description: >-
+    Fired when a customer is created, updated or deleted in an account's Customer List. Superseded by
+    the Vendasta CRM — no new integrations should be built against it.
+  payload_fields: [action, origin, first_name, last_name, email, phone, address, city, state, country, contact_id, account_group_id, created]
+- name: Spend Change Request Webhook
+  description: >-
+    Fired when a spend change is requested for one of the vendor's products. Applies only to apps on
+    the Variable Spend billing model. Resolve it with the Marketplace change_spend API.
+  payload_fields: [requested_value, currency, converted_value, conversion_currency, conversion_rate]
+  related_api: openapi/vendasta-change-spend-api-openapi.yml
+automation_webhook_action:
+  name: Send a webhook
+  source: https://github.com/vendasta/api-gateway-docs/blob/master/docs/Guides/Automate/WebhookAction.md
+  description: >-
+    Any Partner Center automation can include a `Send a webhook` step. The partner defines the query
+    parameters, headers, cookies and JSON body; the response body can be shaped and passed to later
+    automation steps. Body is a single flat JSON object — nested JSON is not supported unless
+    manually constructed.
+  supersedes: Trigger a webhook step
+  timeout: 60s
+  retry_conditions:
+  - Response took more than 60 seconds
+  - HTTP response code >= 500
+  - Connection broken before the response was processed
+  example_body_fields: [accountId, entityId, marketId, orderId, partnerId]
+  guidance: >-
+    "Be careful when including sensitive data... it is recommended to only send ids and then fetch up
+    to date info using an API request."
+testing:
+  tool: Vendor Center Testing Page
+  detail: >-
+    Sends dummy PURCHASE webhook payloads only to a URL you supply. Order-form payloads cannot be
+    tested this way — you must test-activate the product in the platform.
+gaps:
+- No AsyncAPI document published.
+- No programmatic webhook registration — Vendor Center UI only.
+- No documented event-type list endpoint or subscription API.
+checked: '2026-08-13'

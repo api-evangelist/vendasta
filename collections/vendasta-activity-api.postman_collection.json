@@ -1,0 +1,334 @@
+{
+  "item": [
+    {
+      "id": "30017ac2-2205-4dc5-ab7b-b58b1d29aba4",
+      "name": "activity",
+      "description": {
+        "content": "The Activity API lets you inform us of new activity from your Marketplace App.  It will be displayed in the user's activity stream and used for notifications.  Note: This endpoint has duplicate detection.  Within an hour boundary (E.g. 3:00am to 3:59am), we will only generate a single activity object on our servers for messages we deem \"identical\".  We compare title, content, account_id, link, media_url, activity_type, and template_data.  This is subject to change.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "d0989e9c-de3e-4dee-bb3a-43bc06d438a6",
+          "name": "Create Activity",
+          "request": {
+            "name": "Create Activity",
+            "description": {
+              "content": "Submit an `Activity` for an Event that occured within your App, or a prompt for action that needs to be taken within your App. See the [Guide](https://developers.vendasta.com/vendor/4cb70950bb594-activity-stream) for details.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "activity",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"account_id\": \"<string>\",\n  \"activity_type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"link\": \"<string>\",\n  \"content\": \"<string>\",\n  \"media_url\": \"<string>\",\n  \"settings_tags\": \"<string>\",\n  \"requires_platform_auth\": \"<boolean>\",\n  \"template_data\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "14b08583-97b9-4d78-bfc2-01d16a4c9a74",
+              "name": "Success",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activity",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"activity_type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"link\": \"<string>\",\n  \"content\": \"<string>\",\n  \"media_url\": \"<string>\",\n  \"settings_tags\": \"<string>\",\n  \"requires_platform_auth\": \"<boolean>\",\n  \"template_data\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"took\": 8470,\n  \"data\": {\n    \"activity_id\": \"string\",\n    \"account_id\": \"string\",\n    \"created\": \"string\",\n    \"title\": \"string\",\n    \"link\": \"string\",\n    \"activity_type\": \"string\",\n    \"settings_tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"content\": \"string\",\n    \"media_url\": \"string\",\n    \"template_data\": {}\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a8a688e1-1946-4e4b-a81d-ed7ef0dade05",
+              "name": "Invalid activity for app, missing title, or link wasn't a full URL",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activity",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"activity_type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"link\": \"<string>\",\n  \"content\": \"<string>\",\n  \"media_url\": \"<string>\",\n  \"settings_tags\": \"<string>\",\n  \"requires_platform_auth\": \"<boolean>\",\n  \"template_data\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0b2e9078-5907-4bec-bcdc-6a3f5e991b66",
+              "name": "Invalid Authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activity",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"activity_type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"link\": \"<string>\",\n  \"content\": \"<string>\",\n  \"media_url\": \"<string>\",\n  \"settings_tags\": \"<string>\",\n  \"requires_platform_auth\": \"<boolean>\",\n  \"template_data\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a74cb350-a044-4be2-8bf5-6c7e95b33d29",
+              "name": "App doesn't have access to the account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activity",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"activity_type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"link\": \"<string>\",\n  \"content\": \"<string>\",\n  \"media_url\": \"<string>\",\n  \"settings_tags\": \"<string>\",\n  \"requires_platform_auth\": \"<boolean>\",\n  \"template_data\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6beb2b84-d75c-4af0-bad7-b48ee6c2813f",
+              "name": "Account not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "activity",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"account_id\": \"<string>\",\n  \"activity_type\": \"<string>\",\n  \"title\": \"<string>\",\n  \"link\": \"<string>\",\n  \"content\": \"<string>\",\n  \"media_url\": \"<string>\",\n  \"settings_tags\": \"<string>\",\n  \"requires_platform_auth\": \"<boolean>\",\n  \"template_data\": \"<object>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://developers.vendasta.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "1d8409ef-be8d-4409-82a3-96b5f16c8ff9",
+    "name": "Vendasta Marketplace API V1 Endpoints account activity API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Account APIs allow you to perform actions against a single account that your application has been added to.",
+      "type": "text/plain"
+    }
+  }
+}

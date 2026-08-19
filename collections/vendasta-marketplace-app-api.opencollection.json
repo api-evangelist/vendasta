@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vendasta Marketplace API V1 Endpoints account marketplace_app API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "marketplace_app",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Marketplace Application",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/marketplace_app/:marketplace_app_id",
+            "params": [
+              {
+                "name": "marketplace_app_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique identifier for each Marketplace Application. This is automatically generated upon application creation."
+              }
+            ]
+          },
+          "docs": "Get Marketplace Application"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,16 +1,33 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: generated
-source: openapi/vendasta-marketplace-openapi-original.yml
+source: openapi/vendasta-platform-openapi.yml, openapi/_original/vendasta-marketplace-openapi-original.yml
 notes: >-
-  Agent Skills generated from the Vendasta Marketplace API V1 operations. operationIds are
-  assigned in overlays/vendasta-marketplace-overlay.yaml because the source spec omits them; each
-  skill step also cites the concrete METHOD + path. No provider-published skills/AGENTS.md was found.
+  Agent Skills for the two Vendasta API surfaces. The two `platform` skills are grounded in
+  operationIds that Vendasta itself declares in openapi/vendasta-platform-openapi.yml (harvested
+  first-party from github.com/vendasta/api-gateway-docs) — every id was grepped out of the spec, none
+  was invented. The two `marketplace` skills cover the legacy Marketplace API V1, whose spec omits
+  operationIds entirely; those ids are assigned by API Evangelist in
+  overlays/vendasta-marketplace-overlay.yaml and each step also cites the concrete METHOD + path. No
+  provider-published skills or AGENTS.md was found in either Vendasta documentation repo
+  (searched 2026-08-13).
 skills:
+- file: vendasta-sell-and-activate.md
+  name: Sell a product to a business and confirm activation
+  api: openapi/vendasta-platform-openapi.yml
+  surface: platform
+  operations: [get-partnerActivatableProducts, post-salesAccounts, get-salesAccounts, post-orders, get-orders-id, get-subscriptionAssignments]
+- file: vendasta-provision-users.md
+  name: Provision platform users and grant them business locations
+  api: openapi/vendasta-platform-openapi.yml
+  surface: platform
+  operations: [post-users, get-users, get-users-id, delete-users-id, post-users-id-relationships-businessLocations, get-users-id-relationships-businessLocations, patch-users-id-relationships-businessLocations, delete-users-id-relationships-businessLocations, get-sendWelcomeEmail-by-userid, get-userCustomFields-by-userid, patch-userCustomFields-by-id]
 - file: vendasta-manage-account.md
   name: Manage a Vendasta account and its users
-  api: openapi/vendasta-marketplace-openapi-original.yml
+  api: openapi/_original/vendasta-marketplace-openapi-original.yml
+  surface: marketplace-v1
   operations: [getOAuthToken, listAccounts, getAccount, listAccountUsers, getAccountSettings, listActivatedAddons]
 - file: vendasta-manage-customers.md
   name: Create and manage Vendasta customers
-  api: openapi/vendasta-marketplace-openapi-original.yml
+  api: openapi/_original/vendasta-marketplace-openapi-original.yml
+  surface: marketplace-v1
   operations: [getOAuthToken, createCustomer, listCustomers, getCustomer, updateCustomer, deleteCustomer]

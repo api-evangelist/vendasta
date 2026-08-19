@@ -1,0 +1,343 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vendasta Marketplace API V1 Endpoints account API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "account",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/account/",
+            "params": [
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Must be a positive integer."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List Accounts"
+        },
+        {
+          "info": {
+            "name": "Get Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/account/:account_id",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique account ID that can be used to identify and reference an account."
+              }
+            ]
+          },
+          "docs": "Get Account"
+        },
+        {
+          "info": {
+            "name": "Get Account - Rich Data",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/account/:account_id/richdata",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retreive extended account data such as hours of operation and images."
+        },
+        {
+          "info": {
+            "name": "Get Account Settings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/account/:account_id/settings",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique account ID that can be used to identify and reference an account."
+              }
+            ]
+          },
+          "docs": "Partners can have sub-accounts for branding purposes called Markets. Every Account must be assigned to a Market, even if it is the `default` Market. The majority of Partners have only the single default Market. The `platform_settings` object returns the partner branding data for the specific partner_id/market_id combo. \n\nEnsure that you set your branding data at either the Account, or the Market level. If it is configured per partner_id, it will end in a breach of white-label for users in any Ma"
+        },
+        {
+          "info": {
+            "name": "Get Session Transfer URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/account/:account_id/session-transfer",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique account ID that can be used to identify and reference an account."
+              }
+            ]
+          },
+          "docs": "Get Session Transfer URL"
+        },
+        {
+          "info": {
+            "name": "List Users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/account/:account_id/users",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique account ID that can be used to identify and reference an account."
+              }
+            ]
+          },
+          "docs": "List Users"
+        },
+        {
+          "info": {
+            "name": "List Activated Addons",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/account/:account_id/addons",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique account ID that can be used to identify and reference an account."
+              }
+            ]
+          },
+          "docs": "List Activated Addons"
+        },
+        {
+          "info": {
+            "name": "List File Groups",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/account/:account_id/file-group/",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique account ID that can be used to identify and reference an account."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Must be a positive integer."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List File Groups"
+        },
+        {
+          "info": {
+            "name": "Create a File Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/account/:account_id/file-group/",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique account ID that can be used to identify and reference an account."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a collection of files, which are available to the Partner in Partner Center, and the End Business in Business App. \n\nThe Activity will automatically be posted to the Activity Stream in Business App alerting users that they have a new file ready to download, and will include the supplied `description`.\n\nNote* This feature differs between the UI, and API. You must host the files and supply the urls when using the API. But if you use the file group system via the Vendor Center UI, you uploa"
+        },
+        {
+          "info": {
+            "name": "Get a File Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/account/:account_id/file-group/:file_group_id/",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique account ID that can be used to identify and reference an account."
+              },
+              {
+                "name": "file_group_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the file group to delete."
+              }
+            ]
+          },
+          "docs": "Get a File Group"
+        },
+        {
+          "info": {
+            "name": "Replace a File Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://developers.vendasta.com/api/v1/account/:account_id/file-group/:file_group_id/",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique account ID that can be used to identify and reference an account."
+              },
+              {
+                "name": "file_group_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the file group to update."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "This replaces the entire contents of a file group, so if you are looking to update a file group, ensure your including what is already in place along with your addition. Note* This feature differs between the UI, and API. You must host the files and supply the urls when using the API. But if you use the file group system via the Vendor Center UI, you upload the files, and Vendasta will host them.\n\nUnlike the File Group create, the replace action will not trigger an Activity to be sent to the Act"
+        },
+        {
+          "info": {
+            "name": "Delete a File Group",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://developers.vendasta.com/api/v1/account/:account_id/file-group/:file_group_id/",
+            "params": [
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique account ID that can be used to identify and reference an account."
+              },
+              {
+                "name": "file_group_id",
+                "value": "",
+                "type": "path",
+                "description": "The ID of the file group to delete."
+              }
+            ]
+          },
+          "docs": "Delete a File Group"
+        },
+        {
+          "info": {
+            "name": "Resolve a Pending Activation",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/activation/resolve/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resolve a Pending Activation"
+        },
+        {
+          "info": {
+            "name": "List Pending Activations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/activation/list-pending/",
+            "params": [
+              {
+                "name": "addon_id",
+                "value": "",
+                "type": "query",
+                "description": "A unique ID used to identify a marketplace addon."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of entries you want returned."
+              },
+              {
+                "name": "cursor",
+                "value": "",
+                "type": "query",
+                "description": "Used for pagination."
+              }
+            ]
+          },
+          "docs": "List Pending Activations"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

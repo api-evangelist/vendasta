@@ -1,0 +1,38 @@
+generated: '2026-08-13'
+method: searched
+source: https://github.com/vendasta/api-gateway-docs/tree/master/examples/go/access-token
+notes: >-
+  Vendasta ships ONE first-party command-line tool, and it is deliberately narrow: `access-token`
+  mints an OAuth2 access token from a service-account RS256 key file and a list of scopes. It is not
+  a general resource CLI — there are no account/order/user subcommands — so an agent cannot drive the
+  platform from the shell. Vendasta positions it as the debugging companion for the developer
+  center's "try it now" controls. Recorded honestly as a scoped auth CLI rather than a full API CLI.
+  There is no `vendasta` CLI on npm, Homebrew or any other channel (searched 2026-08-13).
+scope: authentication-only
+cli:
+- name: access-token
+  language: go
+  purpose: Generate an OAuth2 access token for a Vendasta service account at the command line.
+  repo: https://github.com/vendasta/api-gateway-docs/tree/master/examples/go/access-token
+  install:
+  - method: prebuilt-binary
+    detail: Download a prebuilt executable from the repo's bin/ directory (darwin-amd64 and siblings).
+    url: https://github.com/vendasta/api-gateway-docs/tree/master/examples/go/access-token/bin
+  - method: go install
+    command: go install github.com/vendasta/api-gateway-docs/examples/go/access-token@latest
+  - method: from source
+    command: go run main.go <private key file path> [scope1 [scope2]]
+  usage: access-token <private key file path> [scope1 [scope2]]
+  examples:
+  - go run main.go ./client-credentials.json business order user.admin
+  - ./bin/access-token-darwin-amd64 ~/.config/api-gateway/demo-9YW9.json business order user.admin
+  prerequisites: >-
+    A JSON credentials file with alg RS256, created in Partner Center -> Administration ->
+    Service Accounts -> Manage Keys -> "Generate Private Key (RS256)".
+  commands:
+  - {command: access-token, args: [key-file, 'scopes...'], description: Print an access token for the given scopes.}
+gaps:
+- No resource-level commands (no accounts/orders/users/CRM verbs).
+- No package-manager distribution (not on npm, Homebrew, apt or Chocolatey).
+- No shell completion, config profiles or output formatting options documented.
+checked: '2026-08-13'

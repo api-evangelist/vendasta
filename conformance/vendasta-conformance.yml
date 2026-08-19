@@ -1,33 +1,88 @@
-generated: '2026-07-21'
-method: derived
-source: openapi/vendasta-marketplace-openapi-original.yml
+generated: '2026-08-13'
+method: searched
+source: https://github.com/vendasta/api-gateway-docs
 notes: >-
-  Standards conformance for the Vendasta Marketplace API V1, derived from the OpenAPI plus the
-  published trust center (SOC 2). Compliance program is captured in security/vendasta-trust-center.yml.
+  Standards conformance for the Vendasta API Gateway and the legacy Marketplace API V1. Vendasta
+  states its standards posture explicitly — "When facing a design decision we have opted to follow
+  existing standards instead of defining yet another way. Most notably we use JSON:API as the default
+  format for requests" — and backs it with a real SCIM 2.0 implementation and an OpenID Connect
+  authorization server. Compliance certifications are captured in security/vendasta-trust-center.yml.
 standards:
 - id: openapi-3.0
   conforms: true
-  evidence: openapi 3.0.0 document published at developers.vendasta.com/api/v1/openapi.yaml
+  evidence: >-
+    30 OpenAPI 3.0.0/3.0.3 documents published first-party at github.com/vendasta/api-gateway-docs
+    and rendered at developers.vendasta.com/platform, plus the Marketplace V1 OpenAPI 3.0.0 at
+    developers.vendasta.com/api/v1/openapi.yaml
+- id: openapi-3.1
+  conforms: true
+  evidence: openapi/vendasta-social-openapi.yml and openapi/vendasta-crm-rest-openapi.json declare openapi 3.1.0
+- id: json-api
+  conforms: true
+  evidence: >-
+    "The body of most requests and responses are JSON objects that are formatted according to the
+    JSON:API standard"; media type application/vnd.api+json; errors[] envelope; page[limit] /
+    page[cursor] pagination; filter[] query params; links.first/prev/self/next/last
 - id: oauth2
   conforms: true
-  evidence: POST /oauth/token issues bearer access tokens (two-legged OAuth2 client credentials)
+  evidence: >-
+    authorizationCode oauth2 securitySchemes in 30 specs against sso-api-prod.apigateway.co, plus a
+    2-legged RS256 JWT-assertion service-account flow
+- id: oidc
+  conforms: true
+  evidence: >-
+    "We support the OpenIDConnect standard" for 3-legged Service Providers; openid/profile/email/
+    phone/address scopes; user-info endpoint at sso-api-prod.apigateway.co/oauth2/user-info
+- id: scim2
+  conforms: true
+  evidence: >-
+    openapi/vendasta-scim-openapi.yml — "SCIM 2.0 User Management", 11 paths / 16 operations at
+    prod.apigateway.co/scim, with published guides on group assignment and supported PATCH operations
+- id: rfc3339-datetimes
+  conforms: true
+  evidence: "Dates are formatted according to RFC-3339 which is an extension of ISO 8601"
+- id: rfc7519-jwt
+  conforms: true
+  evidence: Marketplace webhooks are delivered as RS256-signed JWTs with a published RSA public key
+- id: hateoas
+  conforms: true
+  evidence: "In the body of responses you will find links to related actions and helpful details on errors"
+- id: cursor-pagination
+  conforms: true
+  evidence: 'gateway page[limit] + page[cursor] with link relations; legacy V1 page_size + opaque cursor'
 - id: rest
   conforms: true
   evidence: predictable resource-oriented URL structure over HTTPS
-- id: rfc9457-problem-details
-  conforms: false
-  evidence: error responses use plain HTTP status codes, not application/problem+json
-- id: cursor-pagination
-  conforms: true
-  evidence: list endpoints use page_size + opaque cursor with a pagination response object
 - id: soc2
   conforms: true
   evidence: SOC 2 named on the Vendasta trust center (trust.vendasta.com)
-- id: json-api
+- id: rfc9457-problem-details
   conforms: false
+  evidence: >-
+    Errors use the JSON:API errors[] envelope with application/vnd.api+json, not
+    application/problem+json
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: >-
+    A written deprecation policy exists with dated x-lifecycle fields, but no Sunset or Deprecation
+    HTTP response header is emitted
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: no /.well-known/security.txt served on any Vendasta host (see well-known/vendasta-well-known.yml)
+- id: rfc8414-oauth-metadata
+  conforms: false
+  evidence: no /.well-known/oauth-authorization-server document served by sso-api-prod.apigateway.co
+- id: rfc6749-idempotency
+  conforms: false
+  evidence: no idempotency key contract documented on any Vendasta API
+- id: asyncapi
+  conforms: false
+  evidence: webhooks are documented in prose only; no AsyncAPI document published
 - id: fhir-r4
-  conforms: false
-- id: scim2
   conforms: false
 - id: odata
   conforms: false
+- id: graphql
+  conforms: false
+  evidence: no GraphQL endpoint found on any Vendasta host
+checked: '2026-08-13'

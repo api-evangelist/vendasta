@@ -1,0 +1,114 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vendasta Marketplace API V1 Endpoints account customer API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "customer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/customer",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM)."
+        },
+        {
+          "info": {
+            "name": "List Customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/customer/list-customers",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM)."
+        },
+        {
+          "info": {
+            "name": "Get Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/customer/get-customer",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns a single customer record based on a `vendor_customer_id`. If the id is not unique, the newest record with that id will be returned."
+        },
+        {
+          "info": {
+            "name": "Associate Customer IDs",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/customer/associate-id",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM)."
+        },
+        {
+          "info": {
+            "name": "Update Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/customer/update-customer",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM)."
+        },
+        {
+          "info": {
+            "name": "Delete Customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/customer/delete-customer",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM)."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

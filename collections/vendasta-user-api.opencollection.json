@@ -1,0 +1,68 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vendasta Marketplace API V1 Endpoints account user API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "user",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get User",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://developers.vendasta.com/api/v1/user/:user_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique user ID that can be used to identify and reference a user."
+              }
+            ]
+          },
+          "docs": "Get User"
+        },
+        {
+          "info": {
+            "name": "Check User Access to an Account",
+            "type": "http"
+          },
+          "http": {
+            "method": "HEAD",
+            "url": "https://developers.vendasta.com/api/v1/user/:user_id/permissions/:account_id",
+            "params": [
+              {
+                "name": "user_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique user ID that can be used to identify and reference a user."
+              },
+              {
+                "name": "account_id",
+                "value": "",
+                "type": "path",
+                "description": "A unique account ID that can be used to identify and reference an account."
+              }
+            ]
+          },
+          "docs": "Check User Access to an Account"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

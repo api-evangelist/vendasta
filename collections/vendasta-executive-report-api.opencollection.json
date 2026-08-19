@@ -1,0 +1,54 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Vendasta Marketplace API V1 Endpoints account executive_report API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "executive_report",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Weekly Executive Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/executive_report/weekly/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit data to populate the [Executive Report](https://support.vendasta.com/hc/en-us/articles/4406961302935) with cards aggregated for the past Week. See [Guide](https://developers.vendasta.com/vendor/64ecf7b9ac031-executive-report) for further details."
+        },
+        {
+          "info": {
+            "name": "Create Monthly Executive Report",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://developers.vendasta.com/api/v1/executive_report/monthly/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit data to populate the [Executive Report](https://support.vendasta.com/hc/en-us/articles/4406961302935) with cards aggregated for the past Month. See [Guide](https://developers.vendasta.com/vendor/64ecf7b9ac031-executive-report) for further details."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

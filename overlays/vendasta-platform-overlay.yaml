@@ -1,0 +1,75 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Vendasta Platform REST APIs
+  version: 1.0.0
+extends: openapi/vendasta-platform-openapi.yml
+x-generated: '2026-08-13'
+x-method: generated
+x-source: openapi/vendasta-platform-openapi.yml
+x-notes: >-
+  Non-destructive annotations over Vendasta's own Platform REST API document. Nothing here changes
+  Vendasta's contract — it records what API Evangelist observed about it: the JSON:API conventions
+  that the spec assumes but does not declare, the maturity reality (no operation has reached GA),
+  the absence of an idempotency contract, and pointers into this repo's derived artifacts. The
+  original spec at openapi/vendasta-platform-openapi.yml is never mutated.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-profile: https://apis.io/provider/vendasta
+      x-apievangelist-harvested-from: https://github.com/vendasta/api-gateway-docs/blob/master/openapi/platform/platform.yaml
+      x-apievangelist-conventions: conventions/vendasta-conventions.yml
+      x-apievangelist-authentication: authentication/vendasta-authentication.yml
+      x-apievangelist-scopes: scopes/vendasta-scopes.yml
+      x-apievangelist-errors: errors/vendasta-error-codes.yml
+      x-apievangelist-lifecycle: lifecycle/vendasta-lifecycle.yml
+      x-apievangelist-rate-limits: rate-limits/vendasta-rate-limits.yml
+      x-apievangelist-webhooks: asyncapi/vendasta-webhooks.yml
+  - target: $.info
+    update:
+      x-api-conventions:
+        media_type: application/vnd.api+json
+        standard: JSON:API
+        pagination:
+          style: cursor
+          params: ['page[limit]', 'page[cursor]']
+          response: links.first/prev/self/next/last
+        filtering: 'filter[fieldName]=value, dotted sub-paths supported'
+        sparse_fields: fields
+        localization: Accept-Language, default en-US
+        datetimes: RFC 3339
+        error_envelope: 'errors[] with code/title/detail/source/meta/links.about'
+  - target: $.info
+    update:
+      x-idempotency:
+        supported: false
+        note: >-
+          Vendasta documents no idempotency key on any operation. Every POST in this document is
+          non-repeatable — a retry after a timeout creates a duplicate resource. Search before
+          retrying.
+  - target: $.info
+    update:
+      x-maturity-observed:
+        source: x-lifecycle on each operation
+        general_availability: 0
+        early_access: 0
+        trusted_tester: 49
+        proposed: 5
+        note: >-
+          Vendasta's own versioning policy defines trustedTester as subject to breaking change and
+          proposed as mock-server-only. Not one operation in this document has reached General
+          Availability, and Vendasta's Guides overview states these APIs are in maintenance mode.
+  - target: $.info
+    update:
+      x-rate-limits:
+        published: false
+        note: >-
+          No rate limit, no 429 response and no RateLimit-* response header is declared anywhere in
+          this document. The only published Vendasta limits are on the AI Knowledge API
+          (10 writes/min per account group, 100/min per partner).
+  - target: $.servers
+    update:
+      x-environment-note: >-
+        prod.apigateway.co is Vendasta's production API host and demo.apigateway.co the sandbox;
+        Vendasta's own authorization guide instructs callers to obtain tokens from
+        sso-api-prod.apigateway.co to "call Vendasta APIs". The {local} and localhost:11001 entries
+        are development scaffolding, not callable third-party hosts.

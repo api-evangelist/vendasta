@@ -1,71 +1,238 @@
-generated: '2026-07-21'
+generated: '2026-08-13'
 method: searched
 source: https://www.npmjs.com/~vendasta
 notes: >-
-  Vendasta publishes a family of first-party client SDK libraries to npm under the @vendasta
-  scope (one package per platform service) plus a legacy top-level vendasta-sdk. These are the
-  official client libraries partners consume from the Vendasta frontend/integration stack.
-  No first-party PyPI, Maven, NuGet, RubyGems, Packagist or crates.io package was found for
-  Vendasta (searched 2026-07-21). @pipedream/vendasta exists but is a third-party (Pipedream)
-  integration and is not listed as official.
+  Vendasta publishes first-party client libraries to three registries — npm (the @vendasta scope,
+  one package per platform service, plus a legacy top-level vendasta-sdk), Packagist (the vendasta/*
+  PHP libraries, including `vendasta/vax`, "Vendasta API Extensions for PHP"), and Maven Central
+  (the com.vendasta group, one artifact per service). Nothing on PyPI, NuGet, RubyGems, crates.io or
+  pkg.go.dev (searched 2026-08-13; pypi.org/pypi/vendasta/json returns 404, the NuGet query returns
+  0 hits).
+  CURRENCY IS THE STORY HERE. The `vax` API-extension libraries — the ones actually intended for
+  API consumers — are all stale: PHP `vendasta/vax` 1.3.0 last released 2021-06-08, Maven
+  `com.vendasta:vax.v1` 0.3.0 last released 2020-05-14, and the C# and Java editions have no
+  registry release at all. Every Maven artifact in the com.vendasta group is 2019-2021. The legacy
+  `vendasta-sdk` on npm last shipped in 2017. What IS current is the @vendasta npm scope — but those
+  are Angular libraries for building Vendasta-platform frontend apps, not REST API clients for the
+  gateway. So: an integrator calling prod.apigateway.co in 2026 has NO maintained first-party SDK in
+  any language, five years after the gateway launched. @pipedream/vendasta exists but is a
+  third-party Pipedream integration and is not marked official.
+package_count: 20
+official_count: 20
+registries_checked: [npm, packagist, maven-central, pypi, nuget, rubygems, crates.io, pkg.go.dev]
+registries_with_no_vendasta_package: [pypi, nuget, rubygems, crates.io, pkg.go.dev]
 packages:
-- language: javascript
-  registry: npm
-  name: vendasta-sdk
-  url: https://www.npmjs.com/package/vendasta-sdk
-  install: npm install vendasta-sdk
-  official: true
-  latest: 0.7.5
-- language: javascript
-  registry: npm
-  name: "@vendasta/core"
-  url: https://www.npmjs.com/package/@vendasta/core
-  install: npm install @vendasta/core
-  official: true
-  latest: 55.0.3
-- language: javascript
-  registry: npm
-  name: "@vendasta/iamv2"
-  url: https://www.npmjs.com/package/@vendasta/iamv2
-  install: npm install @vendasta/iamv2
-  official: true
-  latest: 2.15.1
-- language: javascript
-  registry: npm
-  name: "@vendasta/campaigns"
-  url: https://www.npmjs.com/package/@vendasta/campaigns
-  install: npm install @vendasta/campaigns
-  official: true
-- language: javascript
-  registry: npm
-  name: "@vendasta/email"
-  url: https://www.npmjs.com/package/@vendasta/email
-  install: npm install @vendasta/email
-  official: true
-- language: javascript
-  registry: npm
-  name: "@vendasta/conversation"
-  url: https://www.npmjs.com/package/@vendasta/conversation
-  install: npm install @vendasta/conversation
-  official: true
 - language: javascript
   registry: npm
   name: "@vendasta/meetings"
   url: https://www.npmjs.com/package/@vendasta/meetings
   install: npm install @vendasta/meetings
   official: true
-- language: php
-  registry: github
-  name: accounts-php-sdk
-  url: https://github.com/vendasta/accounts-php-sdk
+  version: 1.15.8
+  published: '2026-08-06'
+  kind: platform-frontend-library
+- language: javascript
+  registry: npm
+  name: "@vendasta/email"
+  url: https://www.npmjs.com/package/@vendasta/email
+  install: npm install @vendasta/email
   official: true
-- language: php
-  registry: github
-  name: account-group-php-sdk
-  url: https://github.com/vendasta/account-group-php-sdk
+  version: 4.57.0
+  published: '2026-07-08'
+  kind: platform-frontend-library
+- language: javascript
+  registry: npm
+  name: "@vendasta/campaigns"
+  url: https://www.npmjs.com/package/@vendasta/campaigns
+  install: npm install @vendasta/campaigns
   official: true
-- language: php
-  registry: github
-  name: sales-orders-php-sdk
-  url: https://github.com/vendasta/sales-orders-php-sdk
+  version: 3.74.0
+  published: '2026-07-07'
+  kind: platform-frontend-library
+- language: javascript
+  registry: npm
+  name: "@vendasta/conversation"
+  url: https://www.npmjs.com/package/@vendasta/conversation
+  install: npm install @vendasta/conversation
   official: true
+  version: 0.124.0
+  published: '2026-05-22'
+  kind: platform-frontend-library
+- language: javascript
+  registry: npm
+  name: "@vendasta/iamv2"
+  url: https://www.npmjs.com/package/@vendasta/iamv2
+  install: npm install @vendasta/iamv2
+  official: true
+  version: 2.15.1
+  published: '2026-05-07'
+  kind: platform-frontend-library
+- language: javascript
+  registry: npm
+  name: "@vendasta/core"
+  url: https://www.npmjs.com/package/@vendasta/core
+  install: npm install @vendasta/core
+  official: true
+  version: 55.0.3
+  published: '2022-04-06'
+  kind: platform-frontend-library
+  note: No release in over four years.
+- language: javascript
+  registry: npm
+  name: vendasta-sdk
+  url: https://www.npmjs.com/package/vendasta-sdk
+  install: npm install vendasta-sdk
+  official: true
+  version: 0.7.5
+  published: '2017-06-01'
+  kind: legacy-api-client
+  note: Legacy top-level SDK; last published 2017, predates the API Gateway entirely.
+- language: php
+  registry: packagist
+  name: vendasta/vax
+  url: https://packagist.org/packages/vendasta/vax
+  install: composer require vendasta/vax
+  official: true
+  version: 1.3.0
+  published: '2021-06-08'
+  kind: api-client
+  repo: https://github.com/vendasta/vax-php
+  note: >-
+    "Vendasta API Extensions for PHP" — the PHP API client. Last stable release 2021.
+- language: php
+  registry: packagist
+  name: vendasta/g-suite
+  url: https://packagist.org/packages/vendasta/g-suite
+  install: composer require vendasta/g-suite
+  official: true
+  version: 1.1.0
+  published: '2025-04-10'
+  kind: service-client
+  repo: https://github.com/vendasta/g-suite-php-sdk
+- language: php
+  registry: packagist
+  name: vendasta/sales-orders
+  url: https://packagist.org/packages/vendasta/sales-orders
+  install: composer require vendasta/sales-orders
+  official: true
+  version: 1.4.0
+  published: '2021-06-23'
+  kind: service-client
+  repo: https://github.com/vendasta/sales-orders-php-sdk
+  note: Source repo is archived on GitHub.
+- language: php
+  registry: packagist
+  name: vendasta/godaddy
+  url: https://packagist.org/packages/vendasta/godaddy
+  install: composer require vendasta/godaddy
+  official: true
+  version: 0.2.0
+  published: '2021-02-18'
+  kind: service-client
+  repo: https://github.com/vendasta/godaddy-php-sdk
+- language: php
+  registry: packagist
+  name: vendasta/accounts
+  url: https://packagist.org/packages/vendasta/accounts
+  install: composer require vendasta/accounts
+  official: true
+  version: 1.1.0
+  published: '2020-09-16'
+  kind: service-client
+  repo: https://github.com/vendasta/accounts-php-sdk
+  note: Source repo is archived on GitHub.
+- language: php
+  registry: packagist
+  name: vendasta/accountgroup
+  url: https://packagist.org/packages/vendasta/accountgroup
+  install: composer require vendasta/accountgroup
+  official: true
+  version: 1.1.0
+  published: '2020-07-21'
+  kind: service-client
+  repo: https://github.com/vendasta/account-group-php-sdk
+  note: Source repo is archived on GitHub.
+- language: php
+  registry: packagist
+  name: vendasta/sso
+  url: https://packagist.org/packages/vendasta/sso
+  install: composer require vendasta/sso
+  official: true
+  version: v0.0.10
+  published: '2018-05-08'
+  kind: sso-client
+  repo: https://github.com/vendasta/sso-php-sdk
+- language: java
+  registry: maven-central
+  name: com.vendasta:sso.v1
+  url: https://central.sonatype.com/artifact/com.vendasta/sso.v1
+  install: 'implementation "com.vendasta:sso.v1:2.5.0"'
+  official: true
+  version: 2.5.0
+  published: '2021-03-02'
+  kind: sso-client
+- language: java
+  registry: maven-central
+  name: com.vendasta:vax.v1
+  url: https://central.sonatype.com/artifact/com.vendasta/vax.v1
+  install: 'implementation "com.vendasta:vax.v1:0.3.0"'
+  official: true
+  version: 0.3.0
+  published: '2020-05-14'
+  kind: api-client
+  repo: https://github.com/vendasta/vax-java
+  note: >-
+    "Vendasta API Extensions for Java" — the Java API client. Last Maven release 2020-05-14; the
+    GitHub repo has no tagged releases at all and last saw a push on 2025-09-30.
+- language: java
+  registry: maven-central
+  name: com.vendasta:business.v1
+  url: https://central.sonatype.com/artifact/com.vendasta/business.v1
+  official: true
+  version: 3.2.0
+  published: '2020-05-02'
+  kind: service-client
+- language: java
+  registry: maven-central
+  name: com.vendasta:accounts.v1
+  url: https://central.sonatype.com/artifact/com.vendasta/accounts.v1
+  official: true
+  version: 3.1.0
+  published: '2020-03-26'
+  kind: service-client
+- language: java
+  registry: maven-central
+  name: com.vendasta:socialposts.v1
+  url: https://central.sonatype.com/artifact/com.vendasta/socialposts.v1
+  official: true
+  version: 6.1.1
+  published: '2020-06-24'
+  kind: service-client
+- language: csharp
+  registry: github
+  name: vax-csharp
+  url: https://github.com/vendasta/vax-csharp
+  install: git clone https://github.com/vendasta/vax-csharp
+  official: true
+  version: null
+  published: null
+  kind: api-client
+  note: >-
+    "Vendasta API Extensions for C#" — source-only. Checked NuGet 2026-08-13: zero packages match
+    "vendasta", so there is no registry metadata endpoint to read a version from. Repo last pushed
+    2026-05-13. Consumers must vendor the source.
+tooling:
+- name: access-token
+  language: go
+  kind: cli
+  url: https://github.com/vendasta/api-gateway-docs/tree/master/examples/go/access-token
+  install: go install github.com/vendasta/api-gateway-docs/examples/go/access-token@latest
+  official: true
+  version: null
+  published: null
+  note: >-
+    Distributed from the docs repo and as prebuilt binaries in bin/ — no module registry release, so
+    no version metadata exists to record. See cli/vendasta-cli.yml.
+third_party_noted:
+- {name: "@pipedream/vendasta", registry: npm, official: false, note: Pipedream integration, not published by Vendasta.}
+checked: '2026-08-13'

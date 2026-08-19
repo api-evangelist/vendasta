@@ -1,37 +1,112 @@
-generated: '2026-07-21'
-method: derived
-source: openapi/vendasta-marketplace-openapi-original.yml
+generated: '2026-08-13'
+method: searched
+source: https://github.com/vendasta/api-gateway-docs/blob/master/docs/Overview/Intro.md
+docs: https://developers.vendasta.com/platform
 notes: >-
-  Cross-cutting request/response semantics for the Vendasta Marketplace API V1, derived from the
-  OpenAPI and confirmed conventions. Vendasta APIs are REST with a predictable URL structure.
+  Vendasta's API Gateway publishes an explicit conventions document, and it is unusually opinionated:
+  the platform adopts JSON:API as its default request/response format, returns HATEOAS links in every
+  body, and refuses to version — operations, parameters and fields each carry their own `x-lifecycle`
+  maturity instead. These conventions govern the gateway APIs (prod.apigateway.co). The legacy
+  Marketplace API V1 (developers.vendasta.com/api/v1) predates them and follows the simpler
+  page_size/cursor + plain-HTTP-status conventions recorded under `legacy_marketplace_v1` below.
 authentication:
   style: oauth2-bearer
+  header: 'Authorization: Bearer <access_token>'
   detail: >-
-    Two-legged OAuth2. Exchange client credentials at POST /oauth/token for an access_token
-    (token_type=Bearer, expires as a Unix timestamp), then send `Authorization: Bearer <token>`
-    on every call. See authentication/vendasta-authentication.yml.
-pagination:
-  style: cursor
-  request_params: [page_size, cursor]
-  response_field: pagination
+    Every gateway request requires an OAuth2 bearer access token issued by
+    sso-api-prod.apigateway.co, obtained via 2-legged service-account assertion or 3-legged OIDC.
+    See authentication/vendasta-authentication.yml and scopes/vendasta-scopes.yml.
+media_type:
+  request: application/vnd.api+json
+  response: application/vnd.api+json
+  standard: JSON:API
   detail: >-
-    List endpoints (e.g. GET /account/) accept page_size and an opaque cursor; the response
-    carries a pagination object whose next cursor is passed back to fetch the following page.
+    "The body of most requests and responses are JSON objects that are formatted according to the
+    JSON:API standard. Each representation has a `type` field that can be mapped to a single path
+    with the gateway."
 idempotency:
   supported: false
-  detail: No idempotency-key header or parameter is documented in the spec.
-versioning:
-  style: uri-path
-  detail: Version is carried in the base path (/api/v1). See lifecycle/vendasta-lifecycle.yml.
-error_envelope:
-  style: http-status
   detail: >-
-    Standard HTTP status codes (400/401/403/404/500). No application/problem+json envelope is
-    declared. See errors/vendasta-problem-types.yml.
-rate_limiting:
-  signaled: unknown
-  detail: No rate-limit headers are documented in the current spec.
+    No idempotency key header, parameter or retry-safety contract is documented on any Vendasta API,
+    and none appears in any of the 31 OpenAPI documents in this repo. Writes (POST /orders,
+    POST /salesAccounts, POST /users) are not de-duplicated by the platform. Agents must therefore
+    treat every gateway write as non-repeatable.
+pagination:
+  style: cursor
+  request_params: ['page[limit]', 'page[cursor]']
+  response_field: links
+  link_relations: [first, prev, self, next, last]
+  detail: >-
+    "All operations that return a list of data will let you specify a query param of page[limit] to
+    indicate the max number of records you would like returned in a single batch. The body of the
+    response will provide links that you can use to get the next batch without needing to send the
+    filters again. The link will be omitted if not available."
+filtering:
+  style: json-api-filter
+  form: '&filter[fieldName1]=value1&filter[sub.fieldName3]=value2'
+  detail: Most list operations accept filter[] query params, including dotted sub-field paths.
+sparse_fields:
+  supported: true
+  param: fields
+  detail: >-
+    "It is strongly recommended that you tell us which fields you are using by including the `fields`
+    query parameter on every request that returns data. That will allow us to warn you if you are
+    using fields that have been deprecated on a resource." Sparse fieldsets double as Vendasta's
+    deprecation early-warning channel.
+hateoas:
+  supported: true
+  detail: >-
+    "In the body of responses you will find links to related actions and helpful details on errors.
+    This is the HATEOAS part of REST that is so often forgotten."
+localization:
+  request_header: Accept-Language
+  default: en-US
+  detail: >-
+    Enum-valued attributes are returned as an untranslated `{attribute}Code` plus a translated
+    `{attribute}Name`; translated fields are marked `x-translateable` and are read-only over the API.
+dates:
+  standard: RFC 3339
+  examples: ['2020-10-28T10:37:23Z', '2020-10-28T4:37-6:00', '2001-12-25']
+versioning:
+  style: evergreen
+  detail: >-
+    No version is carried in the path or a header on the gateway ("Evergreen"). Per-item maturity is
+    published in the spec as `x-lifecycle`. See lifecycle/vendasta-lifecycle.yml.
+error_envelope:
+  style: json-api-errors
+  content_type: application/vnd.api+json
+  shape:
+    root: errors[]
+    fields: [status, code, title, detail, source.parameter, meta, links.about, links.docs]
+  detail: >-
+    A 4xx/5xx carries an `errors` array; each entry has a machine-readable `code`, a human `title`
+    and `detail`, a `meta` bag, and `links.about` pointing at
+    https://prod.apigateway.co/docs/errorTypes/{code}. The full set of codes an operation can return
+    is published in the operation's `x-errors` attribute. See errors/vendasta-error-codes.yml.
 request_tracing:
-  request_id_header: unknown
-metadata:
-  detail: Some resources (e.g. accounts, customers) carry structured settings/rich-data objects.
+  request_id_header: undocumented
+rate_limiting:
+  signaled: false
+  detail: >-
+    No rate-limit response headers are documented or declared in any spec; exhaustion surfaces only
+    as HTTP 429 and only on the AI Knowledge API. See rate-limits/vendasta-rate-limits.yml.
+webhooks:
+  detail: >-
+    Outbound events are JWT-signed (RS256) and delivered as text/plain to a URL registered in Vendor
+    Center; automations can also POST an arbitrary JSON body. See asyncapi/vendasta-webhooks.yml.
+legacy_marketplace_v1:
+  base: https://developers.vendasta.com/api/v1
+  media_type: application/json
+  pagination: {style: cursor, request_params: [page_size, cursor], response_field: pagination}
+  error_envelope:
+    style: http-status
+    detail: Plain HTTP status codes, no problem+json and no errors[] array.
+  versioning: {style: uri-path, current: v1}
+cross_links:
+  authentication: authentication/vendasta-authentication.yml
+  scopes: scopes/vendasta-scopes.yml
+  errors: errors/vendasta-error-codes.yml
+  lifecycle: lifecycle/vendasta-lifecycle.yml
+  rate_limits: rate-limits/vendasta-rate-limits.yml
+  webhooks: asyncapi/vendasta-webhooks.yml
+checked: '2026-08-13'
