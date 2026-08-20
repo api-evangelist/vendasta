@@ -43,6 +43,17 @@ modified: '2026-08-13'
 image: https://www.vendasta.com/wp-content/uploads/2021/03/vendasta-logo.png
 tags:
 - Company
+- Software-as-a-Service
+- Marketplace
+- SMB
+- White Label
+- Reseller
+- Marketing
+- CRM
+- Digital Agency
+- Platform
+tags_raw:
+- Company
 - SaaS
 - Marketplace
 - SMB
@@ -65,6 +76,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Account
+  tags_raw:
   - account
   properties:
   - type: OpenAPI
@@ -79,6 +92,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Activity
+  tags_raw:
   - activity
   properties:
   - type: OpenAPI
@@ -89,7 +104,8 @@ apis:
     approving or rejecting
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
-  tags:
+  tags: []
+  tags_raw:
   - change_spend
   properties:
   - type: OpenAPI
@@ -101,6 +117,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Customers
+  tags_raw:
   - customer
   properties:
   - type: OpenAPI
@@ -111,7 +129,8 @@ apis:
     app on an account.
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
-  tags:
+  tags: []
+  tags_raw:
   - executive_report
   properties:
   - type: OpenAPI
@@ -122,7 +141,8 @@ apis:
     as certain operations against all marketplace apps.
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
-  tags:
+  tags: []
+  tags_raw:
   - marketplace_app
   properties:
   - type: OpenAPI
@@ -134,6 +154,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Authentication
+  tags_raw:
   - oauth
   properties:
   - type: OpenAPI
@@ -147,6 +169,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - User
+  tags_raw:
   - user
   properties:
   - type: OpenAPI
@@ -163,6 +187,15 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/platform
   tags:
+  - Platform
+  - Order
+  - User
+  - business-locations
+  - SalesAccounts
+  - Subscription
+  - Automations
+  - JSON:API
+  tags_raw:
   - platform
   - orders
   - users
@@ -184,6 +217,13 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/scim
   tags:
+  - SCIM
+  - Identity
+  - Provisioning
+  - User
+  - Group
+  - SSO
+  tags_raw:
   - scim
   - identity
   - provisioning
@@ -202,6 +242,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/org
   tags:
+  - CRM
+  - Contacts
+  - Companies
+  - Opportunities
+  - JSON:API
+  tags_raw:
   - crm
   - contacts
   - companies
@@ -218,6 +264,13 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - CRM
+  - gRPC
+  - Contacts
+  - Companies
+  - Opportunities
+  - Schemas
+  tags_raw:
   - crm
   - grpc
   - contacts
@@ -234,6 +287,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/products/listings
   tags:
+  - Local SEO
+  - Listings
+  - Citations
+  - Directories
+  - Product
+  tags_raw:
   - local-seo
   - listings
   - citations
@@ -250,6 +309,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/products/advertising
   tags:
+  - Advertising
+  - Campaigns
+  - Analytics
+  - Ads
+  - Product
+  tags_raw:
   - advertising
   - campaigns
   - analytics
@@ -265,6 +330,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/products/reputation
   tags:
+  - Reputation
+  - Reviews
+  - Product
+  - Listings
+  tags_raw:
   - reputation
   - reviews
   - products
@@ -280,6 +350,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Reputation
+  - Reviews
+  - NPS
+  - gRPC
+  - Listings
+  tags_raw:
   - reputation
   - reviews
   - nps
@@ -296,6 +372,12 @@ apis:
   baseURL: https://prod.apigateway.co/products/reviews
   tags:
   - customer-voice
+  - Reviews
+  - Review Requests
+  - Templates
+  - Product
+  tags_raw:
+  - customer-voice
   - reviews
   - review-requests
   - templates
@@ -310,6 +392,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/products/social
   tags:
+  - Social
+  - Social-Media
+  - Message
+  - Product
+  tags_raw:
   - social
   - social-media
   - messages
@@ -325,6 +412,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/business
   tags:
+  - Business
+  - Customers
+  - customer-list
+  - JSON:API
+  tags_raw:
   - business
   - customers
   - customer-list
@@ -340,6 +432,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/glossary
   tags:
+  - Glossary
+  - Vocabulary
+  - Metadata
+  - Reference
+  tags_raw:
   - glossary
   - vocabulary
   - metadata
@@ -355,6 +452,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Artificial Intelligence
+  - AI Employees
+  - Assistants
+  - Agents
+  - gRPC
+  tags_raw:
   - ai
   - ai-employees
   - assistants
@@ -373,6 +476,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Artificial Intelligence
+  - Knowledge
+  - Embeddings
+  - RAG
+  - gRPC
+  tags_raw:
   - ai
   - knowledge
   - embeddings
@@ -388,6 +497,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Conversations
+  - Messaging
+  - Inbox
+  - Chat
+  - gRPC
+  tags_raw:
   - conversations
   - messaging
   - inbox
@@ -403,6 +518,10 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Composer
+  - Content
+  - gRPC
+  tags_raw:
   - composer
   - content
   - grpc
@@ -416,6 +535,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Forms
+  - Submissions
+  - Lead Capture
+  - gRPC
+  tags_raw:
   - forms
   - submissions
   - lead-capture
@@ -430,6 +554,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Meetings
+  - Scheduling
+  - Calendar
+  - gRPC
+  tags_raw:
   - meetings
   - scheduling
   - calendar
@@ -444,6 +573,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Sales
+  - Order
+  - Commerce
+  - gRPC
+  tags_raw:
   - sales
   - orders
   - commerce
@@ -458,6 +592,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Social
+  - Posts
+  - Publishing
+  - WordPress
+  - gRPC
+  tags_raw:
   - social
   - posts
   - publishing
@@ -473,6 +613,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Social
+  - Drafts
+  - Content
+  - gRPC
+  tags_raw:
   - social
   - drafts
   - content
@@ -487,6 +632,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Listings
+  - Local SEO
+  - Citations
+  - SEO
+  - gRPC
+  tags_raw:
   - listings
   - local-seo
   - citations
@@ -502,6 +653,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Analytics
+  - Multi-Location
+  - Franchise
+  - Reporting
+  - gRPC
+  tags_raw:
   - analytics
   - multi-location
   - franchise
@@ -516,6 +673,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - Analytics
+  - Reporting
+  - Metrics
+  - gRPC
+  tags_raw:
   - analytics
   - reporting
   - metrics
@@ -530,6 +692,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - WordPress
+  - Hosting
+  - Websites
+  - gRPC
+  tags_raw:
   - wordpress
   - hosting
   - websites
@@ -544,6 +711,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - WordPress
+  - Websites
+  - Admin
+  - gRPC
+  tags_raw:
   - wordpress
   - websites
   - admin
@@ -557,6 +729,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - WordPress
+  - Monitoring
+  - Uptime
+  - Websites
+  - gRPC
+  tags_raw:
   - wordpress
   - monitoring
   - uptime
@@ -571,6 +749,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - WordPress
+  - Websites
+  - Cache
+  - gRPC
+  tags_raw:
   - wordpress
   - websites
   - cache
@@ -585,6 +768,11 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - WordPress
+  - Support
+  - Websites
+  - gRPC
+  tags_raw:
   - wordpress
   - support
   - websites
@@ -599,6 +787,12 @@ apis:
   humanURL: https://developers.vendasta.com/platform
   baseURL: https://prod.apigateway.co/grpc
   tags:
+  - WordPress
+  - Page Speed
+  - Performance
+  - Websites
+  - gRPC
+  tags_raw:
   - wordpress
   - pagespeed
   - performance
