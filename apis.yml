@@ -71,8 +71,9 @@ maintainers:
 apis:
 - aid: vendasta:vendasta-account-api
   name: Vendasta account API
-  description: The Account APIs allow you to perform actions against a single account that your application
-    has been added to.
+  description: >-
+    The Account APIs allow you to perform actions against a single account that your application has been
+    added to.
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
@@ -84,11 +85,12 @@ apis:
     url: openapi/vendasta-account-api-openapi.yml
 - aid: vendasta:vendasta-activity-api
   name: Vendasta activity API
-  description: 'The Activity API lets you inform us of new activity from your Marketplace App.  It will
-    be displayed in the user''s activity stream and used for notifications.  Note: This endpoint has duplicate
-    detection.  Within an hour boundary (E.g. 3:00am to 3:59am), we will only generate a single activity
-    object on our servers for messages we deem "identical".  We compare title, content, account_id, link,
-    media_url, activity_type, and template_data.  This is subject to change.'
+  description: >-
+    The Activity API lets you inform us of new activity from your Marketplace App.  It will be displayed
+    in the user's activity stream and used for notifications.  Note: This endpoint has duplicate detection.  Within
+    an hour boundary (E.g. 3:00am to 3:59am), we will only generate a single activity object on our servers
+    for messages we deem "identical".  We compare title, content, account_id, link, media_url, activity_type,
+    and template_data.  This is subject to change.
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
@@ -100,8 +102,9 @@ apis:
     url: openapi/vendasta-activity-api-openapi.yml
 - aid: vendasta:vendasta-change-spend-api
   name: Vendasta change_spend API
-  description: The Change Spend APIs allow interact with change spend requests, like resolving them by
-    approving or rejecting
+  description: >-
+    The Change Spend APIs allow interact with change spend requests, like resolving them by approving
+    or rejecting
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags: []
@@ -112,8 +115,9 @@ apis:
     url: openapi/vendasta-change-spend-api-openapi.yml
 - aid: vendasta:vendasta-customer-api
   name: Vendasta customer API
-  description: The Customer APIs allow you to perform actions against customers of the account that your
-    application has been added to.
+  description: >-
+    The Customer APIs allow you to perform actions against customers of the account that your application
+    has been added to.
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
@@ -125,8 +129,8 @@ apis:
     url: openapi/vendasta-customer-api-openapi.yml
 - aid: vendasta:vendasta-executive-report-api
   name: Vendasta executive_report API
-  description: The executive report APIs are used to submit data to the executive report for a single
-    app on an account.
+  description: >-
+    The executive report APIs are used to submit data to the executive report for a single app on an account.
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags: []
@@ -137,8 +141,9 @@ apis:
     url: openapi/vendasta-executive-report-api-openapi.yml
 - aid: vendasta:vendasta-marketplace-app-api
   name: Vendasta marketplace_app API
-  description: The Marketplace App APIs allow you to perform actions against your applications, as well
-    as certain operations against all marketplace apps.
+  description: >-
+    The Marketplace App APIs allow you to perform actions against your applications, as well as certain
+    operations against all marketplace apps.
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags: []
@@ -149,8 +154,9 @@ apis:
     url: openapi/vendasta-marketplace-app-api-openapi.yml
 - aid: vendasta:vendasta-oauth-api
   name: Vendasta oauth API
-  description: The OAuth APIs allow applications to retrieve a bearer token that must be supplied with
-    all API calls. See the Authentication documentation for more details.
+  description: >-
+    The OAuth APIs allow applications to retrieve a bearer token that must be supplied with all API calls.
+    See the Authentication documentation for more details.
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
@@ -162,10 +168,11 @@ apis:
     url: openapi/vendasta-oauth-api-openapi.yml
 - aid: vendasta:vendasta-user-api
   name: Vendasta user API
-  description: The User APIs allow you to perform operations against Vendasta Users. Each user has a unique
-    identifier in the format UID-{}. This ID is guaranteed to stay the same, while the email associated
-    to a user may change. At any given time, an email is unique to a specific user but over time it is
-    possible for the email to change between user ids.
+  description: >-
+    The User APIs allow you to perform operations against Vendasta Users. Each user has a unique identifier
+    in the format UID-{}. This ID is guaranteed to stay the same, while the email associated to a user
+    may change. At any given time, an email is unique to a specific user but over time it is possible
+    for the email to change between user ids.
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
@@ -175,632 +182,808 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/vendasta-user-api-openapi.yml
-- aid: vendasta:vendasta-platform-api
-  name: Vendasta Platform REST API
-  description: 'The Platform REST APIs are the core of the Vendasta API Gateway: business locations, sales
-    accounts, users and their location permissions, orders and order custom fields, order fulfillment
-    forms, subscriptions and subscription assignments, purchases, products, partner activatable products,
-    automations and automation runs, plus country/region reference data. Requests and responses follow
-    JSON:API over application/vnd.api+json with page[limit]/page[cursor] paging and filter[] query params.
-    Secured with OAuth2 bearer tokens issued by sso-api-prod.apigateway.co. Deliberately unversioned ("Evergreen")
-    — maturity is tracked per operation and per field with the x-lifecycle extension.'
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/platform
+- aid: vendasta:vendasta-account-stats-api
+  name: Vendasta Account Stats API
+  description: The Account Stats API from Vendasta — 2 operation(s) for account stats.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - Platform
-  - Order
-  - User
-  - business-locations
-  - SalesAccounts
-  - Subscription
-  - Automations
-  - JSON:API
-  tags_raw:
-  - platform
-  - orders
-  - users
-  - business-locations
-  - sales-accounts
-  - subscriptions
-  - automations
-  - json-api
+  - Account Stats
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-platform-openapi.yml
-- aid: vendasta:vendasta-scim-api
-  name: Vendasta SCIM 2.0 User Management API
-  description: A SCIM 2.0 implementation for provisioning and de-provisioning Vendasta users and groups
-    from an external identity provider. Covers Users, Groups and System Operations (ServiceProviderConfig,
-    ResourceTypes, Schemas), with published guides on group-to-user assignment, supported PATCH operations,
-    and the known limitations of SCIM in Vendasta. Uses the same gateway bearer token as the rest of the
-    platform.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/scim
+    url: openapi/vendasta-account-stats-api-openapi.yml
+- aid: vendasta:vendasta-analyticsservice-api
+  name: Vendasta Analytics Service API
+  description: The AnalyticsService API from Vendasta — 2 operation(s) for analyticsservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - SCIM
-  - Identity
-  - Provisioning
-  - User
-  - Group
-  - SSO
-  tags_raw:
-  - scim
-  - identity
-  - provisioning
-  - users
-  - groups
-  - sso
+  - AnalyticsService
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-scim-openapi.yml
-- aid: vendasta:vendasta-crm-rest-api
-  name: Vendasta CRM REST API
-  description: The CRM REST API for contacts, companies, opportunities, associations and custom objects,
-    exposed as generic JSON:API resource operations under /org. Vendasta names the CRM API as the one
-    Platform surface still under active development, and as the replacement for the deprecated Customer
-    List API.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/org
+    url: openapi/vendasta-analyticsservice-api-openapi.yml
+- aid: vendasta:vendasta-assistants-api
+  name: Vendasta Assistants API
+  description: The Assistants API from Vendasta — 1 operation(s) for assistants.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - CRM
-  - Contacts
-  - Companies
-  - Opportunities
-  - JSON:API
-  tags_raw:
-  - crm
-  - contacts
-  - companies
-  - opportunities
-  - json-api
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-crm-rest-openapi.json
-- aid: vendasta:vendasta-crm-grpc-api
-  name: Vendasta CRM API (gRPC gateway)
-  description: 'The CRM surface exposed through the gRPC reverse-proxy gateway: CRMService, CRMAssociationService,
-    CRMCompanyService, CRMOpportunityService, CRMFieldSchemaService and CRMFieldSchemaCustomizationService.
-    53 operations covering contact, company, opportunity, association and schema management.'
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
-  tags:
-  - CRM
-  - gRPC
-  - Contacts
-  - Companies
-  - Opportunities
-  - Schemas
-  tags_raw:
-  - crm
-  - grpc
-  - contacts
-  - companies
-  - opportunities
-  - schemas
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-crm-grpc-openapi.json
-- aid: vendasta:vendasta-local-seo-api
-  name: Vendasta Local SEO REST API
-  description: 'Local SEO (formerly Listing Builder) product API: listing sync listings, listing scores,
-    listing profiles and citations for a business location. Scope-gated with the `listing` OAuth2 scope.'
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/products/listings
-  tags:
-  - Local SEO
-  - Listings
-  - Citations
-  - Directories
-  - Product
-  tags_raw:
-  - local-seo
-  - listings
-  - citations
-  - directories
-  - products
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-local-seo-openapi.yml
-- aid: vendasta:vendasta-advertising-api
-  name: Vendasta Advertising Intelligence REST API
-  description: 'Advertising Intelligence product API: connected advertising accounts, account-level stats,
-    campaign info and campaign stats across the ad channels a business runs. Scope-gated with the `advertising`
-    OAuth2 scope.'
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/products/advertising
-  tags:
-  - Advertising
-  - Campaigns
-  - Analytics
-  - Ads
-  - Product
-  tags_raw:
-  - advertising
-  - campaigns
-  - analytics
-  - ads
-  - products
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-advertising-openapi.yml
-- aid: vendasta:vendasta-reputation-api
-  name: Vendasta Reputation REST API
-  description: Reputation AI product API for reading business location reviews collected across review
-    sources. Scope-gated with the `reputation` OAuth2 scope.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/products/reputation
-  tags:
-  - Reputation
-  - Reviews
-  - Product
-  - Listings
-  tags_raw:
-  - reputation
-  - reviews
-  - products
-  - listings
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-reputation-openapi.yml
-- aid: vendasta:vendasta-reputation-grpc-api
-  name: Vendasta Reputation API (gRPC gateway)
-  description: 'The fuller Reputation surface through the gRPC gateway: ListingService, ReviewService
-    and NetPromoterScoreService — 17 operations covering listings, reviews and NPS data for the business
-    locations an app has access to.'
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
-  tags:
-  - Reputation
-  - Reviews
-  - NPS
-  - gRPC
-  - Listings
-  tags_raw:
-  - reputation
-  - reviews
-  - nps
-  - grpc
-  - listings
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-reputation-grpc-openapi.json
-- aid: vendasta:vendasta-customer-voice-api
-  name: Vendasta Customer Voice REST API
-  description: Customer Voice product API for sending review requests to a business location customers
-    and managing the email/SMS templates those requests use. Scope-gated with the `reviews` OAuth2 scope.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/products/reviews
-  tags:
-  - customer-voice
-  - Reviews
-  - Review Requests
-  - Templates
-  - Product
-  tags_raw:
-  - customer-voice
-  - reviews
-  - review-requests
-  - templates
-  - products
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-customer-voice-openapi.yml
-- aid: vendasta:vendasta-social-api
-  name: Vendasta Social REST API
-  description: Social AI product API for connected social profiles and messages on a business location.
-    Published as OpenAPI 3.1.0. Scope-gated with the `social` OAuth2 scope.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/products/social
-  tags:
-  - Social
-  - Social-Media
-  - Message
-  - Product
-  tags_raw:
-  - social
-  - social-media
-  - messages
-  - products
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-social-openapi.yml
-- aid: vendasta:vendasta-business-api
-  name: Vendasta Business REST API
-  description: The Business context API covering the Customer List for a business location — list, get,
-    update and delete customers. Vendasta has deprecated the Customer List in favour of the CRM; this
-    surface is maintained for existing integrations only.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/business
-  tags:
-  - Business
-  - Customers
-  - customer-list
-  - JSON:API
-  tags_raw:
-  - business
-  - customers
-  - customer-list
-  - json-api
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-business-openapi.yml
-- aid: vendasta:vendasta-glossary-api
-  name: Vendasta Data Glossary API
-  description: 'The Data Glossary context: glossary contexts and glossary terms, the vocabulary layer
-    that explains what similarly named fields mean in each part of the Vendasta platform (a sales view
-    of a business is not an accounting view of the same business).'
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/glossary
-  tags:
-  - Glossary
-  - Vocabulary
-  - Metadata
-  - Reference
-  tags_raw:
-  - glossary
-  - vocabulary
-  - metadata
-  - reference
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-glossary-openapi.yml
-- aid: vendasta:vendasta-ai-employees-api
-  name: Vendasta AI Employees API
-  description: API for the AI Employees (AI assistants) that Vendasta runs on a partner platform — receptionist,
-    reputation specialist, sales assistant, social media manager and custom AI employees. Scope-gated
-    with `ai-assistant` / `ai-assistant:read`.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
-  tags:
-  - Artificial Intelligence
-  - AI Employees
   - Assistants
-  - Agents
-  - gRPC
-  tags_raw:
-  - ai
-  - ai-employees
-  - assistants
-  - agents
-  - grpc
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-ai-employees-openapi.json
-- aid: vendasta:vendasta-ai-knowledge-api
-  name: Vendasta AI Knowledge API
-  description: 'The knowledge (embeddings) API that grounds Vendasta AI Employees: upsert a knowledge
-    source into an account or partner knowledge base, request a signed URL for direct file upload, remove
-    a source, and link sources to specific AI Employees. This is the ONLY Vendasta API with a published
-    rate limit — 10 writes per minute per account group against a 100/minute partner-wide ceiling, HTTP
-    429 on exhaustion.'
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+    url: openapi/vendasta-assistants-api-openapi.yml
+- aid: vendasta:vendasta-automation-runs-api
+  name: Vendasta Automation Runs API
+  description: The Automation Runs API from Vendasta — 1 operation(s) for automation runs.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - Artificial Intelligence
-  - Knowledge
-  - Embeddings
-  - RAG
-  - gRPC
-  tags_raw:
-  - ai
-  - knowledge
-  - embeddings
-  - rag
-  - grpc
+  - Automation Runs
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-ai-knowledge-openapi.json
-- aid: vendasta:vendasta-conversation-api
-  name: Vendasta Conversation API
-  description: Conversations AI service API for the unified inbox that centralises SMS, web chat, voice
-    and other channels. Scope-gated with `conversation`, `conversation:read` and `conversation.widget`.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+    url: openapi/vendasta-automation-runs-api-openapi.yml
+- aid: vendasta:vendasta-automations-api
+  name: Vendasta Automations API
+  description: The Automations API from Vendasta — 2 operation(s) for automations.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - Conversations
-  - Messaging
-  - Inbox
-  - Chat
-  - gRPC
-  tags_raw:
-  - conversations
-  - messaging
-  - inbox
-  - chat
-  - grpc
+  - Automations
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-conversation-openapi.json
+    url: openapi/vendasta-automations-api-openapi.yml
+- aid: vendasta:vendasta-blogpostsservice-api
+  name: Vendasta Blog Posts Service API
+  description: The BlogPostsService API from Vendasta — 2 operation(s) for blogpostsservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - BlogPostsService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-blogpostsservice-api-openapi.yml
+- aid: vendasta:vendasta-business-categories-api
+  name: Vendasta Business Categories API
+  description: The Business Categories API from Vendasta — 1 operation(s) for business categories.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Business Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-business-categories-api-openapi.yml
+- aid: vendasta:vendasta-business-location-reviews-api
+  name: Vendasta Business Location Reviews API
+  description: >-
+    The Business Location Reviews API from Vendasta — 2 operation(s) for business location reviews.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Business Location Reviews
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-business-location-reviews-api-openapi.yml
+- aid: vendasta:vendasta-business-locations-api
+  name: Vendasta Business Locations API
+  description: The Business Locations API from Vendasta — 2 operation(s) for business locations.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Business Locations
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-business-locations-api-openapi.yml
+- aid: vendasta:vendasta-cache-api
+  name: Vendasta Cache API
+  description: The Cache API from Vendasta — 1 operation(s) for cache.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Cache
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-cache-api-openapi.yml
+- aid: vendasta:vendasta-campaign-info-api
+  name: Vendasta Campaign Info API
+  description: The Campaign Info API from Vendasta — 2 operation(s) for campaign info.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Campaign Info
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-campaign-info-api-openapi.yml
+- aid: vendasta:vendasta-campaign-stats-api
+  name: Vendasta Campaign Stats API
+  description: The Campaign Stats API from Vendasta — 2 operation(s) for campaign stats.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Campaign Stats
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-campaign-stats-api-openapi.yml
+- aid: vendasta:vendasta-citations-api
+  name: Vendasta Citations API
+  description: The Citations API from Vendasta — 2 operation(s) for citations.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Citations
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-citations-api-openapi.yml
 - aid: vendasta:vendasta-composer-api
   name: Vendasta Composer API
-  description: The Composer service on the Vendasta gRPC gateway, used for composing content within the
-    platform.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+  description: The Composer API from Vendasta — 1 operation(s) for composer.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
   - Composer
-  - Content
-  - gRPC
-  tags_raw:
-  - composer
-  - content
-  - grpc
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-composer-openapi.json
+    url: openapi/vendasta-composer-api-openapi.yml
+- aid: vendasta:vendasta-connected-accounts-api
+  name: Vendasta Connected Accounts API
+  description: The Connected Accounts API from Vendasta — 2 operation(s) for connected accounts.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Connected Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-connected-accounts-api-openapi.yml
+- aid: vendasta:vendasta-conversationservice-api
+  name: Vendasta Conversation Service API
+  description: The ConversationService API from Vendasta — 2 operation(s) for conversationservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - ConversationService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-conversationservice-api-openapi.yml
+- aid: vendasta:vendasta-countries-api
+  name: Vendasta Countries API
+  description: The Countries API from Vendasta — 4 operation(s) for countries.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Countries
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-countries-api-openapi.yml
+- aid: vendasta:vendasta-crmassociationservice-api
+  name: Vendasta CRM Association Service API
+  description: The CRMAssociationService API from Vendasta — 6 operation(s) for crmassociationservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - CRMAssociationService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-crmassociationservice-api-openapi.yml
+- aid: vendasta:vendasta-crmcompanyservice-api
+  name: Vendasta CRM Company Service API
+  description: The CRMCompanyService API from Vendasta — 6 operation(s) for crmcompanyservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - CRMCompanyService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-crmcompanyservice-api-openapi.yml
+- aid: vendasta:vendasta-crmcustomobjectservice-api
+  name: Vendasta CRM Custom Object Service API
+  description: >-
+    The CRMCustomObjectService API from Vendasta — 9 operation(s) for crmcustomobjectservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - CRMCustomObjectService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-crmcustomobjectservice-api-openapi.yml
+- aid: vendasta:vendasta-crmcustomobjecttypeservice-api
+  name: Vendasta CRM Custom Object Type Service API
+  description: >-
+    The CRMCustomObjectTypeService API from Vendasta — 5 operation(s) for crmcustomobjecttypeservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - CRMCustomObjectTypeService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-crmcustomobjecttypeservice-api-openapi.yml
+- aid: vendasta:vendasta-crmfieldschemacustomizationservice-api
+  name: Vendasta CRM Field Schema Customization Service API
+  description: >-
+    The CRMFieldSchemaCustomizationService API from Vendasta — 5 operation(s) for crmfieldschemacustomizationservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - CRMFieldSchemaCustomizationService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-crmfieldschemacustomizationservice-api-openapi.yml
+- aid: vendasta:vendasta-crmfieldschemaservice-api
+  name: Vendasta CRM Field Schema Service API
+  description: The CRMFieldSchemaService API from Vendasta — 5 operation(s) for crmfieldschemaservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - CRMFieldSchemaService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-crmfieldschemaservice-api-openapi.yml
+- aid: vendasta:vendasta-crmopportunityservice-api
+  name: Vendasta CRM Opportunity Service API
+  description: The CRMOpportunityService API from Vendasta — 6 operation(s) for crmopportunityservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - CRMOpportunityService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-crmopportunityservice-api-openapi.yml
+- aid: vendasta:vendasta-crmservice-api
+  name: Vendasta CRM Service API
+  description: The CRMService API from Vendasta — 6 operation(s) for crmservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - CRMService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-crmservice-api-openapi.yml
+- aid: vendasta:vendasta-customers-api
+  name: Vendasta Customers API
+  description: The Customers API from Vendasta — 2 operation(s) for customers.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-customers-api-openapi.yml
+- aid: vendasta:vendasta-drafts-api
+  name: Vendasta Drafts API
+  description: The Drafts API from Vendasta — 8 operation(s) for drafts.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Drafts
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-drafts-api-openapi.yml
 - aid: vendasta:vendasta-forms-api
   name: Vendasta Forms API
-  description: Forms service API for creating and managing the forms a business publishes and the submissions
-    they collect.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+  description: The Forms API from Vendasta — 9 operation(s) for forms.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
   - Forms
-  - Submissions
-  - Lead Capture
-  - gRPC
-  tags_raw:
-  - forms
-  - submissions
-  - lead-capture
-  - grpc
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-forms-openapi.json
-- aid: vendasta:vendasta-meetings-api
-  name: Vendasta Meetings API
-  description: Meetings (CalendarHero) API for creating meetings, adding contacts, messaging and searching.
-    Scope-gated with the `meeting` OAuth2 scope.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+    url: openapi/vendasta-forms-api-openapi.yml
+- aid: vendasta:vendasta-glossary-contexts-api
+  name: Vendasta Glossary Contexts API
+  description: The Glossary-Contexts API from Vendasta — 3 operation(s) for glossary-contexts.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - Meetings
-  - Scheduling
-  - Calendar
-  - gRPC
-  tags_raw:
-  - meetings
-  - scheduling
-  - calendar
-  - grpc
+  - Glossary-Contexts
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-meetings-openapi.json
-- aid: vendasta:vendasta-sales-orders-api
+    url: openapi/vendasta-glossary-contexts-api-openapi.yml
+- aid: vendasta:vendasta-glossary-terms-api
+  name: Vendasta Glossary Terms API
+  description: The Glossary-Terms API from Vendasta — 3 operation(s) for glossary-terms.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Glossary-Terms
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-glossary-terms-api-openapi.yml
+- aid: vendasta:vendasta-group-api
+  name: Vendasta Group API
+  description: Group resource
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Group
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-group-api-openapi.yml
+- aid: vendasta:vendasta-knowledge-api
+  name: Vendasta Knowledge API
+  description: The Knowledge API from Vendasta — 5 operation(s) for knowledge.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Knowledge
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-knowledge-api-openapi.yml
+- aid: vendasta:vendasta-listing-profiles-api
+  name: Vendasta Listing Profiles API
+  description: The Listing Profiles API from Vendasta — 1 operation(s) for listing profiles.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Listing Profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-listing-profiles-api-openapi.yml
+- aid: vendasta:vendasta-listing-scores-api
+  name: Vendasta Listing Scores API
+  description: The Listing Scores API from Vendasta — 1 operation(s) for listing scores.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Listing Scores
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-listing-scores-api-openapi.yml
+- aid: vendasta:vendasta-listing-sync-listings-api
+  name: Vendasta Listing Sync Listings API
+  description: The Listing Sync Listings API from Vendasta — 1 operation(s) for listing sync listings.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Listing Sync Listings
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-listing-sync-listings-api-openapi.yml
+- aid: vendasta:vendasta-listingproductsservice-api
+  name: Vendasta Listing Products Service API
+  description: >-
+    The ListingProductsService API from Vendasta — 1 operation(s) for listingproductsservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - ListingProductsService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-listingproductsservice-api-openapi.yml
+- aid: vendasta:vendasta-listingprofileservice-api
+  name: Vendasta Listing Profile Service API
+  description: The ListingProfileService API from Vendasta — 1 operation(s) for listingprofileservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - ListingProfileService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-listingprofileservice-api-openapi.yml
+- aid: vendasta:vendasta-listingservice-api
+  name: Vendasta Listing Service API
+  description: The ListingService API from Vendasta — 3 operation(s) for listingservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - ListingService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-listingservice-api-openapi.yml
+- aid: vendasta:vendasta-listingsourceservice-api
+  name: Vendasta Listing Source Service API
+  description: The ListingSourceService API from Vendasta — 2 operation(s) for listingsourceservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - ListingSourceService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-listingsourceservice-api-openapi.yml
+- aid: vendasta:vendasta-meetingexternal-api
+  name: Vendasta Meeting External API
+  description: The MeetingExternal API from Vendasta — 9 operation(s) for meetingexternal.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - MeetingExternal
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-meetingexternal-api-openapi.yml
+- aid: vendasta:vendasta-messages-api
+  name: Vendasta Messages API
+  description: The Messages API from Vendasta — 1 operation(s) for messages.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Messages
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-messages-api-openapi.yml
+- aid: vendasta:vendasta-monitor-api
+  name: Vendasta Monitor API
+  description: The Monitor API from Vendasta — 2 operation(s) for monitor.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Monitor
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-monitor-api-openapi.yml
+- aid: vendasta:vendasta-netpromoterscoreservice-api
+  name: Vendasta Net Promoter Score Service API
+  description: >-
+    The NetPromoterScoreService API from Vendasta — 4 operation(s) for netpromoterscoreservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - NetPromoterScoreService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-netpromoterscoreservice-api-openapi.yml
+- aid: vendasta:vendasta-options-api
+  name: Vendasta Options API
+  description: The Options API from Vendasta — 55 operation(s) for options.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Options
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-options-api-openapi.yml
+- aid: vendasta:vendasta-order-custom-fields-api
+  name: Vendasta Order Custom Fields API
+  description: The Order Custom Fields API from Vendasta — 1 operation(s) for order custom fields.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Order Custom Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-order-custom-fields-api-openapi.yml
+- aid: vendasta:vendasta-order-fulfillment-forms-api
+  name: Vendasta Order Fulfillment Forms API
+  description: >-
+    The Order Fulfillment Forms API from Vendasta — 3 operation(s) for order fulfillment forms.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Order Fulfillment Forms
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-order-fulfillment-forms-api-openapi.yml
+- aid: vendasta:vendasta-orders-api
+  name: Vendasta Orders API
+  description: The Orders API from Vendasta — 4 operation(s) for orders.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-orders-api-openapi.yml
+- aid: vendasta:vendasta-pagespeedservice-api
+  name: Vendasta Page Speed Service API
+  description: The PageSpeedService API from Vendasta — 1 operation(s) for pagespeedservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - PageSpeedService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-pagespeedservice-api-openapi.yml
+- aid: vendasta:vendasta-partner-activatable-products-api
+  name: Vendasta Partner Activatable Products API
+  description: >-
+    The Partner Activatable Products API from Vendasta — 2 operation(s) for partner activatable products.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Partner Activatable Products
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-partner-activatable-products-api-openapi.yml
+- aid: vendasta:vendasta-pipelines-api
+  name: Vendasta Pipelines API
+  description: The Pipelines API from Vendasta — 5 operation(s) for pipelines.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Pipelines
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-pipelines-api-openapi.yml
+- aid: vendasta:vendasta-product-custom-fields-api
+  name: Vendasta Product Custom Fields API
+  description: The Product Custom Fields API from Vendasta — 1 operation(s) for product custom fields.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Product Custom Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-product-custom-fields-api-openapi.yml
+- aid: vendasta:vendasta-purchases-api
+  name: Vendasta Purchases API
+  description: The Purchases API from Vendasta — 1 operation(s) for purchases.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Purchases
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-purchases-api-openapi.yml
+- aid: vendasta:vendasta-resource-operations-api
+  name: Vendasta Resource Operations API
+  description: Endpoints related to Resource Operations
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Resource Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-resource-operations-api-openapi.yml
+- aid: vendasta:vendasta-review-requests-api
+  name: Vendasta Review Requests API
+  description: The Review Requests API from Vendasta — 1 operation(s) for review requests.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Review Requests
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-review-requests-api-openapi.yml
+- aid: vendasta:vendasta-reviewservice-api
+  name: Vendasta Review Service API
+  description: The ReviewService API from Vendasta — 10 operation(s) for reviewservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - ReviewService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-reviewservice-api-openapi.yml
+- aid: vendasta:vendasta-sales-account-custom-fields-api
+  name: Vendasta Sales Account Custom Fields API
+  description: >-
+    The Sales Account Custom Fields API from Vendasta — 1 operation(s) for sales account custom fields.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Sales Account Custom Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-sales-account-custom-fields-api-openapi.yml
+- aid: vendasta:vendasta-sales-accounts-api
+  name: Vendasta Sales Accounts API
+  description: The Sales Accounts API from Vendasta — 4 operation(s) for sales accounts.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Sales Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-sales-accounts-api-openapi.yml
+- aid: vendasta:vendasta-salesorders-api
   name: Vendasta Sales Orders API
-  description: Sales Orders service and its auxiliary field schema, exposed through the gRPC gateway —
-    the order surface behind the platform marketplace.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+  description: The SalesOrders API from Vendasta — 3 operation(s) for salesorders.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - Sales
-  - Order
-  - Commerce
-  - gRPC
-  tags_raw:
-  - sales
-  - orders
-  - commerce
-  - grpc
+  - SalesOrders
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-sales-orders-openapi.json
-- aid: vendasta:vendasta-social-posts-api
+    url: openapi/vendasta-salesorders-api-openapi.yml
+- aid: vendasta:vendasta-salesordersauxiliaryfieldschema-api
+  name: Vendasta Sales Orders Auxiliary Field Schema API
+  description: >-
+    The SalesOrdersAuxiliaryFieldSchema API from Vendasta — 2 operation(s) for salesordersauxiliaryfieldschema.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - SalesOrdersAuxiliaryFieldSchema
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-salesordersauxiliaryfieldschema-api-openapi.yml
+- aid: vendasta:vendasta-searchservice-api
+  name: Vendasta Search Service API
+  description: The SearchService API from Vendasta — 2 operation(s) for searchservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - SearchService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-searchservice-api-openapi.yml
+- aid: vendasta:vendasta-send-welcome-email-api
+  name: Vendasta Send Welcome Email API
+  description: The Send Welcome Email API from Vendasta — 1 operation(s) for send welcome email.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Send Welcome Email
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-send-welcome-email-api-openapi.yml
+- aid: vendasta:vendasta-seoservice-api
+  name: Vendasta SEO Service API
+  description: The SEOService API from Vendasta — 2 operation(s) for seoservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - SEOService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-seoservice-api-openapi.yml
+- aid: vendasta:vendasta-sitedetail-service-api
+  name: Vendasta SiteDetail Service API
+  description: Partner-facing endpoints for WordPress site information.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - SiteDetail Service
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-sitedetail-service-api-openapi.yml
+- aid: vendasta:vendasta-siteinfo-api
+  name: Vendasta Site Info API
+  description: The SiteInfo API from Vendasta — 1 operation(s) for siteinfo.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - SiteInfo
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-siteinfo-api-openapi.yml
+- aid: vendasta:vendasta-sitemanager-api
+  name: Vendasta Site Manager API
+  description: The SiteManager API from Vendasta — 5 operation(s) for sitemanager.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - SiteManager
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-sitemanager-api-openapi.yml
+- aid: vendasta:vendasta-siteoptionsservice-api
+  name: Vendasta Site Options Service API
+  description: The SiteOptionsService API from Vendasta — 1 operation(s) for siteoptionsservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - SiteOptionsService
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-siteoptionsservice-api-openapi.yml
+- aid: vendasta:vendasta-social-profiles-api
+  name: Vendasta Social Profiles API
+  description: The Social Profiles API from Vendasta — 1 operation(s) for social profiles.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Social Profiles
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-social-profiles-api-openapi.yml
+- aid: vendasta:vendasta-socialposts-api
   name: Vendasta Social Posts API
-  description: 'Social Posts services: SocialPosts, SocialPostsV2, the WordPress plugin service and the
-    blog posts service — publishing and scheduling social and blog content for a business.'
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+  description: The SocialPosts API from Vendasta — 3 operation(s) for socialposts.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - Social
-  - Posts
-  - Publishing
-  - WordPress
-  - gRPC
-  tags_raw:
-  - social
-  - posts
-  - publishing
-  - wordpress
-  - grpc
+  - SocialPosts
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-social-posts-openapi.json
-- aid: vendasta:vendasta-social-drafts-api
-  name: Vendasta Social Drafts API
-  description: Social Drafts service for creating, listing and managing draft social content before it
-    is scheduled or published.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+    url: openapi/vendasta-socialposts-api-openapi.yml
+- aid: vendasta:vendasta-socialpostsv2-api
+  name: Vendasta Social Posts V2 API
+  description: The SocialPostsV2 API from Vendasta — 2 operation(s) for socialpostsv2.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - Social
-  - Drafts
-  - Content
-  - gRPC
-  tags_raw:
-  - social
-  - drafts
-  - content
-  - grpc
+  - SocialPostsV2
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-social-drafts-openapi.json
-- aid: vendasta:vendasta-listing-products-api
-  name: Vendasta Listing Products API
-  description: 'Listing Products services through the gRPC gateway: ListingProductsService, ListingSourceService,
-    ListingProfileService, SEOService and Citations — the fuller local-listings surface behind Local SEO.'
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+    url: openapi/vendasta-socialpostsv2-api-openapi.yml
+- aid: vendasta:vendasta-subscription-assignments-api
+  name: Vendasta Subscription Assignments API
+  description: >-
+    The Subscription Assignments API from Vendasta — 4 operation(s) for subscription assignments.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - Listings
-  - Local SEO
-  - Citations
-  - SEO
-  - gRPC
-  tags_raw:
-  - listings
-  - local-seo
-  - citations
-  - seo
-  - grpc
+  - Subscription Assignments
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-listing-products-openapi.json
-- aid: vendasta:vendasta-multi-location-analytics-api
-  name: Vendasta Multi-Location Analytics API
-  description: Analytics service for multi-location brands and franchises, rolling product performance
-    up across the locations under one partner.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+    url: openapi/vendasta-subscription-assignments-api-openapi.yml
+- aid: vendasta:vendasta-subscriptions-api
+  name: Vendasta Subscriptions API
+  description: The Subscriptions API from Vendasta — 1 operation(s) for subscriptions.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - Analytics
-  - Multi-Location
-  - Franchise
-  - Reporting
-  - gRPC
-  tags_raw:
-  - analytics
-  - multi-location
-  - franchise
-  - reporting
-  - grpc
+  - Subscriptions
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-multi-location-analytics-openapi.json
+    url: openapi/vendasta-subscriptions-api-openapi.yml
+- aid: vendasta:vendasta-system-operations-api
+  name: Vendasta System Operations API
+  description: System Operations
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - System Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-system-operations-api-openapi.yml
+- aid: vendasta:vendasta-templates-api
+  name: Vendasta Templates API
+  description: The Templates API from Vendasta — 2 operation(s) for templates.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Templates
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-templates-api-openapi.yml
+- aid: vendasta:vendasta-terms-api
+  name: Vendasta Terms API
+  description: The Terms API from Vendasta — 2 operation(s) for terms.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Terms
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-terms-api-openapi.yml
+- aid: vendasta:vendasta-user-custom-fields-api
+  name: Vendasta User Custom Fields API
+  description: The User Custom Fields API from Vendasta — 2 operation(s) for user custom fields.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - User Custom Fields
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-user-custom-fields-api-openapi.yml
+- aid: vendasta:vendasta-users-api
+  name: Vendasta Users API
+  description: The Users API from Vendasta — 5 operation(s) for users.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Users
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-users-api-openapi.yml
 - aid: vendasta:vendasta-vanalytics-api
-  name: Vendasta Vanalytics API
-  description: The VAnalytics service on the gRPC gateway, exposing Vendasta platform analytics data.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+  name: Vendasta V Analytics API
+  description: The VAnalytics API from Vendasta — 5 operation(s) for vanalytics.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - Analytics
-  - Reporting
-  - Metrics
-  - gRPC
-  tags_raw:
-  - analytics
-  - reporting
-  - metrics
-  - grpc
+  - VAnalytics
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-vanalytics-openapi.json
-- aid: vendasta:vendasta-wordpress-hosting-api
-  name: Vendasta WordPress Hosting API
-  description: Site detail service for Vendasta managed WordPress hosting (Website Pro), which runs client
-    WordPress sites on Google Cloud.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+    url: openapi/vendasta-vanalytics-api-openapi.yml
+- aid: vendasta:vendasta-wordpresspluginservice-api
+  name: Vendasta Wordpress Plugin Service API
+  description: >-
+    The WordpressPluginService API from Vendasta — 1 operation(s) for wordpresspluginservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - WordPress
-  - Hosting
-  - Websites
-  - gRPC
-  tags_raw:
-  - wordpress
-  - hosting
-  - websites
-  - grpc
+  - WordpressPluginService
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-wordpress-hosting-openapi.json
-- aid: vendasta:vendasta-wsp-admin-center-api
-  name: Vendasta Website Pro Admin Center API
-  description: Website Pro admin center services — search and WordPress administration across the sites
-    a partner manages.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
+    url: openapi/vendasta-wordpresspluginservice-api-openapi.yml
+- aid: vendasta:vendasta-wordpressservice-api
+  name: Vendasta Wordpress Service API
+  description: The WordpressService API from Vendasta — 3 operation(s) for wordpressservice.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - WordPress
-  - Websites
-  - Admin
-  - gRPC
-  tags_raw:
-  - wordpress
-  - websites
-  - admin
-  - grpc
+  - WordpressService
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-wsp-admin-center-openapi.json
-- aid: vendasta:vendasta-wsp-monitor-api
-  name: Vendasta Website Pro Monitor API
-  description: Website Pro monitoring service for uptime and health signals on managed WordPress sites.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
-  tags:
-  - WordPress
-  - Monitoring
-  - Uptime
-  - Websites
-  - gRPC
-  tags_raw:
-  - wordpress
-  - monitoring
-  - uptime
-  - websites
-  - grpc
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-wsp-monitor-openapi.json
-- aid: vendasta:vendasta-wsp-site-info-api
-  name: Vendasta Website Pro Site Info API
-  description: Website Pro site information and cache services for managed WordPress sites.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
-  tags:
-  - WordPress
-  - Websites
-  - Cache
-  - gRPC
-  tags_raw:
-  - wordpress
-  - websites
-  - cache
-  - grpc
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-wsp-site-info-openapi.json
-- aid: vendasta:vendasta-wsp-support-tools-api
-  name: Vendasta Website Pro Support Tools API
-  description: Website Pro SiteManager support tooling used to diagnose and operate managed WordPress
-    sites.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
-  tags:
-  - WordPress
-  - Support
-  - Websites
-  - gRPC
-  tags_raw:
-  - wordpress
-  - support
-  - websites
-  - operations
-  - grpc
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-wsp-support-tools-openapi.json
-- aid: vendasta:vendasta-wsp-wp-manager-api
-  name: Vendasta Website Pro WP Manager API
-  description: Website Pro site options and PageSpeed services for managed WordPress sites.
-  humanURL: https://developers.vendasta.com/platform
-  baseURL: https://prod.apigateway.co/grpc
-  tags:
-  - WordPress
-  - Page Speed
-  - Performance
-  - Websites
-  - gRPC
-  tags_raw:
-  - wordpress
-  - pagespeed
-  - performance
-  - websites
-  - grpc
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-wsp-wp-manager-openapi.json
+    url: openapi/vendasta-wordpressservice-api-openapi.yml
 common:
 - type: TrustCenter
   url: security/vendasta-trust-center.yml
