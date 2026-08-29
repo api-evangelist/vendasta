@@ -25,6 +25,18 @@ x-enrichment:
   status: enriched
   artifacts_added: 41
   pass: local-v1
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: unknown
   onboarding: self-serve
@@ -985,6 +997,9 @@ apis:
   - type: OpenAPI
     url: openapi/vendasta-wordpressservice-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/vendasta-capability-edges.yml
+  name: Vendasta Business Capability Map
 - type: TrustCenter
   url: security/vendasta-trust-center.yml
 - type: VulnerabilityDisclosure
