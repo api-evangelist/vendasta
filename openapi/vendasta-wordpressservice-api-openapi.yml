@@ -1,0 +1,183 @@
+openapi: 3.2.0
+info:
+  title: WSP Admin Center Wordpress Service API
+  version: 1.14.1
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: WordpressService
+paths:
+  /v1/wph/admin/wordpress/core:
+    post:
+      operationId: WordpressService_UpdateCore
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UpdateCoreRequest'
+        description: Request to update a WordPress site with the latest core version information.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Update Core
+      tags:
+      - WordpressService
+  /v1/wph/admin/wordpress/plugins:
+    post:
+      operationId: WordpressService_UpdatePlugins
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UpdatePluginsRequest'
+        description: Request to update a WordPress site with the latest plugin information.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Update Plugins
+      tags:
+      - WordpressService
+  /v1/wph/admin/wordpress/themes:
+    post:
+      operationId: WordpressService_UpdateTheme
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UpdateThemeRequest'
+        description: Request to update a WordPress site with the latest theme information.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Update Theme
+      tags:
+      - WordpressService
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1UpdateThemeRequest:
+      description: Request to update a WordPress site with the latest theme information.
+      properties:
+        siteId:
+          description: Required. The unique identifier of the site to update.
+          type: string
+        theme:
+          $ref: '#/components/schemas/v1WordPressAddon'
+      required:
+      - siteId
+      - theme
+      title: UpdateThemeRequest
+      type: object
+    v1UpdatePluginsRequest:
+      description: Request to update a WordPress site with the latest plugin information.
+      properties:
+        method:
+          description: Optional. The update method to use.
+          type: string
+        plugins:
+          description: Required. The list of plugins to update.
+          items:
+            $ref: '#/components/schemas/v1WordPressAddon'
+          type: array
+        siteId:
+          description: Required. The unique identifier of the site to update.
+          type: string
+      required:
+      - siteId
+      - plugins
+      title: UpdatePluginsRequest
+      type: object
+    v1UpdateCoreRequest:
+      description: Request to update a WordPress site with the latest core version information.
+      properties:
+        coreCurrentVersion:
+          description: Required. The current WordPress core version.
+          type: string
+        coreLatestVersion:
+          description: Required. The latest available WordPress core version.
+          type: string
+        siteId:
+          description: Required. The unique identifier of the site to update.
+          type: string
+      required:
+      - siteId
+      - coreCurrentVersion
+      - coreLatestVersion
+      title: UpdateCoreRequest
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1WordPressAddon:
+      description: A WordPress plugin or theme, including current and latest version information.
+      properties:
+        currentVersion:
+          description: Optional. The current installed version of the addon.
+          type: string
+        id:
+          description: Required. The unique identifier of the addon (plugin slug or theme slug).
+          type: string
+        latestVersion:
+          description: Optional. The latest available version of the addon.
+          type: string
+      required:
+      - id
+      title: WordPressAddon
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            admin: Allows the application to perform administrative tasks that you have access to across the platform
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

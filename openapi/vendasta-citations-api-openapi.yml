@@ -1,0 +1,352 @@
+openapi: 3.2.0
+info:
+  title: Vendasta Citations API
+  version: '1.0'
+  description: 'Operations tagged Citations across 2 of this provider''s published API definitions: vendasta-listing-products-openapi.json, vendasta-local-seo-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+- url: https://prod.apigateway.co/products/listings
+  description: Production
+- url: https://demo.apigateway.co/products/listings
+  description: Demo
+- url: '{local}/products/listings'
+  description: Local
+- url: http://localhost:11001/products/listings
+  description: Localhost
+tags:
+- name: Citations
+paths:
+  /v1/listings/get-citation-data:
+    post:
+      operationId: Citations_GetCitationData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetCitationDataRequest'
+        description: Request to retrieve citation data for a business, including citation counts, historical trends, and citations grouped by domain.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetCitationDataResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Get Citation Data
+      tags:
+      - Citations
+    servers:
+    - description: Production
+      url: https://prod.apigateway.co/grpc
+  /citations:
+    get:
+      summary: Get Citation Data
+      tags:
+      - Citations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    $ref: '#/components/schemas/citations'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        description: Provides a link back to the first page of results
+                        format: uri
+                      next:
+                        type: string
+                        description: The URI at which the next batch of citations can be fetched from
+                        format: uri
+      operationId: get-citationData
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+        Get the citation data information for a specific business. The citations that are returned are sorted by the `foundAt` property in descending order.'
+      x-lifecycle:
+        status: proposed
+      security:
+      - OAuth2Demo:
+        - listing
+      - OAuth2Prod:
+        - listing
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+      - schema:
+          type: string
+        in: query
+        name: filter[businessLocation.id]
+        description: Return citations for the specified listing profile for Vendasta's unique ID for the business
+      - schema:
+          type: string
+        in: query
+        name: page[cursor]
+        description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+      - schema:
+          type: string
+        in: query
+        name: page[limit]
+        description: '[Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).'
+    options:
+      operationId: options-citationData
+      summary: List valid HTTP verbs for /citations
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: User Cannot Access Citations
+        '404':
+          description: Business Not Found
+        '406':
+          description: No Listing Product Active
+      tags:
+      - Citations
+    servers:
+    - url: https://prod.apigateway.co/products/listings
+      description: Production
+    - url: https://demo.apigateway.co/products/listings
+      description: Demo
+    - url: '{local}/products/listings'
+      description: Local
+    - url: http://localhost:11001/products/listings
+      description: Localhost
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1Citation:
+      description: Citation contains details for a citation.
+      properties:
+        breadcrumb:
+          description: Output only. The breadcrumb path of the citation page.
+          readOnly: true
+          type: string
+        created:
+          description: Output only. When this citation was first discovered.
+          format: date-time
+          readOnly: true
+          type: string
+        description:
+          description: Output only. The page description or snippet of the citation.
+          readOnly: true
+          type: string
+        domain:
+          description: Output only. The domain where the citation was found.
+          readOnly: true
+          type: string
+        matchedFields:
+          description: Output only. The NAP fields that matched in this citation.
+          items:
+            type: string
+          readOnly: true
+          type: array
+        searchTerm:
+          description: Output only. The search term that found this citation.
+          readOnly: true
+          type: string
+        title:
+          description: Output only. The page title of the citation.
+          readOnly: true
+          type: string
+        url:
+          description: Output only. The URL of the citation.
+          readOnly: true
+          type: string
+      type: object
+    v1HistoricalCitationsDataPoint:
+      properties:
+        date:
+          description: Output only. Date of the data point.
+          format: date-time
+          readOnly: true
+          type: string
+        value:
+          description: Output only. Total citations found up to this date.
+          format: int64
+          readOnly: true
+          type: string
+      type: object
+    v1GetCitationDataResponse:
+      description: Contains citation data for a business including total count, historical trends, and citations grouped by domain.
+      properties:
+        citationCount:
+          description: Output only. The total number of citations found for the business.
+          format: int64
+          readOnly: true
+          type: string
+        citationPercentGrowth:
+          description: Output only. The percentage growth in citations over the date range.
+          format: int64
+          readOnly: true
+          type: string
+        citationsByDomain:
+          description: Output only. Citations grouped by domain.
+          items:
+            $ref: '#/components/schemas/v1CitationsByDomain'
+          readOnly: true
+          type: array
+        historicalCitationsSeries:
+          description: Output only. Historical citation data points showing citation count over time.
+          items:
+            $ref: '#/components/schemas/v1HistoricalCitationsDataPoint'
+          readOnly: true
+          type: array
+        initialCitationCount:
+          description: Output only. The initial citation count at the start of tracking.
+          format: int64
+          readOnly: true
+          type: string
+        startDate:
+          description: Output only. The start date of the citation data range.
+          format: date-time
+          readOnly: true
+          type: string
+      title: GetCitationDataResponse
+      type: object
+    v1CitationsByDomain:
+      properties:
+        citations:
+          items:
+            $ref: '#/components/schemas/v1Citation'
+          type: array
+        domain:
+          type: string
+      title: CitationsByDomain contains all citations for a domain
+      type: object
+    v1GetCitationDataRequest:
+      description: Request to retrieve citation data for a business, including citation counts, historical trends, and citations grouped by domain.
+      properties:
+        businessId:
+          description: Required. The business ID (account group ID) for which to retrieve citation data.
+          type: string
+        endDate:
+          description: Optional. The end date of the date range for citation data retrieval.
+          format: date-time
+          type: string
+        startDate:
+          description: Optional. The start date of the date range for citation data retrieval.
+          format: date-time
+          type: string
+      required:
+      - businessId
+      title: GetCitationDataRequest
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    citations:
+      title: Citations
+      type: object
+      x-examples:
+        Example 1:
+        - id: c01
+          type: citations
+          breadcrumb: Home > Page Title
+          foundAt: '2021-09-20T12:46:46Z'
+          description: page description
+          domain: vendasta.com
+          title: Page Title Example
+          url: https://vendasta.com/page-title-example.com
+      properties:
+        id:
+          description: Public facing name of the source
+          type: string
+        type:
+          type: string
+          default: citation
+          enum:
+          - citation
+        breadcrumb:
+          type: string
+          description: The breadcrumb from which the citation was found
+        foundAt:
+          type: string
+          format: date-time
+          description: The date the citation was found
+        description:
+          type: string
+          description: The description of the citation
+        domain:
+          type: string
+          description: The domain from which the citation was found
+        title:
+          type: string
+          description: The title of the website page where the citation was found
+        url:
+          type: string
+          description: The url of the website where the citation was found
+      x-lifecycle: proposed
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`
+
+        The citations found for a specific SMB'
+      x-tags:
+      - Citations
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            admin: Allows the application to perform administrative tasks that you have access to across the platform
+            business-app: Allows the application to manage all features of Business App
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2
+    JWT:
+      type: http
+      scheme: bearer
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            listing: Access to the Local SEO REST API
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            listing: Access to the Local SEO REST API
+x-refined-from:
+- vendasta-listing-products-openapi.json
+- vendasta-local-seo-openapi.yml

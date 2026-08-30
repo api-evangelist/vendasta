@@ -1,0 +1,247 @@
+openapi: 3.2.0
+info:
+  title: Advertising Intelligence REST Connected Accounts API
+  version: '1.0'
+  description: ''
+servers:
+- url: https://prod.apigateway.co/products/advertising
+  description: Production
+- url: https://demo.apigateway.co/products/advertising
+  description: Demo
+- url: '{local}/products/advertising'
+  description: Local
+- url: http://localhost:11001/products/advertising
+  description: Localhost
+tags:
+- name: Connected Accounts
+paths:
+  /connectedAccounts/{id}:
+    parameters:
+    - in: path
+      name: id
+      description: Resource ID of a Connected Advertising Account
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Get Connected Account
+      operationId: get-connectedAccounts-connectedAccount.id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vdn.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/connectedAccounts'
+                  links:
+                    type: object
+                    required:
+                    - self
+                    properties:
+                      self:
+                        type: string
+                required:
+                - data
+                - links
+        '404':
+          description: Connected Account Not Found
+      description: Retrieve the metadata of a single connected advertising account.
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      security:
+      - OAuth2Demo:
+        - advertising
+      - OAuth2Prod:
+        - advertising
+      x-lifecycle:
+        status: trustedTester
+      tags:
+      - Connected Accounts
+  /connectedAccounts:
+    parameters: []
+    get:
+      summary: List Connected Accounts
+      operationId: get-connectedAccounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/connectedAccounts'
+                  links:
+                    type: object
+                    required:
+                    - self
+                    properties:
+                      self:
+                        type: string
+                      next:
+                        type: string
+                required:
+                - data
+                - links
+      description: Retrieve all connected advertising accounts.
+      x-lifecycle:
+        status: trustedTester
+      security:
+      - OAuth2Demo:
+        - advertising
+      - OAuth2Prod:
+        - advertising
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/businessLocation.id'
+      - $ref: '#/components/parameters/provider'
+      - $ref: '#/components/parameters/connectedAccount.resourceId'
+      - $ref: '#/components/parameters/pageLimit'
+      - $ref: '#/components/parameters/pageCursor'
+      tags:
+      - Connected Accounts
+components:
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^Bearer\s\S+
+        example: Bearer <access token>
+      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+    businessLocation.id:
+      name: filter[businessLocation.id]
+      in: query
+      schema:
+        type: string
+        example: AG-HDABCKDEFR
+        uniqueItems: true
+        minItems: 0
+      description: A single Business Location ID
+      allowEmptyValue: true
+      required: true
+    pageLimit:
+      name: page[limit]
+      in: query
+      required: false
+      schema:
+        type: number
+        maximum: 100
+        minimum: 1
+        default: 25
+      description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    pageCursor:
+      name: page[cursor]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    provider:
+      name: filter[provider]
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - google
+        - facebook
+        - localads
+      description: Comma separated list of Advertising Providers
+    connectedAccount.resourceId:
+      name: filter[connectedAccount.id]
+      in: query
+      schema:
+        type: string
+        example: AG-AHFJEHD:google:1324354657
+        uniqueItems: true
+      description: Comma separated list of Resource IDs of Connected Advertising Accounts
+      allowEmptyValue: true
+  schemas:
+    connectedAccounts:
+      title: connectedAccounts
+      type: object
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        An advertising account that’s connected within Advertising Intelligence from integrated campaign management platforms, including Google Adwords, Facebook Ads and Local Ads.'
+      x-examples: {}
+      x-lifecycle:
+        status: trustedTester
+      x-tags:
+      - Connected Accounts
+      properties:
+        id:
+          type: string
+          description: The resource ID of the Advertising Account
+          example: AG-HDV4JKPXFR:google:7531238654
+        type:
+          type: string
+          description: connectedAccounts
+          default: connectedAccounts
+          enum:
+          - connectedAccounts
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              description: The name of the ad account
+            currencyCode:
+              type: string
+              description: "\t\nThe 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)"
+              minLength: 3
+              maxLength: 3
+            status:
+              type: string
+              description: Whether or not if the saved credential for the ad account is invalid, e.g. user no longer have access to the account, or user revoked access.
+              enum:
+              - active
+              - reconnectionRequired
+            provider:
+              type: string
+              description: The Advertising provider
+              enum:
+              - google
+              - facebook
+              - localads
+            createdAt:
+              type: string
+              description: The date time that the ad account is connected
+            updatedAt:
+              type: string
+              description: The date time that the entity was last updated
+      required:
+      - id
+      - type
+      - attributes
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            advertising: Access to the Advertising Intelligence REST API
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            advertising: Access to the Advertising Intelligence REST API

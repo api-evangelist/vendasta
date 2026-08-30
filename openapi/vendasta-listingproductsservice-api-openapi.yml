@@ -1,0 +1,501 @@
+openapi: 3.2.0
+info:
+  title: Listing Products Service API
+  version: 1.210.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: ListingProductsService
+paths:
+  /v1/listings/get-sync-data:
+    post:
+      operationId: ListingProductsService_GetSyncData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetSyncDataRequest'
+        description: Request to retrieve comprehensive sync status and listing accuracy data for a business across all directory sources.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetSyncDataResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Get Sync Data
+      tags:
+      - ListingProductsService
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1SourceAccuracy:
+      properties:
+        anchorData:
+          $ref: '#/components/schemas/v1AnchorData'
+        anchorDataMatches:
+          $ref: '#/components/schemas/v1AnchorDataMatches'
+        lastScraped:
+          format: date-time
+          title: 'last_scraped is when we last checked the directory''s live listing
+
+            If this is old, the accuracy data might be stale (we scrape periodically, not real-time)'
+          type: string
+        status:
+          $ref: '#/components/schemas/v1AccuracyStatus'
+      title: 'SourceAccuracy contains comprehensive accuracy information for a listing on a directory.
+
+        This shows both the expected data and field-by-field comparison with what''s actually live.
+
+        This is the key data structure for answering "why is my listing inaccurate?"'
+      type: object
+    v1Metadata:
+      description: 'Metadata contains additional key-value information about a sync.
+
+        Contents vary by directory - may include submission IDs, provider-specific status codes, etc.'
+      properties:
+        key:
+          title: key is the metadata field name
+          type: string
+        value:
+          title: value is the metadata field value
+          type: string
+      type: object
+    v1DetailedSyndicationStatusResults:
+      properties:
+        key:
+          title: key identifies the data type category (e.g., "location" for NAP data, "hours" for business hours, "photos" for images)
+          type: string
+        value:
+          $ref: '#/components/schemas/v1DetailedSyndicationStatusResultValue'
+      title: 'DetailedSyndicationStatusResults provides granular sync status for different data types within a sync.
+
+        Key-value pairs where key is the data type (e.g., "location", "hours", "photos")'
+      type: object
+    v1SyncRequirement:
+      default: SYNC_REQUIREMENT_UNSET
+      description: "SyncRequirement specifies what product activation is needed to automatically sync to a directory.\nThis explains why a directory might not be available for a particular business.\n\n - SYNC_REQUIREMENT_UNSET: SYNC_REQUIREMENT_UNSET means no specific requirement (e.g., manual submission via RM, or direct OAuth)\n - SYNC_REQUIREMENT_LSP: SYNC_REQUIREMENT_LSP requires an active Listing Sync Pro subscription (either Yext or Uberall)\n - SYNC_REQUIREMENT_PRO_EDITION: SYNC_REQUIREMENT_PRO_EDITION requires Local SEO Pro edition\n - SYNC_REQUIREMENT_YEXT_LSP: SYNC_REQUIREMENT_YEXT_LSP specifically requires Yext-based Listing Sync Pro\nThis directory is only available through Yext, not Uberall\n - SYNC_REQUIREMENT_UBERALL_LSP: SYNC_REQUIREMENT_UBERALL_LSP specifically requires Uberall-based Listing Sync Pro\nThis directory is only available through Uberall, not Yext\n - SYNC_REQUIREMENT_LSP_OR_PRO_EDITION: SYNC_REQUIREMENT_LSP_OR_PRO_EDITION requires either Listing Sync Pro OR Local SEO Pro"
+      enum:
+      - SYNC_REQUIREMENT_UNSET
+      - SYNC_REQUIREMENT_LSP
+      - SYNC_REQUIREMENT_PRO_EDITION
+      - SYNC_REQUIREMENT_YEXT_LSP
+      - SYNC_REQUIREMENT_UBERALL_LSP
+      - SYNC_REQUIREMENT_LSP_OR_PRO_EDITION
+      type: string
+    v1EcosystemSource:
+      description: 'EcosystemSource represents a secondary directory that receives data when syncing to a primary aggregator.
+
+        Example: When syncing to Neustar or Data Axle, data flows to dozens of downstream directories.'
+      properties:
+        icon:
+          title: icon is the URL to the directory's logo/icon
+          type: string
+        name:
+          title: name is the human-readable name of the downstream directory (e.g., "TomTom", "Garmin", "MapQuest")
+          type: string
+        sourceId:
+          title: source_id is the numeric ID of the downstream directory
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1AnchorData:
+      description: 'AnchorData contains the expected business NAP (Name, Address, Phone) data from the business profile.
+
+        This is the "source of truth" that we compare against what''s live on the directory to determine accuracy.'
+      properties:
+        address:
+          title: address is the expected street address
+          type: string
+        city:
+          title: city is the expected business city
+          type: string
+        companyName:
+          title: company_name is the expected business name
+          type: string
+        country:
+          title: country is the expected country code
+          type: string
+        phone:
+          title: phone is the expected primary phone number
+          type: string
+        state:
+          title: state is the expected state/province
+          type: string
+        website:
+          title: website is the expected business website URL
+          type: string
+        zip:
+          title: zip is the expected postal/zip code
+          type: string
+      type: object
+    v1DetailedSyndicationStatusResultValue:
+      description: 'DetailedSyndicationStatusResultValue contains field-level sync results for a specific data type.
+
+        This shows exactly which fields synced successfully and which failed within a data category.'
+      properties:
+        dataType:
+          title: data_type is the category of data (matches the key in parent message)
+          type: string
+        errorMessage:
+          title: 'error_message contains the specific error for failed fields
+
+            Example: "Phone number format invalid for Bing Places. Must be (XXX) XXX-XXXX"'
+          type: string
+        failedFields:
+          items:
+            type: string
+          title: 'failed_fields lists individual fields that failed to sync
+
+            Example: ["phone"] - this tells you exactly which field is causing the problem'
+          type: array
+        lastSyncTime:
+          format: date-time
+          title: last_sync_time is when this data type was last synced successfully
+          type: string
+        status:
+          title: status is the high-level status for this data type ("success", "failed", "partial")
+          type: string
+        syncedFields:
+          items:
+            type: string
+          title: 'synced_fields lists individual fields that synced successfully
+
+            Example: ["company_name", "address", "city", "state", "zip"]'
+          type: array
+      type: object
+    v1SyndicationStatus:
+      description: 'SyndicationStatus contains detailed sync execution information for a directory.
+
+        This provides the forensic details needed to diagnose why a sync failed or is taking longer than expected.'
+      properties:
+        detailedResults:
+          items:
+            $ref: '#/components/schemas/v1DetailedSyndicationStatusResults'
+          title: 'detailed_results contains field-by-field sync results showing which fields succeeded and which failed
+
+            Critical for answering "why did only some of my fields sync?"'
+          type: array
+        lastAttemptedOn:
+          format: date-time
+          readOnly: true
+          title: 'Output only. When the most recent sync attempt started (successful or failed).
+
+            Use this to determine "when did we last try to sync?"'
+          type: string
+        lastSucceededOn:
+          description: 'Output only. When the most recent successful sync completed.
+
+            If this is significantly older than last_attempted_on, syncs are failing.'
+          format: date-time
+          readOnly: true
+          type: string
+        lastSuccessfulAttemptId:
+          title: last_successful_attempt_id is the workflow execution ID for the most recent successful sync (for debugging)
+          type: string
+        lastSyncAttemptId:
+          title: last_sync_attempt_id is the workflow execution ID for the most recent sync attempt (for debugging)
+          type: string
+        listingExternalId:
+          title: listing_external_id is the directory's internal ID for this listing (e.g., Google Place ID, Yelp Business ID)
+          type: string
+        listingUrl:
+          title: listing_url is the public URL where this listing can be viewed on the directory
+          type: string
+        metadata:
+          items:
+            $ref: '#/components/schemas/v1Metadata'
+          title: metadata contains additional key-value pairs with sync-specific information
+          type: array
+        status:
+          title: status is a human-readable status message (may contain error details)
+          type: string
+        updated:
+          description: Output only. When this sync status was last modified.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
+    v1ConnectedDirectSyncAccount:
+      description: 'ConnectedDirectSyncAccount represents an OAuth-connected account for direct sync sources (Google, Facebook, Apple, Bing).
+
+        This is only populated for directories that require OAuth authentication to sync.'
+      properties:
+        accountId:
+          title: account_id is the directory's internal identifier for this account (e.g., Google Account ID, Facebook Page ID)
+          type: string
+        accountType:
+          title: account_type identifies the directory/service type (e.g., "google", "facebook", "apple", "bing")
+          type: string
+        clientTags:
+          items:
+            type: string
+          title: client_tags are partner-specific tags associated with this account
+          type: array
+        connectionId:
+          title: connection_id uniquely identifies this connection in the Core Services system (also known as Social Service ID)
+          type: string
+        disabledFlag:
+          title: disabled_flag indicates this connection has been manually disabled and cannot be used
+          type: boolean
+        isAuthenticated:
+          title: 'is_authenticated indicates if the OAuth token is valid and the account is currently connected
+
+            False means the user needs to re-authenticate (token expired or was revoked)'
+          type: boolean
+        isSyncingEnabled:
+          title: 'is_syncing_enabled indicates if automatic syncing is turned on for this specific account
+
+            A business might have multiple Google accounts connected but only sync to one'
+          type: boolean
+        isVerified:
+          title: 'is_verified indicates the account has been verified/claimed by the provider
+
+            Example: a verified Google Business Profile location vs. an unverified one'
+          type: boolean
+        profileImageUrl:
+          title: profile_image_url is the avatar/logo URL for the connected account
+          type: string
+        profileUrl:
+          title: profile_url is the URL to the account's profile page on the directory (e.g., Google Business Profile dashboard)
+          type: string
+        tokenBroken:
+          title: 'token_broken indicates the OAuth token is invalid, expired, or revoked
+
+            User action required: Reconnect the account to get a fresh OAuth token'
+          type: boolean
+        username:
+          title: username is the display name or email of the connected account (e.g., "john@example.com" for Google)
+          type: string
+      type: object
+    v1GetSyncDataRequest:
+      description: Request to retrieve comprehensive sync status and listing accuracy data for a business across all directory sources.
+      properties:
+        businessId:
+          description: Required. The business ID (also known as account_group_id) uniquely identifying the business location.
+          type: string
+        includeHidden:
+          description: 'Optional. Returns directories that are normally hidden from the UI (e.g., disabled by partner, not applicable to business category).
+
+            Set to true for comprehensive troubleshooting or to see all possible directories.'
+          type: boolean
+        refresh:
+          description: 'Optional. Forces a refresh of OAuth tokens for connected accounts (Google, Facebook, etc.).
+
+            Set to true if you suspect authentication issues. This will add latency to the request.'
+          type: boolean
+        sourceIds:
+          description: 'Optional. Filters results to only include specific directory IDs.
+
+            If empty, returns all directories. Use this to check status of specific directories efficiently.'
+          items:
+            type: string
+          type: array
+      required:
+      - businessId
+      title: GetSyncDataRequest
+      type: object
+    v1SyncData:
+      description: 'SyncData contains comprehensive sync status and accuracy information for a single directory source.
+
+        This is the primary data structure for understanding listing presence, accuracy, and sync health.'
+      properties:
+        account:
+          $ref: '#/components/schemas/v1ConnectedDirectSyncAccount'
+        accuracy:
+          $ref: '#/components/schemas/v1SourceAccuracy'
+        additionalAccounts:
+          items:
+            $ref: '#/components/schemas/v1ConnectedDirectSyncAccount'
+          title: 'additional_accounts lists other OAuth accounts connected for this directory that could be used for syncing
+
+            Useful when a business has multiple Google accounts and needs to choose which one to sync to'
+          type: array
+        connectLink:
+          title: connect_link is the URL to initiate OAuth connection for direct sync sources
+          type: string
+        ecosystemSources:
+          items:
+            $ref: '#/components/schemas/v1EcosystemSource'
+          title: 'ecosystem_sources lists secondary directories that receive data when syncing to this primary directory
+
+            Example: syncing to Neustar also syncs to dozens of downstream directories'
+          type: array
+        hidden:
+          title: hidden indicates this directory is not shown in the UI (e.g., disabled by partner, not applicable to business category)
+          type: boolean
+        hiddenReason:
+          title: hidden_reason explains why the directory is hidden (e.g., "Not available in your region", "Not compatible with your business category")
+          type: string
+        iconUrl:
+          title: icon_url is the URL to the directory's logo/icon for display purposes
+          type: string
+        isListingVerified:
+          title: is_listing_verified indicates the business owner has manually verified this listing as accurate
+          type: boolean
+        isSyncingEnabled:
+          title: 'is_syncing_enabled indicates if automatic syncing is turned on for this directory
+
+            False means changes to the business profile won''t propagate to this directory'
+          type: boolean
+        listingId:
+          title: listing_id is the internal identifier for this listing in the Core Services system
+          type: string
+        listingUrl:
+          title: 'listing_url is the public-facing URL where the listing can be viewed on the directory
+
+            Empty if listing not found or claimed by someone else'
+          type: string
+        locked:
+          title: locked indicates syncing cannot be enabled due to business constraints (e.g., missing required fields, account not eligible)
+          type: boolean
+        maxScore:
+          format: int64
+          title: max_score is the maximum possible score for this directory (usually 100, but varies by directory capabilities)
+          type: string
+        name:
+          title: name is the human-readable directory name (e.g., "Google", "Yelp", "Facebook", "Bing Places")
+          type: string
+        provider:
+          $ref: '#/components/schemas/v1Provider'
+        requirement:
+          $ref: '#/components/schemas/v1SyncRequirement'
+        score:
+          format: int64
+          title: score is the current accuracy score (0-100) representing how complete and accurate this listing is
+          type: string
+        sourceId:
+          title: source_id is the numeric ID uniquely identifying this directory (e.g., "1" for Google, "2" for Facebook)
+          type: string
+        sourceType:
+          title: source_type categorizes the directory (e.g., "search_engine", "social_network", "review_site", "data_aggregator")
+          type: string
+        syncDetails:
+          $ref: '#/components/schemas/v1SyndicationStatus'
+        syncStatus:
+          $ref: '#/components/schemas/v1SyncStatus'
+      type: object
+    v1SyncStatus:
+      default: SYNC_STATUS_UNSET
+      description: "SyncStatus represents the current state of syncing to a directory.\nThis is the high-level status that determines what action a user should take.\n\n - SYNC_STATUS_UNSET: SYNC_STATUS_UNSET means syncing has not been attempted or is not enabled for this directory.\nUser action: Enable syncing if they want this directory to be kept up to date.\n - SYNC_STATUS_SYNCING: SYNC_STATUS_SYNCING means a sync is currently in progress.\nUser action: Wait for sync to complete. Check sync_details for progress.\n - SYNC_STATUS_PARTIALLY_SYNCED: SYNC_STATUS_PARTIALLY_SYNCED means some fields synced successfully but others failed or have warnings.\nUser action: Review sync_details.detailed_results to see which fields failed and why.\n - SYNC_STATUS_SUCCESS: SYNC_STATUS_SUCCESS means the listing synced successfully and all fields are up to date.\nUser action: None required. Listing is healthy.\n - SYNC_STATUS_FAILED: SYNC_STATUS_FAILED means the sync attempt failed completely.\nUser action: Review sync_details.error_message for the failure reason. Common causes:\n- Missing required fields (phone, address, category)\n- Invalid data format (bad phone number, malformed URL)\n- Directory-specific restrictions (business type not allowed, location not supported)\n- Authentication issues (OAuth token expired, connection broken)\n - SYNC_STATUS_CLAIMED: SYNC_STATUS_CLAIMED means the listing exists but is claimed/owned by someone else.\nUser action: Business owner must claim/verify ownership on the directory before we can sync.\nThis is common for Google, Yelp, and other directories that require ownership verification.\n - SYNC_STATUS_UNAVAILABLE: SYNC_STATUS_UNAVAILABLE means we cannot sync to this directory due to eligibility constraints.\nUser action: Check hidden_reason for explanation (e.g., \"Not available in your country\", \"Requires LSP subscription\")\n - SYNC_STATUS_SUBMITTED: SYNC_STATUS_SUBMITTED means data was sent to the directory but we don't have confirmation of success.\nThis is used for directories (like Data Axle, Neustar) that don't provide real-time sync confirmation.\nUser action: Wait 24-48 hours for the directory to process the submission.\n - SYNC_STATUS_NOT_CONNECTED: SYNC_STATUS_NOT_CONNECTED means no OAuth account has been connected for this direct sync source.\nUser action: Connect an account via OAuth to enable syncing.\nThis applies to direct sync sources (Google, Facebook, X, Apple) that require OAuth.\n - SYNC_STATUS_RECONNECT_REQUIRED: SYNC_STATUS_RECONNECT_REQUIRED means an OAuth account was previously connected but the token is broken,\nexpired, or the account is no longer authenticated. Data may be stale.\nUser action: Reconnect the account via OAuth to resume syncing.\nThis is more urgent than NOT_CONNECTED as there may be stale data from the previous connection."
+      enum:
+      - SYNC_STATUS_UNSET
+      - SYNC_STATUS_SYNCING
+      - SYNC_STATUS_PARTIALLY_SYNCED
+      - SYNC_STATUS_SUCCESS
+      - SYNC_STATUS_FAILED
+      - SYNC_STATUS_CLAIMED
+      - SYNC_STATUS_UNAVAILABLE
+      - SYNC_STATUS_SUBMITTED
+      - SYNC_STATUS_NOT_CONNECTED
+      - SYNC_STATUS_RECONNECT_REQUIRED
+      type: string
+    v1Provider:
+      default: PROVIDER_UNSPECIFIED
+      description: "Provider indicates how listing data is synced to a directory.\nThis is critical for understanding the difference between managed (LSP) and manual (RM) listings.\n\n - PROVIDER_UNSPECIFIED: PROVIDER_UNSPECIFIED means manual submission via Reputation Management (RM).\nThese listings must be manually created and updated by the user.\nThey do NOT automatically sync when the business profile changes.\n - PROVIDER_UBERALL: PROVIDER_UBERALL means synced automatically via Uberall (LSP provider for European/international directories).\nRequires active Listing Sync Pro subscription with Uberall.\n - PROVIDER_YEXT: PROVIDER_YEXT means synced automatically via Yext (LSP provider for North American directories).\nRequires active Listing Sync Pro subscription with Yext.\n - PROVIDER_DIRECT: PROVIDER_DIRECT means synced directly via OAuth (Google, Facebook, Apple, Bing).\nNo LSP subscription required - user just needs to connect their account."
+      enum:
+      - PROVIDER_UNSPECIFIED
+      - PROVIDER_UBERALL
+      - PROVIDER_YEXT
+      - PROVIDER_DIRECT
+      type: string
+    v1AccuracyStatus:
+      default: ACCURACY_STATUS_INVALID
+      description: "AccuracyStatus represents the overall accuracy state of a listing on a directory.\nThis is determined by comparing the business profile data against what's actually live on the directory (scraped data).\n\n - ACCURACY_STATUS_INVALID: ACCURACY_STATUS_INVALID means the accuracy data could not be interpreted or there was an error during scraping.\nThis is a technical error, not a listing problem.\n - ACCURACY_STATUS_UNKNOWN: ACCURACY_STATUS_UNKNOWN means either no scraped data was found (listing might not exist yet), or we haven't scraped this source yet.\nCommon for new listings that haven't been indexed by the directory, or directories we don't actively scrape.\n - ACCURACY_STATUS_ACCURATE: ACCURACY_STATUS_ACCURATE means the scraped listing data matches the business profile perfectly.\nAll NAP fields match - the listing is correct and healthy.\n - ACCURACY_STATUS_INACCURATE: ACCURACY_STATUS_INACCURATE means the scraped listing has one or more discrepancies compared to the business profile.\nCheck anchor_data_matches to see exactly which fields don't match.\nUser action: Review and correct the inaccurate fields, then wait for next sync.\n - ACCURACY_STATUS_UNAVAILABLE: ACCURACY_STATUS_UNAVAILABLE means this directory doesn't support accuracy reporting (we don't scrape it).\nCommon for data aggregators (Neustar, Data Axle) that don't have public listing pages to scrape."
+      enum:
+      - ACCURACY_STATUS_INVALID
+      - ACCURACY_STATUS_UNKNOWN
+      - ACCURACY_STATUS_ACCURATE
+      - ACCURACY_STATUS_INACCURATE
+      - ACCURACY_STATUS_UNAVAILABLE
+      type: string
+    v1AnchorDataMatches:
+      properties:
+        address:
+          title: 'address is true if the directory''s street address matches the expected address
+
+            Address mismatches prevent customers from finding the business'
+          type: boolean
+        city:
+          title: city is true if the directory's city matches the expected city
+          type: boolean
+        companyName:
+          title: 'company_name is true if the directory''s business name matches the expected name
+
+            Name mismatches are common causes of listing inaccuracy'
+          type: boolean
+        country:
+          title: country is true if the directory's country matches the expected country
+          type: boolean
+        phone:
+          title: 'phone is true if the directory''s phone number matches the expected phone
+
+            Phone mismatches are critical - often the most important field for users'
+          type: boolean
+        state:
+          title: state is true if the directory's state/province matches the expected state
+          type: boolean
+        website:
+          title: website is true if the directory's website matches the expected website
+          type: boolean
+        zip:
+          title: zip is true if the directory's zip code matches the expected zip code
+          type: boolean
+      title: 'AnchorDataMatches contains field-by-field accuracy comparison results.
+
+        Each boolean indicates if the expected value (from AnchorData) matches what''s currently live on the directory.
+
+        True = field is accurate, False = field is inaccurate or missing on the directory.
+
+        This is critical for answering "which specific fields are wrong on this listing?"'
+      type: object
+    v1GetSyncDataResponse:
+      description: Contains sync status and accuracy information for all relevant listing directories for a business.
+      properties:
+        sources:
+          description: 'Output only. An array of directory-specific sync and accuracy data.
+
+            Each entry represents one directory where the business has or could have a listing.'
+          items:
+            $ref: '#/components/schemas/v1SyncData'
+          readOnly: true
+          type: array
+      title: GetSyncDataResponse
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            admin: Allows the application to perform administrative tasks that you have access to across the platform
+            business-app: Allows the application to manage all features of Business App
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

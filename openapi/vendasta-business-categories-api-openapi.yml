@@ -1,0 +1,220 @@
+openapi: 3.2.0
+info:
+  title: Platform REST Business Categories API
+  version: Evergreen
+servers:
+- url: https://prod.apigateway.co/platform
+  description: Production
+- description: Demo
+  url: https://demo.apigateway.co/platform
+- description: Local
+  url: '{local}/platform'
+- url: http://localhost:11001/platform
+  description: Localhost
+tags:
+- name: Business Categories
+paths:
+  /businessCategories:
+    get:
+      summary: List Business Categories
+      operationId: get-businessCategories
+      tags:
+      - Business Categories
+      security:
+      - OAuth2Demo:
+        - business
+      - OAuth2Prod:
+        - business
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Produces a list of business categories'
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      - schema:
+          type: integer
+          minimum: 0
+          maximum: 1000
+          default: 10
+        in: query
+        name: page[limit]
+        description: The maximum number of tasks you would like returned in a single batch. Use the links.next member in the response to get the remainder. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+      - schema:
+          type: string
+        in: query
+        name: page[cursor]
+        description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+      - schema:
+          type: array
+          items:
+            type: string
+          example: '["id1","id2"]'
+        in: query
+        name: filter[ids]
+        description: Returns Business Categories that match the provided IDs.
+      - schema:
+          type: array
+          items:
+            type: string
+          example: '["yextId"]'
+        in: query
+        name: filter[yextIds]
+        description: Returns Business Categories that match the provided yextIds.
+      - schema:
+          type: string
+        in: query
+        name: filter[searchTerm]
+        description: Returns a list of Business Categories based on a given search term.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/businessCategories'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        description: Provides a link back to the first page of results
+                        format: uri
+                      next:
+                        type: string
+                        description: The URI at which the next batch of business categories can be gotten from
+                        format: uri
+              examples: {}
+    options:
+      operationId: options-businessCategories
+      summary: List valid HTTP verbs for /businessCategories
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Business Categories
+components:
+  schemas:
+    businessCategories:
+      title: Business Category
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        The taxonomy to be applied to business locations indicating the type of services that they provide.'
+      x-tags:
+      - Business Categories
+      properties:
+        id:
+          type: string
+          example: AG-1234567
+          readOnly: true
+        type:
+          type: string
+          default: businessCategories
+          enum:
+          - businessCategories
+          readOnly: true
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              description: A user friendly description for the category. It will have been translated based on the Accept-Language header.
+              readOnly: true
+            isActive:
+              type: boolean
+              description: Whether the category is active. Inactive categories may still be returned when looking up by ID but should not be used for new assignments.
+              readOnly: true
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          scopes:
+            sales.contact: Read-write access to sales contact details
+            business:read: Read only access to business details
+            business: Read-write access to business details
+            partner:read: Read-write access to details about your partner
+            financial: Read-write access to financial details
+            order: Read-write access to order details
+            order:read: Read only access to order details
+            user.profile:read: Read access to the profile fields of all categories of users
+            user.contact:read: Read access to the contact info (email, phone, address) of all categories of users
+            user.permission:read: Read access to the permission info (accessible locations, features and roles) of all categories of users
+            user.permission: Read-write access to the permission info (accessible locations, features and roles) of all categories of users
+            user.admin: Read-write access to manage all users
+            user.list: '''Allows searching for users based on a set of filters. (ex: email, name, category, organization). Without this scope an exact user id is required.'
+            self.user.admin: Allows editing the profile, contact info and profile image for the current user.
+            self.user.contact:read: Read access to the contact info (email, phone, address) of the current user.
+            openid: Allows getting the user id of the current user
+            profile: Readonly access to the user profile, including name, locale, and language preferences.
+            email: Allows readonly access to the email of the current user.
+            phone: Allows readonly access to the phone numbers of the current user.
+            address: Allows readonly access to the address of the current user.
+            sales.account: Allows read-write access to account records
+            sales.proposals: Allows read-write access to proposals
+            product: Read access to the product details
+            automation:read: Read only access to automations
+          refreshUrl: ''
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          scopes:
+            sales.contact: Read-write access to sales contact details
+            business:read: Read only access to business details
+            business: Read-write access to business details
+            partner:read: Read-write access to details about your partner
+            financial: Read-write access to financial details
+            order:read: Read only access to order details
+            order: Read-write access to order details
+            user.profile:read: Read access to the profile fields of all categories of users
+            user.contact:read: Read access to the contact info (email, phone, address) of all categories of users
+            user.permission:read: Read access to the permission info (accessible locations, features and roles) of all categories of users
+            user.permission: Read-write access to the permission info (accessible locations, features and roles) of all categories of users
+            user.admin: Read-write access to manage all users
+            user.list: '''Allows searching for users based on a set of filters. (ex: email, name, category, organization). Without this scope an exact user id is required.'
+            self.user.admin: Allows editing the profile, contact info and profile image for the current user.
+            self.user.contact:read: Read access to the contact info (email, phone, address) of the current user.
+            openid: Allows getting the user id of the current user
+            profile: Readonly access to the user profile, including name, locale, and language preferences.
+            email: Allows readonly access to the email of the current user.
+            phone: Allows readonly access to the phone numbers of the current user.
+            address: Allows readonly access to the address of the current user.
+            sales.account: Allows read-write access to account records
+            sales.proposals: Allows read-write access to proposals
+            product: Read access to the product details
+            automation:read: Read only access to automations
+          refreshUrl: ''

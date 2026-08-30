@@ -1,0 +1,305 @@
+openapi: 3.2.0
+info:
+  title: WSP Site Info API
+  version: 1.3.1
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: SiteInfo
+paths:
+  /v1/wph/site-info:
+    post:
+      operationId: SiteInfo_List
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ListRequest'
+        description: Request to list WordPress sites with pagination support.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: List Site Info
+      tags:
+      - SiteInfo
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1ListRequest:
+      description: Request to list WordPress sites with pagination support.
+      properties:
+        cursor:
+          description: Optional. The cursor specifying the page to return. Use the next_cursor from a previous response to paginate.
+          format: int32
+          type: integer
+        pageSize:
+          description: Optional. The number of sites to return per page.
+          format: int32
+          type: integer
+      title: ListRequest
+      type: object
+    v1ListResponse:
+      description: Response containing a paginated list of WordPress sites.
+      properties:
+        invalidSiteIds:
+          description: Output only. Site IDs that could not be retrieved.
+          items:
+            type: string
+          readOnly: true
+          type: array
+        nextCursor:
+          description: Output only. The cursor to use for the next page of results.
+          format: int32
+          readOnly: true
+          type: integer
+        validSites:
+          description: Output only. The list of valid sites for the current page.
+          items:
+            $ref: '#/components/schemas/v1Site'
+          readOnly: true
+          type: array
+      title: ListResponse
+      type: object
+    v1SubsiteInfo:
+      description: Information about a subsite within a WordPress multisite installation.
+      properties:
+        blogId:
+          description: Output only. The unique integer ID of the subsite.
+          format: int64
+          readOnly: true
+          type: string
+        blogName:
+          description: Output only. The title description of the subsite added by the user.
+          readOnly: true
+          type: string
+        createdAt:
+          description: Output only. The time when the subsite was created.
+          readOnly: true
+          type: string
+        lastUpdated:
+          description: Output only. The time when the subsite was last updated.
+          readOnly: true
+          type: string
+        metadata:
+          description: Output only. The subsite metadata.
+          readOnly: true
+          type: string
+        path:
+          description: Output only. The path of the subsite in the URL after the domain.
+          readOnly: true
+          type: string
+        status:
+          description: Output only. The status of the subsite.
+          readOnly: true
+          type: string
+      title: SubsiteInfo
+      type: object
+    v1Site:
+      description: The canonical representation of a WordPress site, including configuration, domains, and status.
+      properties:
+        accountId:
+          description: Output only. The account ID associated with this site.
+          readOnly: true
+          type: string
+        activatedCount:
+          description: Output only. The activated count of subsites for the site.
+          format: int32
+          readOnly: true
+          type: integer
+        alternateDomains:
+          description: Output only. A list of alternate domains for the site.
+          items:
+            type: string
+          readOnly: true
+          type: array
+        cdnVersion:
+          description: Output only. The version of the CDN for the site.
+          readOnly: true
+          type: string
+        dbHost:
+          description: Output only. The IP of the CloudSQL database of the site.
+          readOnly: true
+          type: string
+        dbName:
+          description: Output only. The main database name of the site from CloudSQL.
+          readOnly: true
+          type: string
+        dbPass:
+          description: Output only. The password of the main user of the database.
+          readOnly: true
+          type: string
+        dbUser:
+          description: Output only. The main user of the database.
+          readOnly: true
+          type: string
+        deactivated:
+          description: Output only. Whether the site is deactivated.
+          readOnly: true
+          type: boolean
+        developerModeEnabled:
+          description: Output only. Whether developer mode is enabled.
+          readOnly: true
+          type: boolean
+        domain:
+          description: Output only. The primary domain of the site.
+          readOnly: true
+          type: string
+        editionId:
+          description: Output only. The edition indicator, express (has an ID) or pro.
+          readOnly: true
+          type: string
+        exposeWpLogin:
+          description: Output only. Whether the WP Login page is exposed.
+          readOnly: true
+          type: boolean
+        gaTrackingId:
+          description: Output only. The Google Analytics tracking ID injected into the site.
+          readOnly: true
+          type: string
+        googleAnalyticsEnabled:
+          description: Output only. Whether Google Analytics is enabled for the site.
+          readOnly: true
+          type: boolean
+        id:
+          description: Output only. The unique 64-character identifier of the site.
+          readOnly: true
+          type: string
+        ignoreCacheHeaders:
+          description: Output only. Whether cache headers should be ignored for the site.
+          readOnly: true
+          type: boolean
+        isObjectCache:
+          description: Output only. Redis object cache enable/disable status.
+          readOnly: true
+          type: string
+        isPhpUpgraded:
+          description: Output only. Whether PHP has been upgraded.
+          readOnly: true
+          type: boolean
+        mountPath:
+          description: Output only. The filesystem mount path where the site files are located.
+          readOnly: true
+          type: string
+        multiSite:
+          description: Output only. Whether the site is a multi-site (structured with subdomains).
+          readOnly: true
+          type: boolean
+        objectCacheVersion:
+          description: Output only. The version of the object cache.
+          readOnly: true
+          type: string
+        partnerId:
+          description: Output only. The partner ID that owns this site.
+          readOnly: true
+          type: string
+        phpVersion:
+          description: Deprecated. PHP version used for running the site.
+          format: int32
+          type: integer
+        siteHosting:
+          description: 'Output only. The site hosting backend: "" / "wsp" (legacy) | "wpcloud" (migrated).'
+          readOnly: true
+          type: string
+        sitePhpVersion:
+          description: Output only. The PHP version string for the site.
+          readOnly: true
+          type: string
+        skipUpgradingHttp:
+          description: Output only. Whether the site should skip upgrading HTTP requests to HTTPS.
+          readOnly: true
+          type: boolean
+        stagingDbName:
+          description: Output only. The database name for the staging instance of the site.
+          readOnly: true
+          type: string
+        stagingDomain:
+          description: Output only. The primary domain of the staging site.
+          readOnly: true
+          type: string
+        stagingPhpVersion:
+          description: Deprecated. Staging PHP version used for running the site.
+          format: int32
+          type: integer
+        stagingSitePhpVersion:
+          description: Output only. The staging PHP version string for the site.
+          readOnly: true
+          type: string
+        stagingWpDebugEnabled:
+          description: Output only. Whether WP debug is enabled on the staging site.
+          readOnly: true
+          type: boolean
+        subscribedCount:
+          description: Output only. The subscribed count of subsites for the site.
+          format: int32
+          readOnly: true
+          type: integer
+        subsites:
+          description: Output only. Subsite details for multisite installations.
+          items:
+            $ref: '#/components/schemas/v1SubsiteInfo'
+          readOnly: true
+          type: array
+        template:
+          description: Output only. Whether the site is a template.
+          readOnly: true
+          type: boolean
+        uid:
+          description: Output only. The unique numeric identifier of the site.
+          format: int32
+          readOnly: true
+          type: integer
+        userId:
+          description: Output only. The identifier of the user performing site actions.
+          readOnly: true
+          type: string
+        version:
+          description: Output only. The version used for template sites.
+          readOnly: true
+          type: string
+        wpDebugEnabled:
+          description: Output only. Whether WP debug is enabled on the live site.
+          readOnly: true
+          type: boolean
+        wpOption:
+          description: Output only. The WP option value set on the site.
+          readOnly: true
+          type: string
+      title: Site
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes: {}
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

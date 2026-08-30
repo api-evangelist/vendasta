@@ -1,0 +1,268 @@
+openapi: 3.2.0
+info:
+  title: Advertising Intelligence REST Campaign Info API
+  version: '1.0'
+  description: ''
+servers:
+- url: https://prod.apigateway.co/products/advertising
+  description: Production
+- url: https://demo.apigateway.co/products/advertising
+  description: Demo
+- url: '{local}/products/advertising'
+  description: Local
+- url: http://localhost:11001/products/advertising
+  description: Localhost
+tags:
+- name: Campaign Info
+paths:
+  /campaignInfo:
+    get:
+      summary: List Campaign Info
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/campaignInfo'
+                  links:
+                    type: object
+                    required:
+                    - self
+                    properties:
+                      self:
+                        type: string
+                      next:
+                        type: string
+                required:
+                - data
+                - links
+      operationId: get-campaignInfo
+      description: Retrieve information about Ad Campaigns under a connected advertising account.
+      tags:
+      - Campaign Info
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - schema:
+          type: boolean
+        in: query
+        name: filter[isConnected]
+        description: Filters results to fetch only connected or not connected campaigns
+        allowEmptyValue: true
+      - schema:
+          type: string
+        in: query
+        name: filter[connectedAccount.id]
+        description: Resource ID of a Connected Advertising Account
+        required: true
+      - $ref: '#/components/parameters/startAt'
+      - $ref: '#/components/parameters/endAt'
+      - $ref: '#/components/parameters/pageLimit'
+      - $ref: '#/components/parameters/pageCursor'
+      security:
+      - OAuth2Demo:
+        - advertising
+      - OAuth2Prod:
+        - advertising
+      x-lifecycle:
+        status: trustedTester
+  /campaignInfo/{id}:
+    parameters:
+    - schema:
+        type: string
+        example: AG-HDV4JKHW:google:7531238654:94749174
+      name: id
+      in: path
+      required: true
+      description: campaignInfo resource ID
+    get:
+      summary: Get Campaign Info
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/campaignInfo'
+                  links:
+                    type: object
+                    required:
+                    - self
+                    properties:
+                      self:
+                        type: string
+                required:
+                - data
+                - links
+        '404':
+          description: Campaign Not Found
+      operationId: get-campaignInfo-id
+      description: Gets information about a single Ad Campaign given its ID
+      tags:
+      - Campaign Info
+      security:
+      - OAuth2Demo:
+        - adintel
+      - OAuth2Prod:
+        - adintel
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      x-lifecycle:
+        status: trustedTester
+components:
+  parameters:
+    endAt:
+      name: endAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data from before the specified end date and time. If not specified all data will be returned.
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^Bearer\s\S+
+        example: Bearer <access token>
+      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+    pageLimit:
+      name: page[limit]
+      in: query
+      required: false
+      schema:
+        type: number
+        maximum: 100
+        minimum: 1
+        default: 25
+      description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    pageCursor:
+      name: page[cursor]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    startAt:
+      name: startAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        default: '1970-01-01T00:00:01Z'
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data starting from the specified start date and time
+  schemas:
+    campaignInfo:
+      title: Campaign Info
+      type: object
+      x-examples: {}
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Information about an advertising campaign.  Requires an Advanced Reporting Addon to be active on the Business Location to access'
+      x-lifecycle:
+        status: trustedTester
+      x-tags:
+      - Campaign Info
+      properties:
+        id:
+          type: string
+          description: The resource ID of the Connected Advertising Account
+          example: AG-HDV4JKHW:google:7531238654:94749174
+        type:
+          type: string
+          description: campaignInfo
+          default: campaignInfo
+          enum:
+          - campaignInfo
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the Campaign
+            isConnected:
+              type: boolean
+              description: Flag indicating if the campaign is connected to the Business Location.  Only stats from connected camapigns will be included in total account stats
+            status:
+              type: string
+              description: '`notSet` - Default value, Campaign status is unknown or unset
+
+
+                `pending` - Campaign is pending review
+
+
+                `needsAttention` - Campaign is experiencing issues during creation that requires user action
+
+
+                `scheduled` - Campaign is sheduled to begin at a future date
+
+
+                `live` - Campaign is currently running
+
+
+                `paused` - Campaign has been paused and is not currently running
+
+
+                `removed` - Camapign has been removed or deleted
+
+
+                `ended` - Campaign has ended and is no longer runnning'
+              enum:
+              - notSet
+              - pending
+              - needsAttention
+              - scheduled
+              - live
+              - paused
+              - removed
+              - ended
+            startAt:
+              type: string
+              format: date-time
+              example: '2018-10-23T00:00:00Z'
+              description: Start date of the campaign
+            endAt:
+              type: string
+              format: date-time
+              example: '2022-02-17T00:00:00Z'
+              description: End date of the campaign
+      required:
+      - id
+      - type
+      - attributes
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            advertising: Access to the Advertising Intelligence REST API
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            advertising: Access to the Advertising Intelligence REST API

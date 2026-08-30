@@ -1,0 +1,866 @@
+openapi: 3.2.0
+info:
+  title: Social Drafts API
+  version: 1.13.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: Drafts
+paths:
+  /v1/social-drafts/create:
+    post:
+      operationId: Drafts_CreateDraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1CreateDraftRequest'
+        description: Request message for creating a new social draft.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1CreateDraftResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Create Draft
+      tags:
+      - Drafts
+  /v1/social-drafts/create-multi:
+    post:
+      operationId: Drafts_CreateMultiDrafts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1CreateMultiDraftsRequest'
+        description: Request message for creating multiple social drafts at once.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1CreateMultiDraftsResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Create Multi Drafts
+      tags:
+      - Drafts
+  /v1/social-drafts/delete:
+    post:
+      operationId: Drafts_DeleteDraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1DeleteDraftRequest'
+        description: Request message for deleting a social draft.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Delete Draft
+      tags:
+      - Drafts
+  /v1/social-drafts/delete-multi:
+    post:
+      operationId: Drafts_DeleteMultiMLDrafts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1MultiDeleteMLDraftPostsRequest'
+        description: Request message for deleting multiple multilocation draft posts.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Delete Multi ML Drafts
+      tags:
+      - Drafts
+  /v1/social-drafts/get:
+    post:
+      operationId: Drafts_GetDraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetDraftRequest'
+        description: Request message for retrieving a single social draft.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetDraftResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Get Draft
+      tags:
+      - Drafts
+  /v1/social-drafts/list:
+    post:
+      operationId: Drafts_ListDrafts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ListDraftsRequest'
+        description: Request message for listing social drafts for a given account group.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListDraftsResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: List Drafts
+      tags:
+      - Drafts
+  /v1/social-drafts/update:
+    post:
+      operationId: Drafts_UpdateDraft
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UpdateDraftRequest'
+        description: Request message for updating an existing social draft.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1UpdateDraftResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Update Draft
+      tags:
+      - Drafts
+  /v1/social-drafts/update-multi:
+    post:
+      operationId: Drafts_UpdateMultiMLDrafts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UpdateMultiMLDraftsRequest'
+        description: Request message for updating multiple multilocation drafts at once.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Update Multi ML Drafts
+      tags:
+      - Drafts
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1ListDraftsResponse:
+      description: Response message containing a page of social drafts.
+      properties:
+        drafts:
+          description: Output only. List of obtained drafts.
+          items:
+            $ref: '#/components/schemas/v1Draft'
+          readOnly: true
+          type: array
+        hasMore:
+          description: Output only. Boolean if there are more drafts to get.
+          readOnly: true
+          type: boolean
+        nextCursor:
+          description: Output only. Cursor to more drafts if it is greater then the page size.
+          readOnly: true
+          type: string
+      title: ListDraftsResponse
+      type: object
+    v1Media:
+      description: A single media item (image, video, or gif) attached to a draft.
+      properties:
+        gifUrl:
+          description: Optional. URL to a gif, if this media is a gif.
+          type: string
+        imageUrl:
+          description: Optional. URL for an image, if this media is an image.
+          type: string
+        mediaId:
+          description: Optional. Id of the media entry (mostly used when dealing with more than one).
+          type: string
+        metaData:
+          description: Optional. Any metadata associated with this Media (source, last raised exception, etc).
+          items:
+            $ref: '#/components/schemas/v1MetaData'
+          type: array
+        videoUrl:
+          description: Optional. URL to a video, if this media is a video.
+          type: string
+      title: Media
+      type: object
+    v1SSIDDraftType:
+      description: Maps a social service ID to its corresponding draft type.
+      properties:
+        draftType:
+          $ref: '#/components/schemas/v1DraftType'
+        ssid:
+          description: Required. The social service ID.
+          type: string
+      required:
+      - ssid
+      - draftType
+      title: SSIDDraftType
+      type: object
+    v1BlogPostCustomization:
+      description: Blog post-specific customization options for a draft, including author, categories, and tags.
+      properties:
+        author:
+          $ref: '#/components/schemas/v1Author'
+        categories:
+          description: Optional. The categories of the blog post.
+          items:
+            $ref: '#/components/schemas/v1Categories'
+          type: array
+        siteType:
+          description: Optional. The site type of the blog post.
+          type: string
+        tags:
+          description: Optional. The tags of the blog post.
+          items:
+            type: string
+          type: array
+        title:
+          description: Optional. The title of the blog post.
+          type: string
+      title: BlogPostCustomization
+      type: object
+    v1TikTokCustomization:
+      description: TikTok-specific customization options for video drafts, including community interaction and branding settings.
+      properties:
+        allowComment:
+          description: Optional. Whether viewers can comment on the video.
+          type: boolean
+        allowDuet:
+          description: Optional. Whether other users can create duet videos.
+          type: boolean
+        allowStitch:
+          description: Optional. Whether other users can stitch clips from this video.
+          type: boolean
+        isBrandOrganic:
+          description: Optional. Whether this is organic brand content.
+          type: boolean
+        isBrandedContent:
+          description: Optional. Whether this video contains branded content or product placement.
+          type: boolean
+      title: TikTokCustomization
+      type: object
+    v1DeleteDraftRequest:
+      description: Request message for deleting a social draft.
+      properties:
+        accountGroupId:
+          description: Required. The account group id.
+          type: string
+        draftId:
+          description: Required. The internal id of the draft.
+          type: string
+      required:
+      - accountGroupId
+      - draftId
+      title: DeleteDraftRequest
+      type: object
+    v1CreateDraftResponse:
+      description: Response message containing the newly created draft.
+      properties:
+        draft:
+          $ref: '#/components/schemas/v1Draft'
+      title: CreateDraftResponse
+      type: object
+    v1Draft:
+      description: Represents a social media draft post, including its content, scheduling, and metadata.
+      properties:
+        accountGroupId:
+          description: Output only. Unique id signifying account group this draft belongs to.
+          readOnly: true
+          type: string
+        blogPostCustomization:
+          $ref: '#/components/schemas/v1BlogPostCustomization'
+        brandId:
+          description: Output only. The brand id of the draft.
+          readOnly: true
+          type: string
+        campaignCustomization:
+          $ref: '#/components/schemas/v1CampaignCustomization'
+        created:
+          description: Output only. Time when the draft was created.
+          format: date-time
+          readOnly: true
+          type: string
+        draftId:
+          description: Output only. Unique id for the draft.
+          readOnly: true
+          type: string
+        draftText:
+          description: Output only. Raw text of the draft.
+          readOnly: true
+          type: string
+        draftType:
+          $ref: '#/components/schemas/v1DraftType'
+        gmbPostCustomization:
+          $ref: '#/components/schemas/v1GMBPostCustomization'
+        isHidden:
+          description: Output only. Whether this draft is hidden.
+          readOnly: true
+          type: boolean
+        media:
+          description: Output only. A list of media attached to this draft.
+          items:
+            $ref: '#/components/schemas/v1Media'
+          readOnly: true
+          type: array
+        metadata:
+          description: Output only. Any metadata associated with this draft (source, last raised exception, etc).
+          items:
+            $ref: '#/components/schemas/v1MetaData'
+          readOnly: true
+          type: array
+        multilocationPostId:
+          description: Output only. The multilocation post id of the draft.
+          readOnly: true
+          type: string
+        options:
+          description: Output only. Special configuration options for the composer.
+          items:
+            type: string
+          readOnly: true
+          type: array
+        postDateTime:
+          description: Output only. Time the draft is set to be posted at.
+          format: date-time
+          readOnly: true
+          type: string
+        previews:
+          description: Output only. Preview link for shortened URL Links.
+          readOnly: true
+          type: string
+        socialNetworkIdentifier:
+          description: 'Output only. Identifier for the social network platform (e.g., LinkedIn Profile URL).
+
+            Used to track drafts associated with specific social network profiles,
+
+            particularly when connections are disconnected and posts move to drafts.'
+          readOnly: true
+          type: string
+        ssidDraftTypes:
+          description: Output only. SSID Draft Type mapping.
+          items:
+            $ref: '#/components/schemas/v1SSIDDraftType'
+          readOnly: true
+          type: array
+        ssids:
+          description: Output only. Social Service ids used in this draft.
+          items:
+            type: string
+          readOnly: true
+          type: array
+        tiktokCustomization:
+          $ref: '#/components/schemas/v1TikTokCustomization'
+        updated:
+          description: Output only. Time when the draft was updated.
+          format: date-time
+          readOnly: true
+          type: string
+        youtubeCustomization:
+          $ref: '#/components/schemas/v1YoutubeCustomization'
+      title: Draft
+      type: object
+    v1MetaData:
+      description: A key-value pair of metadata associated with a draft or media entry.
+      properties:
+        propertyName:
+          description: Required. The name of the metadata property.
+          type: string
+        propertyValue:
+          description: Required. The value of the metadata property.
+          type: string
+      required:
+      - propertyName
+      - propertyValue
+      title: MetaData
+      type: object
+    v1Categories:
+      description: A blog post category.
+      properties:
+        id:
+          description: Optional. The category id.
+          format: int64
+          type: string
+        name:
+          description: Optional. The category name.
+          type: string
+      title: Categories
+      type: object
+    v1CreateMultiDraftsRequest:
+      description: Request message for creating multiple social drafts at once.
+      properties:
+        drafts:
+          description: Required. The list of drafts to create.
+          items:
+            $ref: '#/components/schemas/v1CreateDraftRequest'
+          type: array
+      required:
+      - drafts
+      title: CreateMultiDraftsRequest
+      type: object
+    v1UpdateMultiMLDraftsRequest:
+      description: Request message for updating multiple multilocation drafts at once.
+      properties:
+        drafts:
+          description: Required. Array of UpdateDraftRequest.
+          items:
+            $ref: '#/components/schemas/v1UpdateDraftRequest'
+          type: array
+      required:
+      - drafts
+      title: UpdateMultiMLDraftsRequest
+      type: object
+    v1CreateDraftRequest:
+      description: Request message for creating a new social draft.
+      properties:
+        accountGroupId:
+          description: Required. Unique id signifying account group this belongs to.
+          type: string
+        blogPostCustomization:
+          $ref: '#/components/schemas/v1BlogPostCustomization'
+        brandId:
+          description: Optional. The brand id of the draft.
+          type: string
+        campaignCustomization:
+          $ref: '#/components/schemas/v1CampaignCustomization'
+        draftText:
+          description: Optional. Raw text of the draft.
+          type: string
+        draftType:
+          $ref: '#/components/schemas/v1DraftType'
+        gmbPostCustomization:
+          $ref: '#/components/schemas/v1GMBPostCustomization'
+        isHidden:
+          description: Optional. Whether the draft is hidden.
+          type: boolean
+        media:
+          description: Optional. List of the media attached to the draft.
+          items:
+            $ref: '#/components/schemas/v1Media'
+          type: array
+        metadata:
+          items:
+            $ref: '#/components/schemas/v1MetaData'
+          title: Optional. Any metadata associated with this draft (source, last raised exception, etc)
+          type: array
+        multilocationPostId:
+          description: Optional. The multilocation post id of the draft.
+          type: string
+        options:
+          description: Optional. Special configurations options for the composer.
+          items:
+            type: string
+          type: array
+        postDateTime:
+          description: Optional. Time the draft is set to be posted at.
+          format: date-time
+          type: string
+        previews:
+          description: Optional. Preview link for shortened URL Links.
+          type: string
+        socialNetworkIdentifier:
+          description: 'Optional. Identifier for the social network platform (e.g., LinkedIn Profile URL).
+
+            Used to track drafts associated with specific social network profiles,
+
+            particularly when connections are disconnected and posts move to drafts.'
+          type: string
+        ssidDraftTypes:
+          description: Optional. The ssid draft type map.
+          items:
+            $ref: '#/components/schemas/v1SSIDDraftType'
+          type: array
+        ssids:
+          description: Optional. Social Service ids used in this draft.
+          items:
+            type: string
+          type: array
+        tiktokCustomization:
+          $ref: '#/components/schemas/v1TikTokCustomization'
+        youtubeCustomization:
+          $ref: '#/components/schemas/v1YoutubeCustomization'
+      required:
+      - accountGroupId
+      title: CreateDraftRequest
+      type: object
+    v1GetDraftResponse:
+      description: Response message containing the requested draft.
+      properties:
+        draft:
+          $ref: '#/components/schemas/v1Draft'
+      title: GetDraftResponse
+      type: object
+    v1MultiDeleteMLDraftPostsRequest:
+      description: Request message for deleting multiple multilocation draft posts.
+      properties:
+        brandId:
+          description: Required. Brand id of all multilocation draft posts.
+          type: string
+        mlDraftPosts:
+          description: Required. List of multilocation draft Posts.
+          items:
+            $ref: '#/components/schemas/v1MlDraftPost'
+          type: array
+      required:
+      - mlDraftPosts
+      - brandId
+      title: MultiDeleteMLDraftPostsRequest
+      type: object
+    v1CreateMultiDraftsResponse:
+      description: Response message containing the newly created drafts.
+      properties:
+        drafts:
+          description: Output only. The list of newly created drafts.
+          items:
+            $ref: '#/components/schemas/v1Draft'
+          readOnly: true
+          type: array
+      title: CreateMultiDraftsResponse
+      type: object
+    v1DraftType:
+      default: DRAFT_TYPE_INVALID
+      enum:
+      - DRAFT_TYPE_INVALID
+      - DRAFT_TYPE_IMAGE
+      - DRAFT_TYPE_VIDEO
+      - DRAFT_TYPE_GIF
+      - DRAFT_TYPE_REEL
+      - DRAFT_TYPE_CAROUSEL
+      - DRAFT_TYPE_TEXT
+      - DRAFT_TYPE_STORIES
+      - DRAFT_TYPE_IMAGE_STORY
+      - DRAFT_TYPE_VIDEO_STORY
+      type: string
+    v1Author:
+      description: The author of a blog post.
+      properties:
+        id:
+          description: Optional. The id of the author.
+          format: int64
+          type: string
+        name:
+          description: Optional. The name of the author.
+          type: string
+      title: Author
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1YoutubeCustomization:
+      description: YouTube-specific customization options for video drafts, including title and privacy settings.
+      properties:
+        privacyStatus:
+          $ref: '#/components/schemas/YoutubeCustomizationPrivacyStatus'
+        title:
+          description: Optional. Title of the YouTube video.
+          type: string
+      title: YoutubeCustomization
+      type: object
+    v1GetDraftRequest:
+      description: Request message for retrieving a single social draft.
+      properties:
+        accountGroupId:
+          description: Required. The account group id of the draft.
+          type: string
+        draftId:
+          description: Required. The internal id of the draft.
+          type: string
+      required:
+      - accountGroupId
+      - draftId
+      title: GetDraftRequest
+      type: object
+    v1CampaignCustomization:
+      description: Campaign-specific customization options for a draft, including campaign identity and link shortening.
+      properties:
+        id:
+          description: Optional. Id of the Campaign.
+          type: string
+        name:
+          description: Optional. Name of the Campaign.
+          type: string
+        shortCode:
+          description: Optional. Short code for the custom shortened URL.
+          type: string
+      title: CampaignCustomization
+      type: object
+    v1UpdateDraftResponse:
+      description: Response message containing the updated draft.
+      properties:
+        draft:
+          $ref: '#/components/schemas/v1Draft'
+      title: UpdateDraftResponse
+      type: object
+    v1VisibilityType:
+      default: VISIBILITY_TYPE_INVALID
+      enum:
+      - VISIBILITY_TYPE_INVALID
+      - VISIBILITY_TYPE_ALL
+      - VISIBILITY_TYPE_HIDDEN
+      - VISIBILITY_TYPE_VISIBLE
+      type: string
+    v1UpdateDraftRequest:
+      description: Request message for updating an existing social draft.
+      properties:
+        accountGroupId:
+          description: Required. Unique id signifying account group this belongs to.
+          type: string
+        blogPostCustomization:
+          $ref: '#/components/schemas/v1BlogPostCustomization'
+        brandId:
+          description: Optional. The brand id of the draft.
+          type: string
+        campaignCustomization:
+          $ref: '#/components/schemas/v1CampaignCustomization'
+        draftId:
+          description: Required. Unique id for the draft.
+          type: string
+        draftText:
+          description: Optional. Raw text of the draft.
+          type: string
+        draftType:
+          $ref: '#/components/schemas/v1DraftType'
+        gmbPostCustomization:
+          $ref: '#/components/schemas/v1GMBPostCustomization'
+        isHidden:
+          description: Optional. Whether the draft is hidden.
+          type: boolean
+        media:
+          description: Optional. List of media attached to the draft.
+          items:
+            $ref: '#/components/schemas/v1Media'
+          type: array
+        metadata:
+          items:
+            $ref: '#/components/schemas/v1MetaData'
+          title: Optional. Any metadata associated with this draft (source, last raised exception, etc)
+          type: array
+        multilocationPostId:
+          description: Optional. The multilocation post id of the draft.
+          type: string
+        options:
+          description: Optional. Special configurations options for the composer.
+          items:
+            type: string
+          type: array
+        postDateTime:
+          description: Optional. Time the draft is set to be posted at.
+          format: date-time
+          type: string
+        previews:
+          description: Optional. Preview link for shortened URL Links.
+          type: string
+        socialNetworkIdentifier:
+          description: 'Optional. Identifier for the social network platform (e.g., LinkedIn Profile URL).
+
+            Used to track drafts associated with specific social network profiles,
+
+            particularly when connections are disconnected and posts move to drafts.'
+          type: string
+        ssidDraftTypes:
+          description: Optional. The ssid draft type map.
+          items:
+            $ref: '#/components/schemas/v1SSIDDraftType'
+          type: array
+        ssids:
+          description: Optional. Social Service ids used in this draft.
+          items:
+            type: string
+          type: array
+        tiktokCustomization:
+          $ref: '#/components/schemas/v1TikTokCustomization'
+        youtubeCustomization:
+          $ref: '#/components/schemas/v1YoutubeCustomization'
+      required:
+      - accountGroupId
+      - draftId
+      title: UpdateDraftRequest
+      type: object
+    YoutubeCustomizationPrivacyStatus:
+      default: YOUTUBE_PRIVACY_STATUS_INVALID
+      enum:
+      - YOUTUBE_PRIVACY_STATUS_INVALID
+      - YOUTUBE_PRIVACY_STATUS_PUBLIC
+      - YOUTUBE_PRIVACY_STATUS_PRIVATE
+      - YOUTUBE_PRIVACY_STATUS_UNLISTED
+      type: string
+    v1ListDraftsRequest:
+      description: Request message for listing social drafts for a given account group.
+      properties:
+        accountGroupId:
+          description: Required. The account group id.
+          type: string
+        cursor:
+          description: Optional. Cursor to more drafts if it is greater then the page size.
+          type: string
+        end:
+          description: Optional. If an end time is provided, a page of the drafts older than it will be returned.
+          format: date-time
+          type: string
+        networks:
+          description: Optional. Should filter on basis of networks ssids.
+          items:
+            type: string
+          type: array
+        pageSize:
+          description: Optional. Number of results to grab.
+          format: int64
+          type: string
+        searchTerm:
+          description: Optional. Including searching in draft.
+          type: string
+        start:
+          description: Optional. If a start time is provided, a page of the drafts that are newer than it will be returned.
+          format: date-time
+          type: string
+        visibilityType:
+          $ref: '#/components/schemas/v1VisibilityType'
+      required:
+      - accountGroupId
+      title: ListDraftsRequest
+      type: object
+    v1MlDraftPost:
+      description: Identifies a multilocation draft post and the account groups it belongs to, used for bulk deletion.
+      properties:
+        accountGroupIds:
+          description: Required. List of account group ids for that post.
+          items:
+            type: string
+          type: array
+        multilocationPostId:
+          description: Required. Post Id mapped to each multilocation post.
+          type: string
+      required:
+      - multilocationPostId
+      - accountGroupIds
+      title: MlDraftPost
+      type: object
+    v1GMBPostCustomization:
+      description: Google My Business-specific customization options for a draft, including event and call-to-action settings.
+      properties:
+        ctaType:
+          description: Optional. Call to action type.
+          type: string
+        eventEnd:
+          description: Optional. Scheduled end for the event.
+          format: date-time
+          type: string
+        eventStart:
+          description: Optional. Scheduled start for the event.
+          format: date-time
+          type: string
+        linkUrl:
+          description: Optional. URL link for event.
+          type: string
+        title:
+          description: Optional. Title of the GMB Event.
+          type: string
+      title: GMBPostCustomization
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            business-app: Allows the application to manage all features of Business App
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

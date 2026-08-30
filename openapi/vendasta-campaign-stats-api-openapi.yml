@@ -1,0 +1,305 @@
+openapi: 3.2.0
+info:
+  title: Advertising Intelligence REST Campaign Stats API
+  version: '1.0'
+  description: ''
+servers:
+- url: https://prod.apigateway.co/products/advertising
+  description: Production
+- url: https://demo.apigateway.co/products/advertising
+  description: Demo
+- url: '{local}/products/advertising'
+  description: Local
+- url: http://localhost:11001/products/advertising
+  description: Localhost
+tags:
+- name: Campaign Stats
+paths:
+  /campaignStats:
+    get:
+      summary: List Campaign Stats
+      tags:
+      - Campaign Stats
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/campaignStats'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                      next:
+                        type: string
+      operationId: get-campaignStats
+      description: Retrieve stats for all connected advertising campaigns for a given connected advertising account.
+      security:
+      - OAuth2Demo:
+        - advertising
+      - OAuth2Prod:
+        - advertising
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/startAt'
+      - $ref: '#/components/parameters/endAt'
+      - schema:
+          type: string
+        in: query
+        name: filter[connectedAccount.id]
+        required: true
+        description: Resource ID of a Connected Advertising Account
+      - $ref: '#/components/parameters/pageLimit'
+      - $ref: '#/components/parameters/pageCursor'
+      x-lifecycle:
+        status: trustedTester
+  /campaignStats/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Campaign Stats
+      tags:
+      - Campaign Stats
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/campaignInfo'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+        '404':
+          description: Connected Campaign Not Found
+      operationId: get-campaignStats-id
+      description: Retrieve account stats for one connected advertising campaign
+      security:
+      - OAuth2Demo:
+        - advertising
+      - OAuth2Prod:
+        - advertising
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/startAt'
+      - $ref: '#/components/parameters/endAt'
+      x-lifecycle:
+        status: trustedTester
+components:
+  schemas:
+    campaignStats:
+      title: Campaign Stats
+      type: object
+      x-examples: {}
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Total Stats for a connected Advertising Campaign'
+      x-lifecycle:
+        status: trustedTester
+      x-tags:
+      - Campaign Stats
+      properties:
+        id:
+          type: string
+          description: The resource ID of the Connected Advertising Campaign
+          example: AG-HDV4JKPXFR:google:8362684505:14501114557
+        type:
+          type: string
+          description: campaignStats
+          default: campaignStats
+          enum:
+          - campaignStats
+        attributes:
+          type: object
+          properties:
+            impressions:
+              type: integer
+              description: Number of times ads under this campaign were viewed
+            clicks:
+              type: integer
+              description: Number of times ads under this campaign were clicked
+            conversions:
+              type: integer
+              description: Total number of conversions from campaigns under this account
+            costMicros:
+              type: integer
+              description: Total account spend denoted in millionths of a dollar
+            averageCostPerClickMicros:
+              type: integer
+              description: Average cost per click denoted in millionths of a dollar
+            clickThroughRate:
+              type: number
+              description: Rate of the number of clicks per number of impressions
+            currencyCode:
+              type: string
+              description: The 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+              minLength: 3
+              maxLength: 3
+      required:
+      - id
+      - type
+      - attributes
+    campaignInfo:
+      title: Campaign Info
+      type: object
+      x-examples: {}
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Information about an advertising campaign.  Requires an Advanced Reporting Addon to be active on the Business Location to access'
+      x-lifecycle:
+        status: trustedTester
+      x-tags:
+      - Campaign Info
+      properties:
+        id:
+          type: string
+          description: The resource ID of the Connected Advertising Account
+          example: AG-HDV4JKHW:google:7531238654:94749174
+        type:
+          type: string
+          description: campaignInfo
+          default: campaignInfo
+          enum:
+          - campaignInfo
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              description: Name of the Campaign
+            isConnected:
+              type: boolean
+              description: Flag indicating if the campaign is connected to the Business Location.  Only stats from connected camapigns will be included in total account stats
+            status:
+              type: string
+              description: '`notSet` - Default value, Campaign status is unknown or unset
+
+
+                `pending` - Campaign is pending review
+
+
+                `needsAttention` - Campaign is experiencing issues during creation that requires user action
+
+
+                `scheduled` - Campaign is sheduled to begin at a future date
+
+
+                `live` - Campaign is currently running
+
+
+                `paused` - Campaign has been paused and is not currently running
+
+
+                `removed` - Camapign has been removed or deleted
+
+
+                `ended` - Campaign has ended and is no longer runnning'
+              enum:
+              - notSet
+              - pending
+              - needsAttention
+              - scheduled
+              - live
+              - paused
+              - removed
+              - ended
+            startAt:
+              type: string
+              format: date-time
+              example: '2018-10-23T00:00:00Z'
+              description: Start date of the campaign
+            endAt:
+              type: string
+              format: date-time
+              example: '2022-02-17T00:00:00Z'
+              description: End date of the campaign
+      required:
+      - id
+      - type
+      - attributes
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^Bearer\s\S+
+        example: Bearer <access token>
+      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+    endAt:
+      name: endAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data from before the specified end date and time. If not specified all data will be returned.
+    pageLimit:
+      name: page[limit]
+      in: query
+      required: false
+      schema:
+        type: number
+        maximum: 100
+        minimum: 1
+        default: 25
+      description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    pageCursor:
+      name: page[cursor]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    startAt:
+      name: startAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        default: '1970-01-01T00:00:01Z'
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data starting from the specified start date and time
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            advertising: Access to the Advertising Intelligence REST API
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            advertising: Access to the Advertising Intelligence REST API

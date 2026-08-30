@@ -1,0 +1,435 @@
+openapi: 3.2.0
+info:
+  title: V Analytics API
+  version: 0.5.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: VAnalytics
+paths:
+  /v1/business-metrics:
+    post:
+      description: 'Submit one or more data points grouped by aggregation_key. Points with the same
+
+        aggregation_key will be aggregated together when building report cards.
+
+
+        **Limitations:**
+
+        - Only integer values (intval) are currently supported; strval support coming soon
+
+        - For fractions: submit numerator and denominator as separate points with different aggregation keys
+
+        - For decimals: submit as integers (multiply by 10 or 100) and note in submission
+
+
+        **Date Format:** YYYY-MM-DDTHH:MM:SSZ (e.g., "2020-02-05T15:04:05Z")'
+      operationId: VAnalytics_PushBusinessMetric
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1BusinessMetric'
+        description: A business identifier, label, and one or more data points for analytics reporting.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business
+        - business.metrics
+      summary: Push Business Metric
+      tags:
+      - VAnalytics
+  /v1/business-metrics/delete:
+    post:
+      description: 'The point is marked as deleted but not permanently removed. Returns 404 if already deleted
+
+        or does not exist.'
+      operationId: VAnalytics_DeleteBusinessMetric
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1DeleteBusinessMetricRequest'
+        description: Request to soft delete a metric point by its unique identifier.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business
+        - business.metrics
+      summary: Delete Business Metric
+      tags:
+      - VAnalytics
+  /v1/business-metrics/delete-multi:
+    post:
+      description: 'Each point is processed individually. The response includes successfully deleted points
+
+        (no error field) and failed deletions with error details. Error code 1 indicates the
+
+        point does not exist or is already deleted.'
+      operationId: VAnalytics_DeleteMultiBusinessMetrics
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1DeleteMultiBusinessMetricsRequest'
+        description: Request to soft delete multiple metric points in a single call.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1DeleteMultiBusinessMetricsResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business
+        - business.metrics
+      summary: Delete Multiple Business Metrics
+      tags:
+      - VAnalytics
+  /v1/business-metrics/get:
+    post:
+      description: 'Returns paginated results. Use the cursor from the response to retrieve additional pages.
+
+        Leave cursor empty for the initial request.'
+      operationId: VAnalytics_GetBusinessMetric
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetBusinessMetricRequest'
+        description: Request to retrieve metric points for a business, filtered by label and date range.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetBusinessMetricResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business
+        - business:read
+        - business.metrics
+      summary: Get Business Metric
+      tags:
+      - VAnalytics
+  /v1/business-metrics/point/get:
+    post:
+      description: 'Returns complete details including source, business_id, label, value, timestamps,
+
+        aggregation_key, and deletion status.'
+      operationId: VAnalytics_GetBusinessMetricPoint
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetBusinessMetricPointRequest'
+        description: Request to retrieve a single metric point by its unique identifier.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetBusinessMetricPointResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business
+        - business:read
+        - business.metrics
+      summary: Get Business Metric Point
+      tags:
+      - VAnalytics
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1DeleteBusinessMetricResponse:
+      description: Result of a single metric point deletion, indicating success or failure.
+      properties:
+        error:
+          $ref: '#/components/schemas/v1Error'
+        id:
+          description: Output only. UUID of the processed metric point.
+          readOnly: true
+          type: string
+      title: DeleteBusinessMetricResponse
+      type: object
+    v1DeleteBusinessMetricRequest:
+      description: Request to soft delete a metric point by its unique identifier.
+      properties:
+        id:
+          description: Required. Unique identifier (UUID) of the metric point to delete.
+          type: string
+      required:
+      - id
+      title: DeleteBusinessMetricRequest
+      type: object
+    v1GetBusinessMetricPointResponse:
+      description: Complete details for a single metric point including source, value, and timestamps.
+      properties:
+        aggregationKey:
+          description: Output only. Aggregation key used to group this point with others.
+          readOnly: true
+          type: string
+        businessId:
+          readOnly: true
+          title: 'Output only. Business ID (Account ID). Format: AG-XXXXXXXX'
+          type: string
+        created:
+          format: date-time
+          readOnly: true
+          title: 'Output only. When this point was created. Format: YYYY-MM-DDTHH:MM:SSZ'
+          type: string
+        dateHappened:
+          format: date-time
+          readOnly: true
+          title: 'Output only. When the measurement occurred. Format: YYYY-MM-DDTHH:MM:SSZ'
+          type: string
+        dateHappenedKey:
+          description: Output only. Internal date key for indexing (Unix timestamp in nanoseconds).
+          readOnly: true
+          type: string
+        deleted:
+          description: Output only. Whether this point has been soft-deleted.
+          readOnly: true
+          type: boolean
+        id:
+          description: Output only. Unique identifier (UUID).
+          readOnly: true
+          type: string
+        label:
+          readOnly: true
+          title: 'Output only. Metric label. Example: "NetSyncGoogleMapViews", "click"'
+          type: string
+        source:
+          description: Output only. Source identifier (typically the user identifier or service account) that submitted the point.
+          readOnly: true
+          type: string
+        value:
+          description: Output only. Integer value of the metric point.
+          format: int64
+          readOnly: true
+          type: string
+      title: GetBusinessMetricPointResponse
+      type: object
+    v1GetBusinessMetricRequest:
+      description: Request to retrieve metric points for a business, filtered by label and date range.
+      properties:
+        businessId:
+          title: 'Required. Business ID (Account ID). Format: AG-XXXXXXXX'
+          type: string
+        cursor:
+          description: Optional. Pagination cursor from previous response. Leave empty for initial request.
+          type: string
+        dateRange:
+          $ref: '#/components/schemas/v1DateRange'
+        label:
+          description: Required. Label identifying the metric type. Must match the label used when pushing data.
+          type: string
+        pageSize:
+          description: Optional. Maximum number of points to return per page.
+          format: int64
+          type: string
+      required:
+      - businessId
+      - label
+      - dateRange
+      title: GetBusinessMetricRequest
+      type: object
+    v1DeleteMultiBusinessMetricsRequest:
+      description: Request to soft delete multiple metric points in a single call.
+      properties:
+        businessMetrics:
+          description: Required. List of metric point IDs to delete.
+          items:
+            $ref: '#/components/schemas/v1DeleteBusinessMetricRequest'
+          type: array
+      required:
+      - businessMetrics
+      title: DeleteMultiBusinessMetricsRequest
+      type: object
+    v1DeleteMultiBusinessMetricsResponse:
+      description: Response containing results for each deletion attempt in a batch delete.
+      properties:
+        businessMetrics:
+          description: Output only. Deletion results. Successfully deleted points have no error field.
+          items:
+            $ref: '#/components/schemas/v1DeleteBusinessMetricResponse'
+          readOnly: true
+          type: array
+      title: DeleteMultiBusinessMetricsResponse
+      type: object
+    v1GetBusinessMetricPointRequest:
+      description: Request to retrieve a single metric point by its unique identifier.
+      properties:
+        id:
+          description: Required. Unique identifier (UUID) of the metric point to retrieve.
+          type: string
+      required:
+      - id
+      title: GetBusinessMetricPointRequest
+      type: object
+    v1DateRange:
+      description: A date range filter with inclusive start and end dates.
+      properties:
+        endDate:
+          format: date-time
+          title: 'Required. End date. Format: YYYY-MM-DDTHH:MM:SSZ'
+          type: string
+        startDate:
+          format: date-time
+          title: 'Required. Start date. Format: YYYY-MM-DDTHH:MM:SSZ'
+          type: string
+      required:
+      - startDate
+      - endDate
+      title: DateRange
+      type: object
+    v1Error:
+      description: Error details for a failed operation.
+      properties:
+        code:
+          description: 'Output only. Error code. Code 1: point does not exist or is already deleted.'
+          format: int64
+          readOnly: true
+          type: string
+        message:
+          description: Output only. Human-readable error message.
+          readOnly: true
+          type: string
+      title: Error
+      type: object
+    v1GetBusinessMetricResponse:
+      description: Response containing paginated metric points for a business.
+      properties:
+        cursor:
+          description: Output only. Pagination cursor for next page. Empty if no more results.
+          readOnly: true
+          type: string
+        metric:
+          $ref: '#/components/schemas/v1BusinessMetric'
+      title: GetBusinessMetricResponse
+      type: object
+    v1BusinessMetric:
+      description: A business identifier, label, and one or more data points for analytics reporting.
+      properties:
+        businessId:
+          title: 'Required. Business ID (Account ID). Format: AG-XXXXXXXX'
+          type: string
+        label:
+          title: 'Required. Label identifying the metric type. Example: "click", "NetSyncGoogleMapViews"'
+          type: string
+        points:
+          description: Required. Data points to be collected and aggregated.
+          items:
+            $ref: '#/components/schemas/v1Point'
+          type: array
+      required:
+      - businessId
+      - label
+      - points
+      title: BusinessMetric
+      type: object
+    v1Point:
+      description: A single measurement or event at a specific time. Points with the same aggregation_key are grouped together.
+      properties:
+        aggregationKey:
+          title: 'Required. Tag used to group points for aggregation. Example: "web", "mobile", "organic"'
+          type: string
+        dateHappened:
+          format: date-time
+          title: 'Required. When the measurement occurred. Format: YYYY-MM-DDTHH:MM:SSZ'
+          type: string
+        id:
+          description: Output only. Unique identifier assigned by the system. Leave empty when creating new points.
+          readOnly: true
+          type: string
+        intval:
+          format: int64
+          title: Optional. Integer value (counts, metrics, etc.)
+          type: string
+        strval:
+          title: Optional. String value (coming soon)
+          type: string
+      required:
+      - dateHappened
+      - aggregationKey
+      title: Point
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            business: Allows the application to manage your business profiles
+            business.metrics: Allows the application to manage business metrics
+            business:read: Allows the application view-only access to your business profiles
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

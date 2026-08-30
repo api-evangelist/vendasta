@@ -1,0 +1,508 @@
+openapi: 3.2.0
+info:
+  title: Social Posts V2 API
+  version: 2.82.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: SocialPostsV2
+paths:
+  /v2/social-posts/list-services:
+    post:
+      operationId: SocialPostsV2_ListPostableSocialServices
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2ListPostableSocialServiceRequest'
+        description: Request message for listing postable social services for a business.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListPostableSocialServiceResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/googlerpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: List Postable Social Services
+      tags:
+      - SocialPostsV2
+  /v2/social-posts/schedule:
+    post:
+      operationId: SocialPostsV2_ScheduleSocialPosts
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2SocialPostRequest'
+        description: Request message for scheduling one or more social posts.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2SocialPostResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/googlerpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Schedule Social Posts
+      tags:
+      - SocialPostsV2
+components:
+  schemas:
+    v2SocialService:
+      description: A social service connection that can be used for posting.
+      properties:
+        accountGroupId:
+          description: Output only. Account group ID.
+          readOnly: true
+          type: string
+        clientTags:
+          description: 'Output only. Tags associated with the client, eg: "SM", "RM", etc.'
+          items:
+            type: string
+          readOnly: true
+          type: array
+        collectPostsFlag:
+          description: Output only. Whether to collect posts.
+          readOnly: true
+          type: boolean
+        collectStatsFlag:
+          description: Output only. Whether to collect stats.
+          readOnly: true
+          type: boolean
+        fullName:
+          description: Output only. For Twitter, this will be the User display name, otherwise this will be same as the name.
+          readOnly: true
+          type: string
+        googleUserId:
+          description: Output only. Google UserId for GMB services.
+          readOnly: true
+          type: string
+        isAuthenticated:
+          description: Output only. Whether the service is authenticated.
+          readOnly: true
+          type: boolean
+        isDisabledFlag:
+          description: Output only. Whether the service is disabled.
+          readOnly: true
+          type: boolean
+        isSyncing:
+          description: Output only. Whether the service is currently syncing.
+          readOnly: true
+          type: boolean
+        name:
+          description: Output only. For Twitter, this will be the Twitter handle, otherwise this will be just the name.
+          readOnly: true
+          type: string
+        profileImageUrl:
+          description: Output only. Profile image URL.
+          readOnly: true
+          type: string
+        profileUrl:
+          description: Output only. Profile URL.
+          readOnly: true
+          type: string
+        serviceId:
+          description: Output only. Service identifier.
+          readOnly: true
+          type: string
+        serviceType:
+          description: 'Output only. Type of the social service, eg: TW_USER, FB_PAGE, LI_COMPANY, etc.'
+          readOnly: true
+          type: string
+        socialProfileId:
+          description: Output only. Social profile identifier.
+          readOnly: true
+          type: string
+        socialTokenBroken:
+          description: Output only. Whether the social token is broken.
+          readOnly: true
+          type: boolean
+        spid:
+          description: Output only. Social profile ID.
+          readOnly: true
+          type: string
+        ssid:
+          description: Output only. Social service ID.
+          readOnly: true
+          type: string
+      title: SocialService
+      type: object
+    v2PostActionV2:
+      description: A call-to-action (CTA) associated with a social post.
+      properties:
+        linkUrl:
+          description: Required. The link URL where the CTA will lead to.
+          type: string
+        type:
+          description: Required. The type of the CTA (e.g. LEARN_MORE, BOOK, SHOP).
+          type: string
+      required:
+      - type
+      - linkUrl
+      title: PostActionV2
+      type: object
+    v2MetadataV2:
+      description: A key-value pair used to store generic metadata information associated with a post or media.
+      properties:
+        name:
+          description: Required. The property name or key.
+          type: string
+        value:
+          description: Required. The property value associated with the name/key.
+          type: string
+      required:
+      - name
+      - value
+      title: MetadataV2
+      type: object
+    YoutubeCustomizationV2PrivacyStatusV2:
+      default: YOUTUBE_PRIVACY_STATUS_INVALID
+      enum:
+      - YOUTUBE_PRIVACY_STATUS_INVALID
+      - YOUTUBE_PRIVACY_STATUS_PUBLIC
+      - YOUTUBE_PRIVACY_STATUS_PRIVATE
+      - YOUTUBE_PRIVACY_STATUS_UNLISTED
+      type: string
+    v2PostMediaV2:
+      description: A single media attachment (image, video, etc.) associated with a social post.
+      properties:
+        containerId:
+          description: Optional. The container identifier, if the network requires it.
+          type: string
+        mediaId:
+          description: Optional. Identifier for this media item.
+          type: string
+        mediaType:
+          description: 'Required. Type of the media: ''IMAGE'' or ''VIDEO'', etc.'
+          type: string
+        mediaUrl:
+          description: Required. The URL where the media is stored.
+          type: string
+        metadata:
+          description: Optional. Metadata associated with this media item.
+          items:
+            $ref: '#/components/schemas/v2MetadataV2'
+          type: array
+      required:
+      - mediaUrl
+      - mediaType
+      title: PostMediaV2
+      type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v2YoutubeCustomizationV2:
+      description: YouTube-specific customization options for video posts, including privacy settings.
+      properties:
+        privacyStatus:
+          $ref: '#/components/schemas/YoutubeCustomizationV2PrivacyStatusV2'
+      title: YoutubeCustomizationV2
+      type: object
+    v2SocialPostOutput:
+      description: A scheduled or created social post with its internal identifier and status.
+      properties:
+        internalPostId:
+          description: Output only. Internal identifier of the post.
+          readOnly: true
+          type: string
+        metadata:
+          description: Output only. Contains metadata if any associated with the post.
+          items:
+            $ref: '#/components/schemas/v2MetadataV2'
+          readOnly: true
+          type: array
+        socialPost:
+          $ref: '#/components/schemas/v2SocialPostV2'
+        status:
+          $ref: '#/components/schemas/v2PostStatusV2'
+        statusMessage:
+          description: Output only. A message related to the post. Can be the error message in case of an error status, for example.
+          readOnly: true
+          type: string
+      title: SocialPostOutput
+      type: object
+    v2PostCustomizationV2:
+      description: Extra configurations for a social post, including events and call-to-action settings.
+      properties:
+        action:
+          $ref: '#/components/schemas/v2PostActionV2'
+        event:
+          $ref: '#/components/schemas/v2PostEventV2'
+      title: PostCustomizationV2
+      type: object
+    v2ListPostableSocialServiceResponse:
+      description: Response message containing the list of postable social services.
+      properties:
+        postableSocialService:
+          description: Output only. List of postable social services.
+          items:
+            $ref: '#/components/schemas/v2SocialService'
+          readOnly: true
+          type: array
+      title: ListPostableSocialServiceResponse
+      type: object
+    v2SocialPostResponse:
+      description: Response message containing the created or scheduled social posts.
+      properties:
+        socialPosts:
+          description: Output only. List of the created/scheduled posts containing internal identifiers.
+          items:
+            $ref: '#/components/schemas/v2SocialPostOutput'
+          readOnly: true
+          type: array
+      title: SocialPostResponse
+      type: object
+    v2LinkV2:
+      description: Link preview information associated with a social post, including URL, title, and preview image.
+      properties:
+        description:
+          description: Optional. The description of the link.
+          type: string
+        name:
+          description: Optional. The name of the link preview.
+          type: string
+        picture:
+          description: Optional. The preview image associated with the link.
+          type: string
+        shortcode:
+          description: Optional. The shortcode of the link.
+          type: string
+        title:
+          description: Optional. The title for the link.
+          type: string
+        url:
+          description: Required. The URL of the link.
+          type: string
+      required:
+      - url
+      title: LinkV2
+      type: object
+    v2PostEventV2:
+      description: An event associated with a social post, typically used for Google My Business event posts.
+      properties:
+        end:
+          description: Required. The timestamp when the event will end.
+          format: date-time
+          type: string
+        start:
+          description: Required. The timestamp when the event will start.
+          format: date-time
+          type: string
+        title:
+          description: Required. Title of the event related to the post.
+          type: string
+      required:
+      - title
+      - start
+      - end
+      title: PostEventV2
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v2TikTokCustomizationV2:
+      description: TikTok-specific customization options for video posts, including community interaction and branding settings.
+      properties:
+        allowComment:
+          description: Optional. Whether viewers can comment on the video.
+          type: boolean
+        allowDuet:
+          description: Optional. Whether other users can create duet videos.
+          type: boolean
+        allowStitch:
+          description: Optional. Whether other users can stitch clips from this video.
+          type: boolean
+        isBrandOrganic:
+          description: Optional. Whether this is organic brand content (not paid promotion).
+          type: boolean
+        isBrandedContent:
+          description: Optional. Whether this video contains branded content or product placement.
+          type: boolean
+      title: TikTokCustomizationV2
+      type: object
+    v2PostTypeV2:
+      default: POST_TYPE_INVALID
+      enum:
+      - POST_TYPE_INVALID
+      - POST_TYPE_IMAGE
+      - POST_TYPE_VIDEO
+      - POST_TYPE_GIF
+      - POST_TYPE_MULTI_MEDIA
+      - POST_TYPE_TEXT
+      - POST_TYPE_STORIES
+      - POST_TYPE_IMAGE_STORY
+      - POST_TYPE_VIDEO_STORY
+      title: Represents the type of a post
+      type: string
+    v2ListPostableSocialServiceRequest:
+      description: Request message for listing postable social services for a business.
+      properties:
+        businessId:
+          description: Required. The business id of the account.
+          type: string
+      required:
+      - businessId
+      title: ListPostableSocialServiceRequest
+      type: object
+    v2PostStatusV2:
+      default: POST_STATUS_INVALID
+      enum:
+      - POST_STATUS_INVALID
+      - POST_STATUS_SUCCESS
+      - POST_STATUS_ERROR
+      title: Represents the status of a post
+      type: string
+    v2SocialPostV2:
+      description: Represents a social media post including its content, scheduling, customization, and metadata.
+      properties:
+        brandId:
+          description: Optional. The brand_id related to this post (multilocation only).
+          type: string
+        businessId:
+          description: Required. The business id that owns this post.
+          type: string
+        campaignId:
+          description: Optional. Campaign ID, used to store control social posts for a campaign.
+          type: string
+        createdBy:
+          description: 'Output only. Identifier of who created this post.
+
+            In automation flow it will be an assistant ID.
+
+            In chat flow it will be a user ID.'
+          readOnly: true
+          type: string
+        customization:
+          $ref: '#/components/schemas/v2PostCustomizationV2'
+        internalPostId:
+          description: Output only. Internal post id, used as a fail-safe identifier.
+          readOnly: true
+          type: string
+        metadata:
+          description: Optional. Metadata to hold any additional details related to the post.
+          items:
+            $ref: '#/components/schemas/v2MetadataV2'
+          type: array
+        multilocationPostId:
+          description: Optional. The multilocation post id related to this post (multilocation only).
+          type: string
+        partnerId:
+          description: Required. The partner_id of the business_id for this post.
+          type: string
+        postContent:
+          $ref: '#/components/schemas/v2PostContentV2'
+        postType:
+          $ref: '#/components/schemas/v2PostTypeV2'
+        scheduled:
+          description: Optional. The time to schedule the post at. If not provided, the post will be published immediately.
+          format: date-time
+          type: string
+        shareId:
+          description: Optional. The share ID, used for TikTok posts.
+          type: string
+        socialServiceId:
+          description: Required. Social service id representing the specific network. Indicates the network in which the post will be published.
+          type: string
+        tiktokCustomization:
+          $ref: '#/components/schemas/v2TikTokCustomizationV2'
+        updatedBy:
+          description: 'Output only. Identifier of who last updated this post. Empty until the first
+
+            update, then overwritten on every subsequent update.
+
+            In automation flow it will be an assistant ID.
+
+            In chat flow it will be a user ID.'
+          readOnly: true
+          type: string
+        userId:
+          description: Optional. The user ID, used for TikTok posts.
+          type: string
+        youtubeCustomization:
+          $ref: '#/components/schemas/v2YoutubeCustomizationV2'
+      required:
+      - businessId
+      - socialServiceId
+      - postContent
+      - partnerId
+      title: SocialPostV2
+      type: object
+    v2PostContentV2:
+      description: Contains all the content of a social post including text, media attachments, and links.
+      properties:
+        description:
+          description: Optional. Description for the post, used specifically for LinkedIn.
+          type: string
+        links:
+          description: Optional. Link previews associated with the post.
+          items:
+            $ref: '#/components/schemas/v2LinkV2'
+          type: array
+        medias:
+          description: Optional. All media associated with the post (images, videos, etc.).
+          items:
+            $ref: '#/components/schemas/v2PostMediaV2'
+          type: array
+        postText:
+          description: Required. The text content of the post.
+          type: string
+        title:
+          description: Optional. Title for the post. Not required for all social networks.
+          type: string
+      required:
+      - postText
+      title: PostContentV2
+      type: object
+    v2SocialPostRequest:
+      description: Request message for scheduling one or more social posts.
+      properties:
+        socialPosts:
+          description: Required. List of posts to be created and scheduled.
+          items:
+            $ref: '#/components/schemas/v2SocialPostV2'
+          type: array
+      required:
+      - socialPosts
+      title: SocialPostRequest
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            business-app: Allows the application to manage all features of Business App
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

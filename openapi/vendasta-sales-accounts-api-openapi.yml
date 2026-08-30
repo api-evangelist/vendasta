@@ -1,0 +1,1958 @@
+openapi: 3.2.0
+info:
+  title: Platform REST Sales Accounts API
+  version: Evergreen
+servers:
+- url: https://prod.apigateway.co/platform
+  description: Production
+- description: Demo
+  url: https://demo.apigateway.co/platform
+- description: Local
+  url: '{local}/platform'
+- url: http://localhost:11001/platform
+  description: Localhost
+tags:
+- name: Sales Accounts
+paths:
+  /salesAccounts:
+    parameters: []
+    post:
+      summary: Create Sales Account
+      operationId: post-salesAccounts
+      responses:
+        '201':
+          description: Created
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/salesAccounts'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                        description: The address of the newly created business location
+              examples:
+                Return Example (with ID):
+                  value:
+                    data:
+                      id: AG-1234567
+                      type: salesAccounts
+                      attributes:
+                        tags:
+                        - tag1
+                        - tag2
+                        customerIdentifier: User-defined-id-123123
+                        name: Company Example
+                        address:
+                          line1: 109 8th Street E.
+                          line2: Suite 23
+                          city: Saskatoon
+                          stateCode: CA
+                          zip: S7M 1R3
+                          postalCode: S7M 1R3
+                          regionCode: CA-SK
+                          countryCode: CA
+                        phoneNumbers:
+                        - '+13068800001'
+                        serviceAreaBusiness: true
+                        geoCoordinate:
+                          latitude: -90
+                          longitude: -180
+                      relationships:
+                        salesPeople:
+                          data:
+                          - id: U-123123-123123
+                            type: users
+                        businessPartner:
+                          data:
+                            type: partners
+                            id: ABC
+                        businessCategories:
+                          data:
+                          - type: businessCategories
+                            id: active:diving:freediving
+                        type: salesAccounts
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: The address of the newly created business location
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/salesAccounts'
+            examples:
+              Insert Sales Account Example:
+                value:
+                  data:
+                    type: salesAccounts
+                    attributes:
+                      tags:
+                      - tag1
+                      - tag2
+                      customerIdentifier: User-defined-id-123123
+                      name: Company Example
+                      address:
+                        line1: 109 8th Street E.
+                        line2: Suite 23
+                        city: Saskatoon
+                        stateCode: CA
+                        zip: S7M 1R3
+                        postalCode: S7M 1R3
+                        regionCode: CA-SK
+                        countryCode: CA
+                      phoneNumbers:
+                      - '+13068800001'
+                      serviceAreaBusiness: true
+                      geoCoordinate:
+                        latitude: -90
+                        longitude: -180
+                    relationships:
+                      salesPeople:
+                        data:
+                        - id: U-123123-123123
+                          type: users
+                      businessPartner:
+                        data:
+                          type: partners
+                          id: ABC
+                      businessCategories:
+                        data:
+                        - type: businessCategories
+                          id: active:diving:freediving
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Used to record basic data for a new location.
+
+
+        The following members must be populated during creation:
+
+        - `relationships.businessPartner.data.id`
+
+        - `attributes.name`
+
+        - `attributes.address.countryCode` as well as other address fields based on the norms of the country.'
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      - schema:
+          type: string
+          default: application/vnd.api+json
+          enum:
+          - application/vnd.api+json
+        in: header
+        name: Content-Type
+        required: true
+        description: Indicates the format of the request body being sent. In most cases you will want `application/vnd.api+json`
+      security:
+      - OAuth2Demo:
+        - sales.account
+      - OAuth2Prod:
+        - sales.account
+      tags:
+      - Sales Accounts
+    options:
+      operationId: options-salesAccounts
+      summary: List valid HTTP verbs for /salesAccounts
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Sales Accounts
+    get:
+      summary: List Sales Accounts
+      operationId: get-salesAccounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/salesAccounts'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        description: Provides a link back to the first page of results
+                        format: uri
+                      next:
+                        type: string
+                        description: The URI at which the next batch of accounts can be gotten from
+                        format: uri
+                  meta:
+                    type: object
+                    x-stoplight:
+                      id: hbu5nqur0qnmk
+                    properties:
+                      error:
+                        type: array
+                        x-stoplight:
+                          id: s8dssb6fgtlig
+                        items:
+                          x-stoplight:
+                            id: lxynuyj0i8hm6
+                          type: object
+                          properties:
+                            ID:
+                              type: string
+                              x-stoplight:
+                                id: g0v15e1y213zp
+                              example: AG-XXXXXXXX
+                              readOnly: true
+                            Message:
+                              type: string
+                              x-stoplight:
+                                id: pfb4q0j426bd5
+                              example: Account not found
+              examples:
+                Return Example:
+                  value:
+                    id: AG-1234567
+                    type: salesAccounts
+                    attributes:
+                      tags:
+                      - tag1
+                      - tag2
+                      customerIdentifier: User-defined-id-123123
+                      name: Company Example
+                      address:
+                        line1: 109 8th Street E.
+                        line2: Suite 23
+                        city: Saskatoon
+                        stateCode: CA
+                        zip: S7M 1R3
+                        postalCode: S7M 1R3
+                        regionCode: CA-SK
+                        countryCode: CA
+                      phoneNumbers:
+                      - '+13068800001'
+                      serviceAreaBusiness: true
+                      geoCoordinate:
+                        latitude: -90
+                        longitude: -180
+                    relationships:
+                      salesPeople:
+                        data:
+                        - id: U-123123-123123
+                          type: users
+                      customFields:
+                        data:
+                        - id: AG-1234567
+                          type: customFields
+                      businessPartner:
+                        data:
+                          type: partners
+                          id: ABC
+                      businessCategories:
+                        data:
+                        - type: businessCategories
+                          id: active:diving:freediving
+                      type: salesAccounts
+                    included:
+                    - id: AG-1231231
+                      type: salesAccountCustomFields
+                      partnerFields:
+                      - fieldId: FieldID-1231231-12312312
+                        stringValue: Text value
+                        title: Title of field FieldID-1231231
+                        description: Description of field FieldID-1231231
+                        fieldType: string
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Produces a list of sales accounts'
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: filter[businessPartner.id]
+        description: Return business locations for the specified partner
+        required: true
+      - schema:
+          type: string
+        in: query
+        description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+        name: page[cursor]
+      - schema:
+          type: string
+          minLength: 1
+          maxLength: 25
+          default: '25'
+        in: query
+        description: The maximum number of accounts you would like returned in a single batch. Use the links.next member in the response to get the remainder. Any number higher than 25 will be lowered to 25. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+        name: page[limit]
+      - schema:
+          type: string
+          enum:
+          - customFields
+          - salesPeople
+          - businessCategories
+          uniqueItems: true
+        in: query
+        name: include
+        description: A list of relationships where you would like the related records embedded in the response. This can be used to save a network request.
+      - schema:
+          type: string
+          enum:
+          - createdAt
+          - -createdAt
+          - name
+          - -name
+          - updatedAt
+          - -updatedAt
+          default: -updatedAt
+        in: query
+        name: sort
+        description: Sort sales accounts based on selected option. Defaulted to -updatedAt (Desc updatedAt)
+      - schema:
+          type: string
+        in: query
+        name: filter[customerIdentifier]
+        description: Return the accounts within the partner that have given customer identifier.
+      - schema:
+          type: boolean
+        in: query
+        description: useNewCategory is of type boolean which returns new/old business categories.If value of useNewCategory is true then it will return new business categories , if false then it will return old business categories.In case of not set, it will return categories as per feature flag.
+        name: useNewCategory
+      - schema:
+          type: string
+          example: name,phoneNumbers,hours
+        in: query
+        name: fields[salesAccounts]
+        description: 'Filter salesAccounts by the following fields: name, phoneNumbers, customerIdentifier, geoCoordinate, serviceAreaBusiness, hours, and updatedAt. These fields will be included in the response.'
+      - schema:
+          type: array
+          items:
+            type: string
+          example: '["AG-123","AG-456"]'
+        in: query
+        name: filter[id]
+        description: Return accounts for given ids. For this filter ,We are not supporting pagination.
+      security:
+      - OAuth2Demo:
+        - sales.account
+      - OAuth2Prod:
+        - sales.account
+      tags:
+      - Sales Accounts
+      x-lifecycle:
+        status: trustedTester
+  /salesAccounts/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Sales Accounts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/salesAccounts'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+              examples:
+                example-1:
+                  value:
+                    data:
+                      id: AG-1234567
+                      type: salesAccounts
+                      attributes:
+                        tags:
+                        - tag1
+                        - tag2
+                        customerIdentifier: User-defined-id-123123
+                        name: Company Example
+                        address:
+                          line1: 109 8th Street E.
+                          line2: Suite 23
+                          city: Saskatoon
+                          stateCode: CA
+                          zip: S7M 1R3
+                          postalCode: S7M 1R3
+                          regionCode: CA-SK
+                          countryCode: CA
+                        phoneNumbers:
+                        - '+13068800001'
+                        serviceAreaBusiness: true
+                        geoCoordinate:
+                          latitude: -90
+                          longitude: -180
+                      relationships:
+                        salesPeople:
+                          data:
+                          - id: U-123123-123123
+                            type: users
+                        customFields:
+                          data:
+                          - id: AG-1234567
+                            type: customFields
+                        businessPartner:
+                          data:
+                            type: partners
+                            id: ABC
+                        businessCategories:
+                          data:
+                          - type: businessCategories
+                            id: active:diving:freediving
+                        type: salesAccounts
+                      included:
+                      - id: AG-1231231
+                        type: salesAccountCustomFields
+                        partnerFields:
+                        - fieldId: FieldID-1231231-12312312
+                          stringValue: Text value
+                          title: Title of field FieldID-1231231
+                          description: Description of field FieldID-1231231
+                          fieldType: string
+      operationId: get-salesAccounts-by-id
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Returns basic data about the sales account.'
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      - schema:
+          type: boolean
+        in: query
+        description: useNewCategory is of type boolean which returns new/old business categories.If value of useNewCategory is true then it will return new business categories , if false then it will return old business categories.In case of not set, it will return categories as per feature flag.
+        name: useNewCategory
+      - schema:
+          type: string
+          example: name,phoneNumbers,hours
+        in: query
+        name: fields[salesAccounts]
+        description: 'Filter salesAccounts by the following fields: name, phoneNumbers, customerIdentifier, geoCoordinate, serviceAreaBusiness, hours, and updatedAt. These fields will be included in the response.'
+      security:
+      - OAuth2Demo:
+        - sales.account
+      - OAuth2Prod:
+        - sales.account
+      tags:
+      - Sales Accounts
+    options:
+      operationId: options-salesAccounts-by-id
+      summary: List valid HTTP verbs for /salesAccounts/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Sales Accounts
+    patch:
+      summary: Update Sales Account
+      operationId: patch-salesAccounts-by-id
+      tags:
+      - Sales Accounts
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Update the existing business location.
+
+        Only the root ID and type fields are required. All others are optional and will keep their original value if omitted.'
+      x-lifecycle:
+        status: trustedTester
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      - schema:
+          type: string
+          default: application/vnd.api+json
+          enum:
+          - application/vnd.api+json
+        in: header
+        name: Content-Type
+        required: true
+        description: Indicates the format of the request body being sent. In most cases you will want `application/vnd.api+json`
+      security:
+      - OAuth2Demo:
+        - sales.account
+      - OAuth2Prod:
+        - sales.account
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/salesAccounts'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                        description: The address of the updated business location
+              examples:
+                example-1:
+                  value:
+                    data:
+                      id: AG-1234567
+                      type: salesAccounts
+                      attributes:
+                        tags:
+                        - tag1
+                        - tag2
+                        customerIdentifier: User-defined-id-123123
+                        name: Company Example
+                        address:
+                          line1: 109 8th Street E.
+                          line2: Suite 23
+                          city: Saskatoon
+                          stateCode: CA
+                          zip: S7M 1R3
+                          postalCode: S7M 1R3
+                          regionCode: CA-SK
+                          countryCode: CA
+                        phoneNumbers:
+                        - '+13068800001'
+                        serviceAreaBusiness: true
+                        geoCoordinate:
+                          latitude: -90
+                          longitude: -180
+                      relationships:
+                        salesPeople:
+                          data:
+                          - id: U-123123-123123
+                            type: users
+                        businessPartner:
+                          data:
+                            type: partners
+                            id: ABC
+                        businessCategories:
+                          data:
+                          - type: businessCategories
+                            id: active:diving:freediving
+                        type: salesAccounts
+          headers: {}
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/salesAccounts'
+            examples:
+              example-1:
+                value:
+                  data:
+                    id: AG-1234567
+                    type: salesAccounts
+                    attributes:
+                      tags:
+                      - tag1
+                      - tag2
+                      customerIdentifier: User-defined-id-123123
+                      name: Company Example
+                      address:
+                        line1: 109 8th Street E.
+                        line2: Suite 23
+                        city: Saskatoon
+                        stateCode: CA
+                        zip: S7M 1R3
+                        postalCode: S7M 1R3
+                        regionCode: CA-SK
+                        countryCode: CA
+                      phoneNumbers:
+                      - '+13068800001'
+                      serviceAreaBusiness: true
+                      geoCoordinate:
+                        latitude: -90
+                        longitude: -180
+                    relationships:
+                      salesPeople:
+                        data:
+                        - id: U-123123-123123
+                          type: users
+                      businessPartner:
+                        data:
+                          type: partners
+                          id: ABC
+                      businessCategories:
+                        data:
+                        - type: businessCategories
+                          id: active:diving:freediving
+                      type: salesAccounts
+  /salesAccounts/{id}/relationships/customFields:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Custom Fields ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  links:
+                    type: object
+                    properties:
+                      related:
+                        type: string
+                      self:
+                        type: string
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: salesAccountCustomFields
+                      id:
+                        type: string
+                        example: AG-1234123412
+              examples:
+                Relationship Example:
+                  value:
+                    links:
+                      related: https://prod.apigateway.co/platform/salesAccounts/AG-1234123412/customFields
+                      self: https://prod.apigateway.co/platform/salesAccounts/AG-1234567812/relationships/customFields
+                    data:
+                      type: salesAccountCustomFields
+                      id: AG-1234123412
+      operationId: get-salesAccountCustomFieldsID-by-salesAccount
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Returns a reference to the custom metadata for this sales account. Use the path without `/relationships/` in it to get the actual data.
+
+
+        Attributes can be set up at the partner administration page in Partner Center.'
+      security:
+      - OAuth2Demo:
+        - sales.account
+      - OAuth2Prod:
+        - sales.account
+      x-lifecycle:
+        status: trustedTester
+      tags:
+      - Sales Accounts
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+    options:
+      summary: List valid HTTP verbs for /salesAccounts/{id}/relationships/customFields
+      operationId: options-salesAccountCustomFieldsID-by-salesAccount
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Sales Accounts
+  /salesAccounts/{id}/customFields:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Custom Fields
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/salesAccountCustomFields'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        description: Provides a link back to the first page of results
+                        format: uri
+                      next:
+                        type: string
+                        description: The URI at which the next batch of fields can be gotten from
+                        format: uri
+              examples:
+                Return Example:
+                  value:
+                    data:
+                      id: AG-1231231
+                      type: salesAccountCustomFields
+                      attributes:
+                        partnerFields:
+                        - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+                          integerValue: 1000
+                          title: Title of 123448ca field
+                          description: Description for 123448ca field
+                          fieldType: integer
+                        - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+                          dateValue: A good date value
+                          title: Title of 987448ca field
+                          description: Description for 987448ca field
+                          fieldType: date
+                        - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+                          stringValue: A good string value
+                          title: Title of abc448ca field
+                          description: Description for abc448ca field
+                          fieldType: string
+      operationId: get-salesAccountCustomFields-by-salesAccount
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        This endpoint acts like a alias to [Get Sales Account Custom Fields by ID endpoint](b3A6MzYxMTM5MTY-get-sales-account-custom-data-by-id). It returns custom fields about a sales account.'
+      security:
+      - OAuth2Demo:
+        - sales.account
+      - OAuth2Prod:
+        - sales.account
+      x-lifecycle:
+        status: trustedTester
+      tags:
+      - Sales Accounts
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+    options:
+      summary: List valid HTTP verbs for /salesAccounts/{id}/customFields
+      operationId: options-salesAccountCustomFields-by-salesAccount
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Sales Accounts
+components:
+  schemas:
+    businessCategories:
+      title: Business Category
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        The taxonomy to be applied to business locations indicating the type of services that they provide.'
+      x-tags:
+      - Business Categories
+      properties:
+        id:
+          type: string
+          example: AG-1234567
+          readOnly: true
+        type:
+          type: string
+          default: businessCategories
+          enum:
+          - businessCategories
+          readOnly: true
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              description: A user friendly description for the category. It will have been translated based on the Accept-Language header.
+              readOnly: true
+            isActive:
+              type: boolean
+              description: Whether the category is active. Inactive categories may still be returned when looking up by ID but should not be used for new assignments.
+              readOnly: true
+    users:
+      title: Users
+      type: object
+      x-lifecycle:
+        status: proposed
+      description: "[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`\n\t\nA “user” is a person or bot that could potentially interact with the platform. If they have not been granted access to any features they will not be able to do anything after logging in.\n\nA person who is the customer of multiple businesses may have multiple separate user records within the platform so it is important to always include an organization filter when searching by email or name. \n\nTo learn more and view sample requests visit the [user management guide](../../../../../docs/Guides/Users.md)"
+      x-tags:
+      - Users
+      properties:
+        type:
+          type: string
+          default: users
+          enum:
+          - users
+        id:
+          type: string
+          description: 'The id will be assigned by the server and must be included on all update requests. Values sent during creation will be ignored. It is globally unique across all platform instances and will not change.
+
+
+            You may use the special id `me` to operate on the current user if you have the scope `openid`.'
+          example: U-3ca38c57-7677-45d4-81e8-cd29eab91d63
+        attributes:
+          type:
+          - object
+          - 'null'
+          properties:
+            displayName:
+              type: string
+              example: Bill Smith
+              description: The user’s name formatted for display. This will always have a value.
+              readOnly: true
+            givenName:
+              type: string
+              description: Given name(s) or first name(s) of the End-User. Note that in some cultures, people can have multiple given names; all can be present, with the names being separated by space characters.
+              minLength: 0
+              maxLength: 50
+              example: William
+            familyName:
+              type: string
+              description: Surname(s) or last name(s) of the End-User. Note that in some cultures, people can have multiple family names or no family name; all can be present, with the names being separated by space characters.
+              minLength: 0
+              maxLength: 50
+              example: Smith
+            greetingName:
+              type: string
+              description: The name to use at the opening of messages addressed to the user. Note that in some cultures this is an alternate spelling or shortened form of the first name. Defaults to givenName.
+              minLength: 0
+              maxLength: 50
+              example: Billy
+            email:
+              type: string
+              format: email
+              example: bill@example.com
+              minLength: 5
+              description: 'The primary email address for the user.
+
+                This is required when creating a user.'
+            emailVerified:
+              type: boolean
+              default: false
+              description: 'True if the End-User''s e-mail address has been verified; otherwise false. When true affirmative steps to ensure that this e-mail address was controlled by the End-User at the time the verification was performed. '
+              readOnly: true
+            emailSet:
+              type: boolean
+              description: Indicates there is an email address available that can have messages sent to it using the notifications system.
+              readOnly: true
+            languageLocaleCode:
+              type: string
+              pattern: ^[a-z]{2}(-[A-Z]{2})?$
+              example: en-US
+              description: 'The local language that content should be displayed to this user in.
+
+
+                Note: We currently have a limited set of allowed languages but expect to support many more in the future. When the requested language is not supported US English will be used.
+
+
+                It should be a single BCP47/RFC5646 language tag. This is an [ISO 639-1 Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) language code in lowercase and an [ISO 3166-1 Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) country code in uppercase, separated by a dash.
+
+
+                Examples:
+
+                - `en-US` English (US)
+
+                - `fr-FR` French (France)
+
+                - `cs-CZ` Czech (Czech Republic)
+
+                - `de-DE` German (Germany)
+
+                - `nl-BE` Dutch (Belgium)
+
+                - `it` Italian'
+            phoneNumbersSet:
+              type: boolean
+            phoneNumbers:
+              type: array
+              minItems: 0
+              description: "A list of phone numbers for the user. \n\nNote: Do not send a phone number object or \n type if the user does not have a phone number."
+              items:
+                type: object
+                properties:
+                  number:
+                    type: string
+                    description: 'The standard phone numbers for the location.
+
+                      Formatting characters may be included.
+
+
+                      **Extensions**
+
+
+                      It is recommended that extensions are included at the end of the number after an appropriate separator: Pause: `,` Wait: `;` Default: `ext.`
+
+
+                      You may test the parsibility of a number using https://phonenumbers.temba.io/
+
+
+                      All partial phone numbers are assumed to be in the same country as this user''s address.'
+                    example: +1-306-555-1234 ext. 56
+                  typeCode:
+                    type: string
+                    description: 'A classification of what the number should be used for.
+
+
+                      The mobile number should be preferred when sending SMS messages to the user however they may also be sent to work or home numbers.'
+                    enum:
+                    - mobile
+                    - work
+                    - home
+                    - fax
+                    - pager
+                required:
+                - number
+                - typeCode
+            address:
+              type: object
+              description: The primary address where this user can be reached.
+              properties:
+                line1:
+                  type: string
+                  example: 109 8th Street E.
+                  description: The primary information. Typically a street address.
+                line2:
+                  type: string
+                  example: Suite 23
+                  description: An additional line of information to add after the street address.
+                streetAddress:
+                  type: string
+                  example: 109 8th Street E.
+                  deprecated: true
+                  description: Deprecated - This field has been renamed line1
+                  x-lifecycle:
+                    status: deprecated
+                    deprecated: '2021-10-04'
+                    proposedRemoval: '2021-11-04'
+                    description: This field was renamed to line1 while at the trusted tester phase. It will be removed shortly.
+                additionalAddress:
+                  type: string
+                  example: Suite 23
+                  deprecated: true
+                  description: Deprecated - This field has been renamed line2. An additional line of information to add after the street address.
+                  x-lifecycle:
+                    status: deprecated
+                    deprecated: '2021-10-04'
+                    proposedRemoval: '2021-11-04'
+                    description: This field was renamed to line2 while at the trusted tester phase. It will be removed shortly.
+                city:
+                  type: string
+                  description: The city, town or locality component of an address.
+                  example: Saskatoon
+                postalCode:
+                  type: string
+                  description: The zip code or postal code component of an address.
+                  example: S7M 1R3
+                regionCode:
+                  type: string
+                  description: 'The code for the top level subdivision within the country (state/province). For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
+
+
+                    Examples: CA-SK, US-FL, AG-08, AU-NSW'
+                  example: CA-SK
+                  maxLength: 6
+                  minLength: 4
+                  pattern: ^[A-Z]{2}-[\w]{1,3}$
+                countryCode:
+                  type: string
+                  maxLength: 2
+                  minLength: 2
+                  example: CA
+                  description: 'The two letter country code. For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
+
+
+                    Examples: CA, US, AU'
+                  pattern: ^[A-Z]{2}$
+            profileImage:
+              type: string
+              format: uri
+              description: A photo that can be used to represent this user. If the user does not have a custom image set a default image will be returned.
+              example: https://storage.googleapis.com/wordpress-www-vendasta/vw-wordpress/Brendan-King-1.jpg
+              readOnly: true
+            timeZone:
+              type: string
+              description: 'The User''s time zone in the IANA [time zone database format](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+
+
+                Example: `America/Los_Angeles`'
+              example: America/Regina
+            createdAt:
+              type: string
+              format: date-time
+              description: The time at which the user was initially created in the platform.
+              readOnly: true
+            updatedAt:
+              type: string
+              format: date-time
+              description: 'The time at which the user’s profile was last updated. Note: Changes to permissions will not affect this field.'
+              readOnly: true
+        relationships:
+          type: object
+          properties:
+            partner:
+              type: object
+              description: A link to the organization that provides the platform to this user.
+              properties:
+                data:
+                  type: object
+                  required:
+                  - type
+                  - id
+                  properties:
+                    type:
+                      type: string
+                      default: partners
+                      enum:
+                      - partners
+                    id:
+                      type: string
+                      example: ABC
+              required:
+              - data
+            businessLocations:
+              type: object
+              description: 'The business locations that this user is a member of.
+
+
+                When a new location is added to a user they will be granted the default business user permissions.
+
+
+                Fine grained permissions currently must be managed in Partner Center''s UI. We are gathering interest to determine how it should work by API so please send us your use cases.'
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      type:
+                        type: string
+                        default: businessLocations
+                        example: businessLocations
+                        enum:
+                        - businessLocations
+                      id:
+                        type: string
+                        example: AG-1234567
+                        description: The ID of a previously created business location record.
+                    required:
+                    - type
+                    - id
+            platformAccess:
+              type: object
+              description: '`Proposed` The platform access functionality is still at a `proposed` status. Not all options are currently available.
+
+
+                Use this field to grant access to platform level features to your employees and contractors.'
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        default: appFeatures
+                        example: appFeatures
+                      id:
+                        type: string
+                        enum:
+                        - pc:access
+                        - pc:canCustomizeWhitelabel
+                        - pc:canAccessBilling
+                        - pc:canManageSales
+                        - pc:canManageAccounts
+                        - pc:canManageTasks
+                        - pc:canAccessBrands
+                        - pc:canAccessMarketing
+                        - pc:canAccessDashboard
+                        - pc:canAccessOrders
+                        - pc:canManageAdmins
+                        - pc:canAccessMarketplace
+                        - pc:canEnableApps
+                        - pc:canAccessCompanyProfile
+                        - pc:canAccessAutomations
+                        - ssc:access
+                        - ssc:manage
+                        - tm:access
+                        - tm:manage
+                        - crm:contacts:write:own
+                        - crm:contacts:write:ownunowned
+                        - crm:contacts:write:all
+                        - crm:contacts:manage
+                        - crm:companies:write:own
+                        - crm:companies:write:ownunowned
+                        - crm:companies:write:all
+                        - crm:companies:manage
+                        - crm:custom_objects:write:own
+                        - crm:custom_objects:write:ownunowned
+                        - crm:custom_objects:write:all
+                        - crm:custom_objects:manage
+                        description: 'The platform access functionality is still at a `proposed` status. Not all options are currently available. '
+                    required:
+                    - type
+                    - id
+    salesAccounts:
+      title: Sales Account
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        A Sales Account is used by partners to track their interactions with a Business Location. It contains the public data of a business location plus additional data which is private to the partner.'
+      x-tags:
+      - Sales Accounts
+      x-examples:
+        Sales Account Example:
+          data:
+            id: AG-1234567
+            type: salesAccounts
+            attributes:
+              tags:
+              - tag1
+              - tag2
+              customerIdentifier: User-defined-id-123123
+              name: Company Example
+              address:
+                line1: 109 8th Street E.
+                line2: Suite 23
+                city: Saskatoon
+                postalCode: S7M 1R3
+                regionCode: CA-SK
+                countryCode: CA
+              phoneNumbers:
+              - '+13068800001'
+              serviceAreaBusiness: true
+              geoCoordinate:
+                latitude: -90
+                longitude: -180
+            relationships:
+              salesPeople:
+                data:
+                - id: U-123123-123123
+                  type: users
+              customFields:
+                data:
+                - id: AG-1234567
+                  type: customFields
+              businessPartner:
+                data:
+                  type: partners
+                  id: ABC
+              businessCategories:
+                data:
+                - type: businessCategories
+                  id: active:diving:freediving
+              type: salesAccounts
+            included:
+            - id: AG-1231231
+              type: salesAccountCustomFields
+              partnerFields:
+              - fieldId: FieldID-1231231-12312312
+                stringValue: Text value
+                title: Title of field FieldID-1231231
+                description: Description of field FieldID-1231231
+                fieldType: string
+      properties:
+        id:
+          type: string
+          example: AG-1234567
+        type:
+          type: string
+          default: salesAccounts
+          enum:
+          - salesAccounts
+        attributes:
+          type: object
+          properties:
+            tags:
+              type: array
+              maxItems: 15
+              description: A tag is a label that can be used for grouping and filtering your list of accounts. They may be any string upto 30 characters in length. There is a limit of 15 tags.
+              items:
+                type: string
+                maxLength: 30
+                minLength: 1
+            customerIdentifier:
+              type: string
+              description: A value assigned by the business partner to reference this business location. Customer ID is currently NOT enforced to be unique, and there may be negative side effects to having a duplicate and/or changing a customer ID, specifically around legacy SSO. Use caution when editing a customer ID.
+            name:
+              type: string
+              description: 'The common name for this location.
+
+
+                Note: The pipe character (`|`) is not allowed.'
+              example: CN Tower
+              pattern: ^[^|]+$
+              minLength: 1
+            commonNames:
+              type: array
+              description: A common name for a business (Something it is often referred to as)
+              maxItems: 3
+              minItems: 0
+              items:
+                type: string
+            address:
+              type: object
+              properties:
+                line1:
+                  type: string
+                  example: 290 Bremner Blvd
+                  description: The primary information. Typically a street address.
+                line2:
+                  type: string
+                  description: An additional line of information to add after the street address.
+                city:
+                  type: string
+                  example: Toronto
+                postalCode:
+                  type: string
+                  description: The zip code or postal code component of an address.
+                  example: M5V 3L9
+                regionCode:
+                  type: string
+                  description: 'The code for the top level subdivision within the country (state/province). For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
+
+
+                    Examples: CA-SK, US-FL, AG-08, AU-NSW'
+                  example: CA-ON
+                  maxLength: 6
+                  minLength: 4
+                  pattern: ^[A-Z]{2}-[\w]{1,3}$
+                countryCode:
+                  type: string
+                  maxLength: 2
+                  minLength: 2
+                  example: CA
+                  description: 'The two letter country code. For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
+
+
+                    Examples: CA, US, AU'
+                  pattern: ^[A-Z]{2}$
+            phoneNumbers:
+              type: array
+              description: 'The standard phone numbers for the location.
+
+                Formatting characters may be included.
+
+
+                **Extensions**
+
+
+                It is recommended that extensions are included at the end of the number after an appropriate separator: Pause: `,` Wait: `;` Default: `ext.`
+
+
+                You may test the parsibility of a number using https://phonenumbers.temba.io/ All phone numbers are assumed to be in the same country as this business location.'
+              maxItems: 3
+              items:
+                type: string
+                example: '+14168686937'
+            serviceAreaBusiness:
+              type: boolean
+              description: When true the address will be used as the center of the area that this location services instead of being displayed.
+            geoCoordinate:
+              type: object
+              description: 'The point where the map pin for the location should be displayed.
+
+
+                The values will **not** be automatically updated when the address is updated. If not provided when creating the location they will be initialized based on the address.
+
+
+                It is expressed as a pair of numbers to represent degrees latitude and degrees longitude in accordance with the [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System) standard (the one used by your GPS).'
+              required:
+              - latitude
+              - longitude
+              properties:
+                latitude:
+                  type: number
+                  minimum: -90
+                  maximum: 90
+                  example: 43.6425662
+                longitude:
+                  type: number
+                  minimum: -180
+                  maximum: 180
+                  example: -79.3870568
+            seoKeywords:
+              type: array
+              minItems: 0
+              maxItems: 3
+              description: Deprecated - SEO keywords must be set in the Local SEO product
+              deprecated: true
+              x-lifecycle:
+                status: deprecated
+                deprecated: '2024-02-26'
+                proposedRemoval: '2024-03-11'
+                description: These SEO keywords were migrated and removed from the account group in favor of the Local SEO product's keywords. This field will be removed shortly.
+              items:
+                type: string
+            website:
+              type: string
+              format: uri
+              description: The primary website for this business location. http:// will be automatically added if no schema is provided.
+              example: https://www.vendasta.com
+            servicesOffered:
+              type: array
+              maxItems: 15
+              minItems: 0
+              description: "The primary services that the business offers. For example personal tax filing, business tax filing. \n\nTotal length of services offered must be less than 256 characters, when joined with commas. Maximum instances: 15"
+              items:
+                type: string
+                example: root canals
+            descriptionShort:
+              type: string
+              maxLength: 200
+              description: A public summary of the business. See also `descriptionLong`
+            descriptionLong:
+              type: string
+              maxLength: 750
+              description: A public summary of the business. See also `descriptionShort`
+            hours:
+              $ref: '#/components/schemas/hoursOfOperation'
+            updatedAt:
+              type: string
+              description: The time at which the sales accounts was last updated
+            tollFreeNumber:
+              type: string
+              x-stoplight:
+                id: eke0wqk8yvgmh
+              description: The toll free number for the business.
+            trackingNumbers:
+              type: array
+              x-stoplight:
+                id: eyhgi2yh7ukaf
+              minItems: 0
+              maxItems: 6
+              description: A call tracking number is a phone number that gathers analytics for inbound calls. Call tracking is commonly used as a method of performance assessment for marketing campaigns.
+              items:
+                x-stoplight:
+                  id: yflmky9gif6ro
+                type: string
+            adminNotes:
+              type: string
+              x-stoplight:
+                id: tnzahuoq5fsyi
+              description: Administration notes for the account.
+            primaryOperatingLanguage:
+              type: string
+              description: The primary language in which this business operates, as a BCP 47 language tag (e.g. "en", "it", "fr-CA"). Returns "en" when unset. On write, an empty or omitted value is ignored (it will not clear an existing value set via Business Profile).
+              example: en
+            socialUrls:
+              type: object
+              x-stoplight:
+                id: 8bta15bsc842h
+              description: The Social URLs for a Sales Account.
+              properties:
+                googleplusUrl:
+                  type: string
+                  x-stoplight:
+                    id: ojx06t4cb7thm
+                  format: uri
+                  description: The URL for a Sales Account's Google Plus page.
+                linkedinUrl:
+                  type: string
+                  x-stoplight:
+                    id: co78ugcn9hlc0
+                  format: uri
+                  description: The URL for a Sales Account's LinkedIn page.
+                foursquareUrl:
+                  type: string
+                  x-stoplight:
+                    id: tsw7lpw0p4neo
+                  format: uri
+                  description: The URL for a Sales Account's Foursquare page.
+                xUrl:
+                  type: string
+                  x-stoplight:
+                    id: gxqxvm2m72hqu
+                  format: uri
+                  description: The URL for a Sales Account's X page (formerly known as Twitter).
+                facebookUrl:
+                  type: string
+                  x-stoplight:
+                    id: ndrao4lgjf1na
+                  format: uri
+                  description: The URL for a Sales Account's Facebook page.
+                youtubeUrl:
+                  type: string
+                  x-stoplight:
+                    id: gyunfxlgc2hxe
+                  format: uri
+                  description: The URL for a Sales Account's Youtube page.
+                instagramUrl:
+                  type: string
+                  x-stoplight:
+                    id: oyxvkk0l76fg8
+                  format: uri
+                  description: The URL for a Sales Account's Instagram page.
+                pinterestUrl:
+                  type: string
+                  x-stoplight:
+                    id: 78zh69oa0k7s4
+                  format: uri
+                  description: The URL for a Sales Account's Pinterest page.
+        relationships:
+          type: object
+          properties:
+            salesPeople:
+              type: object
+              description: A list of the sales people assigned to this account. The first sales person in the list will be treated as the primary sales person and given special treatment.
+              required:
+              - data
+              properties:
+                data:
+                  type: array
+                  uniqueItems: true
+                  items:
+                    type: object
+                    required:
+                    - id
+                    - type
+                    properties:
+                      id:
+                        type: string
+                        pattern: ^U-
+                        description: "The user id of a salesperson. \n\nTestSalesAccountCustomFields_update/platform/users?filter[partner.id]=TEST&filter[email]=user@example.com`.\n\nFor more information access [GET /platform/users](b3A6MTMxNTA2NDE-get-user)"
+                      type:
+                        type: string
+                        example: users
+                        default: users
+            customFields:
+              type: object
+              description: Custom Fields relative to a sales account
+              required:
+              - data
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                    - id
+                    - type
+                    properties:
+                      id:
+                        type: string
+                        description: ID of custom fields, can be retrieved using custom fields endpoint
+                      type:
+                        type: string
+                        example: customFields
+                        default: customFields
+            businessPartner:
+              type: object
+              description: A link to the organization that provides the platform to this business location.
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - type
+                  - id
+                  properties:
+                    type:
+                      type: string
+                      default: partners
+                      enum:
+                      - partners
+                    id:
+                      type: string
+                      example: ABC
+            businessCategories:
+              type: object
+              description: A list of the types of business this location should be compared against. The first item on the list will be considered as the primary category. If not set during creation it will default "other".
+              properties:
+                data:
+                  type: array
+                  maxItems: 3
+                  minItems: 0
+                  items:
+                    type: object
+                    required:
+                    - type
+                    - id
+                    properties:
+                      type:
+                        type: string
+                        default: businessCategories
+                        enum:
+                        - businessCategories
+                        example: businessCategories
+                      id:
+                        type: string
+                        example: athletic_club
+            businessMarket:
+              type: object
+              x-stoplight:
+                id: lgzfm7ltbzrwf
+              description: A link to the market within an organization that this business location belongs to.
+              properties:
+                data:
+                  type: object
+                  x-stoplight:
+                    id: 7ec68r6p3snic
+                  properties:
+                    type:
+                      x-stoplight:
+                        id: f8x1v0dsz1h34
+                      enum:
+                      - salesAccountMarket
+                    id:
+                      type: string
+                      x-stoplight:
+                        id: k5qv6n4dx1wxh
+        included:
+          type: array
+          description: During Get and List operations you may request the related resources be included by using the `include` query parameter. This can save you making an additional network request.
+          items:
+            anyOf:
+            - $ref: '#/components/schemas/salesAccountCustomFields'
+            - $ref: '#/components/schemas/users'
+            - $ref: '#/components/schemas/businessCategories'
+          readOnly: true
+    salesAccountCustomFields:
+      title: Sales Accounts Custom Fields
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Custom fields associated with a sales account. The field definitions can be managed at Partner Center -> Administration -> Custom Fields.
+
+
+        One form of identifier should be chosen, either `fieldId` or `externalId`.
+
+        `fieldId` is the computer generated ID (like `FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99`) and `externalId` is a optional human-readable ID that can be set in the administration panel.
+
+
+        Dropdown possible value and the currency code are also configured in the Administration panel.'
+      x-examples:
+        Custom Fields with string value Example:
+          data:
+            id: AG-1231231
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+              stringValue: A good string value
+              title: Title of abc448ca field
+              description: Description for abc448ca field
+              fieldType: string
+        Custom Fields with integer value Example:
+          data:
+            id: AG-1231232
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+              integerValue: 1000
+              title: Title of 123448ca field
+              description: Description for 123448ca field
+              fieldType: integer
+        Custom Fields with Date value Example:
+          data:
+            id: AG-1231233
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+              dateValue: '2016-01-02T15:04:05Z'
+              title: Title of 987448ca field
+              description: Description for 987448ca field
+              fieldType: date
+        Custom Fields Full:
+          data:
+            id: AG-1231235
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+              stringValue: A good string value
+              title: Title of abc448ca field
+              description: Description for abc448ca field
+              fieldType: string
+            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+              integerValue: 1000
+              title: Title of 123448ca field
+              description: Description for 123448ca field
+              fieldType: integer
+            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+              dateValue: '2022-01-02T15:04:05Z'
+              title: Title of 987448ca field
+              description: Description for 987448ca field
+              fieldType: date
+            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
+              dropdownValue: red
+              title: Title of 987448f2 field
+              description: Description for 987448f2 field
+              fieldType: dropdown
+            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
+              currencyValue: 10000
+              title: Title of 98744854 field
+              description: Description for 98744854 field
+              fieldType: currency
+              currencyCode: CAD
+        Custom Fields with Dropdown Example:
+          data:
+            id: AG-1231233
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
+              dropdownValue: red
+              title: Title of 987448f2 field
+              description: Description for 987448f2 field
+              fieldType: dropdown
+        Custom Fields with Currency Example:
+          data:
+            id: AG-1231233
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
+              currencyValue: 10000
+              title: Title of 98744854 field
+              description: Description for 98744854 field
+              fieldType: currency
+              currencyCode: CAD
+      x-tags:
+      - Sales Account Custom Fields
+      properties:
+        id:
+          type: string
+          example: AG-1231232
+          description: An identifier for the parent entity, for example salesAccount (AG-1231231)
+          readOnly: true
+        type:
+          type: string
+          default: salesAccountCustomFields
+          enum:
+          - salesAccountCustomFields
+          description: Should always be salesAccountCustomFields
+        partnerFields:
+          type: array
+          description: 'List of custom fields specific to the partner with a direct relationship to the sales account.
+
+            To send a new value each field must have at least the fieldId and its correspondent value.
+
+            For example a field of type string must have the stringValue attribute filled.
+
+
+            string -> stringValue
+
+
+            integer -> integerValue
+
+
+            date -> dateValue
+
+
+            Only the fields that you wish to modify need to be sent.'
+          items:
+            type: object
+            properties:
+              fieldId:
+                type: string
+                description: Field identifier, can be retrieved by listing the attributes
+              externalId:
+                type: string
+                description: Alternative field identifier, can be set on admin panel and can be retrieved by listing the attributes
+              fieldType:
+                type: string
+                example: string
+                enum:
+                - string
+                - integer
+                - date
+                - dropdown
+                - currency
+                description: 'Indicates which of the value fields to use to read or write the data. It can only be modified from within partner center.
+
+
+                  string -> stringValue
+
+                  integer -> integerValue
+
+                  date -> dateValue
+
+                  dropdown -> dropdownValue
+
+                  currency -> currencyValue'
+                readOnly: true
+              stringValue:
+                type: string
+                description: Required when the field type is `string`
+              integerValue:
+                type: integer
+                description: Required when the field type is `integer`
+              dateValue:
+                type: string
+                description: Required when the field type is `date`
+                format: date
+              dropdownValue:
+                type: string
+                description: Required when type is `dropdown`. The possible values can be discovered using the administration panel.
+              currencyValue:
+                type: integer
+                description: 'Required when the field type is `currency`.
+
+
+                  This field represents the cents (or the smallest part of the currency).
+
+
+                  Example:
+
+                  USD 600.00 -> currencyValue=60000'
+              currencyCode:
+                type: string
+                minLength: 3
+                maxLength: 3
+                description: 'Represents the type of currency when the field is type `currency`. It will be the 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+
+
+                  Ex: USD, CAD, AUD'
+                example: USD
+                readOnly: true
+              title:
+                type: string
+                description: The main label for the field, appearing in most user interfaces that show the value. This field is not read when setting a value.
+                readOnly: true
+              description:
+                type: string
+                description: A longer text explanation of the field, it optionally appears in the UI. This field is not read when setting a value.
+                readOnly: true
+      required:
+      - id
+      - type
+    hoursOfOperation:
+      type:
+      - array
+      - 'null'
+      description: The operating hours for the business location. Each entry in the array is a set of hours for a particular department or customer of the business. It is recommended to provide the `general` hours for all locations. Some locations may have additional definitions for other departments.
+      items:
+        type: object
+        required:
+        - hoursTypeId
+        properties:
+          hoursTypeId:
+            type: string
+            enum:
+            - general
+            - delivery
+            - kitchen
+            - driveThrough
+            - pickup
+            - takeout
+            description: "The category of hours that may apply to a specific department or service. Not all types are valid for all business categories.\n\nThe general hours for a location must be set before defining hours for other departments. \n\nCurrently only `general` is supported in the Vendasta platform. We intend to add others in the future."
+          regularHours:
+            title: Hours on the days of the week
+            type:
+            - array
+            - 'null'
+            description: 'A collection of times that this location is open for business. Each period represents a range of hours when the location is open during the week.
+
+
+              You may specify multiple entries for the same date if you are open for multiple periods (Example lunch and supper).'
+            items:
+              type: object
+              required:
+              - openDay
+              - closeDay
+              - openTime
+              - closeTime
+              properties:
+                openDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period starts on.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                closeDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period ends on. It should be the same as `openDay` except when the period goes over midnight. The total period may not be more than 24 hours.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                openTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                closeTime:
+                  $ref: '#/components/schemas/timeOfDay'
+          specialHours:
+            type:
+            - array
+            - 'null'
+            description: "Represents a set of time periods when a location's operational hours differ from its regular business hours. This may be a holiday or special event. These hours replace the regular hours for the day.\n\nA special hour period must represent a range of less than 24 hours. The `openTime` and `startDate` must predate the `closeTime` and `endDate`. \nThe `closeTime` and `endDate` can extend to 11:59 a.m. on the day after the specified `startDate`.\n\nNote: Most listing sites only support special hours for the general type."
+            items:
+              type: object
+              required:
+              - startDate
+              - endDate
+              - startTime
+              - endTime
+              properties:
+                status:
+                  x-stoplight:
+                    id: nav2z12fnl9fr
+                  enum:
+                  - open
+                  - closed
+                  description: Describes the different modes that apply to special hour periods. Currently only `open` and `closed` are supported in the Vendasta platform. Overlapping `open` and `closed` periods are not allowed. When status is `open`, for the given business it will be open for the mentioned time period for the selected date. When status is `closed`, for the given business it will be closed for the selected date.
+                startDate:
+                  description: The calendar date this special hour period starts on.
+                  type: string
+                  format: date
+                endDate:
+                  description: The calendar date this special hour period ends on. If `endDate` field is not set, default to the date specified in `startDate`. If set, this field must be equal to or at most 1 day after `startDate`.
+                  type: string
+                  format: date
+                startTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                endTime:
+                  $ref: '#/components/schemas/timeOfDay'
+    dayOfTheWeek:
+      type: string
+      title: a day of the week
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      example: wednesday
+    timeOfDay:
+      type: string
+      title: a time of day
+      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
+      pattern: ^\d{2}:\d{2}$
+      example: 09:45
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          scopes:
+            sales.contact: Read-write access to sales contact details
+            business:read: Read only access to business details
+            business: Read-write access to business details
+            partner:read: Read-write access to details about your partner
+            financial: Read-write access to financial details
+            order: Read-write access to order details
+            order:read: Read only access to order details
+            user.profile:read: Read access to the profile fields of all categories of users
+            user.contact:read: Read access to the contact info (email, phone, address) of all categories of users
+            user.permission:read: Read access to the permission info (accessible locations, features and roles) of all categories of users
+            user.permission: Read-write access to the permission info (accessible locations, features and roles) of all categories of users
+            user.admin: Read-write access to manage all users
+            user.list: '''Allows searching for users based on a set of filters. (ex: email, name, category, organization). Without this scope an exact user id is required.'
+            self.user.admin: Allows editing the profile, contact info and profile image for the current user.
+            self.user.contact:read: Read access to the contact info (email, phone, address) of the current user.
+            openid: Allows getting the user id of the current user
+            profile: Readonly access to the user profile, including name, locale, and language preferences.
+            email: Allows readonly access to the email of the current user.
+            phone: Allows readonly access to the phone numbers of the current user.
+            address: Allows readonly access to the address of the current user.
+            sales.account: Allows read-write access to account records
+            sales.proposals: Allows read-write access to proposals
+            product: Read access to the product details
+            automation:read: Read only access to automations
+          refreshUrl: ''
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          scopes:
+            sales.contact: Read-write access to sales contact details
+            business:read: Read only access to business details
+            business: Read-write access to business details
+            partner:read: Read-write access to details about your partner
+            financial: Read-write access to financial details
+            order:read: Read only access to order details
+            order: Read-write access to order details
+            user.profile:read: Read access to the profile fields of all categories of users
+            user.contact:read: Read access to the contact info (email, phone, address) of all categories of users
+            user.permission:read: Read access to the permission info (accessible locations, features and roles) of all categories of users
+            user.permission: Read-write access to the permission info (accessible locations, features and roles) of all categories of users
+            user.admin: Read-write access to manage all users
+            user.list: '''Allows searching for users based on a set of filters. (ex: email, name, category, organization). Without this scope an exact user id is required.'
+            self.user.admin: Allows editing the profile, contact info and profile image for the current user.
+            self.user.contact:read: Read access to the contact info (email, phone, address) of the current user.
+            openid: Allows getting the user id of the current user
+            profile: Readonly access to the user profile, including name, locale, and language preferences.
+            email: Allows readonly access to the email of the current user.
+            phone: Allows readonly access to the phone numbers of the current user.
+            address: Allows readonly access to the address of the current user.
+            sales.account: Allows read-write access to account records
+            sales.proposals: Allows read-write access to proposals
+            product: Read access to the product details
+            automation:read: Read only access to automations
+          refreshUrl: ''

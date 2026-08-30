@@ -1,0 +1,1497 @@
+openapi: 3.2.0
+info:
+  title: Vendasta Options API
+  version: '1.0'
+  description: 'Operations tagged Options across 7 of this provider''s published API definitions: vendasta-advertising-openapi.yml, vendasta-business-openapi.yml, vendasta-customer-voice-openapi.yml, vendasta-local-seo-openapi.yml, vendasta-platform-openapi.yml, vendasta-reputation-openapi.yml, vendasta-social-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://prod.apigateway.co/products/advertising
+  description: Production
+- url: https://demo.apigateway.co/products/advertising
+  description: Demo
+- url: '{local}/products/advertising'
+  description: Local
+- url: http://localhost:11001/products/advertising
+  description: Localhost
+- url: https://prod.apigateway.co/business
+  description: Production
+- url: https://demo.apigateway.co/business
+  description: Demo
+- url: '{local}/business'
+  description: Local
+- url: http://localhost:11001/business
+  description: Localhost
+- url: https://prod.apigateway.co/products/reviews
+  description: Production
+- url: https://demo.apigateway.co/products/reviews
+  description: Demo
+- url: '{local}/products/reviews'
+  description: Local
+- url: http://localhost:11001/products/reviews
+  description: Localhost
+- url: https://prod.apigateway.co/products/listings
+  description: Production
+- url: https://demo.apigateway.co/products/listings
+  description: Demo
+- url: '{local}/products/listings'
+  description: Local
+- url: http://localhost:11001/products/listings
+  description: Localhost
+- url: https://prod.apigateway.co/platform
+  description: Production
+- description: Demo
+  url: https://demo.apigateway.co/platform
+- description: Local
+  url: '{local}/platform'
+- url: http://localhost:11001/platform
+  description: Localhost
+- url: https://prod.apigateway.co/products/reputation
+  description: Production
+- url: https://demo.apigateway.co/products/reputation
+  description: Demo
+- url: '{local}/products/reputation'
+  description: Local
+- url: http://localhost:11001/products/reputation
+  description: Localhost
+- url: https://prod.apigateway.co/products/social
+  description: Production
+- url: https://demo.apigateway.co/products/social
+  description: Demo
+- url: http://localhost:3000/products/social
+  description: Local
+- description: Localhost
+  url: '{local}/products/social'
+tags:
+- name: Options
+paths:
+  /accountStats:
+    parameters: []
+    options:
+      summary: List valid HTTP verbs for /accountstats
+      operationId: options-accountStats
+      responses:
+        '200':
+          description: OK
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/products/advertising
+      description: Production
+    - url: https://demo.apigateway.co/products/advertising
+      description: Demo
+    - url: '{local}/products/advertising'
+      description: Local
+    - url: http://localhost:11001/products/advertising
+      description: Localhost
+  /accountStats/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Resource ID of a Connected Advertising Account
+    options:
+      summary: List valid HTTP verbs for /accountStats/{id}
+      operationId: options-accountStats-id
+      responses:
+        '200':
+          description: OK
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/products/advertising
+      description: Production
+    - url: https://demo.apigateway.co/products/advertising
+      description: Demo
+    - url: '{local}/products/advertising'
+      description: Local
+    - url: http://localhost:11001/products/advertising
+      description: Localhost
+  /connectedAccounts/{id}:
+    parameters:
+    - in: path
+      name: id
+      description: Resource ID of a Connected Advertising Account
+      required: true
+      schema:
+        type: string
+    options:
+      summary: List valid HTTP verbs for /connectedAccounts/{id}
+      operationId: options-connectedAccounts-connectedAccount.id
+      responses:
+        '200':
+          description: OK
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/products/advertising
+      description: Production
+    - url: https://demo.apigateway.co/products/advertising
+      description: Demo
+    - url: '{local}/products/advertising'
+      description: Local
+    - url: http://localhost:11001/products/advertising
+      description: Localhost
+  /connectedAccounts:
+    parameters: []
+    options:
+      summary: List valid HTTP verbs for /connectedAccounts
+      operationId: options-connectedAccounts
+      responses:
+        '200':
+          description: OK
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/products/advertising
+      description: Production
+    - url: https://demo.apigateway.co/products/advertising
+      description: Demo
+    - url: '{local}/products/advertising'
+      description: Local
+    - url: http://localhost:11001/products/advertising
+      description: Localhost
+  /campaignInfo:
+    options:
+      summary: List valid HTTP verbs for /campaignInfo
+      operationId: options-campaignInfo
+      responses:
+        '200':
+          description: OK
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/products/advertising
+      description: Production
+    - url: https://demo.apigateway.co/products/advertising
+      description: Demo
+    - url: '{local}/products/advertising'
+      description: Local
+    - url: http://localhost:11001/products/advertising
+      description: Localhost
+  /campaignInfo/{id}:
+    parameters:
+    - schema:
+        type: string
+        example: AG-HDV4JKHW:google:7531238654:94749174
+      name: id
+      in: path
+      required: true
+      description: campaignInfo resource ID
+    options:
+      summary: List valid HTTP verbs for /campaignInfo/{id}
+      operationId: options-campaignInfo-id
+      responses:
+        '200':
+          description: OK
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/products/advertising
+      description: Production
+    - url: https://demo.apigateway.co/products/advertising
+      description: Demo
+    - url: '{local}/products/advertising'
+      description: Local
+    - url: http://localhost:11001/products/advertising
+      description: Localhost
+  /campaignStats:
+    options:
+      summary: List valid HTTP verbs for /campaignStats
+      operationId: options-campaignStats
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/campaignStats'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/products/advertising
+      description: Production
+    - url: https://demo.apigateway.co/products/advertising
+      description: Demo
+    - url: '{local}/products/advertising'
+      description: Local
+    - url: http://localhost:11001/products/advertising
+      description: Localhost
+  /campaignStats/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      summary: List valid HTTP verbs for /campaignStats/{id}
+      operationId: options-campaignStats-id
+      responses:
+        '200':
+          description: OK
+      tags:
+      - Options
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+    servers:
+    - url: https://prod.apigateway.co/products/advertising
+      description: Production
+    - url: https://demo.apigateway.co/products/advertising
+      description: Demo
+    - url: '{local}/products/advertising'
+      description: Local
+    - url: http://localhost:11001/products/advertising
+      description: Localhost
+  /customers:
+    options:
+      summary: List valid HTTP verbs for /customers
+      operationId: options-customers
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+      deprecated: true
+    servers:
+    - url: https://prod.apigateway.co/business
+      description: Production
+    - url: https://demo.apigateway.co/business
+      description: Demo
+    - url: '{local}/business'
+      description: Local
+    - url: http://localhost:11001/business
+      description: Localhost
+  /customers/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      summary: List valid HTTP verbs for /customers/{id}
+      operationId: options-customers-id
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+      deprecated: true
+    servers:
+    - url: https://prod.apigateway.co/business
+      description: Production
+    - url: https://demo.apigateway.co/business
+      description: Demo
+    - url: '{local}/business'
+      description: Local
+    - url: http://localhost:11001/business
+      description: Localhost
+  /reviewRequests:
+    options:
+      summary: Options
+      operationId: options-reviewRequests
+      responses:
+        '200':
+          description: OK
+      description: Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        required: true
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+      - schema:
+          type: string
+        in: header
+        name: Content-Type
+        description: Indicates the format of the request body being sent. In most cases you will want `application/vnd.api+json`
+        required: true
+      tags:
+      - Options
+      security:
+      - OAuth2Demo:
+        - reviews
+      - OAuth2Prod:
+        - reviews
+    servers:
+    - url: https://prod.apigateway.co/products/reviews
+      description: Production
+    - url: https://demo.apigateway.co/products/reviews
+      description: Demo
+    - url: '{local}/products/reviews'
+      description: Local
+    - url: http://localhost:11001/products/reviews
+      description: Localhost
+  /reviewRequestTemplates:
+    options:
+      summary: List valid HTTP verbs for /reviewRequestTemplates
+      operationId: options-templates
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+      security:
+      - OAuth2Demo:
+        - reviews
+      - OAuth2Prod:
+        - reviews
+    servers:
+    - url: https://prod.apigateway.co/products/reviews
+      description: Production
+    - url: https://demo.apigateway.co/products/reviews
+      description: Demo
+    - url: '{local}/products/reviews'
+      description: Local
+    - url: http://localhost:11001/products/reviews
+      description: Localhost
+  /reviewRequestTemplates/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    security:
+    - OAuth2Demo:
+      - reviews
+    - OAuth2Prod:
+      - reviews
+    options:
+      summary: List valid HTTP verbs for /reviewRequestTemplates/{id}
+      operationId: options-templates-id
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+      security:
+      - OAuth2Demo:
+        - reviews
+      - OAuth2Prod:
+        - reviews
+    servers:
+    - url: https://prod.apigateway.co/products/reviews
+      description: Production
+    - url: https://demo.apigateway.co/products/reviews
+      description: Demo
+    - url: '{local}/products/reviews'
+      description: Local
+    - url: http://localhost:11001/products/reviews
+      description: Localhost
+  /listingSyncListings:
+    parameters: []
+    options:
+      operationId: options-listingSyncListings
+      summary: List valid HTTP verbs for /listingSyncListings
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+        '403':
+          description: User Cannot Access Business Location
+        '404':
+          description: Business Not Found
+        '406':
+          description: No Listing Product Active
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/products/listings
+      description: Production
+    - url: https://demo.apigateway.co/products/listings
+      description: Demo
+    - url: '{local}/products/listings'
+      description: Local
+    - url: http://localhost:11001/products/listings
+      description: Localhost
+  /listingScores/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      summary: List valid HTTP verbs for /listingScores
+      operationId: options-listingScores-id
+      responses:
+        '200':
+          description: OK
+      description: Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/products/listings
+      description: Production
+    - url: https://demo.apigateway.co/products/listings
+      description: Demo
+    - url: '{local}/products/listings'
+      description: Local
+    - url: http://localhost:11001/products/listings
+      description: Localhost
+  /businessLocations:
+    options:
+      operationId: options-businessLocations
+      summary: List valid HTTP verbs for /businessLocations
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /businessLocations/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      operationId: options-businessLocations-id
+      summary: List valid HTTP verbs for /businessLocations/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /users:
+    options:
+      operationId: options-users
+      summary: List valid HTTP verbs for /users
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /users/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      operationId: options-users-id
+      summary: List valid HTTP verbs for /users/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /purchases:
+    options:
+      operationId: options-purchases
+      summary: List valid HTTP verbs for /purchases
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /businessCategories:
+    options:
+      operationId: options-businessCategories
+      summary: List valid HTTP verbs for /businessCategories
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /orders:
+    options:
+      operationId: options-orders
+      summary: List valid HTTP verbs for /orders/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /orders/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: The id of the order to be returned
+    options:
+      operationId: options-order-id
+      summary: List valid HTTP verbs for /orders/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /orders/{id}/relationships/customFields:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      summary: List valid HTTP verbs for /orders/{id}/relationships/customFields
+      operationId: options-orderCustomFieldsID-by-order
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /orders/{id}/customFields:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      summary: List valid HTTP verbs for /orders/{id}/customFields
+      operationId: options-orderCustomFields-by-order
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /orderCustomFields/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      example: AG-1231231:ORD-1234567
+      description: The ID of the Custom Fields - actually the same id of the Sales Order
+    options:
+      summary: List valid HTTP verbs for /orderCustomFields/{id}
+      operationId: options-orderCustomFields-by-id
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /orderFulfillmentForms:
+    options:
+      summary: List valid HTTP verbs for /orderFulfillmentForms
+      operationId: options-orderFulfillmentForms
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /orderFulfillmentForms/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      example: AG-1234:ORD-1234567:MP-abc
+      description: The composite fulfillment form ID in the form `businessId:orderId:appId`.
+    options:
+      summary: List valid HTTP verbs for /orderFulfillmentForms/{id}
+      operationId: options-orderFulfillmentForms-by-id
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /users/{id}/relationships/businessLocations:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      operationId: options-users-id-relationships-businessLocations
+      summary: List valid HTTP verbs for /users/{id}/relationships/businessLocations
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /automationRuns:
+    parameters: []
+    options:
+      operationId: options-automationruns-id
+      summary: List valid HTTP verbs for /automationRuns
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /automations:
+    parameters: []
+    options:
+      operationId: options-automations
+      tags:
+      - Options
+      summary: List valid HTTP verbs for /automations
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /automations/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      operationId: options-automations-id
+      tags:
+      - Options
+      summary: List valid HTTP verbs for /automations/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /salesAccounts:
+    parameters: []
+    options:
+      operationId: options-salesAccounts
+      summary: List valid HTTP verbs for /salesAccounts
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /salesAccounts/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      operationId: options-salesAccounts-by-id
+      summary: List valid HTTP verbs for /salesAccounts/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /subscriptionAssignments:
+    parameters:
+    - schema:
+        type: string
+      name: filter[businessLocationId]
+      in: query
+      required: true
+    options:
+      summary: List valid HTTP verbs for /subscriptionAssignments
+      operationId: options-subscriptionAssignments
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /subscriptions:
+    parameters:
+    - schema:
+        type: string
+      name: filter[partner.id]
+      in: query
+      required: true
+    - schema:
+        type: string
+      name: filter[businessLocation.id]
+      in: query
+    options:
+      summary: List valid HTTP verbs for /subscriptions
+      operationId: options-subscriptions
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /subscriptionAssignments/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      summary: List valid HTTP verbs for /subscriptionAssignments/{id}
+      operationId: options-subscriptionAssignment-id
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /subscriptionAssignments/{id}/actions/requestCancellation:
+    parameters:
+    - schema:
+        type: string
+        example: AG-CQD6ZR6:MP-R7G3NP55T725DM5VGD:beff34a4-cccc-4be8-bd9
+      name: id
+      in: path
+      required: true
+      description: 'The id should be a string which is in the form - businessLocationId : productId : activationId'
+    options:
+      summary: List valid HTTP verbs for /subscriptionAssignments/{id}/actions/requestCancellation
+      operationId: options-subscriptionAssignment-requestCancellationAction
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /subscriptionAssignments/{id}/actions/undoCancellation:
+    parameters:
+    - schema:
+        type: string
+        example: AG-CQD6ZR6:MP-R7G3NP55T725DM5VGD:beff34a4-cccc-4be8-bd9
+      name: id
+      in: path
+      required: true
+      description: 'The id should be a string which is in the form - businessLocationId : productId : activationId'
+    options:
+      summary: List valid HTTP verbs for /subscriptionAssignments/{id}/actions/undoCancellation
+      operationId: options-subscriptionAssignment-undoCancellationAction
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /salesAccounts/{id}/relationships/customFields:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      summary: List valid HTTP verbs for /salesAccounts/{id}/relationships/customFields
+      operationId: options-salesAccountCustomFieldsID-by-salesAccount
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /salesAccounts/{id}/customFields:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      summary: List valid HTTP verbs for /salesAccounts/{id}/customFields
+      operationId: options-salesAccountCustomFields-by-salesAccount
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /salesAccountCustomFields/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      example: AG-1231231
+      description: The ID of the Custom Fields - actually the same id of the Sales Account
+    options:
+      summary: List valid HTTP verbs for /salesAccountCustomFields/{id}
+      operationId: options-salesAccountCustomFields-by-id
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /users/{id}/customFields:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      summary: List valid HTTP verbs for /users/{id}/customFields
+      operationId: options-userCustomFields-by-userid
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /users/{id}/actions/sendWelcomeEmail:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    options:
+      summary: List valid HTTP verbs for/users/{id}/actions/sendWelcomeEmail
+      operationId: options-sendWelcomeEmail-by-userid
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+      responses:
+        '204':
+          description: No Content
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /userCustomFields/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      example: U-12345678-abcd-1234-abcd-123456789abc
+      description: The ID of the Custom Fields - actually the same id of the User
+    options:
+      summary: List valid HTTP verbs for /userCustomFields/{id}
+      operationId: options-userCustomFields-by-id
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /productCustomFields/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      example: ABC-MP-1234567890ABCDEFGHIJKLMNOPQRSTUV
+      description: The ID of the Custom Fields, which is a Product ID
+    options:
+      summary: List valid HTTP verbs for /productCustomFields/{id}
+      operationId: options-productCustomFields-by-id
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /countries:
+    options:
+      operationId: options-countries
+      summary: List valid HTTP verbs for /countries
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /countries/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: The ISO Alpha2 code for the country
+    options:
+      operationId: options-countries-id
+      summary: List valid HTTP verbs for /countries/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /countryRegions:
+    options:
+      operationId: options-countryRegions
+      summary: List valid HTTP verbs for /countryRegions
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /countryRegions/{id}:
+    parameters:
+    - schema:
+        type: string
+        pattern: ^[A-Z]{2}-[\w]{1,3}$
+        minLength: 4
+        maxLength: 6
+      name: id
+      in: path
+      required: true
+      description: The ISO region code
+    options:
+      operationId: options-countryRegions-id
+      summary: List valid HTTP verbs for /countryRegions/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /partnerActivatableProducts/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: SKU id
+    options:
+      summary: List valid HTTP verbs for
+      operationId: options-partnerActivatableProducts-id
+      responses:
+        '200':
+          description: OK
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /partnerActivatableProducts:
+    parameters: []
+    options:
+      summary: List valid HTTP verbs for /partnerActivatableProducts
+      operationId: options-partnerActivatableProducts
+      responses:
+        '200':
+          description: OK
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/platform
+      description: Production
+    - description: Demo
+      url: https://demo.apigateway.co/platform
+    - description: Local
+      url: '{local}/platform'
+    - url: http://localhost:11001/platform
+      description: Localhost
+  /businessLocationReviews:
+    parameters: []
+    options:
+      operationId: options-businessLocationReviews
+      summary: List valid HTTP verbs for /businessLocationReviews
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+    servers:
+    - url: https://prod.apigateway.co/products/reputation
+      description: Production
+    - url: https://demo.apigateway.co/products/reputation
+      description: Demo
+    - url: '{local}/products/reputation'
+      description: Local
+    - url: http://localhost:11001/products/reputation
+      description: Localhost
+  /socialProfiles:
+    options:
+      summary: List valid HTTP verbs for /socialProfiles
+      operationId: options-socialProfiles
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+      x-lifecycle:
+        status: trustedTester
+      security:
+      - OAuth2Demo:
+        - business
+        - social
+      - OAuth2Prod:
+        - business
+        - social
+    servers:
+    - url: https://prod.apigateway.co/products/social
+      description: Production
+    - url: https://demo.apigateway.co/products/social
+      description: Demo
+    - url: http://localhost:3000/products/social
+      description: Local
+    - description: Localhost
+      url: '{local}/products/social'
+  /messages:
+    options:
+      summary: List valid HTTP verbs for /messages
+      operationId: options-messages
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Options
+      x-lifecycle:
+        status: trustedTester
+      security:
+      - OAuth2Demo:
+        - business
+        - social
+      - OAuth2Prod:
+        - business
+        - social
+    servers:
+    - url: https://prod.apigateway.co/products/social
+      description: Production
+    - url: https://demo.apigateway.co/products/social
+      description: Demo
+    - url: http://localhost:3000/products/social
+      description: Local
+    - description: Localhost
+      url: '{local}/products/social'
+components:
+  schemas:
+    campaignStats:
+      title: Campaign Stats
+      type: object
+      x-examples: {}
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Total Stats for a connected Advertising Campaign'
+      x-lifecycle:
+        status: trustedTester
+      x-tags:
+      - Campaign Stats
+      properties:
+        id:
+          type: string
+          description: The resource ID of the Connected Advertising Campaign
+          example: AG-HDV4JKPXFR:google:8362684505:14501114557
+        type:
+          type: string
+          description: campaignStats
+          default: campaignStats
+          enum:
+          - campaignStats
+        attributes:
+          type: object
+          properties:
+            impressions:
+              type: integer
+              description: Number of times ads under this campaign were viewed
+            clicks:
+              type: integer
+              description: Number of times ads under this campaign were clicked
+            conversions:
+              type: integer
+              description: Total number of conversions from campaigns under this account
+            costMicros:
+              type: integer
+              description: Total account spend denoted in millionths of a dollar
+            averageCostPerClickMicros:
+              type: integer
+              description: Average cost per click denoted in millionths of a dollar
+            clickThroughRate:
+              type: number
+              description: Rate of the number of clicks per number of impressions
+            currencyCode:
+              type: string
+              description: The 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+              minLength: 3
+              maxLength: 3
+      required:
+      - id
+      - type
+      - attributes
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            advertising: Access to the Advertising Intelligence REST API
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            advertising: Access to the Advertising Intelligence REST API
+x-refined-from:
+- vendasta-advertising-openapi.yml
+- vendasta-business-openapi.yml
+- vendasta-customer-voice-openapi.yml
+- vendasta-local-seo-openapi.yml
+- vendasta-platform-openapi.yml
+- vendasta-reputation-openapi.yml
+- vendasta-social-openapi.yml

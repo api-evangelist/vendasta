@@ -1,0 +1,648 @@
+openapi: 3.2.0
+info:
+  description: Manage the knowledge available to AI Employees on your accounts.
+  title: AI Knowledge API
+  version: 2.0.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: Knowledge
+paths:
+  /v1/knowledge/file-upload:
+    post:
+      description: 'Get a signed URL and an upload handle for a direct upload of one file to storage. Then use Upsert Knowledge to ingest the file as knowledge.
+
+
+        All write requests (Upsert Knowledge, Create Knowledge File Upload, and Remove Knowledge together) share one rate limit. The write budget of each account group refills continuously, at 10 requests per minute. A partner-wide ceiling of 100 requests per minute applies to all account groups together. A request over either limit fails with HTTP 429. Writes to the partner''s own knowledge base count only against the partner-wide ceiling.
+
+
+        Required OAuth2 scopes: `knowledge`'
+      operationId: Knowledge_CreateKnowledgeFileUpload
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2CreateKnowledgeFileUploadRequest'
+        description: 'Request to issue a signed URL and handle for uploading a single knowledge
+
+          file directly to storage.'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2CreateKnowledgeFileUploadResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - knowledge
+      summary: Create Knowledge File Upload
+      tags:
+      - Knowledge
+  /v1/knowledge/list:
+    post:
+      description: 'List the knowledge sources in an account''s or partner''s knowledge base, with pagination.
+
+
+        Required OAuth2 scopes: `knowledge` or `knowledge:read`'
+      operationId: Knowledge_ListKnowledge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2ListKnowledgeRequest'
+        description: 'Request to list the knowledge sources in a namespace''s knowledge base,
+
+          optionally filtered to one AI Employee.'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2ListKnowledgeResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - knowledge
+        - knowledge:read
+      summary: List Knowledge
+      tags:
+      - Knowledge
+  /v1/knowledge/remove:
+    post:
+      description: 'Delete a knowledge source in an account''s or partner''s knowledge base, or unlink the source from the specified AI Employees.
+
+
+        All write requests (Upsert Knowledge, Create Knowledge File Upload, and Remove Knowledge together) share one rate limit. The write budget of each account group refills continuously, at 10 requests per minute. A partner-wide ceiling of 100 requests per minute applies to all account groups together. A request over either limit fails with HTTP 429. Writes to the partner''s own knowledge base count only against the partner-wide ceiling.
+
+
+        Required OAuth2 scopes: `knowledge`'
+      operationId: Knowledge_RemoveKnowledge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2RemoveKnowledgeRequest'
+        description: 'Request to remove a knowledge source from a namespace''s knowledge base,
+
+          either by deleting it or by unlinking it from specific AI Employees.'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2RemoveKnowledgeResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - knowledge
+      summary: Remove Knowledge
+      tags:
+      - Knowledge
+  /v1/knowledge/status:
+    post:
+      description: 'Get the processing status of a single knowledge source in an account''s or partner''s knowledge base.
+
+
+        Required OAuth2 scopes: `knowledge` or `knowledge:read`'
+      operationId: Knowledge_GetKnowledgeStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2GetKnowledgeStatusRequest'
+        description: Request to look up the processing status of a single knowledge source.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2GetKnowledgeStatusResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - knowledge
+        - knowledge:read
+      summary: Get Knowledge Status
+      tags:
+      - Knowledge
+  /v1/knowledge/upsert:
+    post:
+      description: 'Create or update a knowledge source in an account''s or partner''s knowledge base. You can also link the source to an AI Employee.
+
+
+        All write requests (Upsert Knowledge, Create Knowledge File Upload, and Remove Knowledge together) share one rate limit. The write budget of each account group refills continuously, at 10 requests per minute. A partner-wide ceiling of 100 requests per minute applies to all account groups together. A request over either limit fails with HTTP 429. Writes to the partner''s own knowledge base count only against the partner-wide ceiling.
+
+
+        Required OAuth2 scopes: `knowledge`'
+      operationId: Knowledge_UpsertKnowledge
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2UpsertKnowledgeRequest'
+        description: 'Request to create or update a knowledge source and optionally link it to an
+
+          AI Employee.'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2UpsertKnowledgeResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - knowledge
+      summary: Upsert Knowledge
+      tags:
+      - Knowledge
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v2TrainingState:
+      default: TRAINING_STATE_INVALID
+      description: "The processing state of a knowledge source's content.\n\n - TRAINING_STATE_QUEUED: The content is queued for processing. It is not yet available to AI\nEmployees.\n - TRAINING_STATE_IN_PROGRESS: Processing started and is not complete.\n - TRAINING_STATE_DONE: Processing completed successfully. The content is available to AI\nEmployees.\n - TRAINING_STATE_ERRORED: Processing failed. See the error_code on TrainingStatus for the reason."
+      enum:
+      - TRAINING_STATE_INVALID
+      - TRAINING_STATE_QUEUED
+      - TRAINING_STATE_IN_PROGRESS
+      - TRAINING_STATE_DONE
+      - TRAINING_STATE_ERRORED
+      type: string
+    vendastatypesPagedRequestOptions:
+      properties:
+        cursor:
+          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
+          type: string
+        pageSize:
+          description: Optional. The maximum number of items to return per page.
+          format: int64
+          type: string
+      type: object
+    v2UnlinkMode:
+      description: 'Selects unlinking the knowledge source from specific AI Employees without
+
+        deleting it.'
+      properties:
+        assistantIds:
+          description: 'The AI Employees to unlink the source from. Supply each assistant id
+
+            exactly as List Assistants returns it (format: "ASSISTANT-XXXX"). The
+
+            API rejects all other formats, including the bare id without the
+
+            "ASSISTANT-" prefix and internal application ids. At least one id is
+
+            required. The maximum is 100 ids in one request.'
+          items:
+            type: string
+          type: array
+      required:
+      - assistantIds
+      type: object
+    v2DeleteMode:
+      description: 'Selects the deletion of the knowledge source. This message has no fields.
+
+        Its presence in the mode oneof is the instruction to delete.'
+      type: object
+    v2TextContent:
+      description: Free-form text content that an integration supplies directly.
+      properties:
+        text:
+          description: 'The text to store as knowledge. At most 100,000 characters. The count
+
+            is in Unicode characters, not bytes. For larger reference material,
+
+            upload a file instead.'
+          type: string
+      required:
+      - text
+      type: object
+    v2TrainingStatus:
+      description: 'The processing status of a knowledge source, including progress counters
+
+        and any terminal error.'
+      properties:
+        completedUnits:
+          description: 'The number of units that completed their processing. The value is equal
+
+            to total_units when the processing is complete.'
+          format: int64
+          readOnly: true
+          type: string
+        errorCode:
+          $ref: '#/components/schemas/v2TrainingErrorCode'
+        state:
+          $ref: '#/components/schemas/v2TrainingState'
+        totalUnits:
+          description: 'The total number of units that the processing divided the content into.
+
+            The value is 0 when the processing of the source does not use units.'
+          format: int64
+          readOnly: true
+          type: string
+      type: object
+    v2ListKnowledgeRequest:
+      description: 'Request to list the knowledge sources in a namespace''s knowledge base,
+
+        optionally filtered to one AI Employee.'
+      properties:
+        accountGroupId:
+          description: 'The account group whose knowledge to list (format: "AG-XXXXXXXXXX").
+
+            The calling partner must own this account.'
+          type: string
+        assistantId:
+          description: 'Optional. When set, the response contains only the knowledge sources
+
+            attached to this AI Employee. Supply the assistant id exactly as List
+
+            Assistants returns it (format: "ASSISTANT-XXXX"). The API rejects all
+
+            other formats, including the bare id without the "ASSISTANT-" prefix
+
+            and internal application ids. An unknown assistant id returns an empty
+
+            list.'
+          type: string
+        pagingOptions:
+          $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
+        partnerId:
+          description: 'The partner namespace whose knowledge to list. Must be the calling
+
+            partner''s own partner id.'
+          type: string
+      type: object
+    v2CreateKnowledgeFileUploadResponse:
+      description: The signed URL and handle for uploading a single knowledge file.
+      properties:
+        expiresAt:
+          description: 'The time when the upload_url and the upload_handle expire. Upload the
+
+            bytes, and use the handle in UpsertKnowledge, before this time.'
+          format: date-time
+          readOnly: true
+          type: string
+        requiredHeaders:
+          additionalProperties:
+            type: string
+          description: 'The HTTP headers that the PUT to upload_url must send, with no changes.
+
+            They include the Content-Type and the X-Goog-Content-Length-Range that
+
+            are part of the signature. Storage rejects a PUT whose headers do not
+
+            match.'
+          readOnly: true
+          type: object
+        uploadHandle:
+          description: 'The handle that identifies the uploaded bytes. To ingest the file, pass
+
+            this value as the upload_handle in FileContent on a subsequent
+
+            UpsertKnowledge call. The handle is bound to the namespace and to the
+
+            caller of this request. The API rejects the handle after expires_at,
+
+            and under a different namespace.'
+          readOnly: true
+          type: string
+        uploadUrl:
+          description: 'The signed URL for the upload. PUT the file bytes to this URL. The URL
+
+            is valid only until expires_at.'
+          readOnly: true
+          type: string
+      type: object
+    v2TrainingErrorCode:
+      default: TRAINING_ERROR_CODE_INVALID
+      description: "Machine-readable reason a knowledge source failed processing.\n\n - TRAINING_ERROR_CODE_INVALID: No error is recorded. This is the value when the processing of the\nsource did not fail (state is not TRAINING_STATE_ERRORED).\n - TRAINING_ERROR_CODE_LARGE_FILE_CONTENT: The content of the file is too large for processing.\n - TRAINING_ERROR_CODE_UNPROCESSABLE_CONTENT: The parse or the processing of the content failed. A possible cause is\na file that is defective or empty."
+      enum:
+      - TRAINING_ERROR_CODE_INVALID
+      - TRAINING_ERROR_CODE_LARGE_FILE_CONTENT
+      - TRAINING_ERROR_CODE_UNPROCESSABLE_CONTENT
+      type: string
+    v2ListKnowledgeResponse:
+      description: A page of knowledge sources with pagination metadata.
+      properties:
+        knowledgeSources:
+          description: The knowledge sources on this page.
+          items:
+            $ref: '#/components/schemas/v2KnowledgeSourceSummary'
+          readOnly: true
+          type: array
+        pagingMetadata:
+          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
+      type: object
+    v2KnowledgeConfigType:
+      default: KNOWLEDGE_CONFIG_TYPE_INVALID
+      description: "The kind of content backing a knowledge source.\n\n - KNOWLEDGE_CONFIG_TYPE_BUSINESS_PROFILE: Structured business-profile data that the platform manages, such as\nthe well-known business-profile knowledge source of an account.\n - KNOWLEDGE_CONFIG_TYPE_CUSTOM_DATA: Free-form text that a user or an integration supplied directly.\n - KNOWLEDGE_CONFIG_TYPE_WEBSITE: Content that the platform collected from a website.\n - KNOWLEDGE_CONFIG_TYPE_FILE: Content that the platform extracted from an uploaded file."
+      enum:
+      - KNOWLEDGE_CONFIG_TYPE_INVALID
+      - KNOWLEDGE_CONFIG_TYPE_BUSINESS_PROFILE
+      - KNOWLEDGE_CONFIG_TYPE_CUSTOM_DATA
+      - KNOWLEDGE_CONFIG_TYPE_WEBSITE
+      - KNOWLEDGE_CONFIG_TYPE_FILE
+      type: string
+    v2KnowledgeContent:
+      description: 'The content to store for a knowledge source on create or update. Exactly
+
+        one variant must be set. The variant determines the config_type of the
+
+        source. On update, the variant must match the config_type of the current
+
+        source. The config_type of a source cannot change after creation.'
+      properties:
+        file:
+          $ref: '#/components/schemas/v2FileContent'
+        text:
+          $ref: '#/components/schemas/v2TextContent'
+      type: object
+    v2RemoveKnowledgeRequest:
+      description: 'Request to remove a knowledge source from a namespace''s knowledge base,
+
+        either by deleting it or by unlinking it from specific AI Employees.'
+      properties:
+        accountGroupId:
+          description: 'The account group that owns the knowledge source (format:
+
+            "AG-XXXXXXXXXX"). The calling partner must own this account.'
+          type: string
+        deleteSource:
+          $ref: '#/components/schemas/v2DeleteMode'
+        knowledgeSourceId:
+          description: 'The id of the knowledge source to remove, as UpsertKnowledge or
+
+            ListKnowledge returned it. The source must exist in the namespace.'
+          type: string
+        partnerId:
+          description: 'The partner namespace that owns the knowledge source. Must be the
+
+            calling partner''s own partner id.'
+          type: string
+        unlink:
+          $ref: '#/components/schemas/v2UnlinkMode'
+      required:
+      - knowledgeSourceId
+      type: object
+    v2UpsertKnowledgeResponse:
+      description: The result of an UpsertKnowledge call.
+      properties:
+        knowledgeSourceId:
+          description: 'The id of the created or updated knowledge source. Keep this id. You
+
+            use it to update, link, or remove the source in subsequent calls. The
+
+            other Knowledge APIs select the source by this id.'
+          readOnly: true
+          type: string
+      type: object
+    vendastatypesPagedResponseMetadata:
+      properties:
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
+          type: string
+        totalResults:
+          format: int64
+          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
+          type: string
+      type: object
+    v2FileContent:
+      description: 'A file to process into knowledge. Do not send the bytes in this message.
+
+        Supply the upload_handle from the file-upload flow.'
+      properties:
+        fileName:
+          description: 'The original file name to display for the source (for example,
+
+            "handbook.pdf"). At most 255 characters.'
+          type: string
+        mimeType:
+          description: 'The MIME type of the uploaded file (for example, "application/pdf"). At
+
+            most 100 characters.'
+          type: string
+        uploadHandle:
+          description: 'The handle that identifies the uploaded file to ingest, as the
+
+            knowledge file-upload flow issued it. Required when you supply new file
+
+            content.'
+          type: string
+      required:
+      - uploadHandle
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v2GetKnowledgeStatusRequest:
+      description: Request to look up the processing status of a single knowledge source.
+      properties:
+        accountGroupId:
+          description: 'The account group that owns the knowledge source (format:
+
+            "AG-XXXXXXXXXX"). The calling partner must own this account.'
+          type: string
+        knowledgeSourceId:
+          description: 'The id of the knowledge source to examine, as UpsertKnowledge or
+
+            ListKnowledge returned it. The source must exist in the namespace.'
+          type: string
+        partnerId:
+          description: 'The partner namespace that owns the knowledge source. Must be the
+
+            calling partner''s own partner id.'
+          type: string
+      required:
+      - knowledgeSourceId
+      type: object
+    v2GetKnowledgeStatusResponse:
+      description: The processing status of the requested knowledge source.
+      properties:
+        status:
+          $ref: '#/components/schemas/v2TrainingStatus'
+      type: object
+    v2RemoveKnowledgeResponse:
+      description: The result of a RemoveKnowledge call.
+      type: object
+    v2CreateKnowledgeFileUploadRequest:
+      description: 'Request to issue a signed URL and handle for uploading a single knowledge
+
+        file directly to storage.'
+      properties:
+        accountGroupId:
+          description: 'The account group whose knowledge base the file is for (format:
+
+            "AG-XXXXXXXXXX"). The calling partner must own this account.'
+          type: string
+        contentType:
+          title: "The MIME type of the file to upload (for example, \"application/pdf\").\nThe signed URL constrains the upload to this type. The PUT must send a\nContent-Type header with the same value. Must be one of the supported\nMIME types:\n  - application/pdf (.pdf)\n  - application/vnd.openxmlformats-officedocument.wordprocessingml.document (.docx)\n  - application/vnd.openxmlformats-officedocument.presentationml.presentation (.pptx)\n  - application/vnd.openxmlformats-officedocument.spreadsheetml.sheet (.xlsx)\n  - application/vnd.ms-excel (.xls)\n  - image/jpeg (.jpg, .jpeg)\n  - image/png (.png)\n  - text/html (.html, .htm)\n  - text/plain (.txt, .text)\n  - text/markdown (.md, .markdown)\n  - text/csv (.csv)\n  - application/json (.json)\n  - application/jsonl (.jsonl)"
+          type: string
+        fileName:
+          description: 'The original file name, including its extension (for example,
+
+            "handbook.pdf"). Used as the display name of the file. At most 255
+
+            characters.'
+          type: string
+        partnerId:
+          description: 'The partner namespace whose knowledge base the file is for. Must be the
+
+            calling partner''s own partner id.'
+          type: string
+      required:
+      - fileName
+      - contentType
+      type: object
+    v2UpsertKnowledgeRequest:
+      description: 'Request to create or update a knowledge source and optionally link it to an
+
+        AI Employee.'
+      properties:
+        accountGroupId:
+          description: 'The account group whose knowledge base the source belongs to (format:
+
+            "AG-XXXXXXXXXX"). The calling partner must own this account.'
+          type: string
+        assistantId:
+          description: 'Optional. When set, the API links the knowledge source to this AI
+
+            Employee. The AI Employee can then use the content. Supply the
+
+            assistant id exactly as List Assistants returns it (format:
+
+            "ASSISTANT-XXXX"). The API rejects all other formats, including the
+
+            bare id without the "ASSISTANT-" prefix and internal application ids.
+
+            Links are additive and idempotent. Omit this field to keep the current
+
+            links of the source.'
+          type: string
+        content:
+          $ref: '#/components/schemas/v2KnowledgeContent'
+        description:
+          description: 'The description of the knowledge source. On update, omit to keep the
+
+            current description. At most 2,000 characters.'
+          type: string
+        knowledgeSourceId:
+          description: 'Optional. The id of the knowledge source to update. Omit this field to
+
+            create a new source. The server generates the id of a new source and
+
+            returns it. When set, the source must already exist in the namespace.'
+          type: string
+        name:
+          description: 'The display name of the knowledge source. Required on create. On update,
+
+            leave empty to keep the current name. At most 500 characters.'
+          type: string
+        partnerId:
+          description: 'The partner namespace whose knowledge base the source belongs to. Must
+
+            be the calling partner''s own partner id.'
+          type: string
+      type: object
+    v2KnowledgeSourceSummary:
+      description: 'A summary of one knowledge source in an account''s knowledge base:
+
+        identity, content type, processing status, and timestamps.'
+      properties:
+        configType:
+          $ref: '#/components/schemas/v2KnowledgeConfigType'
+        created:
+          description: When the knowledge source was created.
+          format: date-time
+          readOnly: true
+          type: string
+        fileName:
+          description: 'The original file name of the uploaded file. Set only when config_type
+
+            is KNOWLEDGE_CONFIG_TYPE_FILE.'
+          readOnly: true
+          type: string
+        knowledgeSourceId:
+          description: 'The unique identifier of the knowledge source in its namespace. Keep
+
+            this id. You use it to update or remove the source later. The other
+
+            Knowledge APIs select the source by this id.'
+          readOnly: true
+          type: string
+        name:
+          description: The display name of the knowledge source.
+          readOnly: true
+          type: string
+        status:
+          $ref: '#/components/schemas/v2TrainingStatus'
+        updated:
+          description: When the knowledge source was last updated.
+          format: date-time
+          readOnly: true
+          type: string
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            knowledge: Allows the application to manage the knowledge available to AI Employees on your accounts
+            knowledge:read: Allows the application view-only access to the knowledge available to AI Employees on your accounts
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

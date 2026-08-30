@@ -1,0 +1,1083 @@
+openapi: 3.2.0
+info:
+  title: Forms API
+  version: 0.43.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: Forms
+paths:
+  /v1/forms/create:
+    post:
+      description: "IMPORTANT: Use unmapped_field for custom fields. Do NOT add UTM tracking fields -\nthey are automatically added by the system.\n\nExample form_config:\n{\n  \"name\": \"Contact Form\",\n  \"namespace\": \"<use namespace from context>\",\n  \"fields\": [\n    {\n      \"label\": \"Name\",\n      \"required\": true,\n      \"schema\": {\n        \"unmapped_field\": {\"id\": \"name\", \"type\": \"FIELD_TYPE_STRING\"}\n      }\n    },\n    {\n      \"label\": \"Email\",\n      \"required\": true,\n      \"schema\": {\n        \"unmapped_field\": {\"id\": \"email\", \"type\": \"FIELD_TYPE_EMAIL\"}\n      }\n    },\n    {\n      \"label\": \"Message\",\n      \"required\": true,\n      \"schema\": {\n        \"unmapped_field\": {\"id\": \"message\", \"type\": \"FIELD_TYPE_TEXT_AREA\"}\n      }\n    }\n  ]\n}\n\nValid field types: FIELD_TYPE_STRING, FIELD_TYPE_EMAIL, FIELD_TYPE_PHONE,\nFIELD_TYPE_TEXT_AREA, FIELD_TYPE_DROPDOWN, FIELD_TYPE_DATE, FIELD_TYPE_BOOLEAN,\nFIELD_TYPE_CURRENCY, FIELD_TYPE_FILE, FIELD_TYPE_RADIO, FIELD_TYPE_RICH_TEXT_ELEMENT"
+      operationId: Forms_CreateForm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1CreateFormRequest'
+        description: Request to create a new form with the provided configuration.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1CreateFormResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Create Form
+      tags:
+      - Forms
+  /v1/forms/embed-code:
+    post:
+      description: 'Use the form_id returned from CreateForm or CreateFormFromTemplate.
+
+        The embed code can be added to any webpage to display the form.'
+      operationId: Forms_GetEmbedCode
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetEmbedCodeRequest'
+        description: Request to fetch the HTML/JavaScript embed code for a form.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetEmbedCodeResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Get Form Embed Code
+      tags:
+      - Forms
+  /v1/forms/generate-custom-css:
+    post:
+      description: 'Provide a prompt describing the desired styling, and optionally include
+
+        image_urls for visual references. Returns generated Styles that can be
+
+        applied to a form via UpdateForm.
+
+
+        Example: prompt = "Make the form match a modern dark theme with rounded corners"'
+      operationId: Forms_GenerateCustomCSS
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GenerateCustomCSSRequest'
+        description: Request to use AI to generate custom CSS styling for a form based on a text prompt and optional visual references.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GenerateCustomCSSResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Generate Custom CSS
+      tags:
+      - Forms
+  /v1/forms/get:
+    post:
+      operationId: Forms_GetForm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetFormRequest'
+        description: Request to retrieve the most recent version of a form's style, schema, and UI configuration.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetFormResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Get Form
+      tags:
+      - Forms
+  /v1/forms/has-enterprise-api-key:
+    get:
+      operationId: Forms_HasEnterpriseAPIKeyInNamespace
+      parameters:
+      - description: Required. The namespace to check for an enterprise reCAPTCHA API key.
+        in: query
+        name: namespace
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1HasEnterpriseAPIKeyInNamespaceResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Has Enterprise API Key In Namespace
+      tags:
+      - Forms
+  /v1/forms/list:
+    post:
+      operationId: Forms_ListForms
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ListFormsRequest'
+        description: Request to list forms with optional filters, pagination, and search.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListFormsResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: List Forms
+      tags:
+      - Forms
+  /v1/forms/mapped-field-schema/list:
+    post:
+      description: 'Call this FIRST to understand what CRM fields are available before creating
+
+        forms with mapped fields.
+
+
+        mapped_to_resource options:
+
+        - "crm_contact" - CRM Contact fields (name, email, phone, etc.)
+
+        - "crm_company" - CRM Company fields
+
+        - "utm_attribute" - UTM tracking fields (auto-added, don''t include manually)
+
+        - "special_attribute" - Special fields like google_places_id'
+      operationId: Forms_ListMappedFieldSchema
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ListMappedFieldSchemaRequest'
+        description: Request to list available CRM fields that can be mapped in forms.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListMappedFieldSchemaResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: List Mapped Field Schema
+      tags:
+      - Forms
+  /v1/forms/provision-recaptcha-enterprise:
+    post:
+      operationId: Forms_ProvisionRecaptchaEnterprise
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ProvisionRecaptchaEnterpriseRequest'
+        description: Request to create a reCAPTCHA Enterprise site for a specific form and domain.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ProvisionRecaptchaEnterpriseResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Provision reCAPTCHA Enterprise
+      tags:
+      - Forms
+  /v1/forms/update:
+    post:
+      operationId: Forms_UpdateForm
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UpdateFormRequest'
+        description: Request to update an existing form, creating a new version in the version chain.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1UpdateFormResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Update Form
+      tags:
+      - Forms
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    vendastatypesPagedRequestOptions:
+      properties:
+        cursor:
+          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
+          type: string
+        pageSize:
+          description: Optional. The maximum number of items to return per page.
+          format: int64
+          type: string
+      type: object
+    v1UpdateFormRequest:
+      description: Request to update an existing form, creating a new version in the version chain.
+      properties:
+        formConfig:
+          $ref: '#/components/schemas/v1FormConfig'
+      required:
+      - formConfig
+      title: UpdateFormRequest
+      type: object
+    FormConfigFieldSchema:
+      properties:
+        mappedField:
+          $ref: '#/components/schemas/v1MappedField'
+        unmappedField:
+          $ref: '#/components/schemas/v1UnmappedField'
+      type: object
+    v1GenerateCustomCSSResponse:
+      description: Response containing the AI-generated CSS styles that can be applied to a form via UpdateForm.
+      properties:
+        generatedCss:
+          $ref: '#/components/schemas/v1Styles'
+      title: GenerateCustomCSSResponse
+      type: object
+    v1ActionParameters:
+      properties:
+        nextParameters:
+          $ref: '#/components/schemas/v1NextParameters'
+        submitConditionParams:
+          $ref: '#/components/schemas/v1SubmitConditionParameters'
+      type: object
+    ListFormsResponseFormRow:
+      properties:
+        form:
+          $ref: '#/components/schemas/v1FormConfig'
+        numberOfSubmissions:
+          description: Output only. The total number of submissions for this form.
+          format: int64
+          readOnly: true
+          type: string
+        recentProcessingStatus:
+          $ref: '#/components/schemas/v1ListFormsResponseProcessResultStatus'
+      type: object
+    v1ListMappedFieldSchemaRequest:
+      description: Request to list available CRM fields that can be mapped in forms.
+      properties:
+        crmObjectSubtype:
+          description: Deprecated. Use mapped_to_resource instead.
+          type: string
+        crmObjectType:
+          description: Deprecated. Use mapped_to_resource instead.
+          type: string
+        locale:
+          description: Optional. Locale of the user such as "af", "cs", "de", "en", "es-419", "fr", "it", "nl", "pt", "ru".
+          type: string
+        mappedToResource:
+          description: Optional. The resource type to filter mapped fields by, e.g. "crm_contact", "crm_company", "utm_attribute", "special_attribute".
+          type: string
+        namespace:
+          description: Required. The namespace to list mapped field schemas for.
+          type: string
+        pagingOptions:
+          $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
+      required:
+      - namespace
+      title: ListMappedFieldSchemaRequest
+      type: object
+    v1SystemDefined:
+      properties:
+        hidden:
+          title: hidden fields won't display in editor
+          type: boolean
+        includedByDefault:
+          title: included_by_default fields will be auto-dropped upon init
+          type: boolean
+        required:
+          type: boolean
+      type: object
+    v1MappedField:
+      properties:
+        consentConfig:
+          $ref: '#/components/schemas/v1ConsentFieldConfig'
+        id:
+          type: string
+        mappedTo:
+          type: string
+        name:
+          type: string
+        options:
+          items:
+            $ref: '#/components/schemas/v1FieldOption'
+          type: array
+        promoSelectionConfig:
+          $ref: '#/components/schemas/v1PromoSelectionConfig'
+        readonly:
+          type: boolean
+        systemDefined:
+          $ref: '#/components/schemas/v1SystemDefined'
+        type:
+          $ref: '#/components/schemas/v1FieldType'
+      type: object
+    v1FieldOption:
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+      type: object
+    v1CreateFormResponse:
+      description: Response containing the newly generated form ID, version, and any validation errors.
+      properties:
+        errors:
+          description: Output only. Any validation errors encountered during form creation.
+          items:
+            $ref: '#/components/schemas/v1ValidationError'
+          readOnly: true
+          type: array
+        formId:
+          description: Output only. The unique identifier assigned to the newly created form.
+          readOnly: true
+          type: string
+        version:
+          description: Output only. The version identifier for the newly created form.
+          readOnly: true
+          type: string
+      title: CreateFormResponse
+      type: object
+    v1CreateFormRequest:
+      description: Request to create a new form with the provided configuration.
+      properties:
+        formConfig:
+          $ref: '#/components/schemas/v1FormConfig'
+      required:
+      - formConfig
+      title: CreateFormRequest
+      type: object
+    v1ListFormsResponse:
+      description: Response containing a paginated list of forms with submission counts and processing status.
+      properties:
+        formRows:
+          description: Output only. The list of form rows matching the filter criteria.
+          items:
+            $ref: '#/components/schemas/ListFormsResponseFormRow'
+          readOnly: true
+          type: array
+        pagingMetadata:
+          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
+      title: ListFormsResponse
+      type: object
+    v1FilterOperator:
+      default: FILTER_OPERATOR_INVALID
+      enum:
+      - FILTER_OPERATOR_INVALID
+      - FILTER_OPERATOR_IS_EMPTY
+      - FILTER_OPERATOR_IS_NOT_EMPTY
+      - FILTER_OPERATOR_IS
+      - FILTER_OPERATOR_IS_NOT
+      - FILTER_OPERATOR_IS_ANY
+      - FILTER_OPERATOR_IS_NOT_ANY
+      - FILTER_OPERATOR_IS_ALL
+      - FILTER_OPERATOR_IS_NOT_ALL
+      - FILTER_OPERATOR_CONTAINS
+      - FILTER_OPERATOR_DOES_NOT_CONTAIN
+      - FILTER_OPERATOR_IS_EQUAL_TO
+      - FILTER_OPERATOR_IS_NOT_EQUAL_TO
+      - FILTER_OPERATOR_IS_GREATER_THAN
+      - FILTER_OPERATOR_IS_GREATER_THAN_OR_EQUAL_TO
+      - FILTER_OPERATOR_IS_LESS_THAN
+      - FILTER_OPERATOR_IS_LESS_THAN_OR_EQUAL_TO
+      - FILTER_OPERATOR_IS_BEFORE
+      - FILTER_OPERATOR_IS_BEFORE_OR_ON
+      - FILTER_OPERATOR_IS_AFTER
+      - FILTER_OPERATOR_IS_AFTER_OR_ON
+      - FILTER_OPERATOR_IS_BETWEEN
+      - FILTER_OPERATOR_IS_NOT_BETWEEN
+      - FILTER_OPERATOR_IS_VALID
+      - FILTER_OPERATOR_IS_NOT_VALID
+      - FILTER_OPERATOR_ANNIVERSARY_IS
+      type: string
+    v1ProvisionRecaptchaEnterpriseRequest:
+      description: Request to create a reCAPTCHA Enterprise site for a specific form and domain.
+      properties:
+        domain:
+          description: Required. The domain to register in the reCAPTCHA Enterprise site (e.g. "example.com").
+          type: string
+        formId:
+          description: 'Required. The ID of the form to provision reCAPTCHA Enterprise for.
+
+            Each form gets its own reCAPTCHA Enterprise site so different forms
+
+            under the same namespace can have different domains.'
+          type: string
+      required:
+      - formId
+      - domain
+      title: ProvisionRecaptchaEnterpriseRequest
+      type: object
+    v1HasEnterpriseAPIKeyInNamespaceResponse:
+      description: Response indicating whether the namespace has a platform-level reCAPTCHA Enterprise API key.
+      properties:
+        hasApiKey:
+          description: Output only. Whether the namespace has an enterprise reCAPTCHA API key configured.
+          readOnly: true
+          type: boolean
+      title: HasEnterpriseAPIKeyInNamespaceResponse
+      type: object
+    FormConfigTemplateSetupSettings:
+      properties:
+        automationIds:
+          items:
+            type: string
+          type: array
+      type: object
+    v1UnmappedField:
+      properties:
+        currencyCode:
+          type: string
+        id:
+          type: string
+        options:
+          items:
+            $ref: '#/components/schemas/v1FieldOption'
+          type: array
+        type:
+          $ref: '#/components/schemas/v1FieldType'
+      type: object
+    v1FilterValue:
+      properties:
+        boolean:
+          type: boolean
+        date:
+          format: date-time
+          type: string
+        dateDefault:
+          $ref: '#/components/schemas/v1DateDefault'
+        float:
+          format: float
+          type: number
+        integer:
+          format: int64
+          type: string
+        phone:
+          $ref: '#/components/schemas/v1Phone'
+        string:
+          type: string
+      type: object
+    v1ListMappedFieldSchemaResponse:
+      description: Response containing available CRM field schemas that can be used when creating or updating forms.
+      properties:
+        fieldSchemas:
+          description: Output only. The list of available mapped field schemas.
+          items:
+            $ref: '#/components/schemas/v1MappedField'
+          readOnly: true
+          type: array
+        pagingMetadata:
+          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
+      title: ListMappedFieldSchemaResponse
+      type: object
+    v1ConsentType:
+      default: CONSENT_TYPE_INVALID
+      enum:
+      - CONSENT_TYPE_INVALID
+      - CONSENT_TYPE_MARKETING_EMAIL
+      - CONSENT_TYPE_TRANSACTION_SMS
+      - CONSENT_TYPE_MARKETING_SMS
+      type: string
+    v1SectionAction:
+      default: SECTION_ACTION_UNDEFINED
+      enum:
+      - SECTION_ACTION_UNDEFINED
+      - SECTION_ACTION_SUBMIT
+      - SECTION_ACTION_SUBMIT_CONDITION
+      - SECTION_ACTION_NEXT_PAGE
+      - SECTION_ACTION_NEXT_APPEND
+      type: string
+    v1ValidationError:
+      properties:
+        message:
+          title: this can be a translation key
+          type: string
+        ruleId:
+          type: string
+      type: object
+    v1RecaptchaEnterpriseConfig:
+      properties:
+        apiKey:
+          description: Redacted (non-empty sentinel) when retrieving an existing form.
+          type: string
+        managed:
+          description: When true, uses platform-level credentials instead of per-form BYO keys.
+          type: boolean
+        projectId:
+          type: string
+        siteKey:
+          type: string
+      type: object
+    v1FilterGroupOperator:
+      default: FILTER_GROUP_OPERATOR_INVALID
+      enum:
+      - FILTER_GROUP_OPERATOR_INVALID
+      - FILTER_GROUP_OPERATOR_AND
+      - FILTER_GROUP_OPERATOR_OR
+      type: string
+    v1GetFormResponse:
+      description: Response containing the most recent version of FormConfig for the requested form.
+      properties:
+        formConfig:
+          $ref: '#/components/schemas/v1FormConfig'
+      title: GetFormResponse
+      type: object
+    v1SectionConfig:
+      properties:
+        actionParameters:
+          $ref: '#/components/schemas/v1ActionParameters'
+        buttonAction:
+          $ref: '#/components/schemas/v1SectionAction'
+        buttonLabel:
+          type: string
+      type: object
+    v1GetEmbedCodeRequest:
+      description: Request to fetch the HTML/JavaScript embed code for a form.
+      properties:
+        formId:
+          description: Required. The unique identifier of the form to retrieve embed code for.
+          type: string
+      required:
+      - formId
+      title: GetEmbedCodeRequest
+      type: object
+    v1Phone:
+      properties:
+        extension:
+          type: string
+        isoCountryCode:
+          title: ISO country code is the 2 or 3 letter code for the country, example 'CA' for Canada
+          type: string
+        nationalNumber:
+          type: string
+      title: This follows the E164 international standard specification for phone numbers
+      type: object
+    FormConfigField:
+      properties:
+        defaultPhoneIsoCountryCode:
+          type: string
+        defaultValue:
+          $ref: '#/components/schemas/v1FieldValue'
+        hidden:
+          type: boolean
+        label:
+          type: string
+        placeholder:
+          type: string
+        preFillByUrlQueryParameter:
+          description: 'When displaying the form, pre-fill it with the value in this query
+
+            parameter. For example, you could fill out a hidden field with the
+
+            utm_medium and utm_campaign, so you know how people landed on your page
+
+            before filling out the form.'
+          type: string
+        required:
+          type: boolean
+        schema:
+          $ref: '#/components/schemas/FormConfigFieldSchema'
+        sectionConfig:
+          $ref: '#/components/schemas/v1SectionConfig'
+      type: object
+    ListFormsRequestFilters:
+      properties:
+        namespace:
+          description: Required. The namespace to list forms for.
+          type: string
+      required:
+      - namespace
+      type: object
+    v1GetEmbedCodeResponse:
+      description: Response containing the HTML/JavaScript embed code that can be added to any webpage to display the form.
+      properties:
+        embedCode:
+          description: Output only. The HTML embed code for the form.
+          readOnly: true
+          type: string
+      title: GetEmbedCodeResponse
+      type: object
+    v1FieldType:
+      default: FIELD_TYPE_INVALID
+      enum:
+      - FIELD_TYPE_INVALID
+      - FIELD_TYPE_STRING
+      - FIELD_TYPE_INTEGER
+      - FIELD_TYPE_DATE
+      - FIELD_TYPE_DROPDOWN
+      - FIELD_TYPE_CURRENCY
+      - FIELD_TYPE_BOOLEAN
+      - FIELD_TYPE_RADIO
+      - FIELD_TYPE_RICH_TEXT_ELEMENT
+      - FIELD_TYPE_EMAIL
+      - FIELD_TYPE_PHONE
+      - FIELD_TYPE_BUSINESS_SEARCH
+      - FIELD_TYPE_TEXT_AREA
+      - FIELD_TYPE_TAG
+      - FIELD_TYPE_SECTION
+      - FIELD_TYPE_FILE
+      - FIELD_TYPE_PRIVACY_CONSENT
+      - FIELD_TYPE_PROMO_SECTION
+      - FIELD_TYPE_MULTISELECT
+      type: string
+    v1GetFormRequest:
+      description: Request to retrieve the most recent version of a form's style, schema, and UI configuration.
+      properties:
+        formId:
+          description: Required. The unique identifier of the form to retrieve.
+          type: string
+        locale:
+          description: Optional. Locale of the user, e.g. "en", "de", "fr", "it", "nl", "pt". Empty defaults to English.
+          type: string
+      required:
+      - formId
+      title: GetFormRequest
+      type: object
+    v1NextParameters:
+      properties:
+        nextSectionId:
+          type: string
+      type: object
+    v1StringList:
+      properties:
+        values:
+          items:
+            type: string
+          type: array
+      type: object
+    v1FilterGroup:
+      properties:
+        filters:
+          items:
+            $ref: '#/components/schemas/v1Filter'
+          type: array
+        operator:
+          $ref: '#/components/schemas/v1FilterGroupOperator'
+      type: object
+    v1DateDefault:
+      default: DATE_DEFAULT_INVALID
+      enum:
+      - DATE_DEFAULT_INVALID
+      - DATE_DEFAULT_TODAY
+      - DATE_DEFAULT_YESTERDAY
+      - DATE_DEFAULT_TOMORROW
+      - DATE_DEFAULT_THIS_WEEK
+      - DATE_DEFAULT_LAST_WEEK
+      - DATE_DEFAULT_NEXT_WEEK
+      - DATE_DEFAULT_THIS_MONTH
+      - DATE_DEFAULT_LAST_MONTH
+      - DATE_DEFAULT_NEXT_MONTH
+      - DATE_DEFAULT_THIS_QUARTER
+      - DATE_DEFAULT_LAST_QUARTER
+      - DATE_DEFAULT_NEXT_QUARTER
+      - DATE_DEFAULT_THIS_YEAR
+      - DATE_DEFAULT_LAST_YEAR
+      - DATE_DEFAULT_NEXT_YEAR
+      type: string
+    v1ConsentField:
+      properties:
+        text:
+          type: string
+        type:
+          $ref: '#/components/schemas/v1ConsentType'
+      type: object
+    vendastatypesPagedResponseMetadata:
+      properties:
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
+          type: string
+        totalResults:
+          format: int64
+          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
+          type: string
+      type: object
+    v1Filter:
+      properties:
+        fieldId:
+          type: string
+        floatTolerance:
+          format: float
+          type: number
+        operator:
+          $ref: '#/components/schemas/v1FilterOperator'
+        values:
+          items:
+            $ref: '#/components/schemas/v1FilterValue'
+          title: "This is repeated to support operations that take zero or more than one value.\nFor example\n   isEmpty()\n   isAnyOf(a, b, c)\n   isBetween(date1, date2)"
+          type: array
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1SubmitConditionParameters:
+      properties:
+        anyValue:
+          type: boolean
+        fieldId:
+          type: string
+        isNotValue:
+          type: string
+        isValue:
+          type: string
+        noValue:
+          type: boolean
+        onConditionFailure:
+          $ref: '#/components/schemas/v1SectionAction'
+        onConditionFailureParameters:
+          $ref: '#/components/schemas/v1ActionParameters'
+      type: object
+    v1FieldValue:
+      properties:
+        boolean:
+          title: used for boolean
+          type: boolean
+        integer:
+          format: int64
+          title: used for integer and currency
+          type: string
+        invalid:
+          type: boolean
+        string:
+          title: used for string, date, dropdown and radio
+          type: string
+        stringValues:
+          $ref: '#/components/schemas/v1StringList'
+      type: object
+    v1ConsentFieldConfig:
+      properties:
+        consent:
+          items:
+            $ref: '#/components/schemas/v1ConsentField'
+          type: array
+        headerText:
+          type: string
+      title: ConsentFieldConfig defines configuration options for consent field types
+      type: object
+    v1PromoSelectionConfig:
+      properties:
+        autoAdvance:
+          type: boolean
+        ctaButtonLabel:
+          type: string
+        multiSelection:
+          type: boolean
+      type: object
+    v1ListFormsRequest:
+      description: Request to list forms with optional filters, pagination, and search.
+      properties:
+        filters:
+          $ref: '#/components/schemas/ListFormsRequestFilters'
+        filtersV2:
+          $ref: '#/components/schemas/v1FilterGroup'
+        locale:
+          description: Optional. Locale of the user, e.g. "en", "de", "fr", "it", "nl", "pt". Empty defaults to English.
+          type: string
+        pagingOptions:
+          $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
+        searchTerm:
+          description: Optional. Search term to filter forms by name or description.
+          type: string
+      title: ListFormsRequest
+      type: object
+    v1FormConfig:
+      description: Complete configuration for a form, including fields, styles, and metadata.
+      properties:
+        createInboxConversation:
+          description: Optional. On form submission, create a conversation in the inbox or associate submission with an existing conversation.
+          type: boolean
+        created:
+          description: Output only. The timestamp when the form was created.
+          format: date-time
+          readOnly: true
+          type: string
+        description:
+          description: Optional. Short description for the purpose of a form.
+          type: string
+        fields:
+          description: Optional. The list of fields in the form.
+          items:
+            $ref: '#/components/schemas/FormConfigField'
+          type: array
+        formId:
+          description: The unique identifier for this form. Assigned by the system on create; must be provided on update.
+          type: string
+        formType:
+          description: Optional. The type of the form. The value 'template' makes the form a template.
+          type: string
+        mostRecent:
+          description: Output only. Whether this is the most recent version of the form.
+          readOnly: true
+          type: boolean
+        name:
+          description: Optional. The display name for the form.
+          type: string
+        namespace:
+          description: Required. The namespace that owns this form.
+          type: string
+        recaptchaEnterprise:
+          $ref: '#/components/schemas/v1RecaptchaEnterpriseConfig'
+        recaptchaSecretKey:
+          description: 'Optional. This will be redacted but non-empty when retrieving an existing form.
+
+            An empty value indicates the form was created before we started
+
+            adding recaptcha, and a value must be provided in order to update the form.'
+          type: string
+        recaptchaSiteKey:
+          description: Optional. The reCAPTCHA site key for legacy reCAPTCHA integration.
+          type: string
+        redirectUrl:
+          description: Optional. URL to redirect to after successful form submission.
+          type: string
+        styles:
+          $ref: '#/components/schemas/v1Styles'
+        submitButtonLabel:
+          description: Optional. Custom label for the form's submit button.
+          type: string
+        successPage:
+          $ref: '#/components/schemas/v1SuccessPage'
+        tags:
+          description: Optional. Tags used to categorize forms.
+          items:
+            type: string
+          type: array
+        templateSetupSettings:
+          $ref: '#/components/schemas/FormConfigTemplateSetupSettings'
+        updated:
+          description: Output only. The timestamp when the form was last updated.
+          format: date-time
+          readOnly: true
+          type: string
+        version:
+          description: Output only. The version identifier for this form configuration.
+          readOnly: true
+          type: string
+      required:
+      - namespace
+      title: FormConfig
+      type: object
+    v1UpdateFormResponse:
+      description: Response containing the newly generated version identifier and any validation errors.
+      properties:
+        errors:
+          description: Output only. Any validation errors encountered during form update.
+          items:
+            $ref: '#/components/schemas/v1ValidationError'
+          readOnly: true
+          type: array
+        version:
+          description: Output only. The version identifier for the newly created form version.
+          readOnly: true
+          type: string
+      title: UpdateFormResponse
+      type: object
+    v1SuccessPage:
+      properties:
+        body:
+          type: string
+        heading:
+          type: string
+        resubmitButtonLabel:
+          type: string
+        showResubmitButton:
+          type: boolean
+      type: object
+    v1ListFormsResponseProcessResultStatus:
+      default: PROCESS_RESULT_STATUS_UNSPECIFIED
+      enum:
+      - PROCESS_RESULT_STATUS_UNSPECIFIED
+      - PROCESS_RESULT_STATUS_IN_PROGRESS
+      - PROCESS_RESULT_STATUS_COMPLETED
+      - PROCESS_RESULT_STATUS_COMPLETED_WITH_WARNINGS
+      - PROCESS_RESULT_STATUS_FAILED
+      type: string
+    v1Styles:
+      properties:
+        backgroundColor:
+          type: string
+        borderColor:
+          type: string
+        borderRadius:
+          type: string
+        borderStyle:
+          type: string
+        borderWidth:
+          type: string
+        customCss:
+          title: allow more specific customizations by the user
+          type: string
+        onPrimaryColor:
+          title: text on primary buttons, checkmarks in checkboxes, etc
+          type: string
+        padding:
+          type: string
+        primaryColor:
+          title: 'These follow the naming of Material and Bootstrap, with primary, secondary, warning...
+
+            backgrounds of primary button, checkboxes, etc'
+          type: string
+        primaryFontColor:
+          title: in material, this would be the "on background" color
+          type: string
+        width:
+          type: string
+      title: CSS style linked to a form
+      type: object
+    v1ProvisionRecaptchaEnterpriseResponse:
+      description: Response containing the site key of the newly provisioned reCAPTCHA Enterprise site.
+      properties:
+        siteKey:
+          description: Output only. The site key of the provisioned reCAPTCHA Enterprise site.
+          readOnly: true
+          type: string
+      title: ProvisionRecaptchaEnterpriseResponse
+      type: object
+    v1GenerateCustomCSSRequest:
+      description: Request to use AI to generate custom CSS styling for a form based on a text prompt and optional visual references.
+      properties:
+        currentCss:
+          $ref: '#/components/schemas/v1Styles'
+        formId:
+          description: Optional. The unique identifier of the form to generate CSS for.
+          type: string
+        htmlTemplate:
+          description: Optional. HTML template to apply the generated CSS to.
+          type: string
+        imageUrls:
+          description: Optional. URLs of images to use as visual references for the styling.
+          items:
+            type: string
+          type: array
+        namespace:
+          description: Required. The namespace of the form.
+          type: string
+        prompt:
+          description: Required. A text prompt describing the desired styling, e.g. "Make the form match a modern dark theme with rounded corners".
+          type: string
+      required:
+      - namespace
+      - prompt
+      title: GenerateCustomCSSRequest
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            business-app: Allows the application to manage all features of Business App
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

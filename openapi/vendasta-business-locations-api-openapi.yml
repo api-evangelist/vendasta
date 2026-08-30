@@ -1,0 +1,846 @@
+openapi: 3.2.0
+info:
+  title: Platform REST Business Locations API
+  version: Evergreen
+servers:
+- url: https://prod.apigateway.co/platform
+  description: Production
+- description: Demo
+  url: https://demo.apigateway.co/platform
+- description: Local
+  url: '{local}/platform'
+- url: http://localhost:11001/platform
+  description: Localhost
+tags:
+- name: Business Locations
+paths:
+  /businessLocations:
+    post:
+      summary: Create Business Location
+      operationId: post-businessLocations
+      responses:
+        '201':
+          description: Created
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/businessLocations'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                        description: The address of the newly created business location
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: The address of the newly created business location
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/businessLocations'
+            examples:
+              Example Request:
+                value:
+                  type: businessLocations
+                  attributes:
+                    customerIdentifier: string
+                    name: string
+                    address:
+                      line1: 109 8th Street E.
+                      line2: Suite 23
+                      city: string
+                      postalCode: S7M 1R3
+                      regionCode: CA-SK
+                      countryCode: CA
+                    phoneNumbers:
+                    - string
+                    serviceAreaBusiness: true
+                    geoCoordinate:
+                      latitude: -90
+                      longitude: -180
+                    hours:
+                    - hoursTypeId: general
+                      regularHours:
+                      - openDay: wednesday
+                        closeDay: wednesday
+                        openTime: 09:00
+                        closeTime: '17:00'
+                      specialHours:
+                      - status: open
+                        startDate: '2019-08-24'
+                        endDate: '2019-08-24'
+                        startTime: 09:45
+                        endTime: '16:45'
+                    tollFreeNumber: string
+                    trackingNumbers:
+                    - string
+                    commonNames:
+                    - string
+                  relationships:
+                    businessPartner:
+                      data:
+                        type: partners
+                        id: ABC
+                    businessCategories:
+                      data:
+                      - type: businessCategories
+                        id: active:diving:freediving
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Used to record basic data for a new location.
+
+
+        The following members must be populated during creation:
+
+        - `relationships.businessPartner.data.id`
+
+        - `attributes.name`'
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      - schema:
+          type: string
+          default: application/vnd.api+json
+          enum:
+          - application/vnd.api+json
+        in: header
+        name: Content-Type
+        required: true
+        description: Indicates the format of the request body being sent. In most cases you will want `application/vnd.api+json`
+      security:
+      - OAuth2Demo:
+        - business
+      - OAuth2Prod:
+        - business
+      tags:
+      - Business Locations
+    options:
+      operationId: options-businessLocations
+      summary: List valid HTTP verbs for /businessLocations
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Business Locations
+    get:
+      summary: List Business Locations
+      operationId: get-businessLocations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/businessLocations'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        description: Provides a link back to the first page of results
+                        format: uri
+                      next:
+                        type: string
+                        description: The URI at which the next batch of business locations can be gotten from
+                        format: uri
+                  meta:
+                    type: object
+                    x-stoplight:
+                      id: 9c9hcw9pdy3iy
+                    properties:
+                      error:
+                        type: array
+                        x-stoplight:
+                          id: qg547xfmaujg5
+                        items:
+                          x-stoplight:
+                            id: ykm7pgshfp82r
+                          type: object
+                          properties:
+                            ID:
+                              type: string
+                              x-stoplight:
+                                id: 3s1xmzarzaaf6
+                              example: AG-XXXXXXXX
+                            Message:
+                              type: string
+                              x-stoplight:
+                                id: m3i058fvfdhvq
+                              example: Account not found
+        '500':
+          description: 'Internal Server Error
+
+            * duplicate filter ids, and other unkown errors'
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Produces a list of business locations'
+      parameters:
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: filter[businessPartner.id]
+        description: Return business locations for the specified partner
+        required: true
+      - schema:
+          type: string
+        in: query
+        description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+        name: page[cursor]
+      - schema:
+          type: string
+          maxLength: 25
+          default: '25'
+          minLength: 1
+        in: query
+        description: The maximum number of tasks you would like returned in a single batch. Use the links.next member in the response to get the remainder. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+        name: page[limit]
+      - schema:
+          type: string
+          enum:
+          - createdAt
+          - -createdAt
+          - name
+          - -name
+          - updatedAt
+          - -updatedAt
+          default: -updatedAt
+        in: query
+        name: sort
+        description: Sort busines location based on selected option. Defaulted to -updatedAt (Desc updatedAt)
+      - schema:
+          type: boolean
+        in: query
+        name: useNewCategory
+        description: useNewCategory is of type boolean which returns new/old business categories.If value of useNewCategory is true then it will return new business categories , if false then it will return old business categories.In case of not set, it will return categories as per feature flag.
+      - schema:
+          type: string
+          example: name,phoneNumbers,hours
+        in: query
+        name: fields[businessLocations]
+        description: 'Filter businessLocations by the following fields: name, phoneNumbers, customerIdentifier, geoCoordinate, serviceAreaBusiness, hours, and updatedAt. These fields will be included in the response.'
+      - schema:
+          type: array
+          items:
+            type: string
+          example: '["AG-123","AG-456"]'
+        in: query
+        name: filter[id]
+        description: Return accounts for given ids. For this filter ,We are not supporting pagination.
+      - schema:
+          type: string
+          example: Acme Plumbing
+        in: query
+        name: filter[searchTerm]
+        description: 'Performs a full-text search across business location data (such as name, phone numbers, and address). The results order is not affected by the quality of this match — use `sort` to control ordering.
+
+          Cannot be combined with `filter[id]`; the request will be rejected if both are provided.'
+      security:
+      - OAuth2Demo:
+        - business
+        - business:read
+      - OAuth2Prod:
+        - business
+        - business:read
+      tags:
+      - Business Locations
+      x-lifecycle:
+        status: trustedTester
+  /businessLocations/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Business Location
+      tags:
+      - Business Locations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/businessLocations'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+      operationId: get-businessLocations-id
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Returns basic data about the business location.'
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      - schema:
+          type: boolean
+        in: query
+        description: useNewCategory is of type boolean which returns new/old business categories.If value of useNewCategory is true then it will return new business categories , if false then it will return old business categories.In case of not set, it will return categories as per feature flag.
+        name: useNewCategory
+      - schema:
+          type: string
+          example: name,phoneNumbers,hours
+        in: query
+        name: fields[businessLocations]
+        description: 'Filter businessLocations by the following fields: name, phoneNumbers, customerIdentifier, geoCoordinate, serviceAreaBusiness, hours, and updatedAt. These fields will be included in the response.'
+      security:
+      - OAuth2Demo:
+        - business
+        - business:read
+      - OAuth2Prod:
+        - business
+        - business:read
+    options:
+      operationId: options-businessLocations-id
+      summary: List valid HTTP verbs for /businessLocations/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Business Locations
+    patch:
+      summary: Update Business Location
+      operationId: patch-businessLocations-id
+      tags:
+      - Business Locations
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Update the existing business location.
+
+        Only the root ID and type fields are required. All others are optional and will keep their original value if omitted.'
+      x-lifecycle:
+        status: trustedTester
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      - schema:
+          type: string
+          default: application/vnd.api+json
+          enum:
+          - application/vnd.api+json
+        in: header
+        name: Content-Type
+        required: true
+        description: Indicates the format of the request body being sent. In most cases you will want `application/vnd.api+json`
+      security:
+      - OAuth2Demo:
+        - business
+      - OAuth2Prod:
+        - business
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/businessLocations'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                        description: The address of the updated business location
+          headers: {}
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/businessLocations'
+components:
+  schemas:
+    timeOfDay:
+      type: string
+      title: a time of day
+      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
+      pattern: ^\d{2}:\d{2}$
+      example: 09:45
+    hoursOfOperation:
+      type:
+      - array
+      - 'null'
+      description: The operating hours for the business location. Each entry in the array is a set of hours for a particular department or customer of the business. It is recommended to provide the `general` hours for all locations. Some locations may have additional definitions for other departments.
+      items:
+        type: object
+        required:
+        - hoursTypeId
+        properties:
+          hoursTypeId:
+            type: string
+            enum:
+            - general
+            - delivery
+            - kitchen
+            - driveThrough
+            - pickup
+            - takeout
+            description: "The category of hours that may apply to a specific department or service. Not all types are valid for all business categories.\n\nThe general hours for a location must be set before defining hours for other departments. \n\nCurrently only `general` is supported in the Vendasta platform. We intend to add others in the future."
+          regularHours:
+            title: Hours on the days of the week
+            type:
+            - array
+            - 'null'
+            description: 'A collection of times that this location is open for business. Each period represents a range of hours when the location is open during the week.
+
+
+              You may specify multiple entries for the same date if you are open for multiple periods (Example lunch and supper).'
+            items:
+              type: object
+              required:
+              - openDay
+              - closeDay
+              - openTime
+              - closeTime
+              properties:
+                openDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period starts on.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                closeDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period ends on. It should be the same as `openDay` except when the period goes over midnight. The total period may not be more than 24 hours.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                openTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                closeTime:
+                  $ref: '#/components/schemas/timeOfDay'
+          specialHours:
+            type:
+            - array
+            - 'null'
+            description: "Represents a set of time periods when a location's operational hours differ from its regular business hours. This may be a holiday or special event. These hours replace the regular hours for the day.\n\nA special hour period must represent a range of less than 24 hours. The `openTime` and `startDate` must predate the `closeTime` and `endDate`. \nThe `closeTime` and `endDate` can extend to 11:59 a.m. on the day after the specified `startDate`.\n\nNote: Most listing sites only support special hours for the general type."
+            items:
+              type: object
+              required:
+              - startDate
+              - endDate
+              - startTime
+              - endTime
+              properties:
+                status:
+                  x-stoplight:
+                    id: nav2z12fnl9fr
+                  enum:
+                  - open
+                  - closed
+                  description: Describes the different modes that apply to special hour periods. Currently only `open` and `closed` are supported in the Vendasta platform. Overlapping `open` and `closed` periods are not allowed. When status is `open`, for the given business it will be open for the mentioned time period for the selected date. When status is `closed`, for the given business it will be closed for the selected date.
+                startDate:
+                  description: The calendar date this special hour period starts on.
+                  type: string
+                  format: date
+                endDate:
+                  description: The calendar date this special hour period ends on. If `endDate` field is not set, default to the date specified in `startDate`. If set, this field must be equal to or at most 1 day after `startDate`.
+                  type: string
+                  format: date
+                startTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                endTime:
+                  $ref: '#/components/schemas/timeOfDay'
+    businessLocations:
+      title: Business Location
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Any entity that works with a provider company (two-way communication). These generally have a sustained relationship with the provider company. This may include a potential buyer, an existing client, or a past client that has churned.'
+      x-tags:
+      - Business Locations
+      x-examples:
+        Example Request:
+          type: businessLocations
+          attributes:
+            customerIdentifier: string
+            name: string
+            address:
+              line1: 109 8th Street E.
+              line2: Suite 23
+              city: string
+              postalCode: S7M 1R3
+              regionCode: CA-SK
+              countryCode: CA
+            phoneNumbers:
+            - string
+            serviceAreaBusiness: true
+            geoCoordinate:
+              latitude: -90
+              longitude: -180
+            hours:
+            - hoursTypeId: general
+              regularHours:
+              - openDay: wednesday
+                closeDay: wednesday
+                openTime: 09:00
+                closeTime: '17:00'
+              specialHours:
+              - status: open
+                startDate: '2019-08-24'
+                endDate: '2019-08-24'
+                startTime: 09:45
+                endTime: '16:45'
+            tollFreeNumber: string
+            trackingNumbers:
+            - string
+            commonNames:
+            - string
+          relationships:
+            businessPartner:
+              data:
+                type: partners
+                id: ABC
+            businessCategories:
+              data:
+              - type: businessCategories
+                id: active:diving:freediving
+      properties:
+        id:
+          type: string
+          example: AG-1234567
+        type:
+          type: string
+          default: businessLocations
+          enum:
+          - businessLocations
+        attributes:
+          type: object
+          properties:
+            customerIdentifier:
+              type: string
+              description: A value assigned by the business partner to reference this business location. Customer ID is currently NOT enforced to be unique, and there may be negative side effects to having a duplicate and/or changing a customer ID, specifically around legacy SSO. Use caution when editing a customer ID.
+            name:
+              type: string
+              description: 'The common name for this location.
+
+
+                Note: The pipe character (`|`) is not allowed.'
+              pattern: ^[^|]+$
+              minLength: 1
+            address:
+              type: object
+              properties:
+                line1:
+                  type: string
+                  example: 109 8th Street E.
+                  description: The primary information. Typically a street address.
+                line2:
+                  type: string
+                  example: Suite 23
+                  description: An additional line of information to add after the street address.
+                city:
+                  type: string
+                stateCode:
+                  type: string
+                  maxLength: 2
+                  minLength: 2
+                  example: CA
+                  deprecated: true
+                  description: Deprecated - This field has been replaced by regionCode. The two letter state code within the country
+                  x-lifecycle:
+                    status: deprecated
+                    deprecated: '2021-10-04'
+                    proposedRemoval: '2021-11-04'
+                    description: This field was replaced by regionCode while at the trusted tester phase. It will be removed shortly.
+                zip:
+                  type: string
+                  deprecated: true
+                  description: Deprecated - This field has been renamed postalCode
+                  x-lifecycle:
+                    status: deprecated
+                    deprecated: '2021-10-04'
+                    proposedRemoval: '2021-11-04'
+                    description: This field was renamed to postalCode while at the trusted tester phase. It will be removed shortly.
+                postalCode:
+                  type: string
+                  description: The zip code or postal code component of an address.
+                  example: S7M 1R3
+                regionCode:
+                  type: string
+                  description: 'The code for the top level subdivision within the country (state/province). For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
+
+
+                    Examples: CA-SK, US-FL, AG-08, AU-NSW'
+                  example: CA-SK
+                  maxLength: 6
+                  minLength: 4
+                  pattern: ^[A-Z]{2}-[\w]{1,3}$
+                countryCode:
+                  type: string
+                  maxLength: 2
+                  minLength: 2
+                  example: CA
+                  description: 'The two letter country code. For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
+
+
+                    Examples: CA, US, AU'
+                  pattern: ^[A-Z]{2}$
+            phoneNumbers:
+              type: array
+              description: 'The standard phone numbers for the location.
+
+                Formatting characters may be included.
+
+
+                **Extensions**
+
+
+                It is recommended that extensions are included at the end of the number after an appropriate separator: Pause: `,` Wait: `;` Default: `ext.`
+
+
+                You may test the parsibility of a number using https://phonenumbers.temba.io/ All phone numbers are assumed to be in the same country as this business location.'
+              maxItems: 3
+              items:
+                type: string
+            serviceAreaBusiness:
+              type: boolean
+              description: When true the address will be used as the center of the area that this location services instead of being displayed.
+            geoCoordinate:
+              type: object
+              description: 'The point where the map pin for the location should be displayed.
+
+
+                The values will **not** be automatically updated when the address is updated. If not provided when creating the location they will be initialized based on the address.
+
+
+                It is expressed as a pair of numbers to represent degrees latitude and degrees longitude in accordance with the [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System) standard (the one used by your GPS).'
+              required:
+              - latitude
+              - longitude
+              properties:
+                latitude:
+                  type: number
+                  minimum: -90
+                  maximum: 90
+                longitude:
+                  type: number
+                  minimum: -180
+                  maximum: 180
+            hours:
+              $ref: '#/components/schemas/hoursOfOperation'
+            updatedAt:
+              type: string
+              description: The time at which the business locations was last updated
+            tollFreeNumber:
+              type: string
+              x-stoplight:
+                id: osrb4z5e7kdm2
+              description: The toll free number for the business.
+            trackingNumbers:
+              type: array
+              x-stoplight:
+                id: 4a4pt5e0kkxan
+              description: A call tracking number is a phone number that gathers analytics for inbound calls. Call tracking is commonly used as a method of performance assessment for marketing campaigns.
+              minItems: 0
+              maxItems: 6
+              items:
+                x-stoplight:
+                  id: p7k0otyb8h17q
+                type: string
+            commonNames:
+              type: array
+              x-stoplight:
+                id: 4k2d33t7kl1hy
+              maxItems: 3
+              minItems: 0
+              description: Other names that your business is commonly called (Ex. Patty's Irish Pub referred to as Patty's or Patty's Pub).
+              items:
+                x-stoplight:
+                  id: t1gp8neeat4ym
+                type: string
+            primaryOperatingLanguage:
+              type: string
+              readOnly: true
+              description: The primary language in which this business operates, as a BCP 47 language tag (e.g. "en", "it", "fr-CA"). Mirrored from the salesAccounts record; set it there to change it. Returns "en" when unset.
+              example: en
+        relationships:
+          type: object
+          properties:
+            businessPartner:
+              type: object
+              description: A link to the organization that provides the platform to this business location.
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - type
+                  - id
+                  properties:
+                    type:
+                      type: string
+                      default: partners
+                      enum:
+                      - partners
+                    id:
+                      type: string
+                      example: ABC
+            businessCategories:
+              type: object
+              description: A list of the types of business this location should be compared against. The first item on the list will be considered as the primary category. If not set during creation it will default "other".
+              properties:
+                data:
+                  type: array
+                  maxItems: 3
+                  minItems: 0
+                  items:
+                    type: object
+                    required:
+                    - type
+                    - id
+                    properties:
+                      type:
+                        type: string
+                        default: businessCategories
+                        enum:
+                        - businessCategories
+                        example: businessCategories
+                      id:
+                        type: string
+                        example: active:diving:freediving
+    dayOfTheWeek:
+      type: string
+      title: a day of the week
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      example: wednesday
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          scopes:
+            sales.contact: Read-write access to sales contact details
+            business:read: Read only access to business details
+            business: Read-write access to business details
+            partner:read: Read-write access to details about your partner
+            financial: Read-write access to financial details
+            order: Read-write access to order details
+            order:read: Read only access to order details
+            user.profile:read: Read access to the profile fields of all categories of users
+            user.contact:read: Read access to the contact info (email, phone, address) of all categories of users
+            user.permission:read: Read access to the permission info (accessible locations, features and roles) of all categories of users
+            user.permission: Read-write access to the permission info (accessible locations, features and roles) of all categories of users
+            user.admin: Read-write access to manage all users
+            user.list: '''Allows searching for users based on a set of filters. (ex: email, name, category, organization). Without this scope an exact user id is required.'
+            self.user.admin: Allows editing the profile, contact info and profile image for the current user.
+            self.user.contact:read: Read access to the contact info (email, phone, address) of the current user.
+            openid: Allows getting the user id of the current user
+            profile: Readonly access to the user profile, including name, locale, and language preferences.
+            email: Allows readonly access to the email of the current user.
+            phone: Allows readonly access to the phone numbers of the current user.
+            address: Allows readonly access to the address of the current user.
+            sales.account: Allows read-write access to account records
+            sales.proposals: Allows read-write access to proposals
+            product: Read access to the product details
+            automation:read: Read only access to automations
+          refreshUrl: ''
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          scopes:
+            sales.contact: Read-write access to sales contact details
+            business:read: Read only access to business details
+            business: Read-write access to business details
+            partner:read: Read-write access to details about your partner
+            financial: Read-write access to financial details
+            order:read: Read only access to order details
+            order: Read-write access to order details
+            user.profile:read: Read access to the profile fields of all categories of users
+            user.contact:read: Read access to the contact info (email, phone, address) of all categories of users
+            user.permission:read: Read access to the permission info (accessible locations, features and roles) of all categories of users
+            user.permission: Read-write access to the permission info (accessible locations, features and roles) of all categories of users
+            user.admin: Read-write access to manage all users
+            user.list: '''Allows searching for users based on a set of filters. (ex: email, name, category, organization). Without this scope an exact user id is required.'
+            self.user.admin: Allows editing the profile, contact info and profile image for the current user.
+            self.user.contact:read: Read access to the contact info (email, phone, address) of the current user.
+            openid: Allows getting the user id of the current user
+            profile: Readonly access to the user profile, including name, locale, and language preferences.
+            email: Allows readonly access to the email of the current user.
+            phone: Allows readonly access to the phone numbers of the current user.
+            address: Allows readonly access to the address of the current user.
+            sales.account: Allows read-write access to account records
+            sales.proposals: Allows read-write access to proposals
+            product: Read access to the product details
+            automation:read: Read only access to automations
+          refreshUrl: ''

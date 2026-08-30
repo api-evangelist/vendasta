@@ -1,0 +1,74 @@
+openapi: 3.2.0
+info:
+  title: WSP Site Info Cache API
+  version: 1.3.1
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: Cache
+paths:
+  /v1/wph/site-info/cache/invalidate:
+    post:
+      operationId: Cache_InvalidateCache
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1InvalidateCacheRequest'
+        description: Request to invalidate page cache, object cache, and CDN for a WordPress site.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Invalidate Cache
+      tags:
+      - Cache
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1InvalidateCacheRequest:
+      description: Request to invalidate page cache, object cache, and CDN for a WordPress site.
+      properties:
+        siteId:
+          description: Required. The unique identifier of the site whose cache should be invalidated.
+          type: string
+      required:
+      - siteId
+      title: InvalidateCacheRequest
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes: {}
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

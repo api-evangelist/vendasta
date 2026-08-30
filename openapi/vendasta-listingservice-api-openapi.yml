@@ -1,0 +1,371 @@
+openapi: 3.2.0
+info:
+  title: Reputation Listing Service API
+  version: 4.34.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: ListingService
+paths:
+  /v1/listings/force-refresh:
+    post:
+      operationId: ListingService_ForceRefreshListing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ForceRefreshListingRequest'
+        description: Request message to force refresh a specific listing.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Force Refresh Listing
+      tags:
+      - ListingService
+  /v1/listings/get-listings:
+    post:
+      operationId: ListingService_GetListings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetListingsRequest'
+        description: Request message for retrieving a set of listings by their identifiers.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetListingsResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Get Listings
+      tags:
+      - ListingService
+  /v1/listings/lookup-listings:
+    post:
+      operationId: ListingService_LookupListings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1LookupListingsRequest'
+        description: Request message for looking up listings for a business, with filtering options by source and match quality.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1LookupListingsResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Lookup Listings
+      tags:
+      - ListingService
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1GetListingsResponse:
+      description: Response message containing the retrieved listings.
+      properties:
+        listings:
+          description: Output only. The retrieved listings.
+          items:
+            $ref: '#/components/schemas/v1Listing'
+          readOnly: true
+          type: array
+      title: Get Listings Response
+      type: object
+    v1LookupListingsResponse:
+      description: Response message containing listings grouped by source.
+      properties:
+        listingsBySource:
+          description: Output only. The listings grouped by source.
+          items:
+            $ref: '#/components/schemas/v1LookupResponseForSource'
+          readOnly: true
+          type: array
+      title: Lookup Listings Response
+      type: object
+    v1LookupListingsRequest:
+      description: Request message for looking up listings for a business, with filtering options by source and match quality.
+      properties:
+        businessId:
+          description: Required. The business ID to look up listings for.
+          type: string
+        includeAnchorDataMatches:
+          description: Optional. Whether to include anchor data matches.
+          type: boolean
+        includeGoodListings:
+          description: Optional. Whether to include good listings.
+          type: boolean
+        includeInternetProviderListings:
+          description: Optional. Whether to include internet provider listings.
+          type: boolean
+        includeNotDoneListings:
+          description: Optional. Whether to include not-done listings.
+          type: boolean
+        includePoorListings:
+          description: Optional. Whether to include poor listings.
+          type: boolean
+        sourceIds:
+          description: Optional. The source IDs to filter listings by.
+          items:
+            format: int64
+            type: string
+          type: array
+      required:
+      - businessId
+      title: Lookup Listings Request
+      type: object
+    v1GetListingsRequest:
+      description: Request message for retrieving a set of listings by their identifiers.
+      properties:
+        listingIds:
+          description: Required. A set of listing identifiers to retrieve.
+          items:
+            $ref: '#/components/schemas/v1ListingIdentifier'
+          type: array
+      required:
+      - listingIds
+      title: Get Listings Request
+      type: object
+    ListingMatchQuality:
+      default: LISTING_MATCH_QUALITY_GOOD
+      enum:
+      - LISTING_MATCH_QUALITY_GOOD
+      - LISTING_MATCH_QUALITY_POOR
+      - LISTING_MATCH_QUALITY_NO_MATCH
+      type: string
+    v1ForceRefreshListingRequest:
+      description: Request message to force refresh a specific listing.
+      properties:
+        accountGroupId:
+          description: Required. The account group ID which the listing belongs to.
+          type: string
+        listingId:
+          description: Required. The ID of the listing which needs to be force refreshed.
+          type: string
+        listingUrl:
+          description: Optional. The URL of the listing which needs to be force refreshed.
+          type: string
+        sourceId:
+          description: Optional. The source of the listing.
+          format: int64
+          type: string
+      required:
+      - accountGroupId
+      - listingId
+      title: Force Refresh Listing Request
+      type: object
+    v1Listing:
+      description: Represents a business listing on an external source, including NAP data, match quality, and timestamps.
+      properties:
+        created:
+          description: Output only. When the listing was created in the system.
+          format: date-time
+          readOnly: true
+          type: string
+        domain:
+          description: Output only. The domain of the listing URL.
+          readOnly: true
+          type: string
+        externalId:
+          description: Output only. The external ID of the listing.
+          readOnly: true
+          type: string
+        lastScraped:
+          description: Output only. When the listing was last scraped by the system.
+          format: date-time
+          readOnly: true
+          type: string
+        lastUserRefresh:
+          description: Output only. When the listing was refreshed by the user.
+          format: date-time
+          readOnly: true
+          type: string
+        listingIdentifier:
+          $ref: '#/components/schemas/v1ListingIdentifier'
+        matchQuality:
+          $ref: '#/components/schemas/ListingMatchQuality'
+        matches:
+          description: Output only. A list of which fields match the business's NAP data (companyName, city, state).
+          items:
+            type: string
+          readOnly: true
+          type: array
+        missing:
+          description: Output only. Indicates if the listing is missing from the source's site.
+          readOnly: true
+          type: boolean
+        missingOn:
+          description: Output only. When the listing was found missing by the system.
+          format: date-time
+          readOnly: true
+          type: string
+        modified:
+          description: Output only. When the listing was last modified by the system.
+          format: date-time
+          readOnly: true
+          type: string
+        nap:
+          $ref: '#/components/schemas/v1NAP'
+        score:
+          description: Output only. The score of the listing.
+          format: int64
+          readOnly: true
+          type: string
+        sourceId:
+          description: Output only. The source that the listing belongs to.
+          format: int64
+          readOnly: true
+          type: string
+        url:
+          description: Output only. The URL of the listing.
+          readOnly: true
+          type: string
+        userSubmitted:
+          description: Output only. Indicates if the listing was submitted by the user.
+          readOnly: true
+          type: boolean
+        verified:
+          description: Output only. Indicates if the listing was marked verified by the user.
+          readOnly: true
+          type: boolean
+      title: Listing
+      type: object
+    v1ListingIdentifier:
+      description: Uniquely identifies a listing by its account group and listing ID.
+      properties:
+        accountGroupId:
+          description: Required. The account group ID that owns the listing.
+          type: string
+        listingId:
+          description: Required. The unique listing ID.
+          type: string
+      required:
+      - accountGroupId
+      - listingId
+      title: Listing Identifier
+      type: object
+    v1NAP:
+      description: Name, Address, and Phone (NAP) information of a listing.
+      properties:
+        address:
+          description: Optional. The listing's address.
+          type: string
+        city:
+          description: Optional. The listing's city.
+          type: string
+        companyName:
+          description: Optional. The listing's company name.
+          type: string
+        country:
+          description: Optional. The listing's country.
+          type: string
+        phone:
+          description: Optional. The listing's phone.
+          type: string
+        state:
+          description: Optional. The listing's state.
+          type: string
+        website:
+          description: Optional. The listing's website.
+          type: string
+        zip:
+          description: Optional. The listing's zip.
+          type: string
+      title: NAP
+      type: object
+    v1LookupResponseForSource:
+      description: Listings grouped by match quality for a single source.
+      properties:
+        goodListings:
+          description: Output only. Listings with good match quality.
+          items:
+            $ref: '#/components/schemas/v1Listing'
+          readOnly: true
+          type: array
+        notDoneListings:
+          description: Output only. Listings that are not yet done.
+          items:
+            $ref: '#/components/schemas/v1Listing'
+          readOnly: true
+          type: array
+        poorListings:
+          description: Output only. Listings with poor match quality.
+          items:
+            $ref: '#/components/schemas/v1Listing'
+          readOnly: true
+          type: array
+        sourceId:
+          description: Output only. The source ID.
+          format: int64
+          readOnly: true
+          type: string
+        sourceName:
+          description: Output only. The source name.
+          readOnly: true
+          type: string
+        userFriendlySourceName:
+          description: Output only. The user-friendly source name.
+          readOnly: true
+          type: string
+      title: Lookup Response For Source
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            business-app: Allows the application to manage all features of Business App
+            reputation: Allows the application to manage reputation reports for your clients' businesses
+            reputation.nps:read: Allows the application view-only access to NPS data for the business locations you have access to
+            reputation.review:read: Allows the application view-only access to retrieve reviews for the business locations you have access to
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

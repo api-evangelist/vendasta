@@ -1,0 +1,106 @@
+openapi: 3.2.0
+info:
+  title: WSP WP Manager Site Options Service API
+  version: 1.8.1
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: SiteOptionsService
+paths:
+  /v1/wph/manager/site-options/updates:
+    post:
+      operationId: SiteOptionsService_GetSiteUpdate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetSiteUpdateRequest'
+        description: Request to retrieve update information for a WordPress site including PHP version, core version, and available plugin updates.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetSiteUpdateResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Get Site Update
+      tags:
+      - SiteOptionsService
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1GetSiteUpdateRequest:
+      description: Request to retrieve update information for a WordPress site including PHP version, core version, and available plugin updates.
+      properties:
+        siteId:
+          description: Required. The unique identifier of the site to retrieve update information for.
+          type: string
+        staging:
+          description: Optional. Whether to retrieve update information for the staging site.
+          type: boolean
+      required:
+      - siteId
+      title: GetSiteUpdateRequest
+      type: object
+    v1SiteUpdate:
+      description: Version and update information for a WordPress site, including PHP version, core version, and available plugin updates.
+      properties:
+        coreVersion:
+          description: Output only. The current WordPress core version.
+          readOnly: true
+          type: string
+        latestCoreVersion:
+          description: Output only. The latest available WordPress core version.
+          readOnly: true
+          type: string
+        numOfPluginUpdates:
+          description: Output only. The number of plugins that have newer versions available.
+          format: int64
+          readOnly: true
+          type: string
+        phpVersion:
+          description: Output only. The current PHP version running on the site.
+          readOnly: true
+          type: string
+      title: SiteUpdate
+      type: object
+    v1GetSiteUpdateResponse:
+      description: Response containing update information for a WordPress site.
+      properties:
+        update:
+          $ref: '#/components/schemas/v1SiteUpdate'
+      title: GetSiteUpdateResponse
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes: {}
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

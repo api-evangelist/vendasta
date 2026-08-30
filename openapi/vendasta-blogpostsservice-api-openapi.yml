@@ -1,0 +1,266 @@
+openapi: 3.2.0
+info:
+  title: Social Posts Blog Posts Service API
+  version: 2.82.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: BlogPostsService
+paths:
+  /v2/social-posts/blog/delete:
+    post:
+      operationId: BlogPostsService_DeleteBlogPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2DeleteBlogPostRequest'
+        description: Request message for deleting a blog post.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/googlerpcStatus'
+          description: An unexpected error response.
+      summary: Delete Blog Post
+      tags:
+      - BlogPostsService
+  /v2/social-posts/blog/update:
+    post:
+      operationId: BlogPostsService_UpdateBlogPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2UpdateBlogPostRequest'
+        description: Request message for updating an existing blog post.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/googlerpcStatus'
+          description: An unexpected error response.
+      summary: Update Blog Post
+      tags:
+      - BlogPostsService
+components:
+  schemas:
+    v2DeleteBlogPostRequest:
+      description: Request message for deleting a blog post.
+      properties:
+        businessId:
+          description: Required. The business id.
+          type: string
+        internalPostId:
+          description: Required. The internal post id of the blog post to delete.
+          type: string
+        parentPostId:
+          description: Optional. The parent post id, if applicable.
+          type: string
+      required:
+      - businessId
+      - internalPostId
+      title: DeleteBlogPostRequest
+      type: object
+    socialpostsv2Category:
+      properties:
+        id:
+          format: int64
+          title: This is the categoryId
+          type: string
+        name:
+          title: This is the category name
+          type: string
+      type: object
+    v2BlogPost:
+      properties:
+        author:
+          $ref: '#/components/schemas/socialpostsv2Author'
+        businessId:
+          title: Business ID
+          type: string
+        categories:
+          items:
+            $ref: '#/components/schemas/socialpostsv2Category'
+          title: Category for a blog
+          type: array
+        commentsCount:
+          format: int64
+          title: Blog comment count
+          type: string
+        content:
+          title: Blog Content
+          type: string
+        created:
+          format: date-time
+          title: Created Time
+          type: string
+        createdBy:
+          description: 'Identifier of who created this blog post.
+
+            In automation flow it will be an assistant ID.
+
+            In chat flow it will be a user ID.'
+          type: string
+        deleted:
+          format: date-time
+          title: Deleted Time
+          type: string
+        error:
+          title: Holds the error message from blog
+          type: string
+        images:
+          items:
+            $ref: '#/components/schemas/v2MediaProperty'
+          title: Image property for Blog
+          type: array
+        internalPostId:
+          title: Internal post Id of Blog
+          type: string
+        metadata:
+          items:
+            $ref: '#/components/schemas/v2MetadataV2'
+          title: Key/value metadata associated with the blog post (e.g. assistant_type, workflow_type, workflow_source)
+          type: array
+        pageViews:
+          format: int64
+          title: Blog post visitor count
+          type: string
+        partnerId:
+          title: Partner ID
+          type: string
+        permalink:
+          title: Permalink for a blog
+          type: string
+        postDateTime:
+          format: date-time
+          title: Blog post date time
+          type: string
+        postId:
+          title: Blog Post Id
+          type: string
+        postedDateTime:
+          format: date-time
+          title: Blog posted date time
+          type: string
+        siteType:
+          title: Site Type
+          type: string
+        socialServiceId:
+          title: Social service Id for blog
+          type: string
+        tags:
+          items:
+            type: string
+          title: Tags for a blog
+          type: array
+        title:
+          title: Blog Title
+          type: string
+        updated:
+          format: date-time
+          title: Updated Time
+          type: string
+        updatedBy:
+          description: 'Identifier of who last updated this blog post. Empty until the first
+
+            update, then overwritten on every subsequent update.
+
+            In chat flow it will be a user ID.'
+          type: string
+        userId:
+          title: User Id
+          type: string
+        userName:
+          title: User Name
+          type: string
+        video:
+          items:
+            $ref: '#/components/schemas/v2MediaProperty'
+          title: Video property for Blog
+          type: array
+      type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v2UpdateBlogPostRequest:
+      description: Request message for updating an existing blog post.
+      properties:
+        blogPost:
+          $ref: '#/components/schemas/v2BlogPost'
+      required:
+      - blogPost
+      title: UpdateBlogPostRequest
+      type: object
+    v2MetadataV2:
+      description: A key-value pair used to store generic metadata information associated with a post or media.
+      properties:
+        name:
+          description: Required. The property name or key.
+          type: string
+        value:
+          description: Required. The property value associated with the name/key.
+          type: string
+      required:
+      - name
+      - value
+      title: MetadataV2
+      type: object
+    socialpostsv2Author:
+      properties:
+        id:
+          format: int64
+          type: string
+        name:
+          type: string
+      type: object
+    v2MediaProperty:
+      properties:
+        path:
+          title: Path of media
+          type: string
+        publicUrl:
+          title: Public Url for the blog media
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            business-app: Allows the application to manage all features of Business App
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

@@ -1,0 +1,172 @@
+openapi: 3.2.0
+info:
+  title: Data Glossary Context Terms API
+  version: Evergreen
+  description: Sometimes you need to take a step back to understand exactly what is being discussed. The Data Glossary helps you to define terms used in the platform
+servers:
+- url: https://prod.apigateway.co/glossary
+  description: Production
+- description: Demo
+  url: https://demo.apigateway.co/glossary
+- description: Localhost
+  url: '{localhost}/glossary'
+tags:
+- name: Terms
+paths:
+  /terms:
+    parameters: []
+    post:
+      summary: Create Term
+      operationId: glossary-post-terms
+      responses:
+        '201':
+          description: Created
+      description: Create a new term
+      security:
+      - OAuth:
+        - terms.write
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - glossaryTerms
+                  description: Must always be set to "glossaryTerms"
+                attributes:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    definition:
+                      type: string
+                relationships:
+                  type: object
+                  properties:
+                    context:
+                      type: object
+                      properties:
+                        type:
+                          type: string
+                          enum:
+                          - glossaryContext
+                          description: Must always be set to "glossaryContext"
+                        id:
+                          type: string
+                      required:
+                      - type
+                      - id
+      tags:
+      - Terms
+  /terms/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    patch:
+      summary: Update Term
+      operationId: patch-glossary-terms-id
+      responses:
+        '204':
+          description: No Content
+      description: Update specific fields of the term
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/GlossaryTerms'
+      security:
+      - OAuth:
+        - terms.write
+      tags:
+      - Terms
+components:
+  schemas:
+    GlossaryTerms:
+      title: Terms
+      type: object
+      description: Terms are a set of context-specific definitions. They form the Data Glossary for the platform.
+      properties:
+        id:
+          type: string
+          description: Readonly record reference assigned by the server. Must be included in all requests except create.
+        type:
+          type: string
+          enum:
+          - glossaryTerms
+          description: Must always be set to "glossaryTerms"
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+            definition:
+              type: string
+        relationships:
+          type: object
+          properties:
+            context:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - glossaryContext
+                id:
+                  type: string
+              required:
+              - type
+              - id
+      required:
+      - id
+      - type
+      x-examples:
+        'EX: milk':
+          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          type: glossaryTerms
+          attributes:
+            name: Milk
+            definition: Cold white drink
+          relationships:
+            context:
+              type: glossaryContext
+              id: drinks
+      x-tags:
+      - Glossary-Terms
+      - Glossary-Contexts
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    OAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          scopes:
+            terms.write: write terms
+            finance.partners.read: read partners
+            hr.employees.read: read employees
+            hr.teams.read: read teams
+            hr.roles.read: read roles
+            hr.roles.write: write roles
+            crm.customers.read: read customers
+            crm.customers.write: write customers
+            crm.contacts.read: read contacts
+            crm.contacts.write: write contacts
+            sales.leads.read: read leads
+            sales.opportunities.read: read opportunities
+            sales.orders.read: read orders
+            product.products.read: read products
+            product.packages.read: read packages
+      description: ''

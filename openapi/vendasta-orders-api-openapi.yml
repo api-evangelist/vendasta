@@ -1,0 +1,868 @@
+openapi: 3.2.0
+info:
+  title: Platform REST Orders API
+  version: Evergreen
+servers:
+- url: https://prod.apigateway.co/platform
+  description: Production
+- description: Demo
+  url: https://demo.apigateway.co/platform
+- description: Local
+  url: '{local}/platform'
+- url: http://localhost:11001/platform
+  description: Localhost
+tags:
+- name: Orders
+paths:
+  /orders:
+    post:
+      summary: Create Order
+      tags:
+      - Orders
+      operationId: post-orders
+      responses:
+        '201':
+          description: Created
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/orders'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                        description: The address of the newly created order
+              examples:
+                Create order:
+                  value:
+                    data:
+                      id: AG-1234567:ORD-1234567
+                      type: orders
+                      attributes:
+                        statusCode: processing
+                        currencyCode: USD
+                        lineItems:
+                        - productId: MP-abc123
+                          quantity: 1
+                      relationships:
+                        businessLocation:
+                          data:
+                            id: AG-1234567
+                            type: businessLocations
+                    links:
+                      self: https://prod.apigateway.co/platform/orders/AG-1234567:ORD-1234567
+          headers:
+            Location:
+              schema:
+                type: string
+                format: uri
+              description: The address of the newly created order
+      requestBody:
+        content:
+          application/vnd.api+json:
+            schema:
+              type: object
+              properties:
+                data:
+                  $ref: '#/components/schemas/orders'
+            examples:
+              Create order:
+                value:
+                  data:
+                    type: orders
+                    attributes:
+                      currencyCode: USD
+                      lineItems:
+                      - productId: MP-abc123
+                        quantity: 1
+                    relationships:
+                      businessLocation:
+                        data:
+                          id: AG-1234567
+                          type: businessLocations
+      x-lifecycle:
+        status: trustedTester
+      description: "[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`\n\nUse this operation to create a new order for a business.\n\nBy default all orders created by API start out in the `processing` status and do not require approval by either the partner admin or SMB admin. You may create orders with a statusCode of `draft` to simply pre populate the order and then finish processing within the platform. To create an order and send it to admins for approval use the statusCode of `submitted`. \n\n<!-- theme: warning -->\n>Note: For newly created Business Locations/Sales Account it does take a few seconds for the newly created account to be replicated to the billing system and for the billing system to setup some additional records for it. It is usually under 5 seconds  but may take a little longer on high traffic days.\n>\n>We recommend checking for the `NotReady` status code in the error response and retrying on that with an exponential backoff."
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      - schema:
+          type: string
+          default: application/vnd.api+json
+          enum:
+          - application/vnd.api+json
+        in: header
+        name: Content-Type
+        required: true
+        description: Indicates the format of the request body being sent. In most cases you will want `application/vnd.api+json`
+      security:
+      - OAuth2Demo:
+        - order
+      - OAuth2Prod:
+        - order
+    options:
+      operationId: options-orders
+      summary: List valid HTTP verbs for /orders/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Orders
+    get:
+      summary: List Orders
+      operationId: get-orders
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/orders'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        description: Provides a link back to the first page of results
+                        format: uri
+                      next:
+                        type: string
+                        description: The URI at which the next batch of orders can be gotten from
+                        format: uri
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Produces a list of orders.'
+      security:
+      - OAuth2Demo:
+        - order
+        - order:read
+      - OAuth2Prod:
+        - order
+        - order:read
+      parameters:
+      - schema:
+          type: string
+        in: query
+        name: filter[partner.id]
+        description: Return orders for the specified partner
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: page[cursor]
+        description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+      - schema:
+          type: string
+        in: query
+        name: page[limit]
+        description: The maximum number of tasks you would like returned in a single batch. Use the links.next member in the response to get the remainder. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+      - schema:
+          type: string
+        in: header
+        name: Authorization
+        required: true
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+      - schema:
+          type: string
+        in: query
+        name: filter[businessLocation.id]
+        description: The ID of the business location for which you want to retrieve the order details
+      tags:
+      - Orders
+      x-lifecycle:
+        status: trustedTester
+  /orders/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: The id of the order to be returned
+    get:
+      summary: Get Order
+      tags:
+      - Orders
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/orders'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+              examples:
+                Get order:
+                  value:
+                    data:
+                      id: AG-1234567:ORD-1234567
+                      type: orders
+                      attributes:
+                        statusCode: processing
+                        currencyCode: USD
+                        lineItems:
+                        - productId: MP-abc123
+                          quantity: 1
+                      relationships:
+                        businessLocation:
+                          data:
+                            id: AG-1234567
+                            type: businessLocations
+                    links:
+                      self: https://prod.apigateway.co/platform/orders/AG-1234567:ORD-1234567
+      operationId: get-orders-id
+      security:
+      - OAuth2Demo:
+        - order
+        - order:read
+      - OAuth2Prod:
+        - order
+        - order:read
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Fetch the current values for the specified order.'
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+    options:
+      operationId: options-order-id
+      summary: List valid HTTP verbs for /orders/{id}
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Orders
+  /orders/{id}/relationships/customFields:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Custom Fields ID
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  links:
+                    type: object
+                    properties:
+                      related:
+                        type: string
+                      self:
+                        type: string
+                  data:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        example: orderCustomFields
+                      id:
+                        type: string
+                        example: AG-1234123412:ORD-1234567
+              examples:
+                Relationship Example:
+                  value:
+                    links:
+                      related: https://prod.apigateway.co/platform/orders/AG-1234123412:ORD-1234567/customFields
+                      self: https://prod.apigateway.co/platform/orders/AG-1234123412:ORD-1234567/relationships/customFields
+                    data:
+                      type: orderCustomFields
+                      id: AG-1234123412:ORD-123456
+      operationId: get-orderCustomFieldsID-by-order
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Returns a reference to the custom metadata for this sales order. Use the path without `/relationships/` in it to get the actual data.
+
+
+        Attributes can be set up at the partner administration page in Partner Center.'
+      security:
+      - OAuth2Demo:
+        - order
+      - OAuth2Prod:
+        - order
+      x-lifecycle:
+        status: trustedTester
+      tags:
+      - Orders
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+    options:
+      summary: List valid HTTP verbs for /orders/{id}/relationships/customFields
+      operationId: options-orderCustomFieldsID-by-order
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Orders
+  /orders/{id}/customFields:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Custom Fields
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/orderCustomFields'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+              examples:
+                Return Example:
+                  value:
+                    data:
+                      id: AG-1231231:ORD-1234567
+                      type: salesAccountCustomFields
+                      attributes:
+                        partnerFields:
+                        - fieldID: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+                          integerValue: 1000
+                          title: Title of 123448ca field
+                          description: Description for 123448ca field
+                          fieldType: integer
+                        - fieldID: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+                          dateValue: A good date value
+                          title: Title of 987448ca field
+                          description: Description for 987448ca field
+                          fieldType: date
+                        - fieldID: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+                          stringValue: A good string value
+                          title: Title of abc448ca field
+                          description: Description for abc448ca field
+                          fieldType: string
+      operationId: get-orderCustomFields-by-order
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        This endpoint acts like a alias to [Get Order Custom Fields by ID endpoint](b3A6MzYxMTM5MTY-get-order-custom-data-by-id). It returns custom fields about a sales order.'
+      security:
+      - OAuth2Demo:
+        - order
+      - OAuth2Prod:
+        - order
+      x-lifecycle:
+        status: trustedTester
+      tags:
+      - Orders
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+    options:
+      summary: List valid HTTP verbs for /orders/{id}/customFields
+      operationId: options-orderCustomFields-by-order
+      responses:
+        '204':
+          description: No Content
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Orders
+components:
+  schemas:
+    orders:
+      title: Order
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        An order records a sale to a business location. For example requests see the [Sales guide](../../../../../../docs/Guides/Sell/Overview.md).'
+      x-tags:
+      - Orders
+      properties:
+        id:
+          type: string
+          example: AG-1234:ORD-1234567
+          readOnly: true
+        type:
+          type: string
+          default: orders
+          enum:
+          - orders
+        attributes:
+          type: object
+          properties:
+            currencyCode:
+              type: string
+              minLength: 3
+              maxLength: 3
+              example: CAD
+              description: The 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+            lineItems:
+              type: array
+              items:
+                $ref: '#/components/schemas/lineItem'
+            statusCode:
+              type: string
+              default: processing
+              enum:
+              - draft
+              - submitted
+              - processing
+              - declined
+              - fulfilled
+              - error
+              - archived
+              - NotReady
+              description: 'The status of the order will be automatically set to one of the following by the system:
+
+                - `draft`: The order has not yet been sent for approval
+
+                - `submitted`: The order is ready for approval
+
+                - `processing`: The order and its items are being processed
+
+                - `declined`: The order has been declined by an admin or a customer
+
+                - `fulfilled`: The order and its items have been successfully processed. This includes activating the products with the vendor(s).
+
+                - `error`: One or more of the orders items failed to be processed
+
+                - `archived`: The order has been marked as archived
+
+                - `NotReady`: The order could not be created as a dependent resource is not yet ready to be used'
+            tags:
+              type: array
+              maxItems: 30
+              description: A tag is a label that can be used for grouping and filtering your list of orders. They may be any string upto 30 characters in length.
+              items:
+                type: string
+                maxLength: 30
+                minLength: 1
+            notes:
+              type: string
+              description: Free-text notes associated with the order.
+        relationships:
+          type: object
+          properties:
+            businessLocation:
+              type: object
+              description: 'Required during creation: The business location the order is for'
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - id
+                  - type
+                  properties:
+                    id:
+                      type: string
+                      example: AG-1234567
+                    type:
+                      type: string
+                      default: businessLocations
+                      enum:
+                      - businessLocations
+            salesPerson:
+              type: object
+              description: 'The user who will be credited with the sale. Used to associate orders with salespersons in reports.
+
+
+                Note the user must have the salesperson role.'
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - id
+                  - type
+                  properties:
+                    id:
+                      type: string
+                      example: U-1234567
+                    type:
+                      type: string
+                      enum:
+                      - users
+                      default: users
+    orderCustomFields:
+      title: Order Custom Fields
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Custom fields associated with a sales order. The field definitions can be managed at Partner Center -> Administration -> Custom Fields.
+
+
+        One form of identifier should be chosen, either `fieldId` or `externalId`.
+
+        `fieldId` is the computer generated ID (like `FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99`) and `externalId` is a optional human-readable ID that can be set in the administration panel.
+
+
+        Dropdown possible value and the currency code are also configured in the Administration panel.'
+      x-examples:
+        Custom Fields with string value Example:
+          data:
+            id: AG-1231231:ORD-1234567
+            type: orderCustomFields
+            partnerFields:
+            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+              stringValue: A good string value
+              title: Title of abc448ca field
+              description: Description for abc448ca field
+              fieldType: string
+        Custom Fields with integer value Example:
+          data:
+            id: AG-1231231:ORD-1234567
+            type: orderCustomFields
+            partnerFields:
+            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+              integerValue: 1000
+              title: Title of 123448ca field
+              description: Description for 123448ca field
+              fieldType: integer
+        Custom Fields with Date value Example:
+          data:
+            id: AG-1231231:ORD-1234567
+            type: orderCustomFields
+            partnerFields:
+            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+              dateValue: '2016-01-02T15:04:05Z'
+              title: Title of 987448ca field
+              description: Description for 987448ca field
+              fieldType: date
+        Custom Fields Full:
+          data:
+            id: AG-1231231:ORD-1234567
+            type: orderCustomFields
+            partnerFields:
+            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+              stringValue: A good string value
+              title: Title of abc448ca field
+              description: Description for abc448ca field
+              fieldType: string
+            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+              integerValue: 1000
+              title: Title of 123448ca field
+              description: Description for 123448ca field
+              fieldType: integer
+            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+              dateValue: '2022-01-02T15:04:05Z'
+              title: Title of 987448ca field
+              description: Description for 987448ca field
+              fieldType: date
+            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
+              dropdownValue: red
+              title: Title of 987448f2 field
+              description: Description for 987448f2 field
+              fieldType: dropdown
+            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
+              currencyValue: 10000
+              title: Title of 98744854 field
+              description: Description for 98744854 field
+              fieldType: currency
+              currencyCode: CAD
+        Custom Fields with Dropdown Example:
+          data:
+            id: AG-1231231:ORD-1234567
+            type: orderCustomFields
+            partnerFields:
+            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
+              dropdownValue: red
+              title: Title of 987448f2 field
+              description: Description for 987448f2 field
+              fieldType: dropdown
+        Custom Fields with Currency Example:
+          data:
+            id: AG-1231231:ORD-1234567
+            type: orderCustomFields
+            partnerFields:
+            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
+              currencyValue: 10000
+              title: Title of 98744854 field
+              description: Description for 98744854 field
+              fieldType: currency
+              currencyCode: CAD
+      x-tags:
+      - Order Custom Fields
+      properties:
+        id:
+          type: string
+          example: AG-1231231:ORD-1234567
+          description: An identifier for the parent entity, for example order (AG-1231231:ORD-12345671)
+          readOnly: true
+        type:
+          type: string
+          default: orderCustomFields
+          enum:
+          - orderCustomFields
+          description: Should always be orderCustomFields
+        attributes:
+          type: object
+          properties:
+            partnerFields:
+              type: array
+              description: 'List of custom fields specific to the partner with a direct relationship to the sales order.
+
+                To send a new value each field must have at least the fieldId and its correspondent value.
+
+                For example a field of type string must have the stringValue attribute filled.
+
+
+                string -> stringValue
+
+
+                integer -> integerValue
+
+
+                date -> dateValue
+
+
+                Only the fields that you wish to modify need to be sent.'
+              items:
+                type: object
+                properties:
+                  fieldId:
+                    type: string
+                    description: Field identifier, can be retrieved by listing the attributes
+                  externalId:
+                    type: string
+                    description: Alternative field identifier, can be set on admin panel and can be retrieved by listing the attributes
+                  fieldType:
+                    type: string
+                    example: string
+                    enum:
+                    - string
+                    - integer
+                    - date
+                    - dropdown
+                    - currency
+                    description: "Indicates which of the value fields to use to read or write the data. It can only be modified from within partner center. \n\nstring -> stringValue\n\ninteger -> integerValue\n\ndate -> dateValue\n\ndropdown -> dropdownValue\n\ncurrency -> currencyValue"
+                    readOnly: true
+                  stringValue:
+                    type: string
+                    description: Required when the field type is `string`
+                  integerValue:
+                    type: integer
+                    description: Required when the field type is `integer`
+                  dateValue:
+                    type: string
+                    description: Required when the field type is `date`
+                    format: date
+                  dropdownValue:
+                    type: string
+                    description: Required when type is `dropdown`. The possible values can be discovered using the administration panel.
+                  currencyValue:
+                    type: integer
+                    description: 'Required when the field type is `currency`.
+
+
+                      This field represents the cents (or the smallest part of the currency).
+
+
+                      Example:
+
+                      USD 600.00 -> currencyValue=60000'
+                  currencyCode:
+                    type: string
+                    minLength: 3
+                    maxLength: 3
+                    description: 'Represents the type of currency when the field is type `currency`. It will be the 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+
+
+                      Ex: USD, CAD, AUD'
+                    example: USD
+                    readOnly: true
+                  title:
+                    type: string
+                    description: The main label for the field, appearing in most user interfaces that show the value. This field is not read when setting a value.
+                    readOnly: true
+                  description:
+                    type: string
+                    description: A longer text explanation of the field, it optionally appears in the UI. This field is not read when setting a value.
+                    readOnly: true
+      required:
+      - id
+      - type
+    lineItem:
+      title: lineItem
+      x-stoplight:
+        id: 19w8f2ir7f1s9
+      type: object
+      description: Represents an item that is being bought/sold
+      x-tags:
+      - Orders
+      - Proposals
+      properties:
+        sku:
+          type: string
+          description: The unique identifier of a product, product edition or package. It can be obtained by following [this guide](https://docs.apigateway.co/docs/openapi-specs/docs/Guides/Sell/FindSKU.md).
+          example: A-123
+          default: ''
+        type:
+          type: string
+          default: lineItem
+          example: lineItem
+        quantity:
+          type: integer
+          description: The number of units to ordered
+          default: 1
+        amount:
+          type: integer
+          description: The unit price in cents. If not provided the default price for this sku in the marketplace will be used.
+          default: 0
+        intervalCode:
+          type: string
+          enum:
+          - onetime
+          - monthly
+          - yearly
+          - ''
+          description: The billing frequency
+        isPackage:
+          type: boolean
+          description: Indicates if this lineitem is a package instead of a product or an addon.
+          readOnly: true
+        containedInPackage:
+          type: string
+          description: Holds the SKU of the package that this lineitem is part of. Products inside of a package do not have pricing so refer to the lineitem of the package SKU to find the price.
+          default: ''
+          example: MP-123:EDITION-123
+          readOnly: true
+      required:
+      - sku
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          scopes:
+            sales.contact: Read-write access to sales contact details
+            business:read: Read only access to business details
+            business: Read-write access to business details
+            partner:read: Read-write access to details about your partner
+            financial: Read-write access to financial details
+            order: Read-write access to order details
+            order:read: Read only access to order details
+            user.profile:read: Read access to the profile fields of all categories of users
+            user.contact:read: Read access to the contact info (email, phone, address) of all categories of users
+            user.permission:read: Read access to the permission info (accessible locations, features and roles) of all categories of users
+            user.permission: Read-write access to the permission info (accessible locations, features and roles) of all categories of users
+            user.admin: Read-write access to manage all users
+            user.list: '''Allows searching for users based on a set of filters. (ex: email, name, category, organization). Without this scope an exact user id is required.'
+            self.user.admin: Allows editing the profile, contact info and profile image for the current user.
+            self.user.contact:read: Read access to the contact info (email, phone, address) of the current user.
+            openid: Allows getting the user id of the current user
+            profile: Readonly access to the user profile, including name, locale, and language preferences.
+            email: Allows readonly access to the email of the current user.
+            phone: Allows readonly access to the phone numbers of the current user.
+            address: Allows readonly access to the address of the current user.
+            sales.account: Allows read-write access to account records
+            sales.proposals: Allows read-write access to proposals
+            product: Read access to the product details
+            automation:read: Read only access to automations
+          refreshUrl: ''
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          scopes:
+            sales.contact: Read-write access to sales contact details
+            business:read: Read only access to business details
+            business: Read-write access to business details
+            partner:read: Read-write access to details about your partner
+            financial: Read-write access to financial details
+            order:read: Read only access to order details
+            order: Read-write access to order details
+            user.profile:read: Read access to the profile fields of all categories of users
+            user.contact:read: Read access to the contact info (email, phone, address) of all categories of users
+            user.permission:read: Read access to the permission info (accessible locations, features and roles) of all categories of users
+            user.permission: Read-write access to the permission info (accessible locations, features and roles) of all categories of users
+            user.admin: Read-write access to manage all users
+            user.list: '''Allows searching for users based on a set of filters. (ex: email, name, category, organization). Without this scope an exact user id is required.'
+            self.user.admin: Allows editing the profile, contact info and profile image for the current user.
+            self.user.contact:read: Read access to the contact info (email, phone, address) of the current user.
+            openid: Allows getting the user id of the current user
+            profile: Readonly access to the user profile, including name, locale, and language preferences.
+            email: Allows readonly access to the email of the current user.
+            phone: Allows readonly access to the phone numbers of the current user.
+            address: Allows readonly access to the address of the current user.
+            sales.account: Allows read-write access to account records
+            sales.proposals: Allows read-write access to proposals
+            product: Read access to the product details
+            automation:read: Read only access to automations
+          refreshUrl: ''

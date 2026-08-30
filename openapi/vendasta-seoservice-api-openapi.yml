@@ -1,0 +1,328 @@
+openapi: 3.2.0
+info:
+  title: Listing Products SEO Service API
+  version: 1.210.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: SEOService
+paths:
+  /v1/listing-products/get-keyword-data:
+    post:
+      operationId: SEOService_GetLocalSearchSEOData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetLocalSearchSEODataRequest'
+        description: Request to fetch detailed vicinity/local search data for a specific keyword, showing search results from multiple geographic locations around the business.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetLocalSearchSEODataResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Get Local Search SEO Data
+      tags:
+      - SEOService
+  /v1/listing-products/keyword/favourite:
+    post:
+      operationId: SEOService_SaveSEOSettings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1SaveSEOSettingsRequest'
+        description: Request to save SEO settings for a business, including local search radius and favorite keywords.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Save SEO Settings
+      tags:
+      - SEOService
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1GetLocalSearchSEODataRequest:
+      description: Request to fetch detailed vicinity/local search data for a specific keyword, showing search results from multiple geographic locations around the business.
+      properties:
+        businessId:
+          description: Required. The business ID (account group ID) for which to query local search data.
+          type: string
+        endDate:
+          description: Optional. The end date of the date range for which to retrieve local search data.
+          format: date-time
+          type: string
+        keyword:
+          description: 'Required. The specific keyword to fetch local search data for. Unlike GetSEODataSummary, this endpoint
+
+            only accepts a single keyword to provide detailed vicinity analysis.'
+          type: string
+        startDate:
+          description: Optional. The start date of the date range for which to retrieve local search data.
+          format: date-time
+          type: string
+      required:
+      - businessId
+      - keyword
+      title: GetLocalSearchSEODataRequest
+      type: object
+    v1LocalSearchReviews:
+      description: LocalSearchReviews contains review information for a business found in local search results.
+      properties:
+        count:
+          description: The total number of reviews for this business, stored as a string to accommodate large numbers.
+          type: string
+        rating:
+          description: The average star rating for this business (typically on a scale of 1.0 to 5.0).
+          format: double
+          type: number
+      type: object
+    v1Vicinity:
+      default: VICINITY_UNDEFINED
+      enum:
+      - VICINITY_UNDEFINED
+      - VICINITY_CITY
+      - VICINITY_A1
+      - VICINITY_A2
+      - VICINITY_A3
+      - VICINITY_A4
+      - VICINITY_A5
+      - VICINITY_B1
+      - VICINITY_B2
+      - VICINITY_B3
+      - VICINITY_B4
+      - VICINITY_B5
+      - VICINITY_C1
+      - VICINITY_C2
+      - VICINITY_C3
+      - VICINITY_C4
+      - VICINITY_C5
+      - VICINITY_D1
+      - VICINITY_D2
+      - VICINITY_D3
+      - VICINITY_D4
+      - VICINITY_D5
+      - VICINITY_E1
+      - VICINITY_E2
+      - VICINITY_E3
+      - VICINITY_E4
+      - VICINITY_E5
+      type: string
+    v1LocalSearchResult:
+      description: 'LocalSearchResult represents a single business that appeared in local search results.
+
+        This message contains details about a business listing found in the search results for a specific keyword and location.'
+      properties:
+        address:
+          description: The street address of the business.
+          type: string
+        businessName:
+          description: The name of the business as it appears in the search results.
+          type: string
+        claimStatus:
+          $ref: '#/components/schemas/v1GBPClaimStatus'
+        isMainBusiness:
+          description: 'A flag indicating whether this result is the main business being tracked (true) or a competitor (false).
+
+            When true, this represents the business for which SEO data is being collected.'
+          type: boolean
+        phoneNumber:
+          description: The phone number associated with this business listing.
+          type: string
+        rank:
+          description: 'The ranking position of this business in the search results (e.g., "1", "2", "3").
+
+            Lower numbers indicate higher visibility in search results.'
+          type: string
+        reviews:
+          $ref: '#/components/schemas/v1LocalSearchReviews'
+        url:
+          description: The URL of the business's Google Business Profile or listing page.
+          type: string
+      type: object
+    v1GetLocalSearchSEODataResponse:
+      description: Contains detailed vicinity/local search data for a keyword, showing search results from multiple geographic locations around the business.
+      properties:
+        averageLocalRank:
+          description: 'Output only. The average ranking position across all 25 grid points (vicinities) in the Local Search Grid for
+
+            the current/most recent data. This metric represents the business''s average visibility across the
+
+            5x5 grid around the business location. Only grid points with available data are included in the
+
+            calculation. Grid points where the business was not found (rank 0, invalid, or "-") are treated as
+
+            rank 21. Lower values indicate better average positioning across all geographic locations. Compare
+
+            with previous_average_local_rank to analyze visibility trends over time.
+
+            Note: Although this field is a double, the agent response should display only the integer portion.'
+          format: double
+          readOnly: true
+          type: number
+        keyword:
+          description: Output only. The keyword for which this local search data was collected.
+          readOnly: true
+          type: string
+        localSearchData:
+          description: 'Output only. A list of local search data entries, each representing search results from a different geographic
+
+            location (vicinity). Each entry contains results from one of the 25 locations in the 5x5 grid around
+
+            the business, showing which businesses appear in search results at that specific location.'
+          items:
+            $ref: '#/components/schemas/v1LocalSearchData'
+          readOnly: true
+          type: array
+        previousAverageLocalRank:
+          description: 'Output only. The average ranking position across all 25 grid points (vicinities) from the previous/historical
+
+            local search data. This represents the baseline average visibility for comparison with the current
+
+            average_local_rank. Only grid points with available data are included in the calculation. Grid points
+
+            where the business was not found (rank 0, invalid, or "-") are treated as rank 21. Used for trend
+
+            analysis to determine if local search visibility has improved, declined, or remained stable.
+
+            Note: Although this field is a double, the agent response should display only the integer portion.'
+          format: double
+          readOnly: true
+          type: number
+        previousLocalSearchData:
+          description: 'Output only. Historical local search data entries from the oldest data point within the specified date range.
+
+            This represents baseline data for comparison to show performance changes over time.'
+          items:
+            $ref: '#/components/schemas/v1LocalSearchData'
+          readOnly: true
+          type: array
+      title: GetLocalSearchSEODataResponse
+      type: object
+    vendastatypesFieldMask:
+      description: "paths: \"f.a\"\n    paths: \"f.b.d\"\n\nHere `f` represents a field in some root message, `a` and `b`\nfields in the message found in `f`, and `d` a field found in the\nmessage in `f.b`.\n\nField masks are used to specify a subset of fields that should be\nreturned by a get operation or modified by an update operation.\nField masks also have a custom JSON encoding (see below).\n\n# Field Masks in Projections\n\nWhen used in the context of a projection, a response message or\nsub-message is filtered by the API to only contain those fields as\nspecified in the mask. For example, if the mask in the previous\nexample is applied to a response message as follows:\n\n    f {\n      a : 22\n      b {\n        d : 1\n        x : 2\n      }\n      y : 13\n    }\n    z: 8\n\nThe result will not contain specific values for fields x,y and z\n(their value will be set to the default, and omitted in proto text\noutput):\n\n\n    f {\n      a : 22\n      b {\n        d : 1\n      }\n    }\n\nA repeated field is not allowed except at the last position of a\npaths string.\n\nIf a FieldMask object is not present in a get operation, the\noperation applies to all fields (as if a FieldMask of all fields\nhad been specified).\n\nNote that a field mask does not necessarily apply to the\ntop-level response message. In case of a REST get operation, the\nfield mask applies directly to the response, but in case of a REST\nlist operation, the mask instead applies to each individual message\nin the returned resource list. In case of a REST custom method,\nother definitions may be used. Where the mask applies will be\nclearly documented together with its declaration in the API.  In\nany case, the effect on the returned resource/resources is required\nbehavior for APIs.\n\n# Field Masks in Update Operations\n\nA field mask in update operations specifies which fields of the\ntargeted resource are going to be updated. The API is required\nto only change the values of the fields as specified in the mask\nand leave the others untouched. If a resource is passed in to\ndescribe the updated values, the API ignores the values of all\nfields not covered by the mask.\n\nIf a repeated field is specified for an update operation, the existing\nrepeated values in the target resource will be overwritten by the new values.\nNote that a repeated field is only allowed in the last position of a `paths`\nstring.\n\nIf a sub-message is specified in the last position of the field mask for an\nupdate operation, then the existing sub-message in the target resource is\noverwritten. Given the target message:\n\n    f {\n      b {\n        d : 1\n        x : 2\n      }\n      c : 1\n    }\n\nAnd an update message:\n\n    f {\n      b {\n        d : 10\n      }\n    }\n\nthen if the field mask is:\n\n paths: \"f.b\"\n\nthen the result will be:\n\n    f {\n      b {\n        d : 10\n      }\n      c : 1\n    }\n\nHowever, if the update mask was:\n\n paths: \"f.b.d\"\n\nthen the result would be:\n\n    f {\n      b {\n        d : 10\n        x : 2\n      }\n      c : 1\n    }\n\nIn order to reset a field's value to the default, the field must\nbe in the mask and set to the default value in the provided resource.\nHence, in order to reset all fields of a resource, provide a default\ninstance of the resource and set all fields in the mask, or do\nnot provide a mask as described below.\n\nIf a field mask is not present on update, the operation applies to\nall fields (as if a field mask of all fields has been specified).\nNote that in the presence of schema evolution, this may mean that\nfields the client does not know and has therefore not filled into\nthe request will be reset to their default. If this is unwanted\nbehavior, a specific service may require a client to always specify\na field mask, producing an error if not.\n\nAs with get operations, the location of the resource which\ndescribes the updated values in the request message depends on the\noperation kind. In any case, the effect of the field mask is\nrequired to be honored by the API.\n\n## Considerations for HTTP REST\n\nThe HTTP kind of an update operation which uses a field mask must\nbe set to PATCH instead of PUT in order to satisfy HTTP semantics\n(PUT must only be used for full updates).\n\n# JSON Encoding of Field Masks\n\nIn JSON, a field mask is encoded as a single string where paths are\nseparated by a comma. Fields name in each path are converted\nto/from lower-camel naming conventions.\n\nAs an example, consider the following message declarations:\n\n    message Profile {\n      User user = 1;\n      Photo photo = 2;\n    }\n    message User {\n      string display_name = 1;\n      string address = 2;\n    }\n\nIn proto a field mask for `Profile` may look as such:\n\n    mask {\n      paths: \"user.display_name\"\n      paths: \"photo\"\n    }\n\nIn JSON, the same mask is represented as below:\n\n    {\n      mask: \"user.displayName,photo\"\n    }\n\n# Field Masks and Oneof Fields\n\nField masks treat fields in oneofs just as regular fields. Consider the\nfollowing message:\n\n    message SampleMessage {\n      oneof test_oneof {\n        string name = 4;\n        SubMessage sub_message = 9;\n      }\n    }\n\nThe field mask can be:\n\n    mask {\n      paths: \"name\"\n    }\n\nOr:\n\n    mask {\n      paths: \"sub_message\"\n    }\n\nNote that oneof type names (\"test_oneof\" in this case) cannot be used in\npaths."
+      properties:
+        paths:
+          description: The set of field mask paths.
+          items:
+            type: string
+          type: array
+      title: '`FieldMask` represents a set of symbolic field paths, for example:'
+      type: object
+    v1GBPClaimStatus:
+      default: GBP_CLAIM_STATUS_INVALID
+      description: GBPClaimStatus indicates whether a Google Business Profile listing has been claimed by the business owner.
+      enum:
+      - GBP_CLAIM_STATUS_INVALID
+      - GBP_CLAIM_STATUS_UNKNOWN
+      - GBP_CLAIM_STATUS_CLAIMED
+      - GBP_CLAIM_STATUS_UNCLAIMED
+      type: string
+    v1LocalSearchData:
+      description: 'LocalSearchData represents search results from a specific geographic location (vicinity) for a keyword.
+
+        This message contains all businesses that appeared in local search results when searching from that location.'
+      properties:
+        keyword:
+          description: The keyword phrase that was searched for at this location.
+          type: string
+        results:
+          description: 'A list of businesses that appeared in the local search results at this location, ordered by their
+
+            ranking position. This shows which businesses are visible when searching from this specific geographic point.'
+          items:
+            $ref: '#/components/schemas/v1LocalSearchResult'
+          type: array
+        searchLocation:
+          $ref: '#/components/schemas/v1Geo'
+        vicinity:
+          $ref: '#/components/schemas/v1Vicinity'
+      type: object
+    v1SaveSEOSettingsRequest:
+      description: Request to save SEO settings for a business, including local search radius and favorite keywords.
+      properties:
+        businessId:
+          description: Required. The business ID (account group ID) for which to save SEO settings.
+          type: string
+        favoriteKeywords:
+          description: Optional. The list of favorite keywords for this business.
+          items:
+            type: string
+          type: array
+        fieldMask:
+          $ref: '#/components/schemas/vendastatypesFieldMask'
+        isFullSearchEnabled:
+          description: Optional. Whether full search is enabled for this business.
+          type: boolean
+        localSearchRadius:
+          description: Optional. The local search radius to use for keyword tracking.
+          format: double
+          type: number
+      required:
+      - businessId
+      title: SaveSEOSettingsRequest
+      type: object
+    v1Geo:
+      description: Represents a geo point location.
+      properties:
+        latitude:
+          format: double
+          type: number
+        longitude:
+          format: double
+          type: number
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            admin: Allows the application to perform administrative tasks that you have access to across the platform
+            business-app: Allows the application to manage all features of Business App
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

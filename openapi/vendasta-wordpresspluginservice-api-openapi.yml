@@ -1,0 +1,204 @@
+openapi: 3.2.0
+info:
+  title: Social Posts Wordpress Plugin Service API
+  version: 2.82.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: WordpressPluginService
+paths:
+  /v2/social-posts/blog/create:
+    post:
+      operationId: WordpressPluginService_PublishPost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v2PublishPostRequest'
+        description: Request message for publishing a blog post to a WordPress site.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v2PublishPostResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/googlerpcStatus'
+          description: An unexpected error response.
+      summary: Publish Blog Post
+      tags:
+      - WordpressPluginService
+components:
+  schemas:
+    socialpostsv2Category:
+      properties:
+        id:
+          format: int64
+          title: This is the categoryId
+          type: string
+        name:
+          title: This is the category name
+          type: string
+      type: object
+    v2PublishPostResponse:
+      description: Response message containing the internal ID of the published blog post.
+      properties:
+        internalPostId:
+          description: Output only. Internal ID of the post.
+          readOnly: true
+          type: string
+      title: PublishPostResponse
+      type: object
+    v2MetadataV2:
+      description: A key-value pair used to store generic metadata information associated with a post or media.
+      properties:
+        name:
+          description: Required. The property name or key.
+          type: string
+        value:
+          description: Required. The property value associated with the name/key.
+          type: string
+      required:
+      - name
+      - value
+      title: MetadataV2
+      type: object
+    v2BlogImage:
+      properties:
+        path:
+          title: The path of the image
+          type: string
+        publicUrl:
+          title: The public url of the image
+          type: string
+      type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v2PublishPostRequest:
+      description: Request message for publishing a blog post to a WordPress site.
+      properties:
+        author:
+          $ref: '#/components/schemas/socialpostsv2Author'
+        businessId:
+          description: Required. The business id of the blog post connection.
+          type: string
+        categories:
+          description: Optional. The categories of the blog post.
+          items:
+            $ref: '#/components/schemas/socialpostsv2Category'
+          type: array
+        content:
+          description: Required. The content of the blog post.
+          type: string
+        createdBy:
+          description: 'Optional. Identifier of who created this blog post.
+
+            In automation flow it will be an assistant ID.
+
+            In chat flow it will be a user ID.'
+          type: string
+        images:
+          description: Optional. The images of the blog post.
+          items:
+            $ref: '#/components/schemas/v2BlogImage'
+          type: array
+        internalPostId:
+          description: Optional. The internal post id of the blog post.
+          type: string
+        metadata:
+          description: Optional. Key/value metadata associated with the blog post (e.g. assistant_type, workflow_type, workflow_source).
+          items:
+            $ref: '#/components/schemas/v2MetadataV2'
+          type: array
+        partnerId:
+          description: Optional. The partner id of the blog post.
+          type: string
+        postDateTime:
+          description: Optional. The post date time of the blog post.
+          format: date-time
+          type: string
+        postTags:
+          description: Optional. The post tags of the blog post.
+          items:
+            type: string
+          type: array
+        siteType:
+          description: Optional. The site type of the blog post.
+          type: string
+        socialServiceId:
+          description: Required. The service id of the connection.
+          type: string
+        tags:
+          description: Optional. The tags of the blog post.
+          items:
+            type: string
+          type: array
+        title:
+          description: Required. The title of the blog post.
+          type: string
+        userId:
+          description: Optional. The user id of the blog post.
+          type: string
+        userName:
+          description: Optional. The user name of the blog post.
+          type: string
+        videos:
+          description: Optional. The videos of the blog post.
+          items:
+            $ref: '#/components/schemas/v2BlogVideo'
+          type: array
+      required:
+      - businessId
+      - socialServiceId
+      - title
+      - content
+      title: PublishPostRequest
+      type: object
+    socialpostsv2Author:
+      properties:
+        id:
+          format: int64
+          type: string
+        name:
+          type: string
+      type: object
+    v2BlogVideo:
+      properties:
+        path:
+          title: The path of the video
+          type: string
+        publicUrl:
+          title: The public url of the video
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            business-app: Allows the application to manage all features of Business App
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

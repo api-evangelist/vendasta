@@ -1,0 +1,296 @@
+openapi: 3.2.0
+info:
+  title: Reputation REST Business Location Reviews API
+  version: '1.0'
+  description: ''
+servers:
+- url: https://prod.apigateway.co/products/reputation
+  description: Production
+- url: https://demo.apigateway.co/products/reputation
+  description: Demo
+- url: '{local}/products/reputation'
+  description: Local
+- url: http://localhost:11001/products/reputation
+  description: Localhost
+tags:
+- name: Business Location Reviews
+paths:
+  /businessLocationReviews:
+    parameters: []
+    get:
+      summary: List Business Location Reviews
+      operationId: get-businessLocationReviews
+      tags:
+      - Business Location Reviews
+      security:
+      - OAuth2Demo:
+        - business
+      - OAuth2Prod:
+        - business
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Produces a list of reviews for a business location'
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: filter[businessLocation.id]
+        description: Return reviews for the specified business location
+        required: true
+      - schema:
+          type: string
+        in: query
+        name: filter[businessListing.id]
+        description: Return reviews for a specific business listing
+      - schema:
+          type: integer
+        in: query
+        name: filter[listingSource.id]
+        description: Return reviews for a listing source
+      - schema:
+          type: string
+          format: date-time
+        in: query
+        name: filter[startAt]
+        description: Return reviews published on or after this date
+      - schema:
+          type: string
+          format: date-time
+        in: query
+        name: filter[endAt]
+        description: Return reviews published on or before this date
+      - schema:
+          type: string
+        in: query
+        name: filter[rating]
+        description: Return reviews for the listing source
+      - schema:
+          type: string
+        in: query
+        name: filter[phrase]
+        description: A phrase to find reviews for
+      - schema:
+          type: integer
+          minimum: 0
+          maximum: 100
+          default: 10
+        in: query
+        name: page[limit]
+        description: The maximum number of tasks you would like returned in a single batch. Use the links.next member in the response to get the remainder. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+      - schema:
+          type: string
+        in: query
+        name: page[cursor]
+        description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. Please note that users can retrieve a maximum of 10,000 records due to paging limitations. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/businessLocationReviews'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                        format: uri
+                      first:
+                        type: string
+                        description: Provides a link back to the first page of results
+                        format: uri
+                      next:
+                        type: string
+                        description: The URI at which the next batch of reviews can be gotten from
+                        format: uri
+    options:
+      operationId: options-businessLocationReviews
+      summary: List valid HTTP verbs for /businessLocationReviews
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      responses:
+        '204':
+          description: No Content
+      tags:
+      - Business Location Reviews
+  /businessLocationReviews/{id}/actions/suggestResponse:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: The ID of a business location review
+    get:
+      summary: Suggest Review Response
+      operationId: get-businessLocationReviews-id-actions-suggestResponse
+      tags:
+      - Business Location Reviews
+      security:
+      - OAuth2Demo:
+        - business
+      - OAuth2Prod:
+        - business
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Asks AI for a suggested response to the review'
+      parameters:
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+          pattern: ^Bearer\s\S+
+        in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/businessLocationReviewResponseSuggestion'
+components:
+  schemas:
+    businessLocationReviews:
+      title: Business Location Reviews
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        A review of an item - for example, of a restaurant, movie, or store.'
+      properties:
+        id:
+          type: string
+          example: RVW-4EF5BECE03D24D85AB4045097430A9C0
+        type:
+          type: string
+          default: businessLocationReviews
+          enum:
+          - businessLocationReviews
+        attributes:
+          type: object
+          properties:
+            reviewBody:
+              description: The actual body of the review
+              type: string
+            reviewRating:
+              description: The rating given in this review
+              type: string
+            author:
+              description: The creator/author of the review
+              type: string
+            headline:
+              description: Headline of the review
+              type: string
+            publishedAt:
+              description: Date of first broadcast/publication
+              format: date-time
+              type: string
+            url:
+              description: The URL to the review
+              type: string
+            modifiedAt:
+              description: Date when the system last updated this review entity
+              format: date-time
+              type: string
+            editedAt:
+              description: Date of when the review was edited on the source site, currently it is only supported on Google and Facebook reviews
+              format: date-time
+              type: string
+            comments:
+              type: array
+              description: Comments, typically from users
+              items:
+                type: object
+                properties:
+                  author:
+                    description: The creator/author of the comment
+                    type: string
+                  comment:
+                    description: The actual body of the comment
+                    type: string
+                  publishedAt:
+                    description: Date of first broadcast/publication
+                    format: date-time
+                    type: string
+      x-tags:
+      - Business Location Reviews
+    businessLocationReviewResponseSuggestion:
+      x-stoplight:
+        id: kyuk59cfolgz8
+      type: object
+      title: Suggested review response
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        A suggested response to a business location review'
+      properties:
+        type:
+          type: string
+          default: businessLocationReviewResponseSuggestion
+          enum:
+          - businessLocationReviewResponseSuggestion
+        attributes:
+          type: object
+          properties:
+            suggestion:
+              type: string
+              x-stoplight:
+                id: 1jtit00f5byan
+              description: The suggested response to the review
+          required:
+          - suggestion
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            reputation: Access to the Reputation REST API
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            reputation: Access to the Reputation REST API

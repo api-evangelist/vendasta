@@ -1,0 +1,396 @@
+openapi: 3.2.0
+info:
+  title: Platform REST Partner Activatable Products API
+  version: Evergreen
+servers:
+- url: https://prod.apigateway.co/platform
+  description: Production
+- description: Demo
+  url: https://demo.apigateway.co/platform
+- description: Local
+  url: '{local}/platform'
+- url: http://localhost:11001/platform
+  description: Localhost
+tags:
+- name: Partner Activatable Products
+paths:
+  /partnerActivatableProducts/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: SKU id
+    get:
+      summary: Get Partner Activatable Product
+      operationId: get-partnerActivatableProducts-id
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Returns the details of a product listed in a reseller''s store for a known id.'
+      security:
+      - OAuth2Demo:
+        - product
+        - partner:read
+      - OAuth2Prod:
+        - product
+        - partner:read
+      parameters:
+      - in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+        schema:
+          example: Bearer <Access Token>
+          type: string
+          pattern: ^Bearer\s\S+
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/partnerActivatableProducts'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+      tags:
+      - Partner Activatable Products
+      x-lifecycle:
+        status: trustedTester
+    options:
+      summary: List valid HTTP verbs for
+      operationId: options-partnerActivatableProducts-id
+      responses:
+        '200':
+          description: OK
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Partner Activatable Products
+  /partnerActivatableProducts:
+    parameters: []
+    get:
+      summary: List Partner Activatable Products
+      operationId: get-partnerActivatableProducts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                x-examples:
+                  example-1:
+                    data:
+                      id: string
+                      type: products
+                      apps:
+                      - key:
+                          sku: string
+                        sharedMarketingInformation:
+                          name: string
+                          iconUrl: https://example.com/logo.png
+                          tagline: string
+                          bannerImageUrl: string
+                        parentRequirements:
+                          enabled: true
+                          parentDetails:
+                            key:
+                              appId: string
+                        activationInformation:
+                          requiredBusinessData: {}
+                          countryRestrictions:
+                            whitelist:
+                            - string
+                          appRestrictions:
+                            requiredAppIds:
+                            - string
+                        price: {}
+                        appType: APP_TYPE_ADDON
+                    links:
+                      self: string
+                      first: string
+                      next: string
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/partnerActivatableProducts'
+                  links:
+                    type: object
+                    properties:
+                      self:
+                        type: string
+                      first:
+                        type: string
+                      next:
+                        type: string
+      description: "[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`\n\nProvides a list of products that can be activated by a partner for their customers. \nYou must filter the list to a single partner using the `filter[partner.id]=PID` query param. \nSorted by the whiteLabelName field in ascending order. "
+      security:
+      - OAuth2Demo:
+        - partner:read
+        - product
+      - OAuth2Prod:
+        - partner:read
+        - product
+      parameters:
+      - in: header
+        name: Authorization
+        description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+        required: true
+        schema:
+          example: Bearer <Access Token>
+          type: string
+          pattern: ^Bearer\s\S+
+      - schema:
+          type: string
+        in: header
+        name: Accept-Language
+      - schema:
+          type: integer
+          default: 10
+          minimum: 0
+          maximum: 100
+        in: query
+        name: page[limit]
+        description: The maximum number of tasks you would like returned in a single batch. Use the links.next member in the response to get the remainder. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+      - schema:
+          type: string
+        in: query
+        name: page[cursor]
+        description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+      - schema:
+          type: string
+        in: query
+        name: filter[searchText]
+        description: A string containing a partial id or name field.
+      - schema:
+          type: string
+        in: query
+        name: filter[partner.id]
+        description: Return products for the specified partner
+        required: true
+      x-lifecycle:
+        status: trustedTester
+      tags:
+      - Partner Activatable Products
+    options:
+      summary: List valid HTTP verbs for /partnerActivatableProducts
+      operationId: options-partnerActivatableProducts
+      responses:
+        '200':
+          description: OK
+      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      tags:
+      - Partner Activatable Products
+components:
+  schemas:
+    partnerActivatableProducts:
+      type: object
+      x-examples:
+        Partner Activatable Product Example:
+          id: MP-1234:EDITION-123
+          type: partnerActivatableProducts
+          attributes:
+            sku: MP-1234:EDITION-123
+            name: Product Name
+            whiteLabelName: Custom Product Name
+            iconUrl: https://example.com
+            tagline: Short Description
+            bannerImageUrl: https://example.com
+            prices:
+            - amount: 0
+              currencyCode: CAD
+              frequency: UNIT_BILLING_FREQUENCY_MONTHLY
+              type: retail
+          relationships:
+            allowedCountries:
+              data:
+              - id: US
+                type: countries
+            requiredProductIds:
+              data:
+              - id: MP-456:EDITION-456
+                type: partnerActivatableProducts
+      description: Details on the products you are currently selling in your store.
+      title: Partner Activatable Products
+      x-tags:
+      - Partner Activatable Products
+      properties:
+        id:
+          type: string
+          description: Unique identifier of the record.
+          example: MP-1234:EDITION-123
+        type:
+          type: string
+          description: Should always be partnerActivatableProducts.
+          default: partnerActivatableProducts
+          enum:
+          - partnerActivatableProducts
+        relationships:
+          type: object
+          properties:
+            allowedCountries:
+              type: object
+              description: Allowed list of countries as 2-letter codes where the product can be sold. If empty, its allowed for any country. Country name from the code can be obtained with [Countries API](platform.yaml/paths/~1countries/get)
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: US
+                      type:
+                        type: string
+                        enum:
+                        - countries
+                        default: countries
+            requiredProducts:
+              type: object
+              description: List of IDs of the products to be activated before activating this product.
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: ABC:default:MP-456:EDITION-456
+                      type:
+                        type: string
+                        enum:
+                        - partnerActivatableProducts
+                        default: partnerActivatableProducts
+        attributes:
+          type: object
+          properties:
+            sku:
+              type: string
+              description: The unique identifier of a product, product edition or package. It can be obtained by following [this guide](https://docs.apigateway.co/docs/openapi-specs/docs/Guides/Sell/FindSKU.md).
+              example: MP-1234:EDITION-123
+            name:
+              type: string
+              description: Vendor provided name for the product.
+              example: Product Name
+            whiteLabelName:
+              type: string
+              description: Custom name for the product set by the Partner.
+              example: Custom Product Name
+            iconUrl:
+              type: string
+              description: 'Product logo url. Url to the jpg or png image with 1:1 aspect ratio. (Recommended: 240px x 240px).'
+              format: uri
+            tagline:
+              type: string
+              description: Briefly describes what the product does.
+              example: Short Description
+            bannerImageUrl:
+              type: string
+              description: Url to access the large rectangular image at the top of the marketing page.
+              format: uri
+            prices:
+              type: array
+              description: Describes the price of the product.
+              items:
+                type: object
+                properties:
+                  frequency:
+                    type: string
+                    description: Billing frequency of the product.
+                  type:
+                    type: string
+                    description: Denotes the type of price.
+                    example: retail
+                  currencyCode:
+                    type: string
+                    description: Type of currency (code) of the price.
+                    example: CAD
+                  amount:
+                    type: number
+                    description: The cost of the product.
+                    example: 42
+      required:
+      - id
+      - type
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          scopes:
+            sales.contact: Read-write access to sales contact details
+            business:read: Read only access to business details
+            business: Read-write access to business details
+            partner:read: Read-write access to details about your partner
+            financial: Read-write access to financial details
+            order: Read-write access to order details
+            order:read: Read only access to order details
+            user.profile:read: Read access to the profile fields of all categories of users
+            user.contact:read: Read access to the contact info (email, phone, address) of all categories of users
+            user.permission:read: Read access to the permission info (accessible locations, features and roles) of all categories of users
+            user.permission: Read-write access to the permission info (accessible locations, features and roles) of all categories of users
+            user.admin: Read-write access to manage all users
+            user.list: '''Allows searching for users based on a set of filters. (ex: email, name, category, organization). Without this scope an exact user id is required.'
+            self.user.admin: Allows editing the profile, contact info and profile image for the current user.
+            self.user.contact:read: Read access to the contact info (email, phone, address) of the current user.
+            openid: Allows getting the user id of the current user
+            profile: Readonly access to the user profile, including name, locale, and language preferences.
+            email: Allows readonly access to the email of the current user.
+            phone: Allows readonly access to the phone numbers of the current user.
+            address: Allows readonly access to the address of the current user.
+            sales.account: Allows read-write access to account records
+            sales.proposals: Allows read-write access to proposals
+            product: Read access to the product details
+            automation:read: Read only access to automations
+          refreshUrl: ''
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          scopes:
+            sales.contact: Read-write access to sales contact details
+            business:read: Read only access to business details
+            business: Read-write access to business details
+            partner:read: Read-write access to details about your partner
+            financial: Read-write access to financial details
+            order:read: Read only access to order details
+            order: Read-write access to order details
+            user.profile:read: Read access to the profile fields of all categories of users
+            user.contact:read: Read access to the contact info (email, phone, address) of all categories of users
+            user.permission:read: Read access to the permission info (accessible locations, features and roles) of all categories of users
+            user.permission: Read-write access to the permission info (accessible locations, features and roles) of all categories of users
+            user.admin: Read-write access to manage all users
+            user.list: '''Allows searching for users based on a set of filters. (ex: email, name, category, organization). Without this scope an exact user id is required.'
+            self.user.admin: Allows editing the profile, contact info and profile image for the current user.
+            self.user.contact:read: Read access to the contact info (email, phone, address) of the current user.
+            openid: Allows getting the user id of the current user
+            profile: Readonly access to the user profile, including name, locale, and language preferences.
+            email: Allows readonly access to the email of the current user.
+            phone: Allows readonly access to the phone numbers of the current user.
+            address: Allows readonly access to the address of the current user.
+            sales.account: Allows read-write access to account records
+            sales.proposals: Allows read-write access to proposals
+            product: Read access to the product details
+            automation:read: Read only access to automations
+          refreshUrl: ''

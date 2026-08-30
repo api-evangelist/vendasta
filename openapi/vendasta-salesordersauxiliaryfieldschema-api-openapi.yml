@@ -1,0 +1,203 @@
+openapi: 3.2.0
+info:
+  title: Sales Orders Auxiliary Field Schema API
+  version: 1.134.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: SalesOrdersAuxiliaryFieldSchema
+paths:
+  /v1/order/custom-fields/get:
+    post:
+      operationId: SalesOrdersAuxiliaryFieldSchema_GetAuxiliaryDataFieldSchema
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetAuxiliaryDataFieldSchemaRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetAuxiliaryDataFieldSchemaResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/googlerpcStatus'
+          description: An unexpected error response.
+      summary: Get Auxiliary Data Field Schema
+      tags:
+      - SalesOrdersAuxiliaryFieldSchema
+  /v1/order/custom-fields/list:
+    post:
+      operationId: SalesOrdersAuxiliaryFieldSchema_ListAuxiliaryDataFieldSchema
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ListAuxiliaryDataFieldSchemaRequest'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListAuxiliaryDataFieldSchemaResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/googlerpcStatus'
+          description: An unexpected error response.
+      summary: List Auxiliary Data Field Schema
+      tags:
+      - SalesOrdersAuxiliaryFieldSchema
+components:
+  schemas:
+    v1ListAuxiliaryDataFieldSchemaResponse:
+      properties:
+        fieldSchemas:
+          items:
+            $ref: '#/components/schemas/v1AuxiliaryDataFieldSchema'
+          type: array
+        pagingMetadata:
+          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
+      type: object
+    vendastatypesPagedRequestOptions:
+      properties:
+        cursor:
+          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
+          type: string
+        pageSize:
+          description: Optional. The maximum number of items to return per page.
+          format: int64
+          type: string
+      type: object
+    v1AuxiliaryDataFieldSchema:
+      properties:
+        archived:
+          format: date-time
+          type: string
+        created:
+          format: date-time
+          type: string
+        currencyCode:
+          title: currency code according to ISO-4217, e.g. 'USD', 'CAD', 'BRL', etc
+          type: string
+        dropdownOptions:
+          items:
+            $ref: '#/components/schemas/v1DropdownOption'
+          type: array
+        externalId:
+          type: string
+        fieldDescription:
+          type: string
+        fieldId:
+          type: string
+        fieldName:
+          type: string
+        fieldType:
+          $ref: '#/components/schemas/v1AuxiliaryDataFieldType'
+        partnerId:
+          type: string
+        updated:
+          format: date-time
+          type: string
+      type: object
+    v1GetAuxiliaryDataFieldSchemaResponse:
+      properties:
+        fieldSchema:
+          $ref: '#/components/schemas/v1AuxiliaryDataFieldSchema'
+      type: object
+    v1GetAuxiliaryDataFieldSchemaRequest:
+      properties:
+        identifier:
+          $ref: '#/components/schemas/v1FieldSchemaIdentifier'
+      type: object
+    v1FieldSchemaIdentifier:
+      properties:
+        externalId:
+          type: string
+        fieldId:
+          type: string
+        partnerId:
+          type: string
+      type: object
+    v1AuxiliaryDataFieldType:
+      default: AUXILIARY_DATA_FIELD_TYPE_INVALID
+      enum:
+      - AUXILIARY_DATA_FIELD_TYPE_INVALID
+      - AUXILIARY_DATA_FIELD_TYPE_STRING
+      - AUXILIARY_DATA_FIELD_TYPE_INTEGER
+      - AUXILIARY_DATA_FIELD_TYPE_DATE
+      - AUXILIARY_DATA_FIELD_TYPE_DROPDOWN
+      - AUXILIARY_DATA_FIELD_TYPE_CURRENCY
+      type: string
+    v1ListAuxiliaryDataFieldSchemaRequestFilters:
+      properties:
+        onlyArchived:
+          type: boolean
+      type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1DropdownOption:
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+      type: object
+    vendastatypesPagedResponseMetadata:
+      properties:
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
+          type: string
+        totalResults:
+          format: int64
+          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
+          type: string
+      type: object
+    v1ListAuxiliaryDataFieldSchemaRequest:
+      properties:
+        filters:
+          $ref: '#/components/schemas/v1ListAuxiliaryDataFieldSchemaRequestFilters'
+        pagingOptions:
+          $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
+        partnerId:
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            order: Allows the application to manage orders
+            order:read: Allows the application view-only access to orders
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

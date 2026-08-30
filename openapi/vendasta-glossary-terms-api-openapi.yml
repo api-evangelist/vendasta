@@ -1,0 +1,252 @@
+openapi: 3.2.0
+info:
+  title: Data Glossary Context Glossary Terms API
+  version: Evergreen
+  description: Sometimes you need to take a step back to understand exactly what is being discussed. The Data Glossary helps you to define terms used in the platform
+servers:
+- url: https://prod.apigateway.co/glossary
+  description: Production
+- description: Demo
+  url: https://demo.apigateway.co/glossary
+- description: Localhost
+  url: '{localhost}/glossary'
+tags:
+- name: Glossary-Terms
+paths:
+  /terms:
+    parameters: []
+    get:
+      summary: List Terms
+      operationId: glossary-list-terms
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GlossaryTerms'
+                  links:
+                    type: object
+                  included:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GlossaryContext'
+      description: 'Find the definitions used by terms in a given context.
+
+
+        **Tip**
+
+        - Use `?filter[context.ID]=crm` to list all the terms used within the crm context.
+
+        - Use `?filter[name]=customer` to see how the term customer changes between contexts.'
+      parameters:
+      - schema:
+          type: string
+          example: crm
+        in: query
+        name: filter[context.ID]
+        description: list all the terms used within the given context
+      - schema:
+          type: string
+        in: query
+        name: filter[name]
+        description: find the terms with the given name
+      - schema:
+          type: string
+          items:
+            type: string
+          enum:
+          - glossaryContexts
+          minItems: 1
+          uniqueItems: true
+        in: query
+        name: include
+        description: What related resource types would you like to embed?
+      - schema:
+          type: string
+          example: Bearer <Access Token>
+        in: header
+        name: Authorization
+        description: When generating the access token for the user calling the API you must request permission to access the "tasks" scope
+        required: true
+      tags:
+      - Glossary-Terms
+  /terms/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Term
+      tags:
+      - Glossary-Terms
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/GlossaryTerms'
+      operationId: get-terms-id
+  /contexts/{id}/terms:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: List terms in context
+      tags:
+      - Glossary-Terms
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GlossaryTerms'
+      operationId: get-contexts-id-terms
+      description: 'This is effectivly the same as `/terms?filter[context]={id}`
+
+
+        You can sideload this list along with the context info using `/contexts/{contextID}?include=glossaryTerms`'
+components:
+  schemas:
+    GlossaryTerms:
+      title: Terms
+      type: object
+      description: Terms are a set of context-specific definitions. They form the Data Glossary for the platform.
+      properties:
+        id:
+          type: string
+          description: Readonly record reference assigned by the server. Must be included in all requests except create.
+        type:
+          type: string
+          enum:
+          - glossaryTerms
+          description: Must always be set to "glossaryTerms"
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+            definition:
+              type: string
+        relationships:
+          type: object
+          properties:
+            context:
+              type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                  - glossaryContext
+                id:
+                  type: string
+              required:
+              - type
+              - id
+      required:
+      - id
+      - type
+      x-examples:
+        'EX: milk':
+          id: 497f6eca-6276-4993-bfeb-53cbbbba6f08
+          type: glossaryTerms
+          attributes:
+            name: Milk
+            definition: Cold white drink
+          relationships:
+            context:
+              type: glossaryContext
+              id: drinks
+      x-tags:
+      - Glossary-Terms
+      - Glossary-Contexts
+    GlossaryContext:
+      title: Glossary Context
+      type: object
+      description: A context is the frame of reference used when describing a term
+      x-tags:
+      - Glossary-Contexts
+      properties:
+        id:
+          type: string
+          maxLength: 20
+          minLength: 0
+        type:
+          type: string
+          enum:
+          - glossaryContexts
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+            definition:
+              type: string
+        relationships:
+          type: object
+          properties:
+            terms:
+              type: array
+              items:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                        - glossaryTerms
+                    required:
+                    - id
+                    - type
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+    OAuth:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          scopes:
+            terms.write: write terms
+            finance.partners.read: read partners
+            hr.employees.read: read employees
+            hr.teams.read: read teams
+            hr.roles.read: read roles
+            hr.roles.write: write roles
+            crm.customers.read: read customers
+            crm.customers.write: write customers
+            crm.contacts.read: read contacts
+            crm.contacts.write: write contacts
+            sales.leads.read: read leads
+            sales.opportunities.read: read opportunities
+            sales.orders.read: read orders
+            product.products.read: read products
+            product.packages.read: read packages
+      description: ''

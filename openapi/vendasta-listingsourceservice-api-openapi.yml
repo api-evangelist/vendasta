@@ -1,0 +1,411 @@
+openapi: 3.2.0
+info:
+  title: Listing Products Listing Source Service API
+  version: 1.210.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: ListingSourceService
+paths:
+  /v1/listings/get-listing-source-by-id:
+    post:
+      operationId: ListingSourceService_GetListingSourceById
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetListingSourceByIdRequest'
+        description: Request to retrieve detailed configuration for a specific listing directory by its numeric ID.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetListingSourceByIdResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - admin
+      summary: Get Listing Source By Id
+      tags:
+      - ListingSourceService
+  /v1/listings/get-listing-sources:
+    post:
+      operationId: ListingSourceService_GetListingSources
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetListingSourcesRequest'
+        description: Request to fetch all listing sources, optionally filtered by provider.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetListingSourcesResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - admin
+      summary: Get Listing Sources
+      tags:
+      - ListingSourceService
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1LocationOverride:
+      properties:
+        ignoredAnchorDataMatches:
+          items:
+            type: string
+          type: array
+        submitListingValidationRegex:
+          type: string
+      title: Location specific source overrides
+      type: object
+    v1Source:
+      description: 'Source contains comprehensive configuration and constraints for a listing directory.
+
+        This is the definitive reference for understanding what''s required to sync to a directory,
+
+        whether a business is eligible, and what features the directory supports.'
+      properties:
+        adminNotes:
+          title: admin_notes contains internal notes about this directory (for Vendasta admins)
+          type: string
+        availableForServiceAreaBusiness:
+          title: 'available_for_service_area_business indicates this directory supports service area businesses (no physical location)
+
+            False means only businesses with a physical storefront can list here'
+          type: boolean
+        claimListingHtml:
+          title: claim_listing_html contains HTML instructions for claiming an existing listing
+          type: string
+        createListingHtml:
+          title: create_listing_html contains HTML instructions for manually creating a listing on this directory
+          type: string
+        createListingUrl:
+          title: create_listing_url is the URL where users can manually create a listing
+          type: string
+        created:
+          description: Output only. When this directory was added to the system.
+          format: date-time
+          readOnly: true
+          type: string
+        deleted:
+          description: Output only. Indicates this directory has been removed/deprecated.
+          format: date-time
+          readOnly: true
+          type: string
+        descriptionHtml:
+          title: description_html is a human-readable description of this directory for display
+          type: string
+        domains:
+          items:
+            type: string
+          title: domains lists the web domains associated with this directory (for matching/scraping)
+          type: array
+        editListingHtml:
+          title: edit_listing_html contains HTML instructions for manually editing a listing
+          type: string
+        editListingUrl:
+          title: edit_listing_url is the URL where users can manually edit their listing
+          type: string
+        enabledFlag:
+          description: 'enabled_flag controls whether this directory is visible in user-facing applications (RepMan, Snapshot, Business App).
+
+            When false, the directory is hidden from the UI but existing listings may still sync.
+
+            Do not interpret false as "deprecated" - it means the source is not available for new manual submissions
+
+            but may still be actively synced via LSP providers.'
+          type: boolean
+        hasListingReporting:
+          title: 'has_listing_reporting indicates we can scrape/check this directory for accuracy data
+
+            If false, accuracy will always be ACCURACY_STATUS_UNAVAILABLE'
+          type: boolean
+        hasListingsFlag:
+          title: has_listings_flag indicates this directory displays business listings (vs. just aggregating data)
+          type: boolean
+        hasNoRatingsReviewsFlag:
+          title: has_no_ratings_reviews_flag indicates this directory does not support ratings/reviews
+          type: boolean
+        hasReviewsFlag:
+          title: has_reviews_flag indicates this directory supports customer reviews
+          type: boolean
+        iconClass16px:
+          title: icon_class_16px is the CSS class for 16px icon
+          type: string
+        iconClass32px:
+          title: icon_class_32px is the CSS class for 32px icon
+          type: string
+        iconClass50px:
+          title: icon_class_50px is the CSS class for 50px icon
+          type: string
+        iconUrl16px:
+          title: icon_url_16px is the URL for 16px icon
+          type: string
+        iconUrl32px:
+          title: icon_url_32px is the URL for 32px icon
+          type: string
+        iconUrl50px:
+          title: icon_url_50px is the URL for 50px icon
+          type: string
+        ignoredAnchorDataMatches:
+          items:
+            type: string
+          title: 'ignored_anchor_data_matches lists NAP fields to ignore when calculating accuracy
+
+            Example: ["phone"] means don''t flag phone number mismatches as inaccurate'
+          type: array
+        isDirectlySubmittedSource:
+          title: 'is_directly_submitted_source indicates this is a direct OAuth source (Google, Facebook, Apple, Bing)
+
+            True means businesses can connect their account directly without LSP'
+          type: boolean
+        isLdSource:
+          title: is_ld_source indicates this directory is part of Listing Distribution (Data Axle, Neustar, Foursquare ecosystem)
+          type: boolean
+        isLocationWhitelistedByDefaultFlag:
+          title: is_location_whitelisted_by_default_flag affects location-based eligibility
+          type: boolean
+        isPartnerWhitelistedByDefaultFlag:
+          title: is_partner_whitelisted_by_default_flag affects partner-based eligibility
+          type: boolean
+        isTaxonomyWhitelistedByDefaultFlag:
+          title: is_taxonomy_whitelisted_by_default_flag affects category-based eligibility
+          type: boolean
+        locationBlacklist:
+          items:
+            type: string
+          title: location_blacklist lists country codes where this directory is not available
+          type: array
+        locationSpecificOverrides:
+          additionalProperties:
+            $ref: '#/components/schemas/v1LocationOverride'
+          title: location_specific_overrides provides country-specific configuration overrides
+          type: object
+        locationWhitelist:
+          items:
+            type: string
+          title: location_whitelist lists country codes where this directory is available (if specified, only these countries)
+          type: array
+        lspIcon:
+          title: lsp_icon is the icon URL used in LSP-specific UI
+          type: string
+        name:
+          title: name is the human-readable directory name (e.g., "Google", "Yelp", "Facebook")
+          type: string
+        partnerBlacklist:
+          items:
+            type: string
+          title: partner_blacklist lists partner IDs that cannot use this directory
+          type: array
+        partnerSpecificOverrides:
+          additionalProperties:
+            $ref: '#/components/schemas/v1PartnerOverride'
+          title: partner_specific_overrides provides partner-specific configuration (custom branding, names, etc.)
+          type: object
+        partnerWhitelist:
+          items:
+            type: string
+          title: partner_whitelist lists partner IDs that can use this directory (if specified, only these partners)
+          type: array
+        popularity:
+          format: int64
+          title: popularity is a ranking score (higher = more important directory)
+          type: string
+        sourceId:
+          description: Output only. The unique numeric identifier for this directory.
+          format: int64
+          readOnly: true
+          type: string
+        sourceTypeId:
+          title: source_type_id is the category identifier (e.g., "search_engine", "social_network")
+          type: string
+        sourceTypeName:
+          title: source_type_name is the human-readable category name
+          type: string
+        submitListingHelpText:
+          title: submit_listing_help_text provides guidance for manual listing submission
+          type: string
+        submitListingValidationRegex:
+          title: submit_listing_validation_regex validates listing URLs for manual submission
+          type: string
+        supportsSubmittedListing:
+          title: supports_submitted_listing indicates manual submission via RM is supported
+          type: boolean
+        syncRequirement:
+          $ref: '#/components/schemas/v1SyncRequirement'
+        taxonomyBlacklist:
+          items:
+            type: string
+          title: 'taxonomy_blacklist lists business category IDs that are not eligible for this directory
+
+            Use this to explain "Your business type is not supported on [directory]"'
+          type: array
+        taxonomyWhitelist:
+          items:
+            type: string
+          title: taxonomy_whitelist lists business category IDs that are eligible (if specified, only these categories)
+          type: array
+        uberallId:
+          title: uberall_id is the directory's identifier in the Uberall system (if synced via Uberall)
+          type: string
+        updated:
+          description: Output only. When this directory configuration was last modified.
+          format: date-time
+          readOnly: true
+          type: string
+        yextId:
+          title: yext_id is the directory's identifier in the Yext system (if synced via Yext)
+          type: string
+      type: object
+    v1SyncRequirement:
+      default: SYNC_REQUIREMENT_UNSET
+      description: "SyncRequirement specifies what product activation is needed to automatically sync to a directory.\nThis explains why a directory might not be available for a particular business.\n\n - SYNC_REQUIREMENT_UNSET: SYNC_REQUIREMENT_UNSET means no specific requirement (e.g., manual submission via RM, or direct OAuth)\n - SYNC_REQUIREMENT_LSP: SYNC_REQUIREMENT_LSP requires an active Listing Sync Pro subscription (either Yext or Uberall)\n - SYNC_REQUIREMENT_PRO_EDITION: SYNC_REQUIREMENT_PRO_EDITION requires Local SEO Pro edition\n - SYNC_REQUIREMENT_YEXT_LSP: SYNC_REQUIREMENT_YEXT_LSP specifically requires Yext-based Listing Sync Pro\nThis directory is only available through Yext, not Uberall\n - SYNC_REQUIREMENT_UBERALL_LSP: SYNC_REQUIREMENT_UBERALL_LSP specifically requires Uberall-based Listing Sync Pro\nThis directory is only available through Uberall, not Yext\n - SYNC_REQUIREMENT_LSP_OR_PRO_EDITION: SYNC_REQUIREMENT_LSP_OR_PRO_EDITION requires either Listing Sync Pro OR Local SEO Pro"
+      enum:
+      - SYNC_REQUIREMENT_UNSET
+      - SYNC_REQUIREMENT_LSP
+      - SYNC_REQUIREMENT_PRO_EDITION
+      - SYNC_REQUIREMENT_YEXT_LSP
+      - SYNC_REQUIREMENT_UBERALL_LSP
+      - SYNC_REQUIREMENT_LSP_OR_PRO_EDITION
+      type: string
+    v1GetListingSourceByIdResponse:
+      description: Contains comprehensive directory configuration and constraints for a single listing source.
+      properties:
+        source:
+          $ref: '#/components/schemas/v1Source'
+      title: GetListingSourceByIdResponse
+      type: object
+    v1PartnerOverride:
+      properties:
+        adminNotes:
+          type: string
+        claimListingHtml:
+          type: string
+        createListingHtml:
+          type: string
+        descriptionHtml:
+          type: string
+        editListingHtml:
+          type: string
+        editListingUrl:
+          type: string
+        iconClass16px:
+          type: string
+        iconClass32px:
+          type: string
+        iconClass50px:
+          type: string
+        iconUrl16px:
+          type: string
+        iconUrl32px:
+          type: string
+        iconUrl50px:
+          type: string
+        name:
+          type: string
+      title: Partner specific source overrides
+      type: object
+    v1GetListingSourceByIdRequest:
+      description: Request to retrieve detailed configuration for a specific listing directory by its numeric ID.
+      properties:
+        fieldMask:
+          $ref: '#/components/schemas/vendastatypesFieldMask'
+        sourceId:
+          description: 'Required. The numeric ID of the directory (e.g., 1 = Google, 2 = Facebook, etc.).
+
+            You can get this ID from the source_id field in GetSyncDataResponse.'
+          format: int64
+          type: string
+      required:
+      - sourceId
+      title: GetListingSourceByIdRequest
+      type: object
+    vendastatypesFieldMask:
+      description: "paths: \"f.a\"\n    paths: \"f.b.d\"\n\nHere `f` represents a field in some root message, `a` and `b`\nfields in the message found in `f`, and `d` a field found in the\nmessage in `f.b`.\n\nField masks are used to specify a subset of fields that should be\nreturned by a get operation or modified by an update operation.\nField masks also have a custom JSON encoding (see below).\n\n# Field Masks in Projections\n\nWhen used in the context of a projection, a response message or\nsub-message is filtered by the API to only contain those fields as\nspecified in the mask. For example, if the mask in the previous\nexample is applied to a response message as follows:\n\n    f {\n      a : 22\n      b {\n        d : 1\n        x : 2\n      }\n      y : 13\n    }\n    z: 8\n\nThe result will not contain specific values for fields x,y and z\n(their value will be set to the default, and omitted in proto text\noutput):\n\n\n    f {\n      a : 22\n      b {\n        d : 1\n      }\n    }\n\nA repeated field is not allowed except at the last position of a\npaths string.\n\nIf a FieldMask object is not present in a get operation, the\noperation applies to all fields (as if a FieldMask of all fields\nhad been specified).\n\nNote that a field mask does not necessarily apply to the\ntop-level response message. In case of a REST get operation, the\nfield mask applies directly to the response, but in case of a REST\nlist operation, the mask instead applies to each individual message\nin the returned resource list. In case of a REST custom method,\nother definitions may be used. Where the mask applies will be\nclearly documented together with its declaration in the API.  In\nany case, the effect on the returned resource/resources is required\nbehavior for APIs.\n\n# Field Masks in Update Operations\n\nA field mask in update operations specifies which fields of the\ntargeted resource are going to be updated. The API is required\nto only change the values of the fields as specified in the mask\nand leave the others untouched. If a resource is passed in to\ndescribe the updated values, the API ignores the values of all\nfields not covered by the mask.\n\nIf a repeated field is specified for an update operation, the existing\nrepeated values in the target resource will be overwritten by the new values.\nNote that a repeated field is only allowed in the last position of a `paths`\nstring.\n\nIf a sub-message is specified in the last position of the field mask for an\nupdate operation, then the existing sub-message in the target resource is\noverwritten. Given the target message:\n\n    f {\n      b {\n        d : 1\n        x : 2\n      }\n      c : 1\n    }\n\nAnd an update message:\n\n    f {\n      b {\n        d : 10\n      }\n    }\n\nthen if the field mask is:\n\n paths: \"f.b\"\n\nthen the result will be:\n\n    f {\n      b {\n        d : 10\n      }\n      c : 1\n    }\n\nHowever, if the update mask was:\n\n paths: \"f.b.d\"\n\nthen the result would be:\n\n    f {\n      b {\n        d : 10\n        x : 2\n      }\n      c : 1\n    }\n\nIn order to reset a field's value to the default, the field must\nbe in the mask and set to the default value in the provided resource.\nHence, in order to reset all fields of a resource, provide a default\ninstance of the resource and set all fields in the mask, or do\nnot provide a mask as described below.\n\nIf a field mask is not present on update, the operation applies to\nall fields (as if a field mask of all fields has been specified).\nNote that in the presence of schema evolution, this may mean that\nfields the client does not know and has therefore not filled into\nthe request will be reset to their default. If this is unwanted\nbehavior, a specific service may require a client to always specify\na field mask, producing an error if not.\n\nAs with get operations, the location of the resource which\ndescribes the updated values in the request message depends on the\noperation kind. In any case, the effect of the field mask is\nrequired to be honored by the API.\n\n## Considerations for HTTP REST\n\nThe HTTP kind of an update operation which uses a field mask must\nbe set to PATCH instead of PUT in order to satisfy HTTP semantics\n(PUT must only be used for full updates).\n\n# JSON Encoding of Field Masks\n\nIn JSON, a field mask is encoded as a single string where paths are\nseparated by a comma. Fields name in each path are converted\nto/from lower-camel naming conventions.\n\nAs an example, consider the following message declarations:\n\n    message Profile {\n      User user = 1;\n      Photo photo = 2;\n    }\n    message User {\n      string display_name = 1;\n      string address = 2;\n    }\n\nIn proto a field mask for `Profile` may look as such:\n\n    mask {\n      paths: \"user.display_name\"\n      paths: \"photo\"\n    }\n\nIn JSON, the same mask is represented as below:\n\n    {\n      mask: \"user.displayName,photo\"\n    }\n\n# Field Masks and Oneof Fields\n\nField masks treat fields in oneofs just as regular fields. Consider the\nfollowing message:\n\n    message SampleMessage {\n      oneof test_oneof {\n        string name = 4;\n        SubMessage sub_message = 9;\n      }\n    }\n\nThe field mask can be:\n\n    mask {\n      paths: \"name\"\n    }\n\nOr:\n\n    mask {\n      paths: \"sub_message\"\n    }\n\nNote that oneof type names (\"test_oneof\" in this case) cannot be used in\npaths."
+      properties:
+        paths:
+          description: The set of field mask paths.
+          items:
+            type: string
+          type: array
+      title: '`FieldMask` represents a set of symbolic field paths, for example:'
+      type: object
+    v1GetListingSourcesResponse:
+      description: Contains a map of all listing sources keyed by source ID.
+      properties:
+        fieldMask:
+          $ref: '#/components/schemas/vendastatypesFieldMask'
+        sources:
+          additionalProperties:
+            $ref: '#/components/schemas/v1Source'
+          description: Output only. Map of source_id to directory configuration.
+          readOnly: true
+          type: object
+      title: GetListingSourcesResponse
+      type: object
+    v1Provider:
+      default: PROVIDER_UNSPECIFIED
+      description: "Provider indicates how listing data is synced to a directory.\nThis is critical for understanding the difference between managed (LSP) and manual (RM) listings.\n\n - PROVIDER_UNSPECIFIED: PROVIDER_UNSPECIFIED means manual submission via Reputation Management (RM).\nThese listings must be manually created and updated by the user.\nThey do NOT automatically sync when the business profile changes.\n - PROVIDER_UBERALL: PROVIDER_UBERALL means synced automatically via Uberall (LSP provider for European/international directories).\nRequires active Listing Sync Pro subscription with Uberall.\n - PROVIDER_YEXT: PROVIDER_YEXT means synced automatically via Yext (LSP provider for North American directories).\nRequires active Listing Sync Pro subscription with Yext.\n - PROVIDER_DIRECT: PROVIDER_DIRECT means synced directly via OAuth (Google, Facebook, Apple, Bing).\nNo LSP subscription required - user just needs to connect their account."
+      enum:
+      - PROVIDER_UNSPECIFIED
+      - PROVIDER_UBERALL
+      - PROVIDER_YEXT
+      - PROVIDER_DIRECT
+      type: string
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1GetListingSourcesRequest:
+      description: Request to fetch all listing sources, optionally filtered by provider.
+      properties:
+        fieldMask:
+          $ref: '#/components/schemas/vendastatypesFieldMask'
+        provider:
+          $ref: '#/components/schemas/v1Provider'
+      title: GetListingSourcesRequest
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            admin: Allows the application to perform administrative tasks that you have access to across the platform
+            business-app: Allows the application to manage all features of Business App
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

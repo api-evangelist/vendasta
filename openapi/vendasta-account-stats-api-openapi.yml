@@ -1,0 +1,287 @@
+openapi: 3.2.0
+info:
+  title: Advertising Intelligence REST Account Stats API
+  version: '1.0'
+  description: ''
+servers:
+- url: https://prod.apigateway.co/products/advertising
+  description: Production
+- url: https://demo.apigateway.co/products/advertising
+  description: Demo
+- url: '{local}/products/advertising'
+  description: Local
+- url: http://localhost:11001/products/advertising
+  description: Localhost
+tags:
+- name: Account Stats
+paths:
+  /accountStats:
+    parameters: []
+    get:
+      summary: List Account Stats
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    data: []
+                    links:
+                      self: ''
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/accountStats'
+                  links:
+                    type: object
+                    required:
+                    - self
+                    properties:
+                      self:
+                        type: string
+                      next:
+                        type: string
+                required:
+                - data
+                - links
+              examples: {}
+      operationId: get-accountStats
+      description: Retrieve stats for all connected advertising accounts for a given business location.
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/startAt'
+      - $ref: '#/components/parameters/endAt'
+      - $ref: '#/components/parameters/businessLocation.id'
+      - $ref: '#/components/parameters/provider'
+      - $ref: '#/components/parameters/connectedAccount.resourceId'
+      - $ref: '#/components/parameters/pageLimit'
+      - $ref: '#/components/parameters/pageCursor'
+      security:
+      - OAuth2Demo:
+        - advertising
+      - OAuth2Prod:
+        - advertising
+      x-lifecycle:
+        status: trustedTester
+      tags:
+      - Account Stats
+  /accountStats/{id}:
+    parameters:
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+      description: Resource ID of a Connected Advertising Account
+    get:
+      summary: Get Account Stats for one Connected Account
+      responses:
+        '200':
+          description: OK
+          content:
+            application/vnd.api+json:
+              schema:
+                description: ''
+                type: object
+                x-examples:
+                  example-1:
+                    data: []
+                    links:
+                      self: ''
+                properties:
+                  data:
+                    $ref: '#/components/schemas/accountStats'
+                  links:
+                    type: object
+                    required:
+                    - self
+                    properties:
+                      self:
+                        type: string
+                required:
+                - data
+                - links
+              examples: {}
+        '404':
+          description: Connected Account Not Found
+      operationId: get-accountStats-id
+      description: Retrieve account stats for one connected advertising account
+      parameters:
+      - $ref: '#/components/parameters/Authorization'
+      - $ref: '#/components/parameters/startAt'
+      - $ref: '#/components/parameters/endAt'
+      security:
+      - OAuth2Demo:
+        - advertising
+      - OAuth2Prod:
+        - advertising
+      x-lifecycle:
+        status: trustedTester
+      tags:
+      - Account Stats
+components:
+  parameters:
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^Bearer\s\S+
+        example: Bearer <access token>
+      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+    businessLocation.id:
+      name: filter[businessLocation.id]
+      in: query
+      schema:
+        type: string
+        example: AG-HDABCKDEFR
+        uniqueItems: true
+        minItems: 0
+      description: A single Business Location ID
+      allowEmptyValue: true
+      required: true
+    pageLimit:
+      name: page[limit]
+      in: query
+      required: false
+      schema:
+        type: number
+        maximum: 100
+        minimum: 1
+        default: 25
+      description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    endAt:
+      name: endAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data from before the specified end date and time. If not specified all data will be returned.
+    pageCursor:
+      name: page[cursor]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    provider:
+      name: filter[provider]
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - google
+        - facebook
+        - localads
+      description: Comma separated list of Advertising Providers
+    connectedAccount.resourceId:
+      name: filter[connectedAccount.id]
+      in: query
+      schema:
+        type: string
+        example: AG-AHFJEHD:google:1324354657
+        uniqueItems: true
+      description: Comma separated list of Resource IDs of Connected Advertising Accounts
+      allowEmptyValue: true
+    startAt:
+      name: startAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        default: '1970-01-01T00:00:01Z'
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data starting from the specified start date and time
+  schemas:
+    accountStats:
+      title: Account Stats
+      type: object
+      x-examples: {}
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Total Stats for a connected Advertising Account'
+      x-lifecycle:
+        status: trustedTester
+      x-tags:
+      - Account Stats
+      properties:
+        id:
+          type: string
+          description: The resource ID of the Connected Advertising Account
+          example: AG-HDV4JKPXFR:google:7531238654
+        type:
+          type: string
+          description: accountStats
+          default: accountStats
+          enum:
+          - accountStats
+        attributes:
+          type: object
+          properties:
+            impressions:
+              type: integer
+              description: Number of times ads under this account were viewed
+            clicks:
+              type: integer
+              description: Number of times ads under this account were clicked
+            conversions:
+              type: integer
+              description: Total number of conversions from campaigns under this account
+            costMicros:
+              type: integer
+              description: Total account spend denoted in millionths of a dollar
+            averageCostPerClickMicros:
+              type: integer
+              description: Average cost per click denoted in millionths of a dollar
+            clickThroughRate:
+              type: number
+              description: Rate of the number of clicks per number of impressions
+            currencyCode:
+              type: string
+              description: The 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+              minLength: 3
+              maxLength: 3
+            provider:
+              type: string
+              enum:
+              - google
+              - facebook
+              - localads
+              description: Advertising Provider
+      required:
+      - id
+      - type
+      - attributes
+  securitySchemes:
+    JWT:
+      type: http
+      scheme: bearer
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            advertising: Access to the Advertising Intelligence REST API
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          refreshUrl: ''
+          scopes:
+            advertising: Access to the Advertising Intelligence REST API

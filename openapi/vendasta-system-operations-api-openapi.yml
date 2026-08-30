@@ -1,0 +1,725 @@
+openapi: 3.2.0
+info:
+  title: SCIM 2.0 User Management System Operations API
+  description: "System for Cross-domain Identity Management (SCIM) is designed to make managing user identities in cloud-based applications and services easier. It is an [open specification](https://www.simplecloud.info/) that is supported by many user management tools. \n\nThese pages document the specifics of Vendasta's implementation for partners who want to manage users in their own system and them push the changes to the Vendasta platform."
+  version: 1.0.0
+servers:
+- url: https://prod.apigateway.co/scim
+  description: Production
+- url: https://demo.apigateway.co/scim
+  description: Demo
+- url: http://localhost:11001/scim
+  description: Local
+- url: '{local}/scim'
+  description: Localhost
+security:
+- OAuth2Demo:
+  - user.admin
+- OAuth2Prod:
+  - user.admin
+tags:
+- name: System Operations
+  description: System Operations
+paths:
+  /{namespace}/ResourceTypes:
+    parameters:
+    - $ref: '#/components/parameters/namespace'
+    get:
+      summary: List Resource Types
+      tags:
+      - System Operations
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/scim+json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/MessageListResponse'
+                - type: object
+                  properties:
+                    Resources:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/ResourceResourceType'
+        default:
+          $ref: '#/components/responses/error'
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/attributes'
+      - $ref: '#/components/parameters/excludedAttributes'
+      operationId: get-namespace-ResourceTypes
+      x-lifecycle:
+        status: proposed
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`
+
+
+        Returns a list of the resource types that the server suppports. Example "Groups", "Users", "Contacts"'
+  /{namespace}/ResourceTypes/{id}:
+    parameters:
+    - name: namespace
+      in: path
+      required: true
+      schema:
+        type: string
+        example: VUNI
+      description: Currently this must be the id of the partner that you wish to manage users for. In the future we plan to support other types of namespaces such as marketplace apps
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Resource Type
+      tags:
+      - System Operations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ResourceResourceType'
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+        default:
+          $ref: '#/components/responses/error'
+      operationId: get-ResourceTypes-id
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      x-lifecycle:
+        status: proposed
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`
+
+
+        Returns a list of the resource types that the server suppports. Example "Groups", "Users", "Contacts"'
+  /{namespace}/Schemas:
+    parameters:
+    - $ref: '#/components/parameters/namespace'
+    get:
+      summary: List Schemas
+      tags:
+      - System Operations
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/scim+json:
+              schema:
+                allOf:
+                - $ref: '#/components/schemas/MessageListResponse'
+                - type: object
+                  properties:
+                    Resources:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/ResourceSchema'
+        default:
+          $ref: '#/components/responses/error'
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/attributes'
+      - $ref: '#/components/parameters/excludedAttributes'
+      operationId: get-namespace-Schemas
+      x-lifecycle:
+        status: proposed
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`
+
+
+        Lists the data schemas that may be used by the resource types'
+  /{namespace}/Schemas/{id}:
+    parameters:
+    - name: namespace
+      in: path
+      required: true
+      schema:
+        type: string
+        example: VUNI
+      description: Currently this must be the id of the partner that you wish to manage users for. In the future we plan to support other types of namespaces such as marketplace apps
+    - schema:
+        type: string
+      name: id
+      in: path
+      required: true
+    get:
+      summary: Get Schema
+      tags:
+      - System Operations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/scim+json:
+              schema:
+                $ref: '#/components/schemas/ResourceSchema'
+          headers:
+            Location:
+              $ref: '#/components/headers/Location'
+            Content-Type:
+              $ref: '#/components/headers/Content-Type'
+        default:
+          $ref: '#/components/responses/error'
+      operationId: get-Schemas-id
+      x-lifecycle:
+        status: proposed
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`
+
+
+        Lists the data schemas that may be used by the resource types'
+  /{namespace}/ServiceProviderConfig:
+    parameters:
+    - $ref: '#/components/parameters/namespace'
+    get:
+      summary: Get Service Provider Config
+      tags:
+      - System Operations
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SchemaServiceProviderConfig'
+      operationId: get-ServiceProviderConfig
+      parameters:
+      - $ref: '#/components/parameters/Accept'
+      - $ref: '#/components/parameters/attributes'
+      - $ref: '#/components/parameters/excludedAttributes'
+      x-lifecycle:
+        status: proposed
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`
+
+
+        Provides details on the SCIM features supported by the Vendasta platform'
+  /{namespace}/Bulk:
+    parameters:
+    - $ref: '#/components/parameters/namespace'
+    get:
+      summary: Bulk Actions
+      tags:
+      - System Operations
+      responses:
+        '501':
+          $ref: '#/components/responses/error'
+      operationId: get-namespace-Bulk
+      x-lifecycle:
+        status: removed
+      description: 'Status: `Not planned`
+
+
+
+        The SCIM standard defines an optional `/Bulk` endpoint for performing multiple operations at the same time. The Vendasta platform does not currently support it.'
+components:
+  schemas:
+    ResourceSchema:
+      title: schema:core:2.0:Schema
+      x-stoplight:
+        id: unazswsqjjclk
+      type: object
+      description: "This section defines a way to specify the schema in use by resources\n   available and accepted by a SCIM service provider.  For each\n   \"schemas\" URI value, this schema specifies the defined attribute(s)\n   and their characteristics (mutability, returnability, etc).  For\n   every schema URI used in a resource object, there is a corresponding\n   \"Schema\" resource.  \"Schema\" resources are not modifiable, and their\n   associated attributes have a mutability of \"readOnly\".  Except for\n   \"id\" (which is always returned), all attributes have a \"returned\"\n   characteristic of \"default\".  Unless otherwise specified, all schema\n   attributes are case insensitive.  These resources have a \"schemas\"\n   attribute with the following schema URI:\n\n   urn:ietf:params:scim:schemas:core:2.0:Schema\n\n   Unlike other core resources, the \"Schema\" resource MAY contain a\n   complex object within a sub-attribute, and all attributes are\n   REQUIRED unless otherwise specified."
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+            default: urn:ietf:params:scim:schemas:core:2.0:Schema
+            enum:
+            - urn:ietf:params:scim:schemas:core:2.0:Schema
+        id:
+          type: string
+          description: "The unique URI of the schema.  When applicable, service providers\n      MUST specify the URI, e.g.,\n      \"urn:ietf:params:scim:schemas:core:2.0:User\".  Unlike most other\n      schemas, which use some sort of Globally Unique Identifier (GUID)\n      for the \"id\", the schema \"id\" is a URI so that it can be\n      registered and is portable between different service providers and\n      clients.  REQUIRED."
+        name:
+          type: string
+          description: "The schema's human-readable name.  When applicable, service\n      providers MUST specify the name, e.g., \"User\" or \"Group\".\n      OPTIONAL."
+        description:
+          type: string
+          description: "The schema's human-readable description.  When applicable, service\n      providers MUST specify the description.  OPTIONAL."
+        attributes:
+          type: array
+          description: "A complex type that defines service provider attributes and their\n      qualities"
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: 'The attribute''s name.
+
+                  '
+              type:
+                type: string
+                description: "The attribute's data type.  Valid values are \"string\",\n         \"boolean\", \"decimal\", \"integer\", \"dateTime\", \"reference\", and\n         \"complex\".  When an attribute is of type \"complex\", there\n         SHOULD be a corresponding schema attribute \"subAttributes\"\n         defined, listing the sub-attributes of the attribute."
+              subAttributes:
+                type: array
+                description: "When an attribute is of type \"complex\",\n         \"subAttributes\" defines a set of sub-attributes.\n         \"subAttributes\" has the same schema sub-attributes as\n         \"attributes\"."
+                items:
+                  type: object
+              multiValued:
+                type: boolean
+                description: A Boolean value indicating the attribute's plurality.
+              description:
+                type: string
+                description: "The attribute's human-readable description.  When\n         applicable, service providers MUST specify the description."
+              required:
+                type: boolean
+                description: "A Boolean value that specifies whether or not the\n         attribute is required."
+              canonicalValues:
+                type: array
+                description: "A collection of suggested canonical values that\n         MAY be used (e.g., \"work\" and \"home\").  In some cases, service\n         providers MAY choose to ignore unsupported values.  OPTIONAL."
+                items: {}
+              caseExact:
+                type: boolean
+                description: "A Boolean value that specifies whether or not a string\n         attribute is case sensitive.  The server SHALL use case\n         sensitivity when evaluating filters.  For attributes that are\n         case exact, the server SHALL preserve case for any value\n         submitted.  If the attribute is case insensitive, the server\n         MAY alter case for a submitted value.  Case sensitivity also\n         impacts how attribute values MAY be compared against filter\n         values (see Section 3.4.2.2 of [RFC7644])."
+              mutability:
+                type: string
+                description: "A single keyword indicating the circumstances under\nwhich the value of the attribute can be (re)defined:\n\n`readOnly` - The attribute SHALL NOT be modified.\n\n`readWrite` - The attribute MAY be updated and read at any time.\n  This is the default value.\n\n`immutable` - The attribute MAY be defined at resource creation\n  (e.g., POST) or at record replacement via a request (e.g., a\n  PUT).  The attribute SHALL NOT be updated.\n\n`writeOnly` - The attribute MAY be updated at any time.  Attribute\n  values SHALL NOT be returned (e.g., because the value is a\n  stored hash).  Note: An attribute with a mutability of\n  \"writeOnly\" usually also has a returned setting of \"never\"."
+              returned:
+                type: string
+                description: "A single keyword that indicates when an attribute and\nassociated values are returned in response to a GET request or\nin response to a PUT, POST, or PATCH request.  Valid keywords\nare as follows:\n\n`always` - The attribute is always returned, regardless of the\n    contents of the \"attributes\" parameter.  For example, \"id\"\n    is always returned to identify a SCIM resource.\n\n`never` - The attribute is never returned.  This may occur because\n    the original attribute value (e.g., a hashed value) is not\n    retained by the service provider.  A service provider MAY\n    allow attributes to be used in a search filter.\n\n`default` - The attribute is returned by default in all SCIM\n    operation responses where attribute values are returned.  If\n    the GET request \"attributes\" parameter is specified,\n    attribute values are only returned if the attribute is named\n    in the \"attributes\" parameter.  DEFAULT.\n\n`request` - The attribute is returned in response to any PUT,\n    POST, or PATCH operations if the attribute was specified by\n    the client (for example, the attribute was modified).  The\n    attribute is returned in a SCIM query operation only if\n    specified in the \"attributes\" parameter."
+              uniqueness:
+                type: string
+                description: "A single keyword value that specifies how the service\nprovider enforces uniqueness of attribute values.  A server MAY\nreject an invalid value based on uniqueness by returning HTTP\nresponse code 400 (Bad Request).  A client MAY enforce\nuniqueness on the client side to a greater degree than the\nservice provider enforces.  For example, a client could make a\nvalue unique while the server has uniqueness of \"none\".  Valid\nkeywords are as follows:\n\n`none` ` The values are not intended to be unique in any way.\n    DEFAULT.\n\n`server` - The value SHOULD be unique within the context of the\n    current SCIM endpoint (or tenancy) and MAY be globally\n    unique (e.g., a \"username\", email address, or other\n    server-generated key or counter).  No two resources on the\n    same server SHOULD possess the same value.\n\n`global` - The value SHOULD be globally unique (e.g., an email\n    address, a GUID, or other value).  No two resources on any\n    server SHOULD possess the same value."
+              referenceTypes:
+                type: array
+                items:
+                  type: string
+                description: "A multi-valued array of JSON strings that indicate\nthe SCIM resource types that may be referenced.  Valid values\nare as follows:\n- A SCIM resource type (e.g., \"User\" or \"Group\"),\n-  \"external\" - indicating that the resource is an external\n    resource (e.g., a photo), or\n\n-  \"uri\" - indicating that the reference is to a service\n    endpoint or an identifier (e.g., a schema URN).\n\nThis attribute is only applicable for attributes that are of\ntype \"reference\" (Section 2.3.7)."
+      required:
+      - schemas
+      - id
+    SchemaServiceProviderConfig:
+      type: object
+      x-examples:
+        Example 1:
+          schemas:
+          - urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig
+          documentationUri: http://example.com/help/scim.html
+          patch:
+            supported: true
+          bulk:
+            supported: true
+            maxOperations: 1000
+            maxPayloadSize: 1048576
+          filter:
+            supported: true
+            maxResults: 200
+          changePassword:
+            supported: true
+          sort:
+            supported: true
+          etag:
+            supported: true
+          authenticationSchemes:
+          - name: OAuth Bearer Token
+            description: Authentication scheme using the OAuth Bearer Token Standard
+            specUri: http://www.rfc-editor.org/info/rfc6750
+            documentationUri: http://example.com/help/oauth.html
+            type: oauthbearertoken
+            primary: true
+          - name: HTTP Basic
+            description: Authentication scheme using the HTTP Basic Standard
+            specUri: http://www.rfc-editor.org/info/rfc2617
+            documentationUri: http://example.com/help/httpBasic.html
+            type: httpbasic
+          meta:
+            location: https://example.com/v2/ServiceProviderConfig
+            resourceType: ServiceProviderConfig
+            created: '2010-01-23T04:56:22Z'
+            lastModified: '2011-05-13T04:42:34Z'
+            version: W/"3694e05e9dff594"
+      description: "SCIM provides a schema for representing the service provider's\n   configuration, identified using the following schema URI:\n   \"urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig\".\n\n   The service provider configuration resource enables a service\n   provider to discover SCIM specification features in a standardized\n   form as well as provide additional implementation details to clients.\n   All attributes have a mutability of \"readOnly\".  Unlike other core\n   resources, the \"id\" attribute is not required for the service\n   provider configuration resource."
+      title: schemas:core:2.0:ServiceProviderConfig
+      properties:
+        schemas:
+          type: array
+          description: "An HTTP-addressable URL pointing to the service provider's\n      human-consumable help documentation.  OPTIONAL."
+          items:
+            type: string
+            default: urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig
+            enum:
+            - urn:ietf:params:scim:schemas:core:2.0:ServiceProviderConfig
+        documentationUri:
+          type: string
+        patch:
+          type: object
+          required:
+          - supported
+          properties:
+            supported:
+              type: boolean
+              description: A Boolean value specifying whether or not the operation is supported.  REQUIRED.
+        bulk:
+          type: object
+          required:
+          - supported
+          - maxOperations
+          - maxPayloadSize
+          properties:
+            supported:
+              type: boolean
+              description: "A Boolean value specifying whether or not the operation\n         is supported"
+            maxOperations:
+              type: integer
+              description: "An integer value specifying the maximum number of\n         operations.  REQUIRED."
+            maxPayloadSize:
+              type: integer
+              description: "An integer value specifying the maximum payload\n         size in bytes.  REQUIRED."
+        filter:
+          type: object
+          required:
+          - supported
+          - maxResults
+          properties:
+            supported:
+              type: boolean
+            maxResults:
+              type: integer
+        changePassword:
+          type: object
+          required:
+          - supported
+          properties:
+            supported:
+              type: boolean
+        sort:
+          type: object
+          required:
+          - supported
+          properties:
+            supported:
+              type: boolean
+        etag:
+          type: object
+          required:
+          - supported
+          properties:
+            supported:
+              type: boolean
+        authenticationSchemes:
+          type: array
+          description: "specifies supported\n      authentication scheme properties.  To enable seamless discovery of\n      configurations, the service provider SHOULD, with the appropriate\n      security considerations, make the authenticationSchemes attribute\n      publicly accessible without prior authentication.  REQUIRED."
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+                description: "The authentication scheme.  This specification defines the\n         values \"oauth\", \"oauth2\", \"oauthbearertoken\", \"httpbasic\", and\n         \"httpdigest\".  REQUIRED."
+                enum:
+                - oauth
+                - oauth2
+                - oauthbearertoken
+                - httpbasic
+                - httpdigest
+              name:
+                type: string
+                description: "The common authentication scheme name, e.g., HTTP Basic.\n         REQUIRED."
+              description:
+                type: string
+                description: "A description of the authentication scheme.\n         REQUIRED."
+              specUri:
+                type: string
+                description: An HTTP-addressable URL pointing to the authentication       scheme's specification.  OPTIONAL.
+              documentationUri:
+                type: string
+                description: "An HTTP-addressable URL pointing to the\n         authentication scheme's usage documentation.  OPTIONAL."
+              primary:
+                type: boolean
+            required:
+            - type
+            - name
+            - description
+        meta:
+          type: object
+          properties:
+            location:
+              type: string
+            resourceType:
+              type: string
+            created:
+              type: string
+            lastModified:
+              type: string
+            version:
+              type: string
+      required:
+      - schemas
+      - patch
+      - bulk
+      - filter
+      - changePassword
+      - sort
+      - etag
+      - authenticationSchemes
+    MessageError:
+      title: api:messages:2.0:Error
+      x-stoplight:
+        id: zon0d9si6ldkw
+      type: object
+      properties:
+        schemas:
+          type: array
+          description: Documents that the error response contains the core error message attributes
+          items:
+            type: string
+            enum:
+            - urn:ietf:params:scim:api:messages:2.0:Error
+            default: urn:ietf:params:scim:api:messages:2.0:Error
+        status:
+          type: string
+          description: 'The HTTP status code that represents the error.
+
+
+            | Status                      | Applicability                 | Suggested Explanation                                                                                                                                                                                                                                       |
+
+            |-----------------------------|-------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+
+            | 307 (Temporary Redirect)    | GET, POST, PUT, PATCH, DELETE | The client is directed to repeat the same HTTP request at the location identified.  The client SHOULD NOT use the location provided in the response as a permanent reference to the resource and SHOULD continue to use the original request URI [RFC7231]. |
+
+            | 308 (Permanent Redirect)    | GET, POST, PUT, PATCH, DELETE | The client is directed to repeat the same HTTP request at the location identified.  The client SHOULD use the location provided in the response as the permanent reference to the resource [RFC7538].                                                       |
+
+            | 400 (Bad Request)           | GET, POST, PUT, PATCH, DELETE | Request is unparsable, syntactically incorrect, or violates schema.                                                                                                                                                                                         |
+
+            | 401 (Unauthorized)          | GET, POST, PUT, PATCH, DELETE | Authorization failure.  The authorization header is invalid or missing.                                                                                                                                                                                     |
+
+            | 403 (Forbidden)             | GET, POST, PUT, PATCH, DELETE | Operation is not permitted based on the supplied authorization.                                                                                                                                                                                             |
+
+            | 404 (Not Found)             | GET, POST, PUT, PATCH, DELETE | Specified resource (e.g., User) or endpoint does not exist.                                                                                                                                                                                                 |
+
+            | 409 (Conflict)              | POST, PUT, PATCH, DELETE      | The specified version number does not match the resource''s latest version number, or a service provider refused to create a new, duplicate resource.                                                                                                        |
+
+            | 412 (Precondition Failed)   | PUT, PATCH, DELETE            | Failed to update.  Resource has changed on the server.                                                                                                                                                                                                      |
+
+            | 413 (Payload Too Large)     | POST                          | {"maxOperations": 1000,"maxPayloadSize": 1048576}                                                                                                                                                                                                           |
+
+            | 500 (Internal Server Error) | GET, POST, PUT, PATCH, DELETE | An internal error.  Implementers SHOULD provide descriptive debugging advice.                                                                                                                                                                               |
+
+            | 501 (Not Implemented)       | GET, POST, PUT, PATCH, DELETE | Service provider does not support the request operation, e.g., PATCH.                                                                                                                                                                                       |'
+          pattern: ^[2-5][0-9][0-9]$
+          example: '400'
+        scimType:
+          type: string
+          description: 'The status field is used to documment a more specific error category than the HTTP status codes support. For status code 400 there is a list of predefined options. Implementations may add additional ones.
+
+
+            | scimType             | Description                                                                                                                                                                                                                                             | Applicability                                                                                     |   |   |
+
+            |----------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------|---|---|
+
+            | invalidFilter        | The specified filter syntax was invalid (does not comply with Figure 1), or the specified attribute and filter comparison combination is not supported.                                                                                                 | GET (Section 3.4.2), POST (Search - Section 3.4.3), PATCH (Path Filter - Section 3.5.2)           |   |   |
+
+            | tooMany              | The specified filter yields many more results than the server is willing to calculate or process.  For example a filter such as "(userName pr)" by itself would return all entries with a "userName" and MAY not be acceptable to the service provider. | GET (Section 3.4.2), POST (Search - Section 3.4.3)                                                |   |   |
+
+            | uniqueness           | One or more of the attribute values are already in use or are reserved.                                                                                                                                                                                 | POST (Create - Section 3.3), PUT (Section 3.5.1), PATCH (Section 3.5.2)                           |   |   |
+
+            | mutability           | The attempted modification is not compatible with the target attribute''s mutability or current state (e.g. modification of an "immutable" attribute with an existing value).                                                                            | PUT (Section 3.5.1), PATCH (Section 3.5.2)                                                        |   |   |
+
+            | invalidSyntax        | The request body message structure was invalid or did not conform to the request schema.                                                                                                                                                                | POST (Search - Section 3.4.3, Create - Section 3.3, Bulk - Section 3.7), PUT (Section 3.5.1)      |   |   |
+
+            | invalidPath noTarget | The `path` attribute was invalid or malformed (see Figure 7).                                                                                                                                                                                           | PATCH (Section 3.5.2)                                                                             |   |   |
+
+            | noTarget             | The specified "path" did not yield an attribute or attribute value that could be operated on.  This occurs when the specified "path" value contains a filter that yields no match.                                                                      | PATCH (Section 3.5.2)                                                                             |   |   |
+
+            | invalidValue         | A required value was missing, or the value specified was not compatible with the operation or attribute type (see Section 2.2 of [RFC7643]), or resource schema (see Section 4 of [RFC7643]).                                                           | GET (Section 3.4.2), POST (Create - Section 3.3, PATCH (Section 3.5.2)                            |   |   |
+
+            | invalidVers          | The specified SCIM protocol version is not supported (see Section 3.13).                                                                                                                                                                                | GET (Section 3.4.2), POST (ALL), PUT (Section 3.5.1), PATCH (Section 3.5.2), DELETE (Section 3.6) |   |   |
+
+            | sensitive            | The specified request cannot be completed, due to the passing of sensitive (e.g., personal) information in a request URI.  For example, personal information SHALL NOT be transmitted over request URIs.  See Section 7.5.2.                            | GET (Section 3.4.2)                                                                               |   |   |'
+          example: invalidFilter
+        detail:
+          type: string
+          description: A detailed human-readable message.  OPTIONAL.
+          example: Here is how you can fix your error
+      required:
+      - schemas
+      - status
+    MessageListResponse:
+      type: object
+      description: 'All seach requests should return a response with this format.
+
+
+        When not all resources matching the filter criteria can be returned due to paging
+
+        the next page can be obtained by adding the `startIndex` to the `itemsPerPage` to get the value to use as the new `startIndex` query param when making the next request.
+
+
+        Cursor based paging may be added in the future by following [draft-peterson-scim-cursor-pagination](https://datatracker.ietf.org/doc/draft-peterson-scim-cursor-pagination/).'
+      title: api:messages:2.0:ListResponse
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+            default: urn:ietf:params:scim:api:messages:2.0:ListResponse
+            enum:
+            - urn:ietf:params:scim:api:messages:2.0:ListResponse
+        Resources:
+          type: array
+          description: "A multi-valued list of complex objects containing the\n      requested resources.  This MAY be a subset of the full set of\n      resources if pagination (Section 3.4.2.4) is requested.  REQUIRED\n      if \"totalResults\" is non-zero."
+          items:
+            type: object
+        totalResults:
+          type: integer
+          description: "The total number of results returned by the list or\n      query operation.  The value may be larger than the number of\n      resources returned, such as when returning a single page (see\n      Section 3.4.2.4) of results where multiple pages are available.\n      REQUIRED."
+        startIndex:
+          type: integer
+          minimum: 1
+          description: "The 1-based index of the first result in the current set\n      of list results.  REQUIRED when partial results are returned due\n      to pagination."
+        itemsPerPage:
+          type: integer
+          description: "The number of resources returned in a list response\n      page.  REQUIRED when partial results are returned due to\n      pagination."
+      required:
+      - Resources
+      - totalResults
+      x-stoplight:
+        id: b11e844160d23
+    ResourceResourceType:
+      description: "The \"ResourceType\" schema specifies the metadata about a resource\n  type.  Resource type resources are READ-ONLY and identified using the\n  following schema URI:\n  \"urn:ietf:params:scim:schemas:core:2.0:ResourceType\".  Unlike other\n  core resources, all attributes are REQUIRED unless otherwise\n  specified.  The \"id\" attribute is not required for the resource type\n  resource.\n"
+      title: schemas:core:2.0:ResourceType
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+            default: urn:ietf:params:scim:schemas:core:2.0:ResourceType
+            enum:
+            - urn:ietf:params:scim:schemas:core:2.0:ResourceType
+        id:
+          type: string
+          description: "The resource type's server unique id.  This is often the same\n      value as the \"name\" attribute.  OPTIONAL."
+        name:
+          type: string
+          description: "The resource type name.  When applicable, service providers MUST\n      specify the name, e.g., \"User\" or \"Group\".  This name is\n      referenced by the \"meta.resourceType\" attribute in all resources.\n      REQUIRED."
+        description:
+          type: string
+          description: "The resource type's human-readable description.  When applicable,\n      service providers MUST specify the description.  OPTIONAL."
+        endpoint:
+          type: string
+          description: "The resource type's HTTP-addressable endpoint relative to the Base\n      URL of the service provider, e.g., \"Users\".  REQUIRED."
+        schema:
+          type: string
+          description: "The resource type's primary/base schema URI, e.g.,\n      \"urn:ietf:params:scim:schemas:core:2.0:User\".  This MUST be equal\n      to the \"id\" attribute of the associated \"Schema\" resource.\n      REQUIRED."
+        schemaExtensions:
+          type: array
+          description: "A list of URIs of the resource type's schema extensions.\n      OPTIONAL."
+          items:
+            type: object
+            properties:
+              schema:
+                type: string
+                description: "The URI of an extended schema, e.g., \"urn:edu:2.0:Staff\".\n        This MUST be equal to the \"id\" attribute of a \"Schema\"\n        resource.  REQUIRED."
+              required:
+                type: boolean
+                description: "A Boolean value that specifies whether or not the schema\n        extension is required for the resource type.  If true, a\n        resource of this type MUST include this schema extension and\n        also include any attributes declared as required in this schema\n        extension.  If false, a resource of this type MAY omit this\n        schema extension.  REQUIRED."
+            required:
+            - schema
+            - required
+        meta:
+          type: object
+          properties:
+            location:
+              type: string
+            resourceType:
+              type: string
+              example: ResourceType
+      required:
+      - schemas
+      - name
+      - description
+      - endpoint
+      - schema
+  parameters:
+    Accept:
+      name: Accept
+      in: header
+      schema:
+        type: string
+        default: application/scim+json
+        enum:
+        - application/scim+json
+        - application/json
+        example: application/scim+json
+      description: Indicates that the response body contains content formated according to SCIM rules
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      schema:
+        type: string
+        example: VUNI
+      description: Currently this must be the id of the partner that you wish to manage users for. In the future we plan to support other types of namespaces such as marketplace apps
+    attributes:
+      name: attributes
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: "SCIM service providers MUST support both `attributes` and `excludedAttributes` query parameters. \nClients may optionally send either of them to control which attributes are returned in responses.\n\nWhen `attributes` is provided it overrides the default set.\n\nWhen `excludedAttributes` is provided the listed attributes shall be removed from the default set. \nThis parameter SHALL have no effect on attributes whose schema \"returned\" setting is \"always\".\n\nAttribute names MUST be in standard attribute notation (Section 3.10) form.  See\nrfc7644 Section 3.9 for additional retrieval query parameters."
+    excludedAttributes:
+      name: excludedAttributes
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: "SCIM service providers MUST support both `attributes` and `excludedAttributes` query parameters. \nClients may optionally send either of them to control which attributes are returned in responses.\n\nWhen `attributes` is provided it overrides the default set.\n\nWhen `excludedAttributes` is provided the listed attributes shall be removed from the default set. \nThis parameter SHALL have no effect on attributes whose schema \"returned\" setting is \"always\".\n\nAttribute names MUST be in standard attribute notation (Section 3.10) form.  See\nrfc7644 Section 3.9 for additional retrieval query parameters."
+  responses:
+    error:
+      description: https://www.rfc-editor.org/rfc/rfc7644#section-3.12 details the expected values along with some tables describing their usage.
+      headers:
+        Content-Type:
+          $ref: '#/components/headers/Content-Type'
+      content:
+        application/scim+json:
+          schema:
+            $ref: '#/components/schemas/MessageError'
+  headers:
+    Content-Type:
+      required: true
+      schema:
+        type: string
+        default: application/scim+json
+        enum:
+        - application/scim+json; charset=utf-8
+        - application/scim+json
+        - application/json
+        example: application/scim+json
+      description: Indicates that the response body contains content formated according to SCIM rules
+    Location:
+      required: true
+      schema:
+        type: string
+        format: uri
+        example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
+      description: 'The value in the Location header must exactly match the value in `meta.location`
+
+        It should identify the URI at which this resource may be retrieved from. In the case of the special "/Me" alais, it should return the actual User ID.'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: ''
+    OAuth2Demo:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-demo.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-demo.apigateway.co/oauth2/token
+          scopes:
+            user.admin: Read-write access to manage all users
+            user.profile:read: Read access to the profile fields of all categories of users
+    OAuth2Prod:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+          scopes:
+            user.admin: Read-write access to manage all users
+            user.profile:read: Read access to the profile fields of all categories of users

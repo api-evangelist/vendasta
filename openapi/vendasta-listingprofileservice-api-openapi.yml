@@ -1,0 +1,778 @@
+openapi: 3.2.0
+info:
+  title: Listing Products Listing Profile Service API
+  version: 1.210.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: ListingProfileService
+paths:
+  /v1/listing-products/keyword/update:
+    post:
+      operationId: ListingProfileService_Update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UpdateListingProfileRequest'
+        description: Applies one or more field-level changes to a business's listing profile. Changes are executed in order and then synced to connected directories.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - business-app
+      summary: Update Listing Profile
+      tags:
+      - ListingProfileService
+components:
+  schemas:
+    v1RichData:
+      properties:
+        bookingUrl:
+          type: string
+        brandsCarried:
+          items:
+            type: string
+          type: array
+        cellNumber:
+          type: string
+        conditionalFields:
+          items:
+            $ref: '#/components/schemas/v1ConditionalField'
+          type: array
+        description:
+          type: string
+        email:
+          type: string
+        faxNumber:
+          type: string
+        healthCareProfessionalInformation:
+          $ref: '#/components/schemas/v1HealthCareProfessionalInformation'
+        inferredAttributes:
+          items:
+            type: string
+          type: array
+        landmark:
+          type: string
+        paymentMethods:
+          items:
+            $ref: '#/components/schemas/RichDataPaymentMethods'
+          type: array
+        seoKeywords:
+          items:
+            type: string
+          type: array
+        serviceAvailability:
+          $ref: '#/components/schemas/v1ServiceAvailability'
+        servicesOffered:
+          items:
+            type: string
+          type: array
+        shortDescription:
+          type: string
+        syncingSeoKeywords:
+          items:
+            type: string
+          type: array
+        tollFreeNumber:
+          type: string
+      type: object
+    RichDataPaymentMethods:
+      default: AMERICAN_EXPRESS
+      enum:
+      - AMERICAN_EXPRESS
+      - ANDROID_PAY
+      - APPLE_PAY
+      - CASH
+      - CHECK
+      - DEBIT
+      - DINERS_CLUB
+      - DISCOVER
+      - MASTERCARD
+      - PAYPAL
+      - SAMSUNG_PAY
+      - STORE_CARD
+      - TRAVELERS_CHECK
+      - VISA
+      - CCS
+      - SODEXO
+      - GOPAY
+      - V_PAY
+      - FINANCING
+      - INVOICE
+      - PAYSEC
+      - BITCOIN
+      - NFC_MOBILE_PAYMENTS
+      type: string
+    v1SpecialHoursPeriod:
+      properties:
+        endDate:
+          $ref: '#/components/schemas/v1GoogleDate'
+        endTime:
+          $ref: '#/components/schemas/v1TimeOfDay'
+        startDate:
+          $ref: '#/components/schemas/v1GoogleDate'
+        startTime:
+          $ref: '#/components/schemas/v1TimeOfDay'
+        status:
+          $ref: '#/components/schemas/v1SpecialHoursStatus'
+      type: object
+    v1ServiceAvailability:
+      properties:
+        appointmentsOnly:
+          $ref: '#/components/schemas/v1IsAvailable'
+        closedStatus:
+          $ref: '#/components/schemas/v1ClosedStatus'
+        closedStatusDate:
+          format: date-time
+          type: string
+        curbsidePickup:
+          $ref: '#/components/schemas/v1IsAvailable'
+        delivery:
+          $ref: '#/components/schemas/v1IsAvailable'
+        ecommerceOnly:
+          $ref: '#/components/schemas/v1IsAvailable'
+        inStorePickup:
+          $ref: '#/components/schemas/v1IsAvailable'
+        noContactDelivery:
+          $ref: '#/components/schemas/v1IsAvailable'
+        reopeningDate:
+          format: date-time
+          type: string
+        servesDineIn:
+          $ref: '#/components/schemas/v1IsAvailable'
+      type: object
+    listing_productsv1Location:
+      properties:
+        address:
+          type: string
+        address2:
+          type: string
+        callTrackingNumber:
+          items:
+            type: string
+          type: array
+        city:
+          type: string
+        companyName:
+          type: string
+        country:
+          type: string
+        location:
+          $ref: '#/components/schemas/v1Geo'
+        primaryOperatingLanguage:
+          description: 'The primary BCP 47 language the business operates in (e.g. "en", "fr-ca").
+
+            Empty when unset. Consumers fall back to "en".'
+          type: string
+        serviceArea:
+          $ref: '#/components/schemas/v1ServiceArea'
+        serviceAreaBusiness:
+          type: boolean
+        state:
+          type: string
+        timezone:
+          type: string
+        website:
+          type: string
+        workNumber:
+          items:
+            type: string
+          type: array
+        zip:
+          type: string
+      type: object
+    v1DayOfWeek:
+      default: DAY_OF_WEEK_UNSPECIFIED
+      description: "Represents a day of the week.\n\n - DAY_OF_WEEK_UNSPECIFIED: The day of the week is unspecified.\n - MONDAY: Monday\n - TUESDAY: Tuesday\n - WEDNESDAY: Wednesday\n - THURSDAY: Thursday\n - FRIDAY: Friday\n - SATURDAY: Saturday\n - SUNDAY: Sunday"
+      enum:
+      - DAY_OF_WEEK_UNSPECIFIED
+      - MONDAY
+      - TUESDAY
+      - WEDNESDAY
+      - THURSDAY
+      - FRIDAY
+      - SATURDAY
+      - SUNDAY
+      type: string
+    v1HoursOfOperation:
+      properties:
+        hoursOfOperation:
+          items:
+            $ref: '#/components/schemas/HoursOfOperationSpan'
+          type: array
+      title: Deprecated
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1BingAttributes:
+      properties:
+        bingAttribute:
+          items:
+            $ref: '#/components/schemas/v1BingAttribute'
+          type: array
+      type: object
+    vendastatypesFieldMask:
+      description: "paths: \"f.a\"\n    paths: \"f.b.d\"\n\nHere `f` represents a field in some root message, `a` and `b`\nfields in the message found in `f`, and `d` a field found in the\nmessage in `f.b`.\n\nField masks are used to specify a subset of fields that should be\nreturned by a get operation or modified by an update operation.\nField masks also have a custom JSON encoding (see below).\n\n# Field Masks in Projections\n\nWhen used in the context of a projection, a response message or\nsub-message is filtered by the API to only contain those fields as\nspecified in the mask. For example, if the mask in the previous\nexample is applied to a response message as follows:\n\n    f {\n      a : 22\n      b {\n        d : 1\n        x : 2\n      }\n      y : 13\n    }\n    z: 8\n\nThe result will not contain specific values for fields x,y and z\n(their value will be set to the default, and omitted in proto text\noutput):\n\n\n    f {\n      a : 22\n      b {\n        d : 1\n      }\n    }\n\nA repeated field is not allowed except at the last position of a\npaths string.\n\nIf a FieldMask object is not present in a get operation, the\noperation applies to all fields (as if a FieldMask of all fields\nhad been specified).\n\nNote that a field mask does not necessarily apply to the\ntop-level response message. In case of a REST get operation, the\nfield mask applies directly to the response, but in case of a REST\nlist operation, the mask instead applies to each individual message\nin the returned resource list. In case of a REST custom method,\nother definitions may be used. Where the mask applies will be\nclearly documented together with its declaration in the API.  In\nany case, the effect on the returned resource/resources is required\nbehavior for APIs.\n\n# Field Masks in Update Operations\n\nA field mask in update operations specifies which fields of the\ntargeted resource are going to be updated. The API is required\nto only change the values of the fields as specified in the mask\nand leave the others untouched. If a resource is passed in to\ndescribe the updated values, the API ignores the values of all\nfields not covered by the mask.\n\nIf a repeated field is specified for an update operation, the existing\nrepeated values in the target resource will be overwritten by the new values.\nNote that a repeated field is only allowed in the last position of a `paths`\nstring.\n\nIf a sub-message is specified in the last position of the field mask for an\nupdate operation, then the existing sub-message in the target resource is\noverwritten. Given the target message:\n\n    f {\n      b {\n        d : 1\n        x : 2\n      }\n      c : 1\n    }\n\nAnd an update message:\n\n    f {\n      b {\n        d : 10\n      }\n    }\n\nthen if the field mask is:\n\n paths: \"f.b\"\n\nthen the result will be:\n\n    f {\n      b {\n        d : 10\n      }\n      c : 1\n    }\n\nHowever, if the update mask was:\n\n paths: \"f.b.d\"\n\nthen the result would be:\n\n    f {\n      b {\n        d : 10\n        x : 2\n      }\n      c : 1\n    }\n\nIn order to reset a field's value to the default, the field must\nbe in the mask and set to the default value in the provided resource.\nHence, in order to reset all fields of a resource, provide a default\ninstance of the resource and set all fields in the mask, or do\nnot provide a mask as described below.\n\nIf a field mask is not present on update, the operation applies to\nall fields (as if a field mask of all fields has been specified).\nNote that in the presence of schema evolution, this may mean that\nfields the client does not know and has therefore not filled into\nthe request will be reset to their default. If this is unwanted\nbehavior, a specific service may require a client to always specify\na field mask, producing an error if not.\n\nAs with get operations, the location of the resource which\ndescribes the updated values in the request message depends on the\noperation kind. In any case, the effect of the field mask is\nrequired to be honored by the API.\n\n## Considerations for HTTP REST\n\nThe HTTP kind of an update operation which uses a field mask must\nbe set to PATCH instead of PUT in order to satisfy HTTP semantics\n(PUT must only be used for full updates).\n\n# JSON Encoding of Field Masks\n\nIn JSON, a field mask is encoded as a single string where paths are\nseparated by a comma. Fields name in each path are converted\nto/from lower-camel naming conventions.\n\nAs an example, consider the following message declarations:\n\n    message Profile {\n      User user = 1;\n      Photo photo = 2;\n    }\n    message User {\n      string display_name = 1;\n      string address = 2;\n    }\n\nIn proto a field mask for `Profile` may look as such:\n\n    mask {\n      paths: \"user.display_name\"\n      paths: \"photo\"\n    }\n\nIn JSON, the same mask is represented as below:\n\n    {\n      mask: \"user.displayName,photo\"\n    }\n\n# Field Masks and Oneof Fields\n\nField masks treat fields in oneofs just as regular fields. Consider the\nfollowing message:\n\n    message SampleMessage {\n      oneof test_oneof {\n        string name = 4;\n        SubMessage sub_message = 9;\n      }\n    }\n\nThe field mask can be:\n\n    mask {\n      paths: \"name\"\n    }\n\nOr:\n\n    mask {\n      paths: \"sub_message\"\n    }\n\nNote that oneof type names (\"test_oneof\" in this case) cannot be used in\npaths."
+      properties:
+        paths:
+          description: The set of field mask paths.
+          items:
+            type: string
+          type: array
+      title: '`FieldMask` represents a set of symbolic field paths, for example:'
+      type: object
+    v1BusinessHours:
+      properties:
+        hoursTypeId:
+          description: 'The hours types are based on the type of business so we don''t give an exhaustive list of hours
+
+            types here. We get the hours types for the business''s category using the Google endpoint
+
+            https://developers.google.com/my-business/reference/businessinformation/rest/v1/categories/batchGet'
+          title: 'hours type IDs are based on the Google hours types
+
+            https://developers.google.com/my-business/reference/businessinformation/rest/v1/accounts.locations#morehours'
+          type: string
+        regularHours:
+          items:
+            $ref: '#/components/schemas/v1RegularHoursPeriod'
+          title: 'RegularHours is a collection of times that this location is open for business. Each
+
+            period represents a range of hours when the location is open during the week. You may specify
+
+            multiple entries for the same date if you are open for multiple periods (Example lunch and supper)'
+          type: array
+        specialHours:
+          description: 'SpecialHours represents a set of time periods when a location''s operational hours differ from
+
+            its regular business hours. This may be a holiday or special event. These hours replace the
+
+            all regular hours for the day. The openTime and startDate must predate the closeTime and endDate.'
+          items:
+            $ref: '#/components/schemas/v1SpecialHoursPeriod'
+          type: array
+      type: object
+    v1GoogleDate:
+      description: '* A full date, with non-zero year, month, and day values
+
+        * A month and day value, with a zero year, such as an anniversary
+
+        * A year on its own, with zero month and day values
+
+        * A year and month value, with a zero day, such as a credit card expiration
+
+        date
+
+
+        Related types are [google.type.TimeOfDay][google.type.TimeOfDay] and
+
+        `google.protobuf.Timestamp`.'
+      properties:
+        day:
+          description: 'Day of a month. Must be from 1 to 31 and valid for the year and month, or 0
+
+            to specify a year by itself or a year and month where the day isn''t
+
+            significant.'
+          format: int32
+          type: integer
+        month:
+          description: 'Month of a year. Must be from 1 to 12, or 0 to specify a year without a
+
+            month and day.'
+          format: int32
+          type: integer
+        year:
+          description: 'Year of the date. Must be from 1 to 9999, or 0 to specify a date without
+
+            a year.'
+          format: int32
+          type: integer
+      title: 'Represents a whole or partial calendar date, such as a birthday. The time of
+
+        day and time zone are either specified elsewhere or are insignificant. The
+
+        date is relative to the Gregorian Calendar. This can represent one of the
+
+        following:'
+      type: object
+    v1SocialURLs:
+      properties:
+        facebookUrl:
+          type: string
+        foursquareUrl:
+          type: string
+        googleplusUrl:
+          type: string
+        instagramUrl:
+          type: string
+        linkedinUrl:
+          type: string
+        pinterestUrl:
+          type: string
+        rssUrl:
+          type: string
+        twitterUrl:
+          type: string
+        youtubeUrl:
+          type: string
+      type: object
+    v1BingAttribute:
+      properties:
+        name:
+          title: The name of the Bing attribute in the form "attributes/is_owned_by_women"
+          type: string
+        value:
+          title: "Contains the value of the attribute. This can be of 4 types:\n  bool\n  URL (represented as a string google.protobuf.Value)\n  enum (represented as a string google.protobuf.Value)\n  repeated_enum (represented as a struct google.protobuf.Value)\nhttps://bpprodpublicstorage.blob.core.windows.net/bingplacesapi/BingPlaces_API_Latest.pdf"
+      type: object
+    v1ServiceArea:
+      properties:
+        businessType:
+          $ref: '#/components/schemas/v1ServiceAreaBusinessType'
+        places:
+          items:
+            $ref: '#/components/schemas/v1GooglePlace'
+          type: array
+      type: object
+    v1TimeOfDay:
+      description: 'Represents a time of day. The date and time zone are either not significant
+
+        or are specified elsewhere. An API may choose to allow leap seconds. Related
+
+        types are [google.type.Date][google.type.Date] and
+
+        `google.protobuf.Timestamp`.'
+      properties:
+        hours:
+          description: 'Hours of day in 24 hour format. Should be from 0 to 23. An API may choose
+
+            to allow the value "24:00:00" for scenarios like business closing time.'
+          format: int32
+          type: integer
+        minutes:
+          description: Minutes of hour of day. Must be from 0 to 59.
+          format: int32
+          type: integer
+        nanos:
+          description: Fractions of seconds in nanoseconds. Must be from 0 to 999,999,999.
+          format: int32
+          type: integer
+        seconds:
+          description: 'Seconds of minutes of the time. Must normally be from 0 to 59. An API may
+
+            allow the value 60 if it allows leap-seconds.'
+          format: int32
+          type: integer
+      type: object
+    v1LifecycleStage:
+      default: LIFECYCLE_STAGE_UNSET
+      description: 'Where an account is at in the lifecycle stage
+
+        The sales domain has the same concept of a lifecycle stage. Updating this enum
+
+        most likely means you need to update the one in sales as well.'
+      enum:
+      - LIFECYCLE_STAGE_UNSET
+      - LIFECYCLE_STAGE_LEAD
+      - LIFECYCLE_STAGE_PROSPECT
+      - LIFECYCLE_STAGE_CUSTOMER
+      type: string
+    HealthCareProfessionalInformationGender:
+      default: NotSpecified
+      enum:
+      - NotSpecified
+      - Female
+      - Male
+      - Other
+      type: string
+    v1IsAvailable:
+      default: UNSET
+      enum:
+      - UNSET
+      - 'YES'
+      - 'NO'
+      type: string
+    v1MarketingClassification:
+      default: MARKETING_CLASSIFICATION_UNUSED
+      enum:
+      - MARKETING_CLASSIFICATION_UNUSED
+      - MARKETING_CLASSIFICATION_SMB
+      - MARKETING_CLASSIFICATION_SPAM
+      - MARKETING_CLASSIFICATION_DUPLICATE
+      - MARKETING_CLASSIFICATION_BLACKLISTED
+      - MARKETING_CLASSIFICATION_OUT_OF_MARKET
+      type: string
+    HoursOfOperationSpan:
+      properties:
+        closes:
+          type: string
+        dayOfWeek:
+          items:
+            type: string
+          type: array
+        description:
+          type: string
+        opens:
+          type: string
+      type: object
+    HealthCareProfessionalInformationIsProvider:
+      default: IsProviderNotSpecified
+      enum:
+      - IsProviderNotSpecified
+      - IsProviderTrue
+      - IsProviderFalse
+      type: string
+    v1DoctorDotComCategory:
+      properties:
+        fullName:
+          type: string
+        id:
+          format: int64
+          type: string
+        nuccTaxonomyCode:
+          type: string
+      type: object
+    v1Geo:
+      description: Represents a geo point location.
+      properties:
+        latitude:
+          format: double
+          type: number
+        longitude:
+          format: double
+          type: number
+      type: object
+    v1GooglePlace:
+      properties:
+        city:
+          title: The city or locality the Google Place is located in
+          type: string
+        placeId:
+          title: The ID of the place
+          type: string
+        placeName:
+          description: The localized name of the place. For example, Scottsdale, AZ.
+          type: string
+      title: Based on https://developers.google.com/my-business/reference/businessinformation/rest/v1/accounts.locations#Location.PlaceInfo
+      type: object
+    v1UpdateListingProfileRequest:
+      description: Applies one or more field-level changes to a business's listing profile. Changes are executed in order and then synced to connected directories.
+      properties:
+        businessId:
+          description: Required. The business whose listing profile should be updated.
+          type: string
+        ifUnmodifiedSince:
+          description: 'Optional. Optimistic-concurrency guard. If set, the update fails when the profile has been
+
+            modified after this timestamp. Similar to HTTP If-Unmodified-Since.'
+          format: date-time
+          type: string
+        languageCode:
+          description: Optional. BCP-47 language code for locale-specific field values (e.g., "en", "fr").
+          type: string
+        updateOperations:
+          description: Required. Ordered list of field-level changes to apply (e.g., set name, add category, update hours).
+          items:
+            $ref: '#/components/schemas/v1UpdateOperation'
+          type: array
+      required:
+      - businessId
+      - updateOperations
+      title: UpdateListingProfileRequest
+      type: object
+    v1ExternalIdentifiers:
+      properties:
+        actionLists:
+          items:
+            type: string
+          type: array
+        additionalSalesPersonIds:
+          items:
+            type: string
+          type: array
+        customerIdentifier:
+          type: string
+        jobId:
+          items:
+            type: string
+          type: array
+        marketId:
+          type: string
+        origin:
+          type: string
+        partnerId:
+          type: string
+        salesPersonId:
+          type: string
+        socialProfileId:
+          type: string
+        tags:
+          items:
+            type: string
+          type: array
+        taxIds:
+          items:
+            type: string
+          type: array
+        updateOrigin:
+          type: string
+        vCategoryIds:
+          items:
+            type: string
+          type: array
+      type: object
+    v1HealthCareProfessionalInformation:
+      properties:
+        dateOfBirth:
+          format: date-time
+          type: string
+        doctorDotComCategories:
+          items:
+            $ref: '#/components/schemas/v1DoctorDotComCategory'
+          type: array
+        email:
+          type: string
+        fellowship:
+          items:
+            type: string
+          type: array
+        firstName:
+          type: string
+        gender:
+          $ref: '#/components/schemas/HealthCareProfessionalInformationGender'
+        hospitalAffiliations:
+          items:
+            type: string
+          type: array
+        initials:
+          type: string
+        insurancesAccepted:
+          items:
+            type: string
+          type: array
+        isProvider:
+          $ref: '#/components/schemas/HealthCareProfessionalInformationIsProvider'
+        isTakingPatients:
+          type: boolean
+        lastName:
+          type: string
+        medicalLicenseNumber:
+          type: string
+        nationalProviderIdentifier:
+          type: string
+        office:
+          type: string
+        professionalCredential:
+          items:
+            type: string
+          type: array
+        residency:
+          items:
+            type: string
+          type: array
+        school:
+          items:
+            type: string
+          type: array
+        specialty:
+          items:
+            type: string
+          type: array
+        standardizedTitle:
+          type: string
+        stateLicense:
+          type: string
+      type: object
+    v1GoogleAttribute:
+      properties:
+        name:
+          title: The name of the Google attribute in the form "attributes/is_owned_by_women"
+          type: string
+        value:
+          title: "Contains the value of the attribute. This can be of 4 types:\n  bool\n  URL (represented as a string google.protobuf.Value)\n  enum (represented as a string google.protobuf.Value)\n  repeated_enum (represented as a struct google.protobuf.Value)\nhttps://developers.google.com/my-business/reference/businessinformation/rest/v1/AttributeValueType"
+      title: 'Represents a single Google attribute
+
+        reference docs:
+
+        https://developers.google.com/my-business/reference/businessinformation/rest/v1/attributes/list#attributemetadata
+
+        https://developers.google.com/my-business/reference/businessinformation/rest/v1/Attributes'
+      type: object
+    v1SpecialHoursStatus:
+      default: SPECIAL_HOURS_STATUS_INVALID
+      description: "- SPECIAL_HOURS_STATUS_INVALID: Indicates that the field was not sent on the API request. This is not valid to be used.\n - SPECIAL_HOURS_STATUS_OPEN: Indicates the business is open during the period indicated by\n`start_date`, `start_time`, `end_date`, and `end_time`\n - SPECIAL_HOURS_STATUS_CLOSED: Indicates that the business is closed for the entire period from `start_date` to `end_date`.\n`start_time` and `end_time` will be ignored.\n - SPECIAL_HOURS_STATUS_UNCONFIRMED_HOLIDAY: NOT IMPLEMENTED The UI for this status is not included in the first slice.\nIndicates that there is a holiday during the specified period and the business has not confirmed their hours.\nThese periods should not be sent to listing sites"
+      enum:
+      - SPECIAL_HOURS_STATUS_INVALID
+      - SPECIAL_HOURS_STATUS_OPEN
+      - SPECIAL_HOURS_STATUS_CLOSED
+      - SPECIAL_HOURS_STATUS_UNCONFIRMED_HOLIDAY
+      title: Describes the different modes that apply to special hour periods
+      type: string
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1GoogleServices:
+      description: Wrapper for use in UpdateOperation oneof.
+      properties:
+        googleService:
+          items:
+            $ref: '#/components/schemas/v1GoogleService'
+          type: array
+      type: object
+    v1MarketingInfo:
+      properties:
+        conversionPoint:
+          type: string
+        lifecycleStage:
+          $ref: '#/components/schemas/v1LifecycleStage'
+        marketingClassification:
+          $ref: '#/components/schemas/v1MarketingClassification'
+      title: MarketingInfo store marketing properties for an account group
+      type: object
+    v1UpdateOperation:
+      description: 'UpdateOperation represents a single field-level change to a listing profile.
+
+        Choose exactly one oneof field that covers the data you want to modify, then set
+
+        field_mask to the specific sub-fields within that message.'
+      properties:
+        bingAttributes:
+          $ref: '#/components/schemas/v1BingAttributes'
+        businessHours:
+          $ref: '#/components/schemas/v1BusinessHours'
+        externalIdentifiers:
+          $ref: '#/components/schemas/v1ExternalIdentifiers'
+        fieldMask:
+          $ref: '#/components/schemas/vendastatypesFieldMask'
+        googleAttributes:
+          $ref: '#/components/schemas/v1GoogleAttributes'
+        googleServices:
+          $ref: '#/components/schemas/v1GoogleServices'
+        hoursOfOperation:
+          $ref: '#/components/schemas/v1HoursOfOperation'
+        legacyProductDetails:
+          $ref: '#/components/schemas/v1LegacyProductDetails'
+        marketingInfo:
+          $ref: '#/components/schemas/v1MarketingInfo'
+        nap:
+          $ref: '#/components/schemas/listing_productsv1Location'
+        richData:
+          $ref: '#/components/schemas/v1RichData'
+        socialUrls:
+          $ref: '#/components/schemas/v1SocialURLs'
+      type: object
+    v1ConditionalField:
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+      type: object
+    v1ServiceAreaBusinessType:
+      default: SERVICE_AREA_BUSINESS_TYPE_UNSPECIFIED
+      description: "- SERVICE_AREA_BUSINESS_TYPE_UNSPECIFIED: Not specified.\n - SERVICE_AREA_BUSINESS_TYPE_CUSTOMER_LOCATION_ONLY: Offers service only in the surrounding area (not at the business address).\n - SERVICE_AREA_BUSINESS_TYPE_CUSTOMER_AND_BUSINESS_LOCATION: Offers service at the business address and the surrounding area."
+      enum:
+      - SERVICE_AREA_BUSINESS_TYPE_UNSPECIFIED
+      - SERVICE_AREA_BUSINESS_TYPE_CUSTOMER_LOCATION_ONLY
+      - SERVICE_AREA_BUSINESS_TYPE_CUSTOMER_AND_BUSINESS_LOCATION
+      title: Based on https://developers.google.com/my-business/reference/businessinformation/rest/v1/accounts.locations#Location.BusinessType
+      type: string
+    v1GoogleService:
+      properties:
+        displayName:
+          description: 'The human-readable display name (e.g., "Beard trim"). Stored alongside the ID
+
+            so downstream consumers can use it without a metadata API call.'
+          type: string
+        enabled:
+          description: Whether the user has enabled (true) or disabled (false) this service.
+          type: boolean
+        serviceTypeId:
+          description: The Google-provided service type ID (e.g., "job_type_id:beard_trimming").
+          type: string
+      title: 'Represents a single Google structured service that a user has explicitly toggled.
+
+        Reference: https://developers.google.com/my-business/reference/businessinformation/rest/v1/accounts.locations#structuredserviceitem'
+      type: object
+    v1ClosedStatus:
+      default: UNSPECIFIED
+      enum:
+      - UNSPECIFIED
+      - OPEN
+      - LIMITED
+      - TEMPORARY
+      - PERMANENT
+      title: ClosedStatus describes if the business is permanently or temporarily closed, or in a limited state
+      type: string
+    v1RegularHoursPeriod:
+      properties:
+        closeDay:
+          $ref: '#/components/schemas/v1DayOfWeek'
+        closeTime:
+          $ref: '#/components/schemas/v1TimeOfDay'
+        openDay:
+          $ref: '#/components/schemas/v1DayOfWeek'
+        openTime:
+          $ref: '#/components/schemas/v1TimeOfDay'
+      type: object
+    v1GoogleAttributes:
+      properties:
+        googleAttribute:
+          items:
+            $ref: '#/components/schemas/v1GoogleAttribute'
+          type: array
+      type: object
+    v1LegacyProductDetails:
+      properties:
+        adminNotes:
+          type: string
+        commonName:
+          items:
+            type: string
+          type: array
+        competitor:
+          items:
+            type: string
+          type: array
+        shareOfVoiceService:
+          items:
+            type: string
+          type: array
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            admin: Allows the application to perform administrative tasks that you have access to across the platform
+            business-app: Allows the application to manage all features of Business App
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

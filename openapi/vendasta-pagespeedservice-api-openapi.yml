@@ -1,0 +1,91 @@
+openapi: 3.2.0
+info:
+  title: WSP WP Manager Page Speed Service API
+  version: 1.8.1
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: PageSpeedService
+paths:
+  /v1/wph/manager/pagespeed/score:
+    post:
+      operationId: PageSpeedService_GetScore
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetScoreRequest'
+        description: Request to retrieve the Google Page Speed score for a site by domain and device type.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetScoreResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      summary: Get Page Speed Score
+      tags:
+      - PageSpeedService
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1GetScoreResponse:
+      description: Response containing the Google Page Speed score and raw API response.
+      properties:
+        response:
+          description: Output only. The raw Google PageSpeed Insights API response.
+          readOnly: true
+          type: string
+        success:
+          description: Output only. Whether the score was retrieved successfully.
+          readOnly: true
+          type: boolean
+      title: GetScoreResponse
+      type: object
+    v1GetScoreRequest:
+      description: Request to retrieve the Google Page Speed score for a site by domain and device type.
+      properties:
+        device:
+          description: Required. The device type to get the score for. Should be "mobile" or "desktop".
+          type: string
+        domain:
+          description: Required. The domain of the site to get the Page Speed score for.
+          type: string
+      required:
+      - domain
+      - device
+      title: GetScoreRequest
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes: {}
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

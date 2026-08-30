@@ -1,0 +1,578 @@
+openapi: 3.2.0
+info:
+  title: CRM Association Service API
+  version: 0.157.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: CRMAssociationService
+paths:
+  /v1/crm/association/create:
+    post:
+      operationId: CRMAssociationService_CreateAssociation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1CreateAssociationRequest'
+        description: Request to create a new association between two CRM objects within a namespace.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1CreateAssociationResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - crm
+        - crm.association
+      summary: Create Association
+      tags:
+      - CRMAssociationService
+  /v1/crm/association/delete:
+    post:
+      operationId: CRMAssociationService_DeleteAssociation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1DeleteAssociationRequest'
+        description: Request to delete an association between CRM objects within a namespace.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - crm
+        - crm.association
+      summary: Delete Association
+      tags:
+      - CRMAssociationService
+  /v1/crm/association/field-options:
+    post:
+      operationId: CRMAssociationService_ListAssociationFieldOptions
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ListAssociationFieldOptionsRequest'
+        description: Request to list valid values for a field on associations of a given type.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListAssociationFieldOptionsResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - crm
+        - crm.association
+        - crm.association:read
+      summary: List Association Field Options
+      tags:
+      - CRMAssociationService
+  /v1/crm/association/get-multi:
+    post:
+      operationId: CRMAssociationService_GetMultiAssociation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetMultiAssociationRequest'
+        description: Request to retrieve multiple associations by their IDs within a namespace.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetMultiAssociationResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - crm
+        - crm.association
+        - crm.association:read
+      summary: Get Multi Association
+      tags:
+      - CRMAssociationService
+  /v1/crm/association/list:
+    post:
+      operationId: CRMAssociationService_ListAssociation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ListAssociationsRequest'
+        description: Request to list associations within a namespace, with optional filtering and pagination.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListAssociationsResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - crm
+        - crm.association
+        - crm.association:read
+      summary: List Associations
+      tags:
+      - CRMAssociationService
+  /v1/crm/association/update:
+    post:
+      operationId: CRMAssociationService_UpdateAssociation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UpdateAssociationRequest'
+        description: Request to update the tags on an existing association.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - crm
+        - crm.association
+      summary: Update Association
+      tags:
+      - CRMAssociationService
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    vendastatypesPagedRequestOptions:
+      properties:
+        cursor:
+          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
+          type: string
+        pageSize:
+          description: Optional. The maximum number of items to return per page.
+          format: int64
+          type: string
+      type: object
+    v1Association:
+      description: Represents a directional link between two CRM objects, such as a contact-to-company or opportunity-to-contact relationship.
+      properties:
+        associationId:
+          description: Output only. The unique identifier of this association.
+          readOnly: true
+          type: string
+        associationType:
+          description: Required. The type of association (e.g. "contact_to_company", "opportunity_to_contact"). Determines the relationship semantics.
+          type: string
+        created:
+          description: Output only. The time the association was created.
+          format: date-time
+          readOnly: true
+          type: string
+        deleted:
+          description: Output only. The time the association was soft-deleted. Zero value if the association has not been deleted.
+          format: date-time
+          readOnly: true
+          type: string
+        fromCrmObjectSubtype:
+          description: Optional. The custom object subtype of the source CRM object. Only needed when the source is a custom object type.
+          type: string
+        fromId:
+          description: Required. The CRM object ID on the source side of the association.
+          type: string
+        tags:
+          description: Optional. Tags attached to this association for categorization.
+          items:
+            $ref: '#/components/schemas/crmv1Tag'
+          type: array
+        toCrmObjectSubtype:
+          description: Optional. The custom object subtype of the target CRM object. Only needed when the target is a custom object type.
+          type: string
+        toId:
+          description: Required. The CRM object ID on the target side of the association.
+          type: string
+        updated:
+          description: Output only. The time the association was last updated.
+          format: date-time
+          readOnly: true
+          type: string
+      title: Association
+      type: object
+    v1ListAssociationFieldOptionsRequest:
+      description: Request to list valid values for a field on associations of a given type.
+      properties:
+        associationType:
+          description: Required. The association type to list field options for.
+          type: string
+        fieldId:
+          description: Required. The identifier of the field whose options should be listed.
+          type: string
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) to list field options for.
+          type: string
+        pageSize:
+          description: Optional. The maximum number of options to return.
+          format: int64
+          type: string
+        searchTerm:
+          description: Optional. A search term to filter options by substring match.
+          type: string
+      required:
+      - namespace
+      - associationType
+      - fieldId
+      title: List Association Field Options Request
+      type: object
+    v1ListAssociationFieldOptionsResponse:
+      description: Response containing the valid values for the requested association field.
+      properties:
+        options:
+          description: Output only. The list of valid option values for the field.
+          items:
+            type: string
+          readOnly: true
+          type: array
+      title: List Association Field Options Response
+      type: object
+    v1UpdateAssociationRequest:
+      description: Request to update the tags on an existing association.
+      properties:
+        associationId:
+          description: Required. The identifier of the association to update.
+          type: string
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the association belongs to.
+          type: string
+        tags:
+          description: Optional. The updated set of tags for this association. Replaces all existing tags.
+          items:
+            $ref: '#/components/schemas/crmv1Tag'
+          type: array
+      required:
+      - namespace
+      - associationId
+      title: Update Association Request
+      type: object
+    v1FilterValue:
+      properties:
+        boolean:
+          type: boolean
+        date:
+          format: date-time
+          type: string
+        dateDefault:
+          $ref: '#/components/schemas/v1DateDefault'
+        float:
+          format: float
+          type: number
+        integer:
+          format: int64
+          type: string
+        phone:
+          $ref: '#/components/schemas/v1Phone'
+        string:
+          type: string
+      type: object
+    v1ListAssociationsResponse:
+      description: Response containing a page of associations matching the request criteria.
+      properties:
+        associations:
+          description: Output only. The associations matching the request criteria for this page.
+          items:
+            $ref: '#/components/schemas/v1Association'
+          readOnly: true
+          type: array
+        pagingMetadata:
+          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
+        statusCode:
+          description: Output only. HTTP-style status codes for each association in the response (e.g. 200, 403, or 404).
+          items:
+            format: int64
+            type: string
+          readOnly: true
+          type: array
+      title: List Associations Response
+      type: object
+    v1FilterGroupOperator:
+      default: FILTER_GROUP_OPERATOR_INVALID
+      enum:
+      - FILTER_GROUP_OPERATOR_INVALID
+      - FILTER_GROUP_OPERATOR_AND
+      - FILTER_GROUP_OPERATOR_OR
+      type: string
+    v1Phone:
+      properties:
+        extension:
+          type: string
+        isoCountryCode:
+          title: ISO country code is the 2 or 3 letter code for the country, example 'CA' for Canada
+          type: string
+        nationalNumber:
+          type: string
+      title: This follows the E164 international standard specification for phone numbers
+      type: object
+    v1FilterGroup:
+      properties:
+        filters:
+          items:
+            $ref: '#/components/schemas/v1Filter'
+          type: array
+        operator:
+          $ref: '#/components/schemas/v1FilterGroupOperator'
+      type: object
+    v1DateDefault:
+      default: DATE_DEFAULT_INVALID
+      enum:
+      - DATE_DEFAULT_INVALID
+      - DATE_DEFAULT_TODAY
+      - DATE_DEFAULT_YESTERDAY
+      - DATE_DEFAULT_TOMORROW
+      - DATE_DEFAULT_THIS_WEEK
+      - DATE_DEFAULT_LAST_WEEK
+      - DATE_DEFAULT_NEXT_WEEK
+      - DATE_DEFAULT_THIS_MONTH
+      - DATE_DEFAULT_LAST_MONTH
+      - DATE_DEFAULT_NEXT_MONTH
+      - DATE_DEFAULT_THIS_QUARTER
+      - DATE_DEFAULT_LAST_QUARTER
+      - DATE_DEFAULT_NEXT_QUARTER
+      - DATE_DEFAULT_THIS_YEAR
+      - DATE_DEFAULT_LAST_YEAR
+      - DATE_DEFAULT_NEXT_YEAR
+      type: string
+    v1Filter:
+      properties:
+        fieldId:
+          type: string
+        floatTolerance:
+          format: float
+          type: number
+        operator:
+          $ref: '#/components/schemas/v1FilterOperator'
+        values:
+          items:
+            $ref: '#/components/schemas/v1FilterValue'
+          title: "This is repeated to support operations that take zero or more than one value.\nFor example\n   isEmpty()\n   isAnyOf(a, b, c)\n   isBetween(date1, date2)"
+          type: array
+      type: object
+    vendastatypesPagedResponseMetadata:
+      properties:
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
+          type: string
+        totalResults:
+          format: int64
+          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1GetMultiAssociationRequest:
+      description: Request to retrieve multiple associations by their IDs within a namespace.
+      properties:
+        associationIds:
+          description: Required. The identifiers of the associations to retrieve.
+          items:
+            type: string
+          type: array
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the associations belong to.
+          type: string
+      required:
+      - namespace
+      - associationIds
+      title: Get Multi Association Request
+      type: object
+    v1CreateAssociationRequest:
+      description: Request to create a new association between two CRM objects within a namespace.
+      properties:
+        association:
+          $ref: '#/components/schemas/v1Association'
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the association belongs to.
+          type: string
+      required:
+      - namespace
+      - association
+      title: Create Association Request
+      type: object
+    v1GetMultiAssociationResponse:
+      description: Response containing the requested associations and per-ID status codes.
+      properties:
+        associations:
+          description: Output only. The retrieved associations.
+          items:
+            $ref: '#/components/schemas/v1Association'
+          readOnly: true
+          type: array
+        statusCode:
+          description: Output only. HTTP-style status codes for each association_id in the request (e.g. 200, 403, or 404).
+          items:
+            format: int64
+            type: string
+          readOnly: true
+          type: array
+      title: Get Multi Association Response
+      type: object
+    v1CreateAssociationResponse:
+      description: Response containing the identifier of the newly created association.
+      properties:
+        associationId:
+          description: Output only. The unique identifier of the newly created association.
+          readOnly: true
+          type: string
+      title: Create Association Response
+      type: object
+    crmv1Tag:
+      properties:
+        tagValue:
+          description: Required. The tag value string.
+          type: string
+      type: object
+    v1DeleteAssociationRequest:
+      description: Request to delete an association between CRM objects within a namespace.
+      properties:
+        associationId:
+          description: Required. The identifier of the association to delete.
+          type: string
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the association belongs to.
+          type: string
+      required:
+      - namespace
+      - associationId
+      title: Delete Association Request
+      type: object
+    v1ListAssociationsRequest:
+      description: Request to list associations within a namespace, with optional filtering and pagination.
+      properties:
+        filtersV2:
+          $ref: '#/components/schemas/v1FilterGroup'
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) to list associations for.
+          type: string
+        pagingOptions:
+          $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
+      required:
+      - namespace
+      title: List Associations Request
+      type: object
+    v1FilterOperator:
+      default: FILTER_OPERATOR_INVALID
+      enum:
+      - FILTER_OPERATOR_INVALID
+      - FILTER_OPERATOR_IS_EMPTY
+      - FILTER_OPERATOR_IS_NOT_EMPTY
+      - FILTER_OPERATOR_IS
+      - FILTER_OPERATOR_IS_NOT
+      - FILTER_OPERATOR_IS_ANY
+      - FILTER_OPERATOR_IS_NOT_ANY
+      - FILTER_OPERATOR_IS_ALL
+      - FILTER_OPERATOR_IS_NOT_ALL
+      - FILTER_OPERATOR_CONTAINS
+      - FILTER_OPERATOR_DOES_NOT_CONTAIN
+      - FILTER_OPERATOR_IS_EQUAL_TO
+      - FILTER_OPERATOR_IS_NOT_EQUAL_TO
+      - FILTER_OPERATOR_IS_GREATER_THAN
+      - FILTER_OPERATOR_IS_GREATER_THAN_OR_EQUAL_TO
+      - FILTER_OPERATOR_IS_LESS_THAN
+      - FILTER_OPERATOR_IS_LESS_THAN_OR_EQUAL_TO
+      - FILTER_OPERATOR_IS_BEFORE
+      - FILTER_OPERATOR_IS_BEFORE_OR_ON
+      - FILTER_OPERATOR_IS_AFTER
+      - FILTER_OPERATOR_IS_AFTER_OR_ON
+      - FILTER_OPERATOR_IS_BETWEEN
+      - FILTER_OPERATOR_IS_NOT_BETWEEN
+      - FILTER_OPERATOR_IS_VALID
+      - FILTER_OPERATOR_IS_NOT_VALID
+      - FILTER_OPERATOR_ANNIVERSARY_IS
+      type: string
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            crm: Allows the application to manage all data in your CRM
+            crm.association: Allows the application to manage associations in your CRM
+            crm.association:read: Allows the application view-only access to associations in your CRM
+            crm.company: Allows the application to manage your CRM companies
+            crm.company:read: Allows the application view-only access to CRM companies
+            crm.contact: Allows the application to manage your CRM contacts
+            crm.contact:read: Allows the application view-only access to CRM contacts
+            crm.custom-object: Allows the application to manage your CRM custom objects
+            crm.custom-object:read: Allows the application view-only access to CRM custom objects
+            crm.opportunity: Allows the application to manage your CRM opportunities
+            crm.opportunity:read: Allows the application view-only access to CRM opportunities
+            crm.schema: Allows the application to manage your CRM object schemas
+            crm.schema:read: Allows the application view-only access to CRM object schemas
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2

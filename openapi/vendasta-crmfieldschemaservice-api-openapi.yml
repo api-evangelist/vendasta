@@ -1,0 +1,487 @@
+openapi: 3.2.0
+info:
+  title: CRM Field Schema Service API
+  version: 0.157.0
+servers:
+- description: Production
+  url: https://prod.apigateway.co/grpc
+tags:
+- name: CRMFieldSchemaService
+paths:
+  /v1/crm/field-schema/archive:
+    post:
+      operationId: CRMFieldSchemaService_ArchiveFieldSchema
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ArchiveFieldSchemaRequest'
+        description: Request to archive a field schema. Archived schemas are hidden from default list responses and are not used when reading or writing CRM objects, but their historical values on existing CRM objects are preserved.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - crm
+        - crm.schema
+      summary: Archive Field Schema
+      tags:
+      - CRMFieldSchemaService
+  /v1/crm/field-schema/create:
+    post:
+      operationId: CRMFieldSchemaService_CreateFieldSchema
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1CreateFieldSchemaRequest'
+        description: Request to create a new custom field schema on a CRM object type within a namespace.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1CreateFieldSchemaResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - crm
+        - crm.schema
+      summary: Create Field Schema
+      tags:
+      - CRMFieldSchemaService
+  /v1/crm/field-schema/get-multi:
+    post:
+      operationId: CRMFieldSchemaService_GetMultiFieldSchema
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1GetMultiFieldSchemaRequest'
+        description: Request to retrieve multiple field schemas by ID for a CRM object type within a namespace.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1GetMultiFieldSchemaResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - crm
+        - crm.schema:read
+      summary: Get Multi Field Schema
+      tags:
+      - CRMFieldSchemaService
+  /v1/crm/field-schema/list:
+    post:
+      operationId: CRMFieldSchemaService_ListFieldSchema
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1ListFieldSchemaRequest'
+        description: Request to list field schemas for a CRM object type within a namespace, optionally filtered by subtype, namespace, archive status, or search term.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/v1ListFieldSchemaResponse'
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - crm
+        - crm.schema:read
+      summary: List Field Schema
+      tags:
+      - CRMFieldSchemaService
+  /v1/crm/field-schema/update:
+    post:
+      operationId: CRMFieldSchemaService_UpdateFieldSchema
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/v1UpdateFieldSchemaRequest'
+        description: Request to update an existing custom field schema. Only fields named in the field mask are modified. The CRM object type and subtype of an existing schema cannot be changed.
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+          description: A successful response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/rpcStatus'
+          description: An unexpected error response.
+      security:
+      - OAuth2:
+        - crm
+        - crm.schema
+      summary: Update Field Schema
+      tags:
+      - CRMFieldSchemaService
+components:
+  schemas:
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    vendastatypesPagedRequestOptions:
+      properties:
+        cursor:
+          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
+          type: string
+        pageSize:
+          description: Optional. The maximum number of items to return per page.
+          format: int64
+          type: string
+      type: object
+    v1CreateFieldSchemaRequest:
+      description: Request to create a new custom field schema on a CRM object type within a namespace.
+      properties:
+        crmObjectSubtype:
+          description: Optional. The custom object subtype the field belongs to. Only used when `crm_object_type` refers to a custom object type that defines subtypes.
+          type: string
+        crmObjectType:
+          description: Required. The CRM object type the field belongs to. Valid values include "Contact", "Activity", "Company", "Opportunity", "PotentialContact", and the ID of any custom object type.
+          type: string
+        fieldSchema:
+          $ref: '#/components/schemas/v1FieldSchema'
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the new field schema will belong to.
+          type: string
+      required:
+      - namespace
+      - crmObjectType
+      - fieldSchema
+      title: Create Field Schema Request
+      type: object
+    v1UpdateFieldSchemaRequest:
+      description: Request to update an existing custom field schema. Only fields named in the field mask are modified. The CRM object type and subtype of an existing schema cannot be changed.
+      properties:
+        crmObjectSubtype:
+          description: Optional. The custom object subtype the field belongs to. Only used when `crm_object_type` refers to a custom object type that defines subtypes.
+          type: string
+        crmObjectType:
+          description: Required. The CRM object type the field belongs to. Valid values include "Contact", "Activity", "Company", "Opportunity", "PotentialContact", and the ID of any custom object type.
+          type: string
+        fieldMask:
+          $ref: '#/components/schemas/vendastatypesFieldMask'
+        fieldSchema:
+          $ref: '#/components/schemas/v1FieldSchema'
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the field schema belongs to.
+          type: string
+      required:
+      - namespace
+      - crmObjectType
+      - fieldSchema
+      - fieldMask
+      title: Update Field Schema Request
+      type: object
+    v1GetMultiFieldSchemaResponse:
+      description: Response containing the requested field schemas.
+      properties:
+        fieldSchemas:
+          description: The retrieved field schemas, returned in the same order as the request `field_id` list. If an ID is not found, an empty `FieldSchema` (with no `field_id` set) is returned at that position so that response entries align positionally with the requested IDs.
+          items:
+            $ref: '#/components/schemas/v1FieldSchema'
+          type: array
+      title: Get Multi Field Schema Response
+      type: object
+    v1CreateFieldSchemaResponse:
+      description: Response containing the identifier of the newly created field schema.
+      properties:
+        fieldId:
+          description: The unique identifier of the newly created field schema. Use this value to reference the field on subsequent CRM object create/update requests and on `UpdateFieldSchema`, `ArchiveFieldSchema`, and `GetMultiFieldSchema` calls.
+          type: string
+      title: Create Field Schema Response
+      type: object
+    crmv1FieldUniqueness:
+      default: FIELD_UNIQUENESS_NONE
+      description: "FieldUniqueness describes whether values in a field must be unique across a namespace's\nobjects of the same type. It is surfaced read-only on FieldSchema; it cannot be set or\nchanged through the CRM API.\n\n - FIELD_UNIQUENESS_NONE: No uniqueness constraint (the default for most fields).\n - FIELD_UNIQUENESS_WARNING: Duplicates are allowed but surfaced as a warning (e.g. phone-number fields).\n - FIELD_UNIQUENESS_ENFORCED: Duplicates are rejected / deduplicated — the enforced key field (e.g. email)."
+      enum:
+      - FIELD_UNIQUENESS_NONE
+      - FIELD_UNIQUENESS_WARNING
+      - FIELD_UNIQUENESS_ENFORCED
+      type: string
+    v1ListFieldSchemaResponse:
+      description: Response containing a page of field schemas that match the request criteria.
+      properties:
+        fieldSchemas:
+          description: The field schemas that match the request criteria for this page.
+          items:
+            $ref: '#/components/schemas/v1FieldSchema'
+          type: array
+        pagingMetadata:
+          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
+      title: List Field Schema Response
+      type: object
+    v1ListFieldSchemaRequest:
+      description: Request to list field schemas for a CRM object type within a namespace, optionally filtered by subtype, namespace, archive status, or search term.
+      properties:
+        crmObjectSubtype:
+          description: Optional. The custom object subtype to filter by. Only used when `crm_object_type` refers to a custom object type that defines subtypes.
+          type: string
+        crmObjectType:
+          description: Optional. The CRM object type to filter by. Valid values include "Contact", "Activity", "Company", "Opportunity", "PotentialContact", and the ID of any custom object type. If omitted, schemas across all object types are returned.
+          type: string
+        filters:
+          $ref: '#/components/schemas/v1ListFieldSchemaRequestFilters'
+        locale:
+          description: 'Optional. The locale used to translate built-in field labels and descriptions. Examples: "af", "cs", "de", "en", "es-419", "fr", "it", "nl", "pt", "ru". If omitted, the default locale is used.'
+          type: string
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) to list field schemas for. Inherited schemas from field extensions and built-ins are included unless `filters.namespace` narrows them.
+          type: string
+        pagingOptions:
+          $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
+        searchTerm:
+          description: Optional. Case-insensitive substring matched against the field name and description. If omitted, no search filter is applied.
+          type: string
+      required:
+      - namespace
+      title: List Field Schema Request
+      type: object
+    v1ListFieldSchemaRequestFilters:
+      properties:
+        namespace:
+          description: Optional. Restricts results to schemas owned by this specific namespace. Useful when the calling namespace inherits schemas from multiple sources (built-ins or field extensions) and you want only one source.
+          type: string
+        onlyArchived:
+          description: Optional. When true, only archived field schemas are returned. When false or omitted, only non-archived schemas are returned.
+          type: boolean
+      type: object
+    v1ArchiveFieldSchemaRequest:
+      description: Request to archive a field schema. Archived schemas are hidden from default list responses and are not used when reading or writing CRM objects, but their historical values on existing CRM objects are preserved.
+      properties:
+        crmObjectSubtype:
+          description: Optional. The custom object subtype the field belongs to. Only used when `crm_object_type` refers to a custom object type that defines subtypes.
+          type: string
+        crmObjectType:
+          description: Required. The CRM object type the field belongs to. Valid values include "Contact", "Activity", "Company", "Opportunity", "PotentialContact", and the ID of any custom object type.
+          type: string
+        fieldId:
+          description: Required. The ID of the field schema to archive.
+          type: string
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the field schema belongs to.
+          type: string
+      required:
+      - namespace
+      - crmObjectType
+      - fieldId
+      title: Archive Field Schema Request
+      type: object
+    v1FieldType:
+      default: FIELD_TYPE_INVALID
+      description: "- FIELD_TYPE_DROPDOWN: FIELD_TYPE_DROPDOWN is passed as a string in the field_value\n - FIELD_TYPE_CURRENCY: FIELD_TYPE_CURRENCY is passed as a Currency message containing a code and value\n - FIELD_TYPE_EMAIL: FIELD_TYPE_EMAIL is passed as a string in the field_value\n - FIELD_TYPE_PHONE: FIELD_TYPE_PHONE is passed as a string in the field_value\n - FIELD_TYPE_TAG: FIELD_TYPE_TAG is passed as a StringList in the field_value\n - FIELD_TYPE_GEOPOINT: FIELD_TYPE_GEOPOINT is passed as a Geopoint message containing lat and long fields in the field_value"
+      enum:
+      - FIELD_TYPE_INVALID
+      - FIELD_TYPE_STRING
+      - FIELD_TYPE_INTEGER
+      - FIELD_TYPE_DATE
+      - FIELD_TYPE_DROPDOWN
+      - FIELD_TYPE_CURRENCY
+      - FIELD_TYPE_EMAIL
+      - FIELD_TYPE_PHONE
+      - FIELD_TYPE_BOOLEAN
+      - FIELD_TYPE_TAG
+      - FIELD_TYPE_DATETIME
+      - FIELD_TYPE_STRING_LIST
+      - FIELD_TYPE_GEOPOINT
+      - FIELD_TYPE_FLOAT
+      type: string
+    vendastatypesFieldMask:
+      description: "paths: \"f.a\"\n    paths: \"f.b.d\"\n\nHere `f` represents a field in some root message, `a` and `b`\nfields in the message found in `f`, and `d` a field found in the\nmessage in `f.b`.\n\nField masks are used to specify a subset of fields that should be\nreturned by a get operation or modified by an update operation.\nField masks also have a custom JSON encoding (see below).\n\n# Field Masks in Projections\n\nWhen used in the context of a projection, a response message or\nsub-message is filtered by the API to only contain those fields as\nspecified in the mask. For example, if the mask in the previous\nexample is applied to a response message as follows:\n\n    f {\n      a : 22\n      b {\n        d : 1\n        x : 2\n      }\n      y : 13\n    }\n    z: 8\n\nThe result will not contain specific values for fields x,y and z\n(their value will be set to the default, and omitted in proto text\noutput):\n\n\n    f {\n      a : 22\n      b {\n        d : 1\n      }\n    }\n\nA repeated field is not allowed except at the last position of a\npaths string.\n\nIf a FieldMask object is not present in a get operation, the\noperation applies to all fields (as if a FieldMask of all fields\nhad been specified).\n\nNote that a field mask does not necessarily apply to the\ntop-level response message. In case of a REST get operation, the\nfield mask applies directly to the response, but in case of a REST\nlist operation, the mask instead applies to each individual message\nin the returned resource list. In case of a REST custom method,\nother definitions may be used. Where the mask applies will be\nclearly documented together with its declaration in the API.  In\nany case, the effect on the returned resource/resources is required\nbehavior for APIs.\n\n# Field Masks in Update Operations\n\nA field mask in update operations specifies which fields of the\ntargeted resource are going to be updated. The API is required\nto only change the values of the fields as specified in the mask\nand leave the others untouched. If a resource is passed in to\ndescribe the updated values, the API ignores the values of all\nfields not covered by the mask.\n\nIf a repeated field is specified for an update operation, the existing\nrepeated values in the target resource will be overwritten by the new values.\nNote that a repeated field is only allowed in the last position of a `paths`\nstring.\n\nIf a sub-message is specified in the last position of the field mask for an\nupdate operation, then the existing sub-message in the target resource is\noverwritten. Given the target message:\n\n    f {\n      b {\n        d : 1\n        x : 2\n      }\n      c : 1\n    }\n\nAnd an update message:\n\n    f {\n      b {\n        d : 10\n      }\n    }\n\nthen if the field mask is:\n\n paths: \"f.b\"\n\nthen the result will be:\n\n    f {\n      b {\n        d : 10\n      }\n      c : 1\n    }\n\nHowever, if the update mask was:\n\n paths: \"f.b.d\"\n\nthen the result would be:\n\n    f {\n      b {\n        d : 10\n        x : 2\n      }\n      c : 1\n    }\n\nIn order to reset a field's value to the default, the field must\nbe in the mask and set to the default value in the provided resource.\nHence, in order to reset all fields of a resource, provide a default\ninstance of the resource and set all fields in the mask, or do\nnot provide a mask as described below.\n\nIf a field mask is not present on update, the operation applies to\nall fields (as if a field mask of all fields has been specified).\nNote that in the presence of schema evolution, this may mean that\nfields the client does not know and has therefore not filled into\nthe request will be reset to their default. If this is unwanted\nbehavior, a specific service may require a client to always specify\na field mask, producing an error if not.\n\nAs with get operations, the location of the resource which\ndescribes the updated values in the request message depends on the\noperation kind. In any case, the effect of the field mask is\nrequired to be honored by the API.\n\n## Considerations for HTTP REST\n\nThe HTTP kind of an update operation which uses a field mask must\nbe set to PATCH instead of PUT in order to satisfy HTTP semantics\n(PUT must only be used for full updates).\n\n# JSON Encoding of Field Masks\n\nIn JSON, a field mask is encoded as a single string where paths are\nseparated by a comma. Fields name in each path are converted\nto/from lower-camel naming conventions.\n\nAs an example, consider the following message declarations:\n\n    message Profile {\n      User user = 1;\n      Photo photo = 2;\n    }\n    message User {\n      string display_name = 1;\n      string address = 2;\n    }\n\nIn proto a field mask for `Profile` may look as such:\n\n    mask {\n      paths: \"user.display_name\"\n      paths: \"photo\"\n    }\n\nIn JSON, the same mask is represented as below:\n\n    {\n      mask: \"user.displayName,photo\"\n    }\n\n# Field Masks and Oneof Fields\n\nField masks treat fields in oneofs just as regular fields. Consider the\nfollowing message:\n\n    message SampleMessage {\n      oneof test_oneof {\n        string name = 4;\n        SubMessage sub_message = 9;\n      }\n    }\n\nThe field mask can be:\n\n    mask {\n      paths: \"name\"\n    }\n\nOr:\n\n    mask {\n      paths: \"sub_message\"\n    }\n\nNote that oneof type names (\"test_oneof\" in this case) cannot be used in\npaths."
+      properties:
+        paths:
+          description: The set of field mask paths.
+          items:
+            type: string
+          type: array
+      title: '`FieldMask` represents a set of symbolic field paths, for example:'
+      type: object
+    v1GetMultiFieldSchemaRequest:
+      description: Request to retrieve multiple field schemas by ID for a CRM object type within a namespace.
+      properties:
+        crmObjectSubtype:
+          description: Optional. The custom object subtype the fields belong to. Only used when `crm_object_type` refers to a custom object type that defines subtypes.
+          type: string
+        crmObjectType:
+          description: Required. The CRM object type the fields belong to. Valid values include "Contact", "Activity", "Company", "Opportunity", "PotentialContact", and the ID of any custom object type.
+          type: string
+        fieldId:
+          description: Required. The IDs of the field schemas to retrieve. The response returns one entry per requested ID, in the same order; entries for IDs that were not found are returned as empty `FieldSchema` messages.
+          items:
+            type: string
+          type: array
+        locale:
+          description: 'Optional. The locale used to translate built-in field labels and descriptions. Examples: "af", "cs", "de", "en", "es-419", "fr", "it", "nl", "pt", "ru". If omitted, the default locale is used.'
+          type: string
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the field schemas belong to.
+          type: string
+      required:
+      - namespace
+      - crmObjectType
+      - fieldId
+      title: Get Multi Field Schema Request
+      type: object
+    v1FieldSchema:
+      description: Defines a field on a CRM object type. Field schemas describe the type, label, and validation rules for both built-in fields (provided by Vendasta) and partner-defined custom fields.
+      properties:
+        archived:
+          description: Output only. Set when the schema has been archived via `ArchiveFieldSchema`. Absent on non-archived schemas.
+          format: date-time
+          readOnly: true
+          type: string
+        created:
+          description: Output only. The time the schema was created.
+          format: date-time
+          readOnly: true
+          type: string
+        crmObjectSubtype:
+          description: Output only. The custom object subtype the field belongs to. Set by the service from the request `crm_object_subtype`; ignored on Create and Update.
+          readOnly: true
+          type: string
+        crmObjectType:
+          description: Output only. The CRM object type the field belongs to. Set by the service from the request `crm_object_type`; ignored on Create and Update.
+          readOnly: true
+          type: string
+        currencyCode:
+          description: Optional. The ISO 4217 currency code (e.g. "USD", "EUR", "CAD") used when `field_type` is `FIELD_TYPE_CURRENCY`. Ignored for other field types.
+          type: string
+        dropdownOptions:
+          description: Optional. The set of allowed values when `field_type` is `FIELD_TYPE_DROPDOWN`. Ignored for other field types.
+          items:
+            $ref: '#/components/schemas/v1DropdownOption'
+          type: array
+        externalId:
+          description: Optional. A partner-defined alternate identifier for this field, used to map an external system's field name onto this schema. Has no effect on Vendasta storage or validation.
+          type: string
+        fieldDescription:
+          description: Optional. The display description of the field shown in the partner UI. For dropdown fields, this should indicate which values from `dropdown_options` are valid.
+          type: string
+        fieldId:
+          description: The unique identifier of the field schema. Required on `UpdateFieldSchema` to identify the schema being updated. On `CreateFieldSchema` it is auto-assigned by the service and must be omitted on the request.
+          type: string
+        fieldName:
+          description: Required on Create. The display name of the field shown in the partner UI.
+          type: string
+        fieldType:
+          $ref: '#/components/schemas/v1FieldType'
+        namespace:
+          description: Output only. The namespace (partner ID or account group ID) the schema belongs to. Set by the service from the request namespace; ignored on Create and Update.
+          readOnly: true
+          type: string
+        readonly:
+          description: Optional. When true, the value of this field on CRM objects cannot be modified by API or UI callers (the field is treated as system-managed). Default false.
+          type: boolean
+        skipAutomation:
+          description: Optional. When true, value changes to this field on a CRM object will not trigger automations. Default false.
+          type: boolean
+        uniqueness:
+          $ref: '#/components/schemas/crmv1FieldUniqueness'
+        updated:
+          description: Output only. The time the schema was last updated.
+          format: date-time
+          readOnly: true
+          type: string
+      title: Field Schema
+      type: object
+    v1DropdownOption:
+      properties:
+        label:
+          description: The human-readable label displayed for this option in the partner UI.
+          type: string
+        value:
+          description: The stored value written to the CRM object when this option is selected.
+          type: string
+      type: object
+    vendastatypesPagedResponseMetadata:
+      properties:
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
+          type: string
+        totalResults:
+          format: int64
+          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+  securitySchemes:
+    OAuth2:
+      flows:
+        authorizationCode:
+          authorizationUrl: https://sso-api-prod.apigateway.co/oauth2/auth
+          scopes:
+            crm: Allows the application to manage all data in your CRM
+            crm.association: Allows the application to manage associations in your CRM
+            crm.association:read: Allows the application view-only access to associations in your CRM
+            crm.company: Allows the application to manage your CRM companies
+            crm.company:read: Allows the application view-only access to CRM companies
+            crm.contact: Allows the application to manage your CRM contacts
+            crm.contact:read: Allows the application view-only access to CRM contacts
+            crm.custom-object: Allows the application to manage your CRM custom objects
+            crm.custom-object:read: Allows the application view-only access to CRM custom objects
+            crm.opportunity: Allows the application to manage your CRM opportunities
+            crm.opportunity:read: Allows the application view-only access to CRM opportunities
+            crm.schema: Allows the application to manage your CRM object schemas
+            crm.schema:read: Allows the application view-only access to CRM object schemas
+          tokenUrl: https://sso-api-prod.apigateway.co/oauth2/token
+      type: oauth2
