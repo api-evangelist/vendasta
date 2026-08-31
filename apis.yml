@@ -133,7 +133,7 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - Customers
+  - customer
   tags_raw:
   - customer
   properties:
@@ -494,6 +494,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Glossary Terms
+  tags_raw:
   - Glossary-Terms
   properties:
   - type: OpenAPI
@@ -605,6 +607,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Message
+  tags_raw:
   - Messages
   properties:
   - type: OpenAPI
@@ -615,6 +619,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Monitors
+  tags_raw:
   - Monitor
   properties:
   - type: OpenAPI
@@ -667,6 +673,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -769,6 +777,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - SalesAccounts
+  tags_raw:
   - Sales Accounts
   properties:
   - type: OpenAPI
@@ -779,6 +789,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Sales Orders
+  tags_raw:
   - SalesOrders
   properties:
   - type: OpenAPI
@@ -800,6 +812,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Search Service
+  tags_raw:
   - SearchService
   properties:
   - type: OpenAPI
@@ -840,6 +854,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Site Info
+  tags_raw:
   - SiteInfo
   properties:
   - type: OpenAPI
@@ -911,6 +927,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
@@ -961,6 +979,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - User
+  tags_raw:
   - Users
   properties:
   - type: OpenAPI
