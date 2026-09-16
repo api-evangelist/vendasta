@@ -164,20 +164,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/vendasta-marketplace-app-api-openapi.yml
-- aid: vendasta:vendasta-oauth-api
-  name: Vendasta oauth API
-  description: >-
-    The OAuth APIs allow applications to retrieve a bearer token that must be supplied with all API calls.
-    See the Authentication documentation for more details.
-  humanURL: https://developers.vendasta.com/vendor
-  baseURL: https://developers.vendasta.com/api/v1
-  tags:
-  - Authentication
-  tags_raw:
-  - oauth
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-oauth-api-openapi.yml
 - aid: vendasta:vendasta-user-api
   name: Vendasta user API
   description: >-
@@ -783,18 +769,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/vendasta-sales-accounts-api-openapi.yml
-- aid: vendasta:vendasta-salesorders-api
-  name: Vendasta Sales Orders API
-  description: The SalesOrders API from Vendasta — 3 operation(s) for salesorders.
-  humanURL: https://developers.vendasta.com/vendor
-  baseURL: https://developers.vendasta.com/api/v1
-  tags:
-  - Sales Orders
-  tags_raw:
-  - SalesOrders
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-salesorders-api-openapi.yml
 - aid: vendasta:vendasta-salesordersauxiliaryfieldschema-api
   name: Vendasta Sales Orders Auxiliary Field Schema API
   description: >-
@@ -806,18 +780,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/vendasta-salesordersauxiliaryfieldschema-api-openapi.yml
-- aid: vendasta:vendasta-searchservice-api
-  name: Vendasta Search Service API
-  description: The SearchService API from Vendasta — 2 operation(s) for searchservice.
-  humanURL: https://developers.vendasta.com/vendor
-  baseURL: https://developers.vendasta.com/api/v1
-  tags:
-  - Search Service
-  tags_raw:
-  - SearchService
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-searchservice-api-openapi.yml
 - aid: vendasta:vendasta-send-welcome-email-api
   name: Vendasta Send Welcome Email API
   description: The Send Welcome Email API from Vendasta — 1 operation(s) for send welcome email.
@@ -848,18 +810,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/vendasta-sitedetail-service-api-openapi.yml
-- aid: vendasta:vendasta-siteinfo-api
-  name: Vendasta Site Info API
-  description: The SiteInfo API from Vendasta — 1 operation(s) for siteinfo.
-  humanURL: https://developers.vendasta.com/vendor
-  baseURL: https://developers.vendasta.com/api/v1
-  tags:
-  - Site Info
-  tags_raw:
-  - SiteInfo
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-siteinfo-api-openapi.yml
 - aid: vendasta:vendasta-sitemanager-api
   name: Vendasta Site Manager API
   description: The SiteManager API from Vendasta — 5 operation(s) for sitemanager.
@@ -890,16 +840,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/vendasta-social-profiles-api-openapi.yml
-- aid: vendasta:vendasta-socialposts-api
-  name: Vendasta Social Posts API
-  description: The SocialPosts API from Vendasta — 3 operation(s) for socialposts.
-  humanURL: https://developers.vendasta.com/vendor
-  baseURL: https://developers.vendasta.com/api/v1
-  tags:
-  - SocialPosts
-  properties:
-  - type: OpenAPI
-    url: openapi/vendasta-socialposts-api-openapi.yml
 - aid: vendasta:vendasta-socialpostsv2-api
   name: Vendasta Social Posts V2 API
   description: The SocialPostsV2 API from Vendasta — 2 operation(s) for socialpostsv2.
@@ -1016,6 +956,58 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/vendasta-wordpressservice-api-openapi.yml
+- aid: vendasta:vendasta-o-auth-api
+  name: Vendasta O Auth API
+  description: >-
+    The OAuth APIs allow applications to retrieve a bearer token that must be supplied with all API calls.
+    See the Authentication documentation for more details.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - O Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-o-auth-api-openapi.yml
+- aid: vendasta:vendasta-sales-orders-api
+  name: Vendasta Sales Orders API
+  description: The Sales Orders API from Vendasta — 3 operation(s) for sales orders.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Sales Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-sales-orders-api-openapi.yml
+- aid: vendasta:vendasta-search-service-api
+  name: Vendasta Search Service API
+  description: The Search Service API from Vendasta — 2 operation(s) for search service.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Search Service
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-search-service-api-openapi.yml
+- aid: vendasta:vendasta-site-info-api
+  name: Vendasta Site Info API
+  description: The Site Info API from Vendasta — 1 operation(s) for site info.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Site Info
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-site-info-api-openapi.yml
+- aid: vendasta:vendasta-social-posts-api
+  name: Vendasta Social Posts API
+  description: The Social Posts API from Vendasta — 3 operation(s) for social posts.
+  humanURL: https://developers.vendasta.com/vendor
+  baseURL: https://developers.vendasta.com/api/v1
+  tags:
+  - Social Posts
+  properties:
+  - type: OpenAPI
+    url: openapi/vendasta-social-posts-api-openapi.yml
 common:
 - type: CapabilityMap
   url: capabilities/vendasta-capability-edges.yml
