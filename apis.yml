@@ -956,18 +956,18 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/vendasta-wordpressservice-api-openapi.yml
-- aid: vendasta:vendasta-o-auth-api
-  name: Vendasta O Auth API
+- aid: vendasta:vendasta-oauth-api
+  name: Vendasta OAUTH API
   description: >-
     The OAuth APIs allow applications to retrieve a bearer token that must be supplied with all API calls.
     See the Authentication documentation for more details.
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - O Auth
+  - oauth
   properties:
   - type: OpenAPI
-    url: openapi/vendasta-o-auth-api-openapi.yml
+    url: openapi/vendasta-oauth-api-openapi.yml
 - aid: vendasta:vendasta-sales-orders-api
   name: Vendasta Sales Orders API
   description: The Sales Orders API from Vendasta — 3 operation(s) for sales orders.
