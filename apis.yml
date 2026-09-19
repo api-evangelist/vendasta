@@ -206,6 +206,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Assistant
+  tags_raw:
   - Assistants
   properties:
   - type: OpenAPI
@@ -226,6 +228,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Automation
+  tags_raw:
   - Automations
   properties:
   - type: OpenAPI
@@ -964,6 +968,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - Authentication
+  tags_raw:
   - oauth
   properties:
   - type: OpenAPI
@@ -1004,6 +1010,8 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
+  - SocialPosts
+  tags_raw:
   - Social Posts
   properties:
   - type: OpenAPI
