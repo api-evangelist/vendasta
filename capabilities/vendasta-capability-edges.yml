@@ -107,7 +107,8 @@ edges:
   reason: Generic CRUD/list surface over CRM record types (companies, contacts, activities) with field-schema
     metadata — this is customer master/record data management in the CRM.
 - tag: SocialPosts
-  spec_file: vendasta-socialposts-api-openapi.yml
+  spec_file: vendasta-social-posts-api-openapi.yml
+  reanchored_from: vendasta-socialposts-api-openapi.yml
   capability_id: BC-400.60
   capability_id_l1: BC-400
   capability_name: Digital Marketing Management
