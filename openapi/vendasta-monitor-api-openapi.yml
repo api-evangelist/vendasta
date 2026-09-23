@@ -65,27 +65,21 @@ paths:
       - Monitor
 components:
   schemas:
-    rpcStatus:
+    v1UptimeSearchResponse:
+      description: Response containing uptime and health data for WordPress sites.
       properties:
-        code:
-          format: int32
-          type: integer
-        details:
+        siteHealths:
+          description: Output only. The list of site health records.
           items:
-            $ref: '#/components/schemas/protobufAny'
+            $ref: '#/components/schemas/v1SiteHealths'
+          readOnly: true
           type: array
-        message:
+        totalResults:
+          description: Output only. The total number of results for this query across all pages.
+          format: int64
+          readOnly: true
           type: string
-      type: object
-    v1UptimeSearchRequest:
-      description: Request to search for WordPress site uptime data for a partner.
-      properties:
-        partnerId:
-          description: Required. The partner ID to search uptime data for.
-          type: string
-      required:
-      - partnerId
-      title: UptimeSearchRequest
+      title: UptimeSearchResponse
       type: object
     v1SiteHealths:
       description: Health and uptime status information for a WordPress site.
@@ -132,6 +126,32 @@ components:
           type: string
       title: SiteHealths
       type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1UptimeEvent:
+      description: A single uptime event data point with timestamp and value.
+      properties:
+        dateTime:
+          description: Output only. The date and time of the uptime event.
+          format: date-time
+          readOnly: true
+          type: string
+        value:
+          description: Output only. The uptime value at this point in time.
+          readOnly: true
+          type: string
+      title: UptimeEvent
+      type: object
     v1FetchUptimeDataRequest:
       description: Request to fetch uptime data for a specific account within a date range.
       properties:
@@ -149,20 +169,6 @@ components:
       required:
       - accountId
       title: FetchUptimeDataRequest
-      type: object
-    v1UptimeEvent:
-      description: A single uptime event data point with timestamp and value.
-      properties:
-        dateTime:
-          description: Output only. The date and time of the uptime event.
-          format: date-time
-          readOnly: true
-          type: string
-        value:
-          description: Output only. The uptime value at this point in time.
-          readOnly: true
-          type: string
-      title: UptimeEvent
       type: object
     v1FetchUptimeDataResponse:
       description: Response containing uptime events and uptime percentages for the requested period.
@@ -185,27 +191,21 @@ components:
           type: integer
       title: FetchUptimeDataResponse
       type: object
+    v1UptimeSearchRequest:
+      description: Request to search for WordPress site uptime data for a partner.
+      properties:
+        partnerId:
+          description: Required. The partner ID to search uptime data for.
+          type: string
+      required:
+      - partnerId
+      title: UptimeSearchRequest
+      type: object
     protobufAny:
       additionalProperties: {}
       properties:
         '@type':
           type: string
-      type: object
-    v1UptimeSearchResponse:
-      description: Response containing uptime and health data for WordPress sites.
-      properties:
-        siteHealths:
-          description: Output only. The list of site health records.
-          items:
-            $ref: '#/components/schemas/v1SiteHealths'
-          readOnly: true
-          type: array
-        totalResults:
-          description: Output only. The total number of results for this query across all pages.
-          format: int64
-          readOnly: true
-          type: string
-      title: UptimeSearchResponse
       type: object
   securitySchemes:
     OAuth2:

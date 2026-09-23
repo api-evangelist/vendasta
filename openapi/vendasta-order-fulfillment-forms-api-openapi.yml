@@ -75,7 +75,7 @@ paths:
                           value: https://example.com/logo.png
                           label: Logo
                           type: file
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Returns all fulfillment form submissions for the apps in a given order. Each app with a fulfillment order will have its own entry.'
@@ -96,7 +96,7 @@ paths:
       responses:
         '204':
           description: No Content
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       tags:
       - Order Fulfillment Forms
   /orderFulfillmentForms/{id}:
@@ -140,7 +140,7 @@ paths:
                           value: Mon-Fri 9am-5pm
                           label: Business Hours
                           type: text
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Returns the latest fulfillment form submission for a specific app within an order.'
@@ -218,7 +218,7 @@ paths:
                           value: Mon-Fri 9am-5pm
                           label: Business Hours
                           type: text
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Saves (upserts) form field data for a specific app within an order.
@@ -261,7 +261,7 @@ paths:
       responses:
         '204':
           description: No Content
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       tags:
       - Order Fulfillment Forms
   /orderFulfillmentForms/{id}/actions/submit:
@@ -276,7 +276,7 @@ paths:
     post:
       summary: Submit a fulfillment form to the vendor
       operationId: post-orderFulfillmentForms-submit
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Explicitly sets the fulfillment order status to `inReview`, notifying the vendor that the form is ready for processing.

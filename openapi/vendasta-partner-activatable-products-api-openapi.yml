@@ -25,7 +25,7 @@ paths:
     get:
       summary: Get Partner Activatable Product
       operationId: get-partnerActivatableProducts-id
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Returns the details of a product listed in a reseller''s store for a known id.'
@@ -74,7 +74,7 @@ paths:
       responses:
         '200':
           description: OK
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       tags:
       - Partner Activatable Products
   /partnerActivatableProducts:
@@ -135,7 +135,14 @@ paths:
                         type: string
                       next:
                         type: string
-      description: "[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`\n\nProvides a list of products that can be activated by a partner for their customers. \nYou must filter the list to a single partner using the `filter[partner.id]=PID` query param. \nSorted by the whiteLabelName field in ascending order. "
+      description: 'Status: `Trusted Tester`
+
+
+        Provides a list of products that can be activated by a partner for their customers.
+
+        You must filter the list to a single partner using the `filter[partner.id]=PID` query param.
+
+        Sorted by the whiteLabelName field in ascending order.'
       security:
       - OAuth2Demo:
         - partner:read
@@ -190,7 +197,7 @@ paths:
       responses:
         '200':
           description: OK
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       tags:
       - Partner Activatable Products
 components:

@@ -36,31 +36,6 @@ paths:
       - Composer
 components:
   schemas:
-    v1Exception:
-      description: An error encountered for a specific social service during a post operation.
-      properties:
-        message:
-          description: Output only. The error message describing what went wrong.
-          readOnly: true
-          type: string
-        socialServiceId:
-          description: Output only. The social service ID where the error occurred.
-          readOnly: true
-          type: string
-      title: Exception
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
     v1GMBPostCustomization:
       properties:
         ctaType:
@@ -76,63 +51,57 @@ components:
         title:
           type: string
       type: object
-    v1PostType:
-      default: POST_TYPE_INVALID
-      enum:
-      - POST_TYPE_INVALID
-      - POST_TYPE_IMAGE
-      - POST_TYPE_VIDEO
-      - POST_TYPE_GIF
-      - POST_TYPE_REEL
-      - POST_TYPE_CAROUSEL
-      - POST_TYPE_STORIES
-      - POST_TYPE_TEXT
-      - POST_TYPE_IMAGE_STORY
-      - POST_TYPE_VIDEO_STORY
-      type: string
-    composerv1MediaEntry:
-      description: 'Media Entry field to have media
-
-        This is currently starting with Instagram Carousel posts but
-
-        we would need to update other post types as well.'
+    v1Exception:
+      description: An error encountered for a specific social service during a post operation.
       properties:
-        containerId:
-          type: string
-        mediaEntryId:
-          type: string
-        mediaType:
-          type: string
-        mediaUrl:
-          type: string
-        metaData:
-          items:
-            $ref: '#/components/schemas/v1MetaData'
-          type: array
-      type: object
-    v1UpdatePostsRequest:
-      description: Request to update one or more scheduled social media posts.
-      properties:
-        posts:
-          description: Required. The list of posts to update. Each post must include its internal_post_id.
-          items:
-            $ref: '#/components/schemas/v1Post'
-          type: array
-      required:
-      - posts
-      title: UpdatePostsRequest
-      type: object
-    v1Result:
-      description: A successful result containing the social post ID and post details.
-      properties:
-        post:
-          $ref: '#/components/schemas/v1Post'
-        socialPostId:
-          description: Output only. The social post ID assigned by the social media platform.
+        message:
+          description: Output only. The error message describing what went wrong.
           readOnly: true
           type: string
-      title: Result
+        socialServiceId:
+          description: Output only. The social service ID where the error occurred.
+          readOnly: true
+          type: string
+      title: Exception
       type: object
+    v1TikTokCustomization:
+      properties:
+        allowComment:
+          type: boolean
+        allowDuet:
+          type: boolean
+        allowStitch:
+          type: boolean
+        isBrandOrganic:
+          type: boolean
+        isBrandedContent:
+          type: boolean
+      type: object
+    v1YoutubeCustomization:
+      properties:
+        privacyStatus:
+          $ref: '#/components/schemas/YoutubeCustomizationPrivacyStatus'
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    YoutubeCustomizationPrivacyStatus:
+      default: STATUS_INVALID
+      enum:
+      - STATUS_INVALID
+      - STATUS_PUBLIC
+      - STATUS_PRIVATE
+      - STATUS_UNLISTED
+      type: string
     v1MetaData:
       description: 'Metadata message type for saving properties in individual µservice
 
@@ -143,6 +112,21 @@ components:
         propertyName:
           type: string
         propertyValue:
+          type: string
+      type: object
+    v1Link:
+      properties:
+        description:
+          title: The description of the link
+          type: string
+        name:
+          title: The name of the link preview
+          type: string
+        picture:
+          description: The preview image associated with the link.
+          type: string
+        title:
+          title: The title for the link
           type: string
       type: object
     v1Post:
@@ -218,13 +202,19 @@ components:
       - internalPostId
       title: Post
       type: object
-    YoutubeCustomizationPrivacyStatus:
-      default: STATUS_INVALID
+    v1PostType:
+      default: POST_TYPE_INVALID
       enum:
-      - STATUS_INVALID
-      - STATUS_PUBLIC
-      - STATUS_PRIVATE
-      - STATUS_UNLISTED
+      - POST_TYPE_INVALID
+      - POST_TYPE_IMAGE
+      - POST_TYPE_VIDEO
+      - POST_TYPE_GIF
+      - POST_TYPE_REEL
+      - POST_TYPE_CAROUSEL
+      - POST_TYPE_STORIES
+      - POST_TYPE_TEXT
+      - POST_TYPE_IMAGE_STORY
+      - POST_TYPE_VIDEO_STORY
       type: string
     v1UpdatePostsResponse:
       description: Response containing the results of updating social media posts.
@@ -243,44 +233,54 @@ components:
           type: array
       title: UpdatePostsResponse
       type: object
-    v1Link:
+    v1UpdatePostsRequest:
+      description: Request to update one or more scheduled social media posts.
       properties:
-        description:
-          title: The description of the link
+        posts:
+          description: Required. The list of posts to update. Each post must include its internal_post_id.
+          items:
+            $ref: '#/components/schemas/v1Post'
+          type: array
+      required:
+      - posts
+      title: UpdatePostsRequest
+      type: object
+    composerv1MediaEntry:
+      description: 'Media Entry field to have media
+
+        This is currently starting with Instagram Carousel posts but
+
+        we would need to update other post types as well.'
+      properties:
+        containerId:
           type: string
-        name:
-          title: The name of the link preview
+        mediaEntryId:
           type: string
-        picture:
-          description: The preview image associated with the link.
+        mediaType:
           type: string
-        title:
-          title: The title for the link
+        mediaUrl:
           type: string
+        metaData:
+          items:
+            $ref: '#/components/schemas/v1MetaData'
+          type: array
+      type: object
+    v1Result:
+      description: A successful result containing the social post ID and post details.
+      properties:
+        post:
+          $ref: '#/components/schemas/v1Post'
+        socialPostId:
+          description: Output only. The social post ID assigned by the social media platform.
+          readOnly: true
+          type: string
+      title: Result
       type: object
     protobufAny:
       additionalProperties: {}
       properties:
         '@type':
           type: string
-      type: object
-    v1TikTokCustomization:
-      properties:
-        allowComment:
-          type: boolean
-        allowDuet:
-          type: boolean
-        allowStitch:
-          type: boolean
-        isBrandOrganic:
-          type: boolean
-        isBrandedContent:
-          type: boolean
-      type: object
-    v1YoutubeCustomization:
-      properties:
-        privacyStatus:
-          $ref: '#/components/schemas/YoutubeCustomizationPrivacyStatus'
       type: object
   securitySchemes:
     OAuth2:

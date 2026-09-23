@@ -62,31 +62,47 @@ paths:
       - BlogPostsService
 components:
   schemas:
-    v2DeleteBlogPostRequest:
-      description: Request message for deleting a blog post.
+    v2MetadataV2:
+      description: A key-value pair used to store generic metadata information associated with a post or media.
       properties:
-        businessId:
-          description: Required. The business id.
+        name:
+          description: Required. The property name or key.
           type: string
-        internalPostId:
-          description: Required. The internal post id of the blog post to delete.
-          type: string
-        parentPostId:
-          description: Optional. The parent post id, if applicable.
+        value:
+          description: Required. The property value associated with the name/key.
           type: string
       required:
-      - businessId
-      - internalPostId
-      title: DeleteBlogPostRequest
+      - name
+      - value
+      title: MetadataV2
       type: object
-    socialpostsv2Category:
+    v2UpdateBlogPostRequest:
+      description: Request message for updating an existing blog post.
+      properties:
+        blogPost:
+          $ref: '#/components/schemas/v2BlogPost'
+      required:
+      - blogPost
+      title: UpdateBlogPostRequest
+      type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    socialpostsv2Author:
       properties:
         id:
           format: int64
-          title: This is the categoryId
           type: string
         name:
-          title: This is the category name
           type: string
       type: object
     v2BlogPost:
@@ -197,47 +213,31 @@ components:
           title: Video property for Blog
           type: array
       type: object
-    googlerpcStatus:
+    v2DeleteBlogPostRequest:
+      description: Request message for deleting a blog post.
       properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
+        businessId:
+          description: Required. The business id.
           type: string
-      type: object
-    v2UpdateBlogPostRequest:
-      description: Request message for updating an existing blog post.
-      properties:
-        blogPost:
-          $ref: '#/components/schemas/v2BlogPost'
-      required:
-      - blogPost
-      title: UpdateBlogPostRequest
-      type: object
-    v2MetadataV2:
-      description: A key-value pair used to store generic metadata information associated with a post or media.
-      properties:
-        name:
-          description: Required. The property name or key.
+        internalPostId:
+          description: Required. The internal post id of the blog post to delete.
           type: string
-        value:
-          description: Required. The property value associated with the name/key.
+        parentPostId:
+          description: Optional. The parent post id, if applicable.
           type: string
       required:
-      - name
-      - value
-      title: MetadataV2
+      - businessId
+      - internalPostId
+      title: DeleteBlogPostRequest
       type: object
-    socialpostsv2Author:
+    socialpostsv2Category:
       properties:
         id:
           format: int64
+          title: This is the categoryId
           type: string
         name:
+          title: This is the category name
           type: string
       type: object
     v2MediaProperty:

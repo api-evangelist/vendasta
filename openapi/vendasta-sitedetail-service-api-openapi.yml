@@ -58,22 +58,6 @@ components:
         message:
           type: string
       type: object
-    v1SiteDetails:
-      description: Domain information for a single WordPress site including primary and alternate domains.
-      properties:
-        accountId:
-          description: The account ID that owns the site.
-          type: string
-        alternateDomains:
-          description: Alternate domains associated with the site.
-          items:
-            type: string
-          type: array
-        primaryDomain:
-          description: The primary domain of the site.
-          type: string
-      title: Site Details
-      type: object
     v1ListSiteDetailsResponse:
       description: Response message containing paginated site domain information.
       properties:
@@ -90,6 +74,22 @@ components:
           format: int64
           type: string
       title: List Site Details Response
+      type: object
+    v1SiteDetails:
+      description: Domain information for a single WordPress site including primary and alternate domains.
+      properties:
+        accountId:
+          description: The account ID that owns the site.
+          type: string
+        alternateDomains:
+          description: Alternate domains associated with the site.
+          items:
+            type: string
+          type: array
+        primaryDomain:
+          description: The primary domain of the site.
+          type: string
+      title: Site Details
       type: object
     v1ListSiteDetailsRequest:
       description: Request message for listing primary and alternate domains for all WordPress sites owned by a partner.

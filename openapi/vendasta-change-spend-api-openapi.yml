@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: '1.0'
-  title: Vendasta Marketplace API V1 Endpoints account change_spend API
-  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+  title: Vendasta Marketplace API V1 Endpoints Change Spend API
+  description: The Change Spend APIs allow interact with change spend requests, like resolving them by approving or rejecting
 servers:
 - url: https://developers.vendasta.com/api/v1
   description: Production Server
@@ -61,6 +61,8 @@ paths:
                   type: string
                   description: If approved is false, you must give a reason for rejecting the change spend.
         required: true
+      operationId: postChangeSpendResolve
+      x-operation-id-source: derived
 components:
   securitySchemes:
     BearerAuth:

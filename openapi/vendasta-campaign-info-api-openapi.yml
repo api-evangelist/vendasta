@@ -119,15 +119,6 @@ paths:
         status: trustedTester
 components:
   parameters:
-    endAt:
-      name: endAt
-      in: query
-      required: false
-      schema:
-        type: string
-        format: date-time
-        example: '2021-01-01T00:00:01Z'
-      description: Only return data from before the specified end date and time. If not specified all data will be returned.
     Authorization:
       name: Authorization
       in: header
@@ -137,6 +128,15 @@ components:
         pattern: ^Bearer\s\S+
         example: Bearer <access token>
       description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+    endAt:
+      name: endAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data from before the specified end date and time. If not specified all data will be returned.
     pageLimit:
       name: page[limit]
       in: query
@@ -147,13 +147,6 @@ components:
         minimum: 1
         default: 25
       description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
-    pageCursor:
-      name: page[cursor]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
     startAt:
       name: startAt
       in: query
@@ -164,6 +157,13 @@ components:
         default: '1970-01-01T00:00:01Z'
         example: '2021-01-01T00:00:01Z'
       description: Only return data starting from the specified start date and time
+    pageCursor:
+      name: page[cursor]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
   schemas:
     campaignInfo:
       title: Campaign Info

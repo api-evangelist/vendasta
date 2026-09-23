@@ -36,18 +36,6 @@ paths:
       - SiteOptionsService
 components:
   schemas:
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
     v1GetSiteUpdateRequest:
       description: Request to retrieve update information for a WordPress site including PHP version, core version, and available plugin updates.
       properties:
@@ -60,6 +48,18 @@ components:
       required:
       - siteId
       title: GetSiteUpdateRequest
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
       type: object
     v1SiteUpdate:
       description: Version and update information for a WordPress site, including PHP version, core version, and available plugin updates.

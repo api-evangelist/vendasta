@@ -135,6 +135,44 @@ components:
         pattern: ^Bearer\s\S+
         example: Bearer <access token>
       description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+    endAt:
+      name: endAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data from before the specified end date and time. If not specified all data will be returned.
+    pageLimit:
+      name: page[limit]
+      in: query
+      required: false
+      schema:
+        type: number
+        maximum: 100
+        minimum: 1
+        default: 25
+      description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    startAt:
+      name: startAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        default: '1970-01-01T00:00:01Z'
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data starting from the specified start date and time
+    connectedAccount.resourceId:
+      name: filter[connectedAccount.id]
+      in: query
+      schema:
+        type: string
+        example: AG-AHFJEHD:google:1324354657
+        uniqueItems: true
+      description: Comma separated list of Resource IDs of Connected Advertising Accounts
+      allowEmptyValue: true
     businessLocation.id:
       name: filter[businessLocation.id]
       in: query
@@ -146,25 +184,6 @@ components:
       description: A single Business Location ID
       allowEmptyValue: true
       required: true
-    pageLimit:
-      name: page[limit]
-      in: query
-      required: false
-      schema:
-        type: number
-        maximum: 100
-        minimum: 1
-        default: 25
-      description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
-    endAt:
-      name: endAt
-      in: query
-      required: false
-      schema:
-        type: string
-        format: date-time
-        example: '2021-01-01T00:00:01Z'
-      description: Only return data from before the specified end date and time. If not specified all data will be returned.
     pageCursor:
       name: page[cursor]
       in: query
@@ -183,25 +202,6 @@ components:
         - facebook
         - localads
       description: Comma separated list of Advertising Providers
-    connectedAccount.resourceId:
-      name: filter[connectedAccount.id]
-      in: query
-      schema:
-        type: string
-        example: AG-AHFJEHD:google:1324354657
-        uniqueItems: true
-      description: Comma separated list of Resource IDs of Connected Advertising Accounts
-      allowEmptyValue: true
-    startAt:
-      name: startAt
-      in: query
-      required: false
-      schema:
-        type: string
-        format: date-time
-        default: '1970-01-01T00:00:01Z'
-        example: '2021-01-01T00:00:01Z'
-      description: Only return data starting from the specified start date and time
   schemas:
     accountStats:
       title: Account Stats

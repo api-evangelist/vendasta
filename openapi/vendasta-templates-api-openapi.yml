@@ -34,7 +34,57 @@ paths:
                 properties:
                   data:
                     $ref: '#/components/schemas/reviewRequestTemplates'
-      description: "[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`\n\nUsed to create a new template within Customer Voice. Dynamic content can be inserted via substitution variables. \n\nThe follow variables are supported within an email template:\n\n- `{{.customerName}}`: The first and last name of the customer.\n- `{{.customerFirstName}}`: The first name of the customer.\n- `{{.businessName}}`: The business location name.\n- `{{.buttonUrl}}`: The review request button URL.\n\nCan be used for dynamic content visibility within an email template:\n\n- `{{.displaySource1}}`: Whether or not to display source 1.\n- `{{.displaySource2}}`: Whether or not to display source 2.\n- `{{.displaySource3}}`: Whether or not to display source 3.\n\nUsed to render images within an email template:\n\n- `<img style=\"border-radius: 50%;\" src=\"https://www.cdnstyles.com/static/images/icon50/sourceId-{{.sourceId1}}.png\">`\n- `<img style=\"border-radius: 50%;\" src=\"https://www.cdnstyles.com/static/images/icon50/sourceId-{{.sourceId2}}.png\">`\n- `<img style=\"border-radius: 50%;\" src=\"https://www.cdnstyles.com/static/images/icon50/sourceId-{{.sourceId3}}.png\">`\n\nUsed to render links within an email template:    \n\n- `<a href=\"{{.shareUrl1}}\" style=\"text-decoration: none; color: #999999;\">{{.sourceName1}}</a>`\n- `<a href=\"{{.shareUrl2}}\" style=\"text-decoration: none; color: #999999;\">{{.sourceName2}}</a>`\n- `<a href=\"{{.shareUrl3}}\" style=\"text-decoration: none; color: #999999;\">{{.sourceName3}}</a>`\n\nThe following members must be populated during creation:\n- `relationships.businessLocation.data.id`"
+      description: 'Status: `Trusted Tester`
+
+
+        Used to create a new template within Customer Voice. Dynamic content can be inserted via substitution variables.
+
+
+        The follow variables are supported within an email template:
+
+
+        - `{{.customerName}}`: The first and last name of the customer.
+
+        - `{{.customerFirstName}}`: The first name of the customer.
+
+        - `{{.businessName}}`: The business location name.
+
+        - `{{.buttonUrl}}`: The review request button URL.
+
+
+        Can be used for dynamic content visibility within an email template:
+
+
+        - `{{.displaySource1}}`: Whether or not to display source 1.
+
+        - `{{.displaySource2}}`: Whether or not to display source 2.
+
+        - `{{.displaySource3}}`: Whether or not to display source 3.
+
+
+        Used to render images within an email template:
+
+
+        - ``
+
+        - ``
+
+        - ``
+
+
+        Used to render links within an email template:
+
+
+        - `{{.sourceName1}}`
+
+        - `{{.sourceName2}}`
+
+        - `{{.sourceName3}}`
+
+
+        The following members must be populated during creation:
+
+        - `relationships.businessLocation.data.id`'
       x-lifecycle:
         status: trustedTester
       security:
@@ -152,7 +202,7 @@ paths:
                         type: string
                         description: The URI at which the next batch of templates can be gotten from
                         format: uri
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Produces a list of templates'
@@ -195,7 +245,7 @@ paths:
       responses:
         '204':
           description: No Content
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       tags:
       - Templates
   /reviewRequestTemplates/{id}:
@@ -232,7 +282,7 @@ paths:
       operationId: get-templates-id
       x-lifecycle:
         status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Fetch the current values for the specified template.'
@@ -255,7 +305,7 @@ paths:
       operationId: delete-templates-id
       x-lifecycle:
         status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Delete the specified template.'
@@ -278,7 +328,7 @@ paths:
       operationId: patch-templates-id
       tags:
       - Templates
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Update the existing template.
@@ -338,7 +388,7 @@ paths:
     options:
       summary: List valid HTTP verbs for /reviewRequestTemplates/{id}
       operationId: options-templates-id
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       responses:
         '204':
           description: No Content

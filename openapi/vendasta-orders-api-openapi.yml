@@ -87,7 +87,20 @@ paths:
                           type: businessLocations
       x-lifecycle:
         status: trustedTester
-      description: "[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`\n\nUse this operation to create a new order for a business.\n\nBy default all orders created by API start out in the `processing` status and do not require approval by either the partner admin or SMB admin. You may create orders with a statusCode of `draft` to simply pre populate the order and then finish processing within the platform. To create an order and send it to admins for approval use the statusCode of `submitted`. \n\n<!-- theme: warning -->\n>Note: For newly created Business Locations/Sales Account it does take a few seconds for the newly created account to be replicated to the billing system and for the billing system to setup some additional records for it. It is usually under 5 seconds  but may take a little longer on high traffic days.\n>\n>We recommend checking for the `NotReady` status code in the error response and retrying on that with an exponential backoff."
+      description: 'Status: `Trusted Tester`
+
+
+        Use this operation to create a new order for a business.
+
+
+        By default all orders created by API start out in the `processing` status and do not require approval by either the partner admin or SMB admin. You may create orders with a statusCode of `draft` to simply pre populate the order and then finish processing within the platform. To create an order and send it to admins for approval use the statusCode of `submitted`.
+
+
+        >Note: For newly created Business Locations/Sales Account it does take a few seconds for the newly created account to be replicated to the billing system and for the billing system to setup some additional records for it. It is usually under 5 seconds but may take a little longer on high traffic days.
+
+        >
+
+        >We recommend checking for the `NotReady` status code in the error response and retrying on that with an exponential backoff.'
       parameters:
       - schema:
           type: string
@@ -114,7 +127,7 @@ paths:
     options:
       operationId: options-orders
       summary: List valid HTTP verbs for /orders/{id}
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       responses:
         '204':
           description: No Content
@@ -149,7 +162,7 @@ paths:
                         type: string
                         description: The URI at which the next batch of orders can be gotten from
                         format: uri
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Produces a list of orders.'
@@ -248,7 +261,7 @@ paths:
         - order:read
       x-lifecycle:
         status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Fetch the current values for the specified order.'
@@ -264,7 +277,7 @@ paths:
     options:
       operationId: options-order-id
       summary: List valid HTTP verbs for /orders/{id}
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       responses:
         '204':
           description: No Content
@@ -313,7 +326,7 @@ paths:
                       type: orderCustomFields
                       id: AG-1234123412:ORD-123456
       operationId: get-orderCustomFieldsID-by-order
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Returns a reference to the custom metadata for this sales order. Use the path without `/relationships/` in it to get the actual data.
@@ -344,7 +357,7 @@ paths:
       responses:
         '204':
           description: No Content
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       tags:
       - Orders
   /orders/{id}/customFields:
@@ -396,10 +409,10 @@ paths:
                           description: Description for abc448ca field
                           fieldType: string
       operationId: get-orderCustomFields-by-order
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
-        This endpoint acts like a alias to [Get Order Custom Fields by ID endpoint](b3A6MzYxMTM5MTY-get-order-custom-data-by-id). It returns custom fields about a sales order.'
+        This endpoint acts like a alias to Get Order Custom Fields by ID endpoint. It returns custom fields about a sales order.'
       security:
       - OAuth2Demo:
         - order
@@ -424,7 +437,7 @@ paths:
       responses:
         '204':
           description: No Content
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       tags:
       - Orders
 components:

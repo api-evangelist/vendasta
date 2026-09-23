@@ -6,7 +6,7 @@ servers:
 - description: Production
   url: https://prod.apigateway.co/grpc
 tags:
-- name: SiteInfo
+- name: Site Info
 paths:
   /v1/wph/site-info:
     post:
@@ -33,34 +33,9 @@ paths:
           description: An unexpected error response.
       summary: List Site Info
       tags:
-      - SiteInfo
+      - Site Info
 components:
   schemas:
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
-    v1ListRequest:
-      description: Request to list WordPress sites with pagination support.
-      properties:
-        cursor:
-          description: Optional. The cursor specifying the page to return. Use the next_cursor from a previous response to paginate.
-          format: int32
-          type: integer
-        pageSize:
-          description: Optional. The number of sites to return per page.
-          format: int32
-          type: integer
-      title: ListRequest
-      type: object
     v1ListResponse:
       description: Response containing a paginated list of WordPress sites.
       properties:
@@ -116,6 +91,18 @@ components:
           readOnly: true
           type: string
       title: SubsiteInfo
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
       type: object
     v1Site:
       description: The canonical representation of a WordPress site, including configuration, domains, and status.
@@ -288,6 +275,19 @@ components:
           readOnly: true
           type: string
       title: Site
+      type: object
+    v1ListRequest:
+      description: Request to list WordPress sites with pagination support.
+      properties:
+        cursor:
+          description: Optional. The cursor specifying the page to return. Use the next_cursor from a previous response to paginate.
+          format: int32
+          type: integer
+        pageSize:
+          description: Optional. The number of sites to return per page.
+          format: int32
+          type: integer
+      title: ListRequest
       type: object
     protobufAny:
       additionalProperties: {}

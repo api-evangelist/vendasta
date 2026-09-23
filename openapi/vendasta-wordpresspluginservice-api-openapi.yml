@@ -36,25 +36,6 @@ paths:
       - WordpressPluginService
 components:
   schemas:
-    socialpostsv2Category:
-      properties:
-        id:
-          format: int64
-          title: This is the categoryId
-          type: string
-        name:
-          title: This is the category name
-          type: string
-      type: object
-    v2PublishPostResponse:
-      description: Response message containing the internal ID of the published blog post.
-      properties:
-        internalPostId:
-          description: Output only. Internal ID of the post.
-          readOnly: true
-          type: string
-      title: PublishPostResponse
-      type: object
     v2MetadataV2:
       description: A key-value pair used to store generic metadata information associated with a post or media.
       properties:
@@ -69,15 +50,6 @@ components:
       - value
       title: MetadataV2
       type: object
-    v2BlogImage:
-      properties:
-        path:
-          title: The path of the image
-          type: string
-        publicUrl:
-          title: The public url of the image
-          type: string
-      type: object
     googlerpcStatus:
       properties:
         code:
@@ -88,6 +60,42 @@ components:
             $ref: '#/components/schemas/protobufAny'
           type: array
         message:
+          type: string
+      type: object
+    socialpostsv2Author:
+      properties:
+        id:
+          format: int64
+          type: string
+        name:
+          type: string
+      type: object
+    v2PublishPostResponse:
+      description: Response message containing the internal ID of the published blog post.
+      properties:
+        internalPostId:
+          description: Output only. Internal ID of the post.
+          readOnly: true
+          type: string
+      title: PublishPostResponse
+      type: object
+    socialpostsv2Category:
+      properties:
+        id:
+          format: int64
+          title: This is the categoryId
+          type: string
+        name:
+          title: This is the category name
+          type: string
+      type: object
+    v2BlogImage:
+      properties:
+        path:
+          title: The path of the image
+          type: string
+        publicUrl:
+          title: The public url of the image
           type: string
       type: object
     v2PublishPostRequest:
@@ -169,14 +177,6 @@ components:
       - title
       - content
       title: PublishPostRequest
-      type: object
-    socialpostsv2Author:
-      properties:
-        id:
-          format: int64
-          type: string
-        name:
-          type: string
       type: object
     v2BlogVideo:
       properties:

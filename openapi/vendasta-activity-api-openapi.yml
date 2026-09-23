@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: '1.0'
-  title: Vendasta Marketplace API V1 Endpoints account activity API
-  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+  title: Vendasta Marketplace API V1 Endpoints Activity API
+  description: 'The Activity API lets you inform us of new activity from your Marketplace App. It will be displayed in the user''s activity stream and used for notifications. Note: This endpoint has duplicate detection. Within an hour boundary (E.g. 3:00am to 3:59am), we will only generate a single activity object on our servers for messages we deem "identical". We compare title, content, account_id, link, media_url, activity_type, and template_data. This is subject to change.'
 servers:
 - url: https://developers.vendasta.com/api/v1
   description: Production Server
@@ -11,13 +11,13 @@ servers:
 security:
 - BearerAuth: []
 tags:
-- name: activity
-  description: 'The Activity API lets you inform us of new activity from your Marketplace App.  It will be displayed in the user''s activity stream and used for notifications.  Note: This endpoint has duplicate detection.  Within an hour boundary (E.g. 3:00am to 3:59am), we will only generate a single activity object on our servers for messages we deem "identical".  We compare title, content, account_id, link, media_url, activity_type, and template_data.  This is subject to change.'
+- name: Activity
+  description: 'The Activity API lets you inform us of new activity from your Marketplace App. It will be displayed in the user''s activity stream and used for notifications. Note: This endpoint has duplicate detection. Within an hour boundary (E.g. 3:00am to 3:59am), we will only generate a single activity object on our servers for messages we deem "identical". We compare title, content, account_id, link, media_url, activity_type, and template_data. This is subject to change.'
 paths:
   /activity/:
     post:
       tags:
-      - activity
+      - Activity
       responses:
         '200':
           description: Success
@@ -79,8 +79,9 @@ paths:
               - title
               - link
         required: true
-      description: Submit an `Activity` for an Event that occured within your App, or a prompt for action that needs to be taken within your App. See the [Guide](https://developers.vendasta.com/vendor/4cb70950bb594-activity-stream) for details.
-      operationId: ''
+      description: Submit an `Activity` for an Event that occured within your App, or a prompt for action that needs to be taken within your App. See the Guide for details.
+      operationId: postActivity
+      x-operation-id-source: derived
 components:
   schemas:
     activity:

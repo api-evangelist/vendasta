@@ -132,7 +132,7 @@ paths:
                           id: active:diving:freediving
       x-lifecycle:
         status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Used to record basic data for a new location.
@@ -173,7 +173,7 @@ paths:
     options:
       operationId: options-salesAccounts
       summary: List valid HTTP verbs for /salesAccounts
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       responses:
         '204':
           description: No Content
@@ -286,7 +286,7 @@ paths:
                         title: Title of field FieldID-1231231
                         description: Description of field FieldID-1231231
                         fieldType: string
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Produces a list of sales accounts'
@@ -453,7 +453,7 @@ paths:
       operationId: get-salesAccounts-by-id
       x-lifecycle:
         status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Returns basic data about the sales account.'
@@ -487,7 +487,7 @@ paths:
     options:
       operationId: options-salesAccounts-by-id
       summary: List valid HTTP verbs for /salesAccounts/{id}
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       responses:
         '204':
           description: No Content
@@ -498,7 +498,7 @@ paths:
       operationId: patch-salesAccounts-by-id
       tags:
       - Sales Accounts
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Update the existing business location.
@@ -680,7 +680,7 @@ paths:
                       type: salesAccountCustomFields
                       id: AG-1234123412
       operationId: get-salesAccountCustomFieldsID-by-salesAccount
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
         Returns a reference to the custom metadata for this sales account. Use the path without `/relationships/` in it to get the actual data.
@@ -711,7 +711,7 @@ paths:
       responses:
         '204':
           description: No Content
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       tags:
       - Sales Accounts
   /salesAccounts/{id}/customFields:
@@ -771,10 +771,10 @@ paths:
                           description: Description for abc448ca field
                           fieldType: string
       operationId: get-salesAccountCustomFields-by-salesAccount
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
 
-        This endpoint acts like a alias to [Get Sales Account Custom Fields by ID endpoint](b3A6MzYxMTM5MTY-get-sales-account-custom-data-by-id). It returns custom fields about a sales account.'
+        This endpoint acts like a alias to Get Sales Account Custom Fields by ID endpoint. It returns custom fields about a sales account.'
       security:
       - OAuth2Demo:
         - sales.account
@@ -799,44 +799,11 @@ paths:
       responses:
         '204':
           description: No Content
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       tags:
       - Sales Accounts
 components:
   schemas:
-    businessCategories:
-      title: Business Category
-      type: object
-      x-lifecycle:
-        status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
-
-
-        The taxonomy to be applied to business locations indicating the type of services that they provide.'
-      x-tags:
-      - Business Categories
-      properties:
-        id:
-          type: string
-          example: AG-1234567
-          readOnly: true
-        type:
-          type: string
-          default: businessCategories
-          enum:
-          - businessCategories
-          readOnly: true
-        attributes:
-          type: object
-          properties:
-            name:
-              type: string
-              description: A user friendly description for the category. It will have been translated based on the Accept-Language header.
-              readOnly: true
-            isActive:
-              type: boolean
-              description: Whether the category is active. Inactive categories may still be returned when looking up by ID but should not be used for new assignments.
-              readOnly: true
     users:
       title: Users
       type: object
@@ -1579,6 +1546,87 @@ components:
             - $ref: '#/components/schemas/users'
             - $ref: '#/components/schemas/businessCategories'
           readOnly: true
+    hoursOfOperation:
+      type:
+      - array
+      - 'null'
+      description: The operating hours for the business location. Each entry in the array is a set of hours for a particular department or customer of the business. It is recommended to provide the `general` hours for all locations. Some locations may have additional definitions for other departments.
+      items:
+        type: object
+        required:
+        - hoursTypeId
+        properties:
+          hoursTypeId:
+            type: string
+            enum:
+            - general
+            - delivery
+            - kitchen
+            - driveThrough
+            - pickup
+            - takeout
+            description: "The category of hours that may apply to a specific department or service. Not all types are valid for all business categories.\n\nThe general hours for a location must be set before defining hours for other departments. \n\nCurrently only `general` is supported in the Vendasta platform. We intend to add others in the future."
+          regularHours:
+            title: Hours on the days of the week
+            type:
+            - array
+            - 'null'
+            description: 'A collection of times that this location is open for business. Each period represents a range of hours when the location is open during the week.
+
+
+              You may specify multiple entries for the same date if you are open for multiple periods (Example lunch and supper).'
+            items:
+              type: object
+              required:
+              - openDay
+              - closeDay
+              - openTime
+              - closeTime
+              properties:
+                openDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period starts on.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                closeDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period ends on. It should be the same as `openDay` except when the period goes over midnight. The total period may not be more than 24 hours.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                openTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                closeTime:
+                  $ref: '#/components/schemas/timeOfDay'
+          specialHours:
+            type:
+            - array
+            - 'null'
+            description: "Represents a set of time periods when a location's operational hours differ from its regular business hours. This may be a holiday or special event. These hours replace the regular hours for the day.\n\nA special hour period must represent a range of less than 24 hours. The `openTime` and `startDate` must predate the `closeTime` and `endDate`. \nThe `closeTime` and `endDate` can extend to 11:59 a.m. on the day after the specified `startDate`.\n\nNote: Most listing sites only support special hours for the general type."
+            items:
+              type: object
+              required:
+              - startDate
+              - endDate
+              - startTime
+              - endTime
+              properties:
+                status:
+                  x-stoplight:
+                    id: nav2z12fnl9fr
+                  enum:
+                  - open
+                  - closed
+                  description: Describes the different modes that apply to special hour periods. Currently only `open` and `closed` are supported in the Vendasta platform. Overlapping `open` and `closed` periods are not allowed. When status is `open`, for the given business it will be open for the mentioned time period for the selected date. When status is `closed`, for the given business it will be closed for the selected date.
+                startDate:
+                  description: The calendar date this special hour period starts on.
+                  type: string
+                  format: date
+                endDate:
+                  description: The calendar date this special hour period ends on. If `endDate` field is not set, default to the date specified in `startDate`. If set, this field must be equal to or at most 1 day after `startDate`.
+                  type: string
+                  format: date
+                startTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                endTime:
+                  $ref: '#/components/schemas/timeOfDay'
     salesAccountCustomFields:
       title: Sales Accounts Custom Fields
       type: object
@@ -1788,87 +1836,45 @@ components:
       required:
       - id
       - type
-    hoursOfOperation:
-      type:
-      - array
-      - 'null'
-      description: The operating hours for the business location. Each entry in the array is a set of hours for a particular department or customer of the business. It is recommended to provide the `general` hours for all locations. Some locations may have additional definitions for other departments.
-      items:
-        type: object
-        required:
-        - hoursTypeId
-        properties:
-          hoursTypeId:
-            type: string
-            enum:
-            - general
-            - delivery
-            - kitchen
-            - driveThrough
-            - pickup
-            - takeout
-            description: "The category of hours that may apply to a specific department or service. Not all types are valid for all business categories.\n\nThe general hours for a location must be set before defining hours for other departments. \n\nCurrently only `general` is supported in the Vendasta platform. We intend to add others in the future."
-          regularHours:
-            title: Hours on the days of the week
-            type:
-            - array
-            - 'null'
-            description: 'A collection of times that this location is open for business. Each period represents a range of hours when the location is open during the week.
+    timeOfDay:
+      type: string
+      title: a time of day
+      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
+      pattern: ^\d{2}:\d{2}$
+      example: 09:45
+    businessCategories:
+      title: Business Category
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
 
 
-              You may specify multiple entries for the same date if you are open for multiple periods (Example lunch and supper).'
-            items:
-              type: object
-              required:
-              - openDay
-              - closeDay
-              - openTime
-              - closeTime
-              properties:
-                openDay:
-                  allOf:
-                  - description: Indicates the day of the week that this period starts on.
-                  - $ref: '#/components/schemas/dayOfTheWeek'
-                closeDay:
-                  allOf:
-                  - description: Indicates the day of the week that this period ends on. It should be the same as `openDay` except when the period goes over midnight. The total period may not be more than 24 hours.
-                  - $ref: '#/components/schemas/dayOfTheWeek'
-                openTime:
-                  $ref: '#/components/schemas/timeOfDay'
-                closeTime:
-                  $ref: '#/components/schemas/timeOfDay'
-          specialHours:
-            type:
-            - array
-            - 'null'
-            description: "Represents a set of time periods when a location's operational hours differ from its regular business hours. This may be a holiday or special event. These hours replace the regular hours for the day.\n\nA special hour period must represent a range of less than 24 hours. The `openTime` and `startDate` must predate the `closeTime` and `endDate`. \nThe `closeTime` and `endDate` can extend to 11:59 a.m. on the day after the specified `startDate`.\n\nNote: Most listing sites only support special hours for the general type."
-            items:
-              type: object
-              required:
-              - startDate
-              - endDate
-              - startTime
-              - endTime
-              properties:
-                status:
-                  x-stoplight:
-                    id: nav2z12fnl9fr
-                  enum:
-                  - open
-                  - closed
-                  description: Describes the different modes that apply to special hour periods. Currently only `open` and `closed` are supported in the Vendasta platform. Overlapping `open` and `closed` periods are not allowed. When status is `open`, for the given business it will be open for the mentioned time period for the selected date. When status is `closed`, for the given business it will be closed for the selected date.
-                startDate:
-                  description: The calendar date this special hour period starts on.
-                  type: string
-                  format: date
-                endDate:
-                  description: The calendar date this special hour period ends on. If `endDate` field is not set, default to the date specified in `startDate`. If set, this field must be equal to or at most 1 day after `startDate`.
-                  type: string
-                  format: date
-                startTime:
-                  $ref: '#/components/schemas/timeOfDay'
-                endTime:
-                  $ref: '#/components/schemas/timeOfDay'
+        The taxonomy to be applied to business locations indicating the type of services that they provide.'
+      x-tags:
+      - Business Categories
+      properties:
+        id:
+          type: string
+          example: AG-1234567
+          readOnly: true
+        type:
+          type: string
+          default: businessCategories
+          enum:
+          - businessCategories
+          readOnly: true
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              description: A user friendly description for the category. It will have been translated based on the Accept-Language header.
+              readOnly: true
+            isActive:
+              type: boolean
+              description: Whether the category is active. Inactive categories may still be returned when looking up by ID but should not be used for new assignments.
+              readOnly: true
     dayOfTheWeek:
       type: string
       title: a day of the week
@@ -1881,12 +1887,6 @@ components:
       - saturday
       - sunday
       example: wednesday
-    timeOfDay:
-      type: string
-      title: a time of day
-      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
-      pattern: ^\d{2}:\d{2}$
-      example: 09:45
   securitySchemes:
     JWT:
       type: http

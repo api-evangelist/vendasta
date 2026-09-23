@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: '1.0'
-  title: Vendasta Marketplace API V1 Endpoints account customer API
-  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+  title: Vendasta Marketplace API V1 Endpoints Customer API
+  description: The Customer APIs allow you to perform actions against customers of the account that your application has been added to.
 servers:
 - url: https://developers.vendasta.com/api/v1
   description: Production Server
@@ -11,13 +11,13 @@ servers:
 security:
 - BearerAuth: []
 tags:
-- name: customer
+- name: Customer
   description: The Customer APIs allow you to perform actions against customers of the account that your application has been added to.
 paths:
   /customer:
     post:
       tags:
-      - customer
+      - Customer
       responses:
         '200':
           description: Success
@@ -96,11 +96,13 @@ paths:
               - account_id
         required: true
       deprecated: true
-      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).
+      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the new CRM.
+      operationId: postCustomer
+      x-operation-id-source: derived
   /customer/list-customers:
     post:
       tags:
-      - customer
+      - Customer
       responses:
         '200':
           description: Success
@@ -158,11 +160,13 @@ paths:
               - account_id
         required: true
       deprecated: true
-      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).
+      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the new CRM.
+      operationId: postCustomerListCustomers
+      x-operation-id-source: derived
   /customer/get-customer:
     post:
       tags:
-      - customer
+      - Customer
       responses:
         '200':
           description: Success
@@ -206,10 +210,12 @@ paths:
         required: true
       description: Returns a single customer record based on a `vendor_customer_id`. If the id is not unique, the newest record with that id will be returned.
       deprecated: true
+      operationId: postCustomerGetCustomer
+      x-operation-id-source: derived
   /customer/associate-id:
     post:
       tags:
-      - customer
+      - Customer
       responses:
         '200':
           description: Success
@@ -248,11 +254,13 @@ paths:
                   description: A string indicating what value to return with the customer for api interactions
         required: true
       deprecated: true
-      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).
+      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the new CRM.
+      operationId: postCustomerAssociateId
+      x-operation-id-source: derived
   /customer/update-customer:
     post:
       tags:
-      - customer
+      - Customer
       responses:
         '200':
           description: Success
@@ -334,11 +342,13 @@ paths:
                   description: Last name of the Rep/Salesperson associated with customer
         required: true
       deprecated: true
-      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).
+      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the new CRM.
+      operationId: postCustomerUpdateCustomer
+      x-operation-id-source: derived
   /customer/delete-customer:
     post:
       tags:
-      - customer
+      - Customer
       responses:
         '200':
           description: Success
@@ -374,61 +384,11 @@ paths:
                   description: A unique account ID that can be used to identify and reference an account.
         required: true
       deprecated: true
-      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the [new CRM](https://support.vendasta.com/hc/en-us/categories/24284629825559-CRM).
+      description: Supported for existing integrations. No new development should occur against the customer API. It will be replaced by an API for the new CRM.
+      operationId: postCustomerDeleteCustomer
+      x-operation-id-source: derived
 components:
   schemas:
-    return_customer:
-      type: object
-      properties:
-        city:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        account_id:
-          type: string
-        country:
-          type: string
-        customer_id:
-          type: string
-          description: The platform assigned ID used to identify this contact record.
-        phone:
-          type: array
-          items:
-            type: string
-        state:
-          type: string
-        address:
-          type: string
-        email:
-          type: array
-          items:
-            type: string
-        origins:
-          type: array
-          items:
-            type: string
-        assigned_rep_first_name:
-          type: string
-        assigned_rep_last_name:
-          type: string
-        permission_to_contact:
-          type: string
-          format: date-time
-          description: The last time the product or business indicated that this contact granted them permission to contact them.
-        vendor_customer_id:
-          type: string
-          description: The ID you specified when creating the contact. This will likely coorispond to an ID in your system. If not provided it will be set to the `customer_id`.
-        created:
-          type: string
-          format: date-time
-        updated:
-          type: string
-          format: date-time
-        deleted:
-          type: string
-          format: date-time
     filters:
       type: object
       properties:
@@ -508,6 +468,58 @@ components:
       required:
       - field
       - direction
+    return_customer:
+      type: object
+      properties:
+        city:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        account_id:
+          type: string
+        country:
+          type: string
+        customer_id:
+          type: string
+          description: The platform assigned ID used to identify this contact record.
+        phone:
+          type: array
+          items:
+            type: string
+        state:
+          type: string
+        address:
+          type: string
+        email:
+          type: array
+          items:
+            type: string
+        origins:
+          type: array
+          items:
+            type: string
+        assigned_rep_first_name:
+          type: string
+        assigned_rep_last_name:
+          type: string
+        permission_to_contact:
+          type: string
+          format: date-time
+          description: The last time the product or business indicated that this contact granted them permission to contact them.
+        vendor_customer_id:
+          type: string
+          description: The ID you specified when creating the contact. This will likely coorispond to an ID in your system. If not provided it will be set to the `customer_id`.
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+        deleted:
+          type: string
+          format: date-time
   securitySchemes:
     BearerAuth:
       type: http

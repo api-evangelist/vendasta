@@ -36,24 +36,6 @@ paths:
       - PageSpeedService
 components:
   schemas:
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
-      type: object
     v1GetScoreResponse:
       description: Response containing the Google Page Speed score and raw API response.
       properties:
@@ -66,6 +48,18 @@ components:
           readOnly: true
           type: boolean
       title: GetScoreResponse
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
       type: object
     v1GetScoreRequest:
       description: Request to retrieve the Google Page Speed score for a site by domain and device type.
@@ -80,6 +74,12 @@ components:
       - domain
       - device
       title: GetScoreRequest
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
       type: object
   securitySchemes:
     OAuth2:

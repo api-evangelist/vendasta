@@ -11,7 +11,7 @@ servers:
 - description: Localhost
   url: '{localhost}/glossary'
 tags:
-- name: Glossary-Terms
+- name: Glossary Terms
 paths:
   /terms:
     parameters: []
@@ -75,7 +75,7 @@ paths:
         description: When generating the access token for the user calling the API you must request permission to access the "tasks" scope
         required: true
       tags:
-      - Glossary-Terms
+      - Glossary Terms
   /terms/{id}:
     parameters:
     - schema:
@@ -86,7 +86,7 @@ paths:
     get:
       summary: Get Term
       tags:
-      - Glossary-Terms
+      - Glossary Terms
       responses:
         '200':
           description: OK
@@ -108,7 +108,7 @@ paths:
     get:
       summary: List terms in context
       tags:
-      - Glossary-Terms
+      - Glossary Terms
       responses:
         '200':
           description: OK

@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: '1.0'
-  title: Vendasta Marketplace API V1 Endpoints account marketplace_app API
-  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+  title: Vendasta Marketplace API V1 Endpoints Marketplace App API
+  description: The Marketplace App APIs allow you to perform actions against your applications, as well as certain operations against all marketplace apps.
 servers:
 - url: https://developers.vendasta.com/api/v1
   description: Production Server
@@ -44,6 +44,8 @@ paths:
           type: string
       summary: Get Marketplace Application
       description: ''
+      operationId: getMarketplaceAppByMarketplaceAppId
+      x-operation-id-source: derived
 components:
   schemas:
     marketplace_application:

@@ -195,131 +195,17 @@ paths:
       - Knowledge
 components:
   schemas:
-    rpcStatus:
+    v2ListKnowledgeResponse:
+      description: A page of knowledge sources with pagination metadata.
       properties:
-        code:
-          format: int32
-          type: integer
-        details:
+        knowledgeSources:
+          description: The knowledge sources on this page.
           items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
-    v2TrainingState:
-      default: TRAINING_STATE_INVALID
-      description: "The processing state of a knowledge source's content.\n\n - TRAINING_STATE_QUEUED: The content is queued for processing. It is not yet available to AI\nEmployees.\n - TRAINING_STATE_IN_PROGRESS: Processing started and is not complete.\n - TRAINING_STATE_DONE: Processing completed successfully. The content is available to AI\nEmployees.\n - TRAINING_STATE_ERRORED: Processing failed. See the error_code on TrainingStatus for the reason."
-      enum:
-      - TRAINING_STATE_INVALID
-      - TRAINING_STATE_QUEUED
-      - TRAINING_STATE_IN_PROGRESS
-      - TRAINING_STATE_DONE
-      - TRAINING_STATE_ERRORED
-      type: string
-    vendastatypesPagedRequestOptions:
-      properties:
-        cursor:
-          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
-          type: string
-        pageSize:
-          description: Optional. The maximum number of items to return per page.
-          format: int64
-          type: string
-      type: object
-    v2UnlinkMode:
-      description: 'Selects unlinking the knowledge source from specific AI Employees without
-
-        deleting it.'
-      properties:
-        assistantIds:
-          description: 'The AI Employees to unlink the source from. Supply each assistant id
-
-            exactly as List Assistants returns it (format: "ASSISTANT-XXXX"). The
-
-            API rejects all other formats, including the bare id without the
-
-            "ASSISTANT-" prefix and internal application ids. At least one id is
-
-            required. The maximum is 100 ids in one request.'
-          items:
-            type: string
-          type: array
-      required:
-      - assistantIds
-      type: object
-    v2DeleteMode:
-      description: 'Selects the deletion of the knowledge source. This message has no fields.
-
-        Its presence in the mode oneof is the instruction to delete.'
-      type: object
-    v2TextContent:
-      description: Free-form text content that an integration supplies directly.
-      properties:
-        text:
-          description: 'The text to store as knowledge. At most 100,000 characters. The count
-
-            is in Unicode characters, not bytes. For larger reference material,
-
-            upload a file instead.'
-          type: string
-      required:
-      - text
-      type: object
-    v2TrainingStatus:
-      description: 'The processing status of a knowledge source, including progress counters
-
-        and any terminal error.'
-      properties:
-        completedUnits:
-          description: 'The number of units that completed their processing. The value is equal
-
-            to total_units when the processing is complete.'
-          format: int64
+            $ref: '#/components/schemas/v2KnowledgeSourceSummary'
           readOnly: true
-          type: string
-        errorCode:
-          $ref: '#/components/schemas/v2TrainingErrorCode'
-        state:
-          $ref: '#/components/schemas/v2TrainingState'
-        totalUnits:
-          description: 'The total number of units that the processing divided the content into.
-
-            The value is 0 when the processing of the source does not use units.'
-          format: int64
-          readOnly: true
-          type: string
-      type: object
-    v2ListKnowledgeRequest:
-      description: 'Request to list the knowledge sources in a namespace''s knowledge base,
-
-        optionally filtered to one AI Employee.'
-      properties:
-        accountGroupId:
-          description: 'The account group whose knowledge to list (format: "AG-XXXXXXXXXX").
-
-            The calling partner must own this account.'
-          type: string
-        assistantId:
-          description: 'Optional. When set, the response contains only the knowledge sources
-
-            attached to this AI Employee. Supply the assistant id exactly as List
-
-            Assistants returns it (format: "ASSISTANT-XXXX"). The API rejects all
-
-            other formats, including the bare id without the "ASSISTANT-" prefix
-
-            and internal application ids. An unknown assistant id returns an empty
-
-            list.'
-          type: string
-        pagingOptions:
-          $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
-        partnerId:
-          description: 'The partner namespace whose knowledge to list. Must be the calling
-
-            partner''s own partner id.'
-          type: string
+          type: array
+        pagingMetadata:
+          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
       type: object
     v2CreateKnowledgeFileUploadResponse:
       description: The signed URL and handle for uploading a single knowledge file.
@@ -362,6 +248,12 @@ components:
           readOnly: true
           type: string
       type: object
+    v2GetKnowledgeStatusResponse:
+      description: The processing status of the requested knowledge source.
+      properties:
+        status:
+          $ref: '#/components/schemas/v2TrainingStatus'
+      type: object
     v2TrainingErrorCode:
       default: TRAINING_ERROR_CODE_INVALID
       description: "Machine-readable reason a knowledge source failed processing.\n\n - TRAINING_ERROR_CODE_INVALID: No error is recorded. This is the value when the processing of the\nsource did not fail (state is not TRAINING_STATE_ERRORED).\n - TRAINING_ERROR_CODE_LARGE_FILE_CONTENT: The content of the file is too large for processing.\n - TRAINING_ERROR_CODE_UNPROCESSABLE_CONTENT: The parse or the processing of the content failed. A possible cause is\na file that is defective or empty."
@@ -370,28 +262,12 @@ components:
       - TRAINING_ERROR_CODE_LARGE_FILE_CONTENT
       - TRAINING_ERROR_CODE_UNPROCESSABLE_CONTENT
       type: string
-    v2ListKnowledgeResponse:
-      description: A page of knowledge sources with pagination metadata.
+    protobufAny:
+      additionalProperties: {}
       properties:
-        knowledgeSources:
-          description: The knowledge sources on this page.
-          items:
-            $ref: '#/components/schemas/v2KnowledgeSourceSummary'
-          readOnly: true
-          type: array
-        pagingMetadata:
-          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
+        '@type':
+          type: string
       type: object
-    v2KnowledgeConfigType:
-      default: KNOWLEDGE_CONFIG_TYPE_INVALID
-      description: "The kind of content backing a knowledge source.\n\n - KNOWLEDGE_CONFIG_TYPE_BUSINESS_PROFILE: Structured business-profile data that the platform manages, such as\nthe well-known business-profile knowledge source of an account.\n - KNOWLEDGE_CONFIG_TYPE_CUSTOM_DATA: Free-form text that a user or an integration supplied directly.\n - KNOWLEDGE_CONFIG_TYPE_WEBSITE: Content that the platform collected from a website.\n - KNOWLEDGE_CONFIG_TYPE_FILE: Content that the platform extracted from an uploaded file."
-      enum:
-      - KNOWLEDGE_CONFIG_TYPE_INVALID
-      - KNOWLEDGE_CONFIG_TYPE_BUSINESS_PROFILE
-      - KNOWLEDGE_CONFIG_TYPE_CUSTOM_DATA
-      - KNOWLEDGE_CONFIG_TYPE_WEBSITE
-      - KNOWLEDGE_CONFIG_TYPE_FILE
-      type: string
     v2KnowledgeContent:
       description: 'The content to store for a knowledge source on create or update. Exactly
 
@@ -405,58 +281,6 @@ components:
           $ref: '#/components/schemas/v2FileContent'
         text:
           $ref: '#/components/schemas/v2TextContent'
-      type: object
-    v2RemoveKnowledgeRequest:
-      description: 'Request to remove a knowledge source from a namespace''s knowledge base,
-
-        either by deleting it or by unlinking it from specific AI Employees.'
-      properties:
-        accountGroupId:
-          description: 'The account group that owns the knowledge source (format:
-
-            "AG-XXXXXXXXXX"). The calling partner must own this account.'
-          type: string
-        deleteSource:
-          $ref: '#/components/schemas/v2DeleteMode'
-        knowledgeSourceId:
-          description: 'The id of the knowledge source to remove, as UpsertKnowledge or
-
-            ListKnowledge returned it. The source must exist in the namespace.'
-          type: string
-        partnerId:
-          description: 'The partner namespace that owns the knowledge source. Must be the
-
-            calling partner''s own partner id.'
-          type: string
-        unlink:
-          $ref: '#/components/schemas/v2UnlinkMode'
-      required:
-      - knowledgeSourceId
-      type: object
-    v2UpsertKnowledgeResponse:
-      description: The result of an UpsertKnowledge call.
-      properties:
-        knowledgeSourceId:
-          description: 'The id of the created or updated knowledge source. Keep this id. You
-
-            use it to update, link, or remove the source in subsequent calls. The
-
-            other Knowledge APIs select the source by this id.'
-          readOnly: true
-          type: string
-      type: object
-    vendastatypesPagedResponseMetadata:
-      properties:
-        hasMore:
-          title: Whether or not more results exist
-          type: boolean
-        nextCursor:
-          title: A cursor that can be provided to retrieve the next page of results
-          type: string
-        totalResults:
-          format: int64
-          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
-          type: string
       type: object
     v2FileContent:
       description: 'A file to process into knowledge. Do not send the bytes in this message.
@@ -483,10 +307,16 @@ components:
       required:
       - uploadHandle
       type: object
-    protobufAny:
-      additionalProperties: {}
+    rpcStatus:
       properties:
-        '@type':
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
           type: string
       type: object
     v2GetKnowledgeStatusRequest:
@@ -510,14 +340,18 @@ components:
       required:
       - knowledgeSourceId
       type: object
-    v2GetKnowledgeStatusResponse:
-      description: The processing status of the requested knowledge source.
+    vendastatypesPagedResponseMetadata:
       properties:
-        status:
-          $ref: '#/components/schemas/v2TrainingStatus'
-      type: object
-    v2RemoveKnowledgeResponse:
-      description: The result of a RemoveKnowledge call.
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
+          type: string
+        totalResults:
+          format: int64
+          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
+          type: string
       type: object
     v2CreateKnowledgeFileUploadRequest:
       description: 'Request to issue a signed URL and handle for uploading a single knowledge
@@ -547,6 +381,107 @@ components:
       required:
       - fileName
       - contentType
+      type: object
+    v2RemoveKnowledgeResponse:
+      description: The result of a RemoveKnowledge call.
+      type: object
+    v2TrainingState:
+      default: TRAINING_STATE_INVALID
+      description: "The processing state of a knowledge source's content.\n\n - TRAINING_STATE_QUEUED: The content is queued for processing. It is not yet available to AI\nEmployees.\n - TRAINING_STATE_IN_PROGRESS: Processing started and is not complete.\n - TRAINING_STATE_DONE: Processing completed successfully. The content is available to AI\nEmployees.\n - TRAINING_STATE_ERRORED: Processing failed. See the error_code on TrainingStatus for the reason."
+      enum:
+      - TRAINING_STATE_INVALID
+      - TRAINING_STATE_QUEUED
+      - TRAINING_STATE_IN_PROGRESS
+      - TRAINING_STATE_DONE
+      - TRAINING_STATE_ERRORED
+      type: string
+    v2DeleteMode:
+      description: 'Selects the deletion of the knowledge source. This message has no fields.
+
+        Its presence in the mode oneof is the instruction to delete.'
+      type: object
+    v2UnlinkMode:
+      description: 'Selects unlinking the knowledge source from specific AI Employees without
+
+        deleting it.'
+      properties:
+        assistantIds:
+          description: 'The AI Employees to unlink the source from. Supply each assistant id
+
+            exactly as List Assistants returns it (format: "ASSISTANT-XXXX"). The
+
+            API rejects all other formats, including the bare id without the
+
+            "ASSISTANT-" prefix and internal application ids. At least one id is
+
+            required. The maximum is 100 ids in one request.'
+          items:
+            type: string
+          type: array
+      required:
+      - assistantIds
+      type: object
+    v2TrainingStatus:
+      description: 'The processing status of a knowledge source, including progress counters
+
+        and any terminal error.'
+      properties:
+        completedUnits:
+          description: 'The number of units that completed their processing. The value is equal
+
+            to total_units when the processing is complete.'
+          format: int64
+          readOnly: true
+          type: string
+        errorCode:
+          $ref: '#/components/schemas/v2TrainingErrorCode'
+        state:
+          $ref: '#/components/schemas/v2TrainingState'
+        totalUnits:
+          description: 'The total number of units that the processing divided the content into.
+
+            The value is 0 when the processing of the source does not use units.'
+          format: int64
+          readOnly: true
+          type: string
+      type: object
+    v2KnowledgeSourceSummary:
+      description: 'A summary of one knowledge source in an account''s knowledge base:
+
+        identity, content type, processing status, and timestamps.'
+      properties:
+        configType:
+          $ref: '#/components/schemas/v2KnowledgeConfigType'
+        created:
+          description: When the knowledge source was created.
+          format: date-time
+          readOnly: true
+          type: string
+        fileName:
+          description: 'The original file name of the uploaded file. Set only when config_type
+
+            is KNOWLEDGE_CONFIG_TYPE_FILE.'
+          readOnly: true
+          type: string
+        knowledgeSourceId:
+          description: 'The unique identifier of the knowledge source in its namespace. Keep
+
+            this id. You use it to update or remove the source later. The other
+
+            Knowledge APIs select the source by this id.'
+          readOnly: true
+          type: string
+        name:
+          description: The display name of the knowledge source.
+          readOnly: true
+          type: string
+        status:
+          $ref: '#/components/schemas/v2TrainingStatus'
+        updated:
+          description: When the knowledge source was last updated.
+          format: date-time
+          readOnly: true
+          type: string
       type: object
     v2UpsertKnowledgeRequest:
       description: 'Request to create or update a knowledge source and optionally link it to an
@@ -598,43 +533,108 @@ components:
             be the calling partner''s own partner id.'
           type: string
       type: object
-    v2KnowledgeSourceSummary:
-      description: 'A summary of one knowledge source in an account''s knowledge base:
-
-        identity, content type, processing status, and timestamps.'
+    v2UpsertKnowledgeResponse:
+      description: The result of an UpsertKnowledge call.
       properties:
-        configType:
-          $ref: '#/components/schemas/v2KnowledgeConfigType'
-        created:
-          description: When the knowledge source was created.
-          format: date-time
-          readOnly: true
-          type: string
-        fileName:
-          description: 'The original file name of the uploaded file. Set only when config_type
-
-            is KNOWLEDGE_CONFIG_TYPE_FILE.'
-          readOnly: true
-          type: string
         knowledgeSourceId:
-          description: 'The unique identifier of the knowledge source in its namespace. Keep
+          description: 'The id of the created or updated knowledge source. Keep this id. You
 
-            this id. You use it to update or remove the source later. The other
+            use it to update, link, or remove the source in subsequent calls. The
 
-            Knowledge APIs select the source by this id.'
+            other Knowledge APIs select the source by this id.'
           readOnly: true
           type: string
-        name:
-          description: The display name of the knowledge source.
-          readOnly: true
+      type: object
+    v2KnowledgeConfigType:
+      default: KNOWLEDGE_CONFIG_TYPE_INVALID
+      description: "The kind of content backing a knowledge source.\n\n - KNOWLEDGE_CONFIG_TYPE_BUSINESS_PROFILE: Structured business-profile data that the platform manages, such as\nthe well-known business-profile knowledge source of an account.\n - KNOWLEDGE_CONFIG_TYPE_CUSTOM_DATA: Free-form text that a user or an integration supplied directly.\n - KNOWLEDGE_CONFIG_TYPE_WEBSITE: Content that the platform collected from a website.\n - KNOWLEDGE_CONFIG_TYPE_FILE: Content that the platform extracted from an uploaded file."
+      enum:
+      - KNOWLEDGE_CONFIG_TYPE_INVALID
+      - KNOWLEDGE_CONFIG_TYPE_BUSINESS_PROFILE
+      - KNOWLEDGE_CONFIG_TYPE_CUSTOM_DATA
+      - KNOWLEDGE_CONFIG_TYPE_WEBSITE
+      - KNOWLEDGE_CONFIG_TYPE_FILE
+      type: string
+    vendastatypesPagedRequestOptions:
+      properties:
+        cursor:
+          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
           type: string
-        status:
-          $ref: '#/components/schemas/v2TrainingStatus'
-        updated:
-          description: When the knowledge source was last updated.
-          format: date-time
-          readOnly: true
+        pageSize:
+          description: Optional. The maximum number of items to return per page.
+          format: int64
           type: string
+      type: object
+    v2ListKnowledgeRequest:
+      description: 'Request to list the knowledge sources in a namespace''s knowledge base,
+
+        optionally filtered to one AI Employee.'
+      properties:
+        accountGroupId:
+          description: 'The account group whose knowledge to list (format: "AG-XXXXXXXXXX").
+
+            The calling partner must own this account.'
+          type: string
+        assistantId:
+          description: 'Optional. When set, the response contains only the knowledge sources
+
+            attached to this AI Employee. Supply the assistant id exactly as List
+
+            Assistants returns it (format: "ASSISTANT-XXXX"). The API rejects all
+
+            other formats, including the bare id without the "ASSISTANT-" prefix
+
+            and internal application ids. An unknown assistant id returns an empty
+
+            list.'
+          type: string
+        pagingOptions:
+          $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
+        partnerId:
+          description: 'The partner namespace whose knowledge to list. Must be the calling
+
+            partner''s own partner id.'
+          type: string
+      type: object
+    v2RemoveKnowledgeRequest:
+      description: 'Request to remove a knowledge source from a namespace''s knowledge base,
+
+        either by deleting it or by unlinking it from specific AI Employees.'
+      properties:
+        accountGroupId:
+          description: 'The account group that owns the knowledge source (format:
+
+            "AG-XXXXXXXXXX"). The calling partner must own this account.'
+          type: string
+        deleteSource:
+          $ref: '#/components/schemas/v2DeleteMode'
+        knowledgeSourceId:
+          description: 'The id of the knowledge source to remove, as UpsertKnowledge or
+
+            ListKnowledge returned it. The source must exist in the namespace.'
+          type: string
+        partnerId:
+          description: 'The partner namespace that owns the knowledge source. Must be the
+
+            calling partner''s own partner id.'
+          type: string
+        unlink:
+          $ref: '#/components/schemas/v2UnlinkMode'
+      required:
+      - knowledgeSourceId
+      type: object
+    v2TextContent:
+      description: Free-form text content that an integration supplies directly.
+      properties:
+        text:
+          description: 'The text to store as knowledge. At most 100,000 characters. The count
+
+            is in Unicode characters, not bytes. For larger reference material,
+
+            upload a file instead.'
+          type: string
+      required:
+      - text
       type: object
   securitySchemes:
     OAuth2:

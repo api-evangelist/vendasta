@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: '1.0'
-  title: Vendasta Marketplace API V1 Endpoints account oauth API
-  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+  title: Vendasta Marketplace API V1 Endpoints OAUTH API
+  description: The OAuth APIs allow applications to retrieve a bearer token that must be supplied with all API calls. See the Authentication documentation for more details.
 servers:
 - url: https://developers.vendasta.com/api/v1
   description: Production Server
@@ -11,14 +11,14 @@ servers:
 security:
 - BearerAuth: []
 tags:
-- name: oauth
+- name: OAuth
   description: The OAuth APIs allow applications to retrieve a bearer token that must be supplied with all API calls. See the Authentication documentation for more details.
 paths:
   /oauth/token:
     post:
       security: []
       tags:
-      - oauth
+      - OAuth
       responses:
         '200':
           description: Success
@@ -53,6 +53,8 @@ paths:
                   type: string
                   description: The JWT, including signature
         required: true
+      operationId: postOauthToken
+      x-operation-id-source: derived
 components:
   schemas:
     access_token:

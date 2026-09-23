@@ -37,7 +37,7 @@ paths:
                   data:
                     $ref: '#/components/schemas/listingScores'
       operationId: get-listingScores
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
         Get the listing score information for a specific business'
       x-lifecycle:
@@ -59,7 +59,7 @@ paths:
       responses:
         '200':
           description: OK
-      description: Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       tags:
       - Listing Scores
 components:

@@ -1,7 +1,7 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: '1.0'
-  title: Vendasta Marketplace API V1 Endpoints account API
+  title: Vendasta Marketplace API V1 Endpoints Account API
   description: The Account APIs allow you to perform actions against a single account that your application has been added to.
 servers:
 - url: https://developers.vendasta.com/api/v1
@@ -11,13 +11,13 @@ servers:
 security:
 - BearerAuth: []
 tags:
-- name: account
+- name: Account
   description: The Account APIs allow you to perform actions against a single account that your application has been added to.
 paths:
   /account/:
     get:
       tags:
-      - account
+      - Account
       responses:
         '200':
           description: Success
@@ -52,10 +52,12 @@ paths:
         schema:
           type: string
       summary: List Accounts
+      operationId: getAccount
+      x-operation-id-source: derived
   /account/{account_id}:
     get:
       tags:
-      - account
+      - Account
       responses:
         '200':
           description: Success
@@ -83,6 +85,8 @@ paths:
         schema:
           type: string
       summary: Get Account
+      operationId: getAccountByAccountId
+      x-operation-id-source: derived
   /account/{account_id}/richdata:
     parameters:
     - schema:
@@ -92,7 +96,7 @@ paths:
       required: true
     get:
       tags:
-      - account
+      - Account
       responses:
         '200':
           description: Success
@@ -137,10 +141,12 @@ paths:
               type: object
               properties: {}
       description: Retreive extended account data such as hours of operation and images.
+      operationId: getAccountByAccountIdRichdata
+      x-operation-id-source: derived
   /account/{account_id}/settings:
     get:
       tags:
-      - account
+      - Account
       responses:
         '200':
           description: Success
@@ -168,11 +174,19 @@ paths:
         schema:
           type: string
       summary: Get Account Settings
-      description: "Partners can have sub-accounts for branding purposes called Markets. Every Account must be assigned to a Market, even if it is the `default` Market. The majority of Partners have only the single default Market. The `platform_settings` object returns the partner branding data for the specific partner_id/market_id combo. \n\nEnsure that you set your branding data at either the Account, or the Market level. If it is configured per partner_id, it will end in a breach of white-label for users in any Market other than that of the latest activated Account!\n\n<!-- theme: warning -->\n> There is no webhook at this time for providing updates to partner branding. Therefore a Vendor should periodically poll this API for each of their Accounts to ensure they have the most up to date branding information."
+      description: 'Partners can have sub-accounts for branding purposes called Markets. Every Account must be assigned to a Market, even if it is the `default` Market. The majority of Partners have only the single default Market. The `platform_settings` object returns the partner branding data for the specific partner_id/market_id combo.
+
+
+        Ensure that you set your branding data at either the Account, or the Market level. If it is configured per partner_id, it will end in a breach of white-label for users in any Market other than that of the latest activated Account!
+
+
+        > There is no webhook at this time for providing updates to partner branding. Therefore a Vendor should periodically poll this API for each of their Accounts to ensure they have the most up to date branding information.'
+      operationId: getAccountByAccountIdSettings
+      x-operation-id-source: derived
   /account/{account_id}/session-transfer:
     get:
       tags:
-      - account
+      - Account
       responses:
         '200':
           description: Success
@@ -200,10 +214,12 @@ paths:
         schema:
           type: string
       summary: Get Session Transfer URL
+      operationId: getAccountByAccountIdSessionTransfer
+      x-operation-id-source: derived
   /account/{account_id}/users:
     get:
       tags:
-      - account
+      - Account
       responses:
         '200':
           description: Success
@@ -229,10 +245,12 @@ paths:
         schema:
           type: string
       summary: List Users
+      operationId: getAccountByAccountIdUsers
+      x-operation-id-source: derived
   /account/{account_id}/addons:
     get:
       tags:
-      - account
+      - Account
       responses:
         '200':
           description: Success
@@ -258,10 +276,12 @@ paths:
         schema:
           type: string
       summary: List Activated Addons
+      operationId: getAccountByAccountIdAddons
+      x-operation-id-source: derived
   /account/{account_id}/file-group/:
     post:
       tags:
-      - account
+      - Account
       parameters:
       - required: true
         description: A unique account ID that can be used to identify and reference an account.
@@ -291,10 +311,18 @@ paths:
       summary: Create a File Group
       requestBody:
         $ref: '#/components/requestBodies/Body'
-      description: "Creates a collection of files, which are available to the Partner in Partner Center, and the End Business in Business App. \n\nThe Activity will automatically be posted to the Activity Stream in Business App alerting users that they have a new file ready to download, and will include the supplied `description`.\n\nNote* This feature differs between the UI, and API. You must host the files and supply the urls when using the API. But if you use the file group system via the Vendor Center UI, you upload the files, and Vendasta will host them."
+      description: 'Creates a collection of files, which are available to the Partner in Partner Center, and the End Business in Business App.
+
+
+        The Activity will automatically be posted to the Activity Stream in Business App alerting users that they have a new file ready to download, and will include the supplied `description`.
+
+
+        Note* This feature differs between the UI, and API. You must host the files and supply the urls when using the API. But if you use the file group system via the Vendor Center UI, you upload the files, and Vendasta will host them.'
+      operationId: postAccountByAccountIdFileGroup
+      x-operation-id-source: derived
     get:
       tags:
-      - account
+      - Account
       parameters:
       - required: true
         description: A unique account ID that can be used to identify and reference an account.
@@ -339,10 +367,12 @@ paths:
         '404':
           description: Account not found
       summary: List File Groups
+      operationId: getAccountByAccountIdFileGroup
+      x-operation-id-source: derived
   /account/{account_id}/file-group/{file_group_id}/:
     put:
       tags:
-      - account
+      - Account
       parameters:
       - required: true
         description: A unique account ID that can be used to identify and reference an account.
@@ -382,9 +412,11 @@ paths:
 
 
         Unlike the File Group create, the replace action will not trigger an Activity to be sent to the Activity Stream.'
+      operationId: putAccountByAccountIdFileGroupByFileGroupId
+      x-operation-id-source: derived
     delete:
       tags:
-      - account
+      - Account
       parameters:
       - required: true
         description: A unique account ID that can be used to identify and reference an account.
@@ -418,9 +450,11 @@ paths:
         '404':
           description: Account or file group not found
       summary: Delete a File Group
+      operationId: deleteAccountByAccountIdFileGroupByFileGroupId
+      x-operation-id-source: derived
     get:
       tags:
-      - account
+      - Account
       parameters:
       - required: true
         description: A unique account ID that can be used to identify and reference an account.
@@ -454,10 +488,12 @@ paths:
         '404':
           description: Account or file group not found
       summary: Get a File Group
+      operationId: getAccountByAccountIdFileGroupByFileGroupId
+      x-operation-id-source: derived
   /activation/resolve/:
     post:
       tags:
-      - account
+      - Account
       responses:
         '202':
           description: Accepted
@@ -490,10 +526,12 @@ paths:
               - business_id
               - approved
         required: true
+      operationId: postActivationResolve
+      x-operation-id-source: derived
   /activation/list-pending/:
     get:
       tags:
-      - account
+      - Account
       responses:
         '200':
           description: Success
@@ -536,167 +574,10 @@ paths:
         schema:
           type: string
       summary: List Pending Activations
+      operationId: getActivationListPending
+      x-operation-id-source: derived
 components:
   schemas:
-    file_group:
-      type: object
-      properties:
-        account_id:
-          type: string
-        file_group_id:
-          type: string
-        title:
-          type: string
-        description:
-          type: string
-        created:
-          type: string
-        modified:
-          type: string
-        files:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              url:
-                type: string
-    session_transfer_url:
-      required:
-      - session_transfer_url
-      properties:
-        session_transfer_url:
-          type: string
-      type: object
-    account:
-      required:
-      - company_name
-      - id
-      - partner_id
-      properties:
-        call_tracking_number:
-          items:
-            type: string
-          type: array
-        deleted_flag:
-          type: boolean
-        contact_first_name:
-          type: string
-        common_name:
-          items:
-            type: string
-          type: array
-        timezone:
-          type: string
-        work_number:
-          items:
-            type: string
-          type: array
-        partner_id:
-          type: string
-        id:
-          type: string
-        city:
-          type: string
-        zip:
-          type: string
-        market_id:
-          type: string
-        deleted:
-          type: string
-          format: date-time
-        state:
-          type: string
-        company_name:
-          type: string
-        latitude:
-          type: number
-        foursquare_url:
-          type: string
-        tax_ids:
-          items:
-            type: string
-          type: array
-        website:
-          type: string
-        rss_url:
-          type: string
-        updated:
-          type: string
-          format: date-time
-        twitter_url:
-          type: string
-        facebook_url:
-          type: string
-        fax_number:
-          type: string
-        contact_email:
-          type: string
-        address:
-          type: string
-        youtube_url:
-          type: string
-        instagram_url:
-          type: string
-        key_person:
-          items:
-            type: string
-          type: array
-        pinterest_url:
-          type: string
-        contact_last_name:
-          type: string
-        cell_number:
-          type: string
-        country:
-          type: string
-        created:
-          type: string
-          format: date-time
-        linkedin_url:
-          type: string
-        longitude:
-          type: number
-        sales_person_id:
-          type: string
-        googleplus_url:
-          type: string
-        service_area_business_flag:
-          type: boolean
-        tags:
-          type: array
-          items:
-            type: string
-        seo_category:
-          type: array
-          items:
-            type: string
-        email:
-          type: string
-      type: object
-    account_settings:
-      required:
-      - account_id
-      properties:
-        account_id:
-          type: string
-        partner_id:
-          type: string
-        market_id:
-          type: string
-        platform_settings:
-          type: object
-          properties:
-            partner_name:
-              type: string
-            partner_logo_url:
-              type: string
-            partner_primary_branding_hex_color:
-              type: string
-        white_label_active:
-          type: boolean
-      type: object
     account_richdata:
       description: ''
       type: object
@@ -1098,6 +979,143 @@ components:
             description: Open 24 hours
           landmark: 20th Street
           country: CA
+    active_addon:
+      type: object
+      properties:
+        addon_id:
+          type: string
+        activation_id:
+          type: string
+    file_group:
+      type: object
+      properties:
+        account_id:
+          type: string
+        file_group_id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        created:
+          type: string
+        modified:
+          type: string
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              url:
+                type: string
+    account:
+      required:
+      - company_name
+      - id
+      - partner_id
+      properties:
+        call_tracking_number:
+          items:
+            type: string
+          type: array
+        deleted_flag:
+          type: boolean
+        contact_first_name:
+          type: string
+        common_name:
+          items:
+            type: string
+          type: array
+        timezone:
+          type: string
+        work_number:
+          items:
+            type: string
+          type: array
+        partner_id:
+          type: string
+        id:
+          type: string
+        city:
+          type: string
+        zip:
+          type: string
+        market_id:
+          type: string
+        deleted:
+          type: string
+          format: date-time
+        state:
+          type: string
+        company_name:
+          type: string
+        latitude:
+          type: number
+        foursquare_url:
+          type: string
+        tax_ids:
+          items:
+            type: string
+          type: array
+        website:
+          type: string
+        rss_url:
+          type: string
+        updated:
+          type: string
+          format: date-time
+        twitter_url:
+          type: string
+        facebook_url:
+          type: string
+        fax_number:
+          type: string
+        contact_email:
+          type: string
+        address:
+          type: string
+        youtube_url:
+          type: string
+        instagram_url:
+          type: string
+        key_person:
+          items:
+            type: string
+          type: array
+        pinterest_url:
+          type: string
+        contact_last_name:
+          type: string
+        cell_number:
+          type: string
+        country:
+          type: string
+        created:
+          type: string
+          format: date-time
+        linkedin_url:
+          type: string
+        longitude:
+          type: number
+        sales_person_id:
+          type: string
+        googleplus_url:
+          type: string
+        service_area_business_flag:
+          type: boolean
+        tags:
+          type: array
+          items:
+            type: string
+        seo_category:
+          type: array
+          items:
+            type: string
+        email:
+          type: string
+      type: object
     pending_activation:
       type: object
       properties:
@@ -1112,18 +1130,40 @@ components:
           type: string
         created_date:
           type: string
-    active_addon:
-      type: object
-      properties:
-        addon_id:
-          type: string
-        activation_id:
-          type: string
     associated_user:
       type: object
       properties:
         user_id:
           type: string
+    session_transfer_url:
+      required:
+      - session_transfer_url
+      properties:
+        session_transfer_url:
+          type: string
+      type: object
+    account_settings:
+      required:
+      - account_id
+      properties:
+        account_id:
+          type: string
+        partner_id:
+          type: string
+        market_id:
+          type: string
+        platform_settings:
+          type: object
+          properties:
+            partner_name:
+              type: string
+            partner_logo_url:
+              type: string
+            partner_primary_branding_hex_color:
+              type: string
+        white_label_active:
+          type: boolean
+      type: object
   requestBodies:
     Body:
       content:

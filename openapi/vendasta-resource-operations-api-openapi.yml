@@ -262,7 +262,7 @@ paths:
         '404':
           description: User Not Found
       operationId: ListFieldSchema
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`
+      description: 'Status: `Proposed`
 
 
         Retrieve field schema based on namespace.'
@@ -344,7 +344,7 @@ paths:
         '400':
           description: Bad Request
       operationId: GetFieldOptions
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`
+      description: 'Status: `Proposed`
 
 
         Retrieve the field options based on the given fieldId.'
@@ -590,7 +590,25 @@ paths:
         id: 1de3f0654bc17
       x-lifecycle:
         status: Trusted Tester
-      description: "[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): \n\nv1: `Trusted Tester`\n\nv2: `Proposed`\n\n**v1 Description:**\n\nCreate/update CRM contacts, companies or activities records.\n\nDefault rules will be used to match existing records. You may specificy your own fields that contain unique values in `searchExisting`.\n\nIf a match is found the records will be merged using the always_overwrite, overwrite_if_empty, overwrite_if_newer & combine stratagy"
+      description: 'Status:
+
+
+        v1: `Trusted Tester`
+
+
+        v2: `Proposed`
+
+
+        **v1 Description:**
+
+
+        Create/update CRM contacts, companies or activities records.
+
+
+        Default rules will be used to match existing records. You may specificy your own fields that contain unique values in `searchExisting`.
+
+
+        If a match is found the records will be merged using the always_overwrite, overwrite_if_empty, overwrite_if_newer & combine stratagy'
     post:
       summary: Create CRM Record
       operationId: CreateCrmRecord
@@ -628,7 +646,12 @@ paths:
       - Resource Operations
       x-stoplight:
         id: j1bhs5sbm6rw4
-      description: "[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`\n\nCreate a new CRM record. \nTip: Use Upsert CRM Record to automatically check for existing records to merge the provided data into."
+      description: 'Status: `Proposed`
+
+
+        Create a new CRM record.
+
+        Tip: Use Upsert CRM Record to automatically check for existing records to merge the provided data into.'
   /{namespace}/{resourceTypeCode}/{id}:
     get:
       summary: Get CRM Record
@@ -679,7 +702,7 @@ paths:
                     $ref: '#/components/schemas/CRMObject'
       tags:
       - Resource Operations
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`'
+      description: 'Status: `Proposed`'
     delete:
       summary: Delete CRM Record
       operationId: DeleteCrmRecord
@@ -720,7 +743,7 @@ paths:
           description: Bad Request
       tags:
       - Resource Operations
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`'
+      description: 'Status: `Proposed`'
     patch:
       summary: Update CRM Record
       operationId: UpdateCrmRecord
@@ -770,7 +793,7 @@ paths:
           description: Bad Request
       tags:
       - Resource Operations
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`'
+      description: 'Status: `Proposed`'
   /list/{namespace}/{resourceTypeCode}:
     post:
       operationId: ListCrmRecords
@@ -1018,12 +1041,332 @@ paths:
       - Resource Operations
       x-lifecycle:
         status: earlyAccess
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Early Access`
+      description: 'Status: `Early Access`
 
 
         List CRM contacts, companies or activities records.'
 components:
   schemas:
+    CRMOpportunityChangeActivity:
+      description: CRM OpportunityChange Field Schema for AG-L56V52BMMW
+      properties:
+        standard__activity_manually_logged:
+          description: Whether the activity was manually logged
+          format: boolean
+          readOnly: true
+          title: Manually logged
+          type: boolean
+        standard__activity_name:
+          description: Display name used when showing a summary of the activity.
+          title: Name
+          type: string
+        standard__activity_opportunity_change_id:
+          description: The unique identifier for an Opportunity
+          title: Opportunity ID
+          type: string
+        standard__activity_opportunity_change_last_edit_salesperson_id:
+          description: The ID of the salesperson who last edited the Opportunity
+          title: Last edit salesperson ID
+          type: string
+        standard__activity_opportunity_change_lost_reason:
+          description: Explanation of why the Opportunity was lost
+          title: Lost reason
+          type: string
+        standard__activity_opportunity_change_name:
+          description: The name/title of the Opportunity
+          title: Opportunity name
+          type: string
+        standard__activity_opportunity_change_notes:
+          description: Notes about the Opportunity
+          title: Notes
+          type: string
+        standard__activity_opportunity_change_pipeline_stage:
+          description: The pipeline status of the Opportunity in the pipeline, (closed-won, closed-lost, open, etc)
+          title: Pipeline stage
+          type: string
+        standard__activity_opportunity_change_updated_date:
+          description: The date the Opportunity was last updated
+          format: date
+          title: Updated date
+          type: string
+        standard__activity_source_drill_1:
+          description: Activity record source drill down 1
+          title: Record source drill down 1
+          type: string
+        standard__activity_source_drill_2:
+          description: Activity record source drill down 2
+          title: Record source drill down 2
+          type: string
+        standard__activity_source_drill_3:
+          description: Activity record source drill down 3
+          title: Record source drill down 3
+          type: string
+        standard__activity_source_name:
+          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__activity_tags:
+          description: List of tags useful for segmentation of activities.
+          title: Tags
+          type: string
+        standard__activity_url:
+          description: Link to more information about the activity.
+          title: URL
+          type: string
+        standard__activity_url_name:
+          description: Name of the link to more information about the activity.
+          title: URL name
+          type: string
+        system__activity_activity_type:
+          description: Type of activity
+          title: Activity type
+          type: string
+        system__activity_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__activity_effective:
+          description: Relevant date for the type
+          format: date-time
+          title: Effective date
+          type: string
+        system__activity_external_id:
+          description: External identifier for the record, optional
+          readOnly: true
+          title: External ID
+          type: string
+        system__activity_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__activity_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__activity_source_id:
+          description: ID in the source system
+          title: Source ID
+          type: string
+        system__activity_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+      title: CRM OpportunityChange
+      type: object
+    CRMCommunicationActivity:
+      description: CRM Communication Field Schema for AG-L56V52BMMW
+      x-stoplight:
+        id: 6d4b14936d092
+      properties:
+        standard__activity_communication_body:
+          description: Text of the body.
+          title: Communication body
+          type: string
+        standard__activity_communication_channel:
+          description: 'Communication channels different than email, or a call, e.g.: SMS, VENDASTA_INBOX, WHATS_APP, LINKEDIN_MESSAGE, etc…'
+          title: Communication channel
+          type: string
+        standard__activity_communication_date:
+          description: Date and time the activity was made.
+          format: date-time
+          title: Communication date
+          type: string
+        standard__activity_communication_direction:
+          description: 'Direction of the communication activity, e.g.: INBOUND, OUTBOUND, etc…'
+          title: Communication direction
+          type: string
+        standard__activity_communication_from_id:
+          description: If the communication channel has an ID used for sending and receiving it can be recorded here.
+          title: Communication from ID
+          type: string
+        standard__activity_communication_outcome:
+          description: 'Outcome of the communication, e.g.: SCHEDULED, COMPLETED, RESCHEDULED, NO_SHOW, CANCELLED'
+          title: Communication outcome
+          type: string
+        standard__activity_communication_status:
+          description: 'status of the communication, e.g.: DELIVERED, PROCESSED, BOUNCED'
+          title: Communication status
+          type: string
+        standard__activity_communication_to_id:
+          description: If the communication channel has an ID used for sending and receiving it can be recorded here.
+          title: Communication to ID
+          type: string
+        standard__activity_communication_type:
+          description: 'Type of the communication, e.g: General, Campaign, Reputation review request'
+          title: Communication type
+          type: string
+        standard__activity_manually_logged:
+          description: Whether the activity was manually logged
+          format: boolean
+          readOnly: true
+          title: Manually logged
+          type: boolean
+        standard__activity_name:
+          description: Display name used when showing a summary of the activity.
+          title: Name
+          type: string
+        standard__activity_source_drill_1:
+          description: Activity record source drill down 1
+          title: Record source drill down 1
+          type: string
+        standard__activity_source_drill_2:
+          description: Activity record source drill down 2
+          title: Record source drill down 2
+          type: string
+        standard__activity_source_drill_3:
+          description: Activity record source drill down 3
+          title: Record source drill down 3
+          type: string
+        standard__activity_source_name:
+          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__activity_tags:
+          description: List of tags useful for segmentation of activities.
+          title: Tags
+          type: string
+        standard__activity_url:
+          description: Link to more information about the activity.
+          title: URL
+          type: string
+        standard__activity_url_name:
+          description: Name of the link to more information about the activity.
+          title: URL name
+          type: string
+        system__activity_activity_type:
+          description: Type of activity
+          title: Activity type
+          type: string
+        system__activity_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__activity_effective:
+          description: Relevant date for the type
+          format: date-time
+          title: Effective date
+          type: string
+        system__activity_external_id:
+          description: External identifier for the record, optional
+          readOnly: true
+          title: External ID
+          type: string
+        system__activity_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__activity_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__activity_source_id:
+          description: ID in the source system
+          title: Source ID
+          type: string
+        system__activity_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+      title: CRM Communication
+      type: object
+    CRMNoteActivity:
+      description: CRM Note Field Schema for AG-L56V52BMMW
+      properties:
+        standard__activity_manually_logged:
+          description: Whether the activity was manually logged
+          format: boolean
+          readOnly: true
+          title: Manually logged
+          type: boolean
+        standard__activity_name:
+          description: Display name used when showing a summary of the activity.
+          title: Name
+          type: string
+        standard__activity_note:
+          title: Note
+          type: string
+        standard__activity_note_title:
+          title: Note title
+          type: string
+        standard__activity_source_drill_1:
+          description: Activity record source drill down 1
+          title: Record source drill down 1
+          type: string
+        standard__activity_source_drill_2:
+          description: Activity record source drill down 2
+          title: Record source drill down 2
+          type: string
+        standard__activity_source_drill_3:
+          description: Activity record source drill down 3
+          title: Record source drill down 3
+          type: string
+        standard__activity_source_name:
+          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__activity_tags:
+          description: List of tags useful for segmentation of activities.
+          title: Tags
+          type: string
+        standard__activity_url:
+          description: Link to more information about the activity.
+          title: URL
+          type: string
+        standard__activity_url_name:
+          description: Name of the link to more information about the activity.
+          title: URL name
+          type: string
+        system__activity_activity_type:
+          description: Type of activity
+          title: Activity type
+          type: string
+        system__activity_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__activity_effective:
+          description: Relevant date for the type
+          format: date-time
+          title: Effective date
+          type: string
+        system__activity_external_id:
+          description: External identifier for the record, optional
+          readOnly: true
+          title: External ID
+          type: string
+        system__activity_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__activity_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__activity_source_id:
+          description: ID in the source system
+          title: Source ID
+          type: string
+        system__activity_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+      title: CRM Note
+      type: object
     CRMCustomObject:
       title: CRM Custom Object
       type: object
@@ -1052,267 +1395,6 @@ components:
           type: string
           format: date
           readOnly: true
-    CRMRecordChangeActivity:
-      description: CRM RecordChange Field Schema for AG-L56V52BMMW
-      properties:
-        standard__activity_manually_logged:
-          description: Whether the activity was manually logged
-          format: boolean
-          readOnly: true
-          title: Manually logged
-          type: boolean
-        standard__activity_name:
-          description: Display name used when showing a summary of the activity.
-          title: Name
-          type: string
-        standard__activity_record_change_field_ids_list:
-          items:
-            type: string
-          title: List of the Field ID's for the fields changed
-          type: array
-        standard__activity_record_change_reference_id:
-          description: The ChangeID that references the change
-          title: Record change reference ID
-          type: string
-        standard__activity_record_change_type:
-          description: 'The type of change associated with a CRM object record, e.g.: CREATED, CHANGED_TO, etc…'
-          title: Record change type
-          type: string
-        standard__activity_record_change_user_id:
-          title: ID of the person who made the change
-          type: string
-        standard__activity_source_drill_1:
-          description: Activity record source drill down 1
-          title: Record source drill down 1
-          type: string
-        standard__activity_source_drill_2:
-          description: Activity record source drill down 2
-          title: Record source drill down 2
-          type: string
-        standard__activity_source_drill_3:
-          description: Activity record source drill down 3
-          title: Record source drill down 3
-          type: string
-        standard__activity_source_name:
-          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__activity_tags:
-          description: List of tags useful for segmentation of activities.
-          title: Tags
-          type: string
-        standard__activity_url:
-          description: Link to more information about the activity.
-          title: URL
-          type: string
-        standard__activity_url_name:
-          description: Name of the link to more information about the activity.
-          title: URL name
-          type: string
-        system__activity_activity_type:
-          description: Type of activity
-          title: Activity type
-          type: string
-        system__activity_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__activity_effective:
-          description: Relevant date for the type
-          format: date-time
-          title: Effective date
-          type: string
-        system__activity_external_id:
-          description: External identifier for the record, optional
-          readOnly: true
-          title: External ID
-          type: string
-        system__activity_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__activity_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__activity_source_id:
-          description: ID in the source system
-          title: Source ID
-          type: string
-        system__activity_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-      title: CRM RecordChange
-      type: object
-    CRMMeetingActivity:
-      description: CRM Meeting Field Schema for AG-L56V52BMMW
-      properties:
-        standard__activity_manually_logged:
-          description: Whether the activity was manually logged
-          format: boolean
-          readOnly: true
-          title: Manually logged
-          type: boolean
-        standard__activity_meeting_action_items:
-          description: Action items of the meeting
-          items:
-            type: string
-          title: Meeting action items
-          type: array
-        standard__activity_meeting_analysis_processed_transcript_id:
-          description: Processed transcript ID of the meeting analysis
-          title: Meeting transcript ID
-          type: string
-        standard__activity_meeting_body:
-          description: Meeting description.
-          title: Meeting body
-          type: string
-        standard__activity_meeting_duration:
-          description: Duration of the meeting in milliseconds.
-          title: Meeting duration
-          type: number
-        standard__activity_meeting_end_time:
-          format: date-time
-          title: Meeting end time
-          type: string
-        standard__activity_meeting_internal_notes:
-          description: Internal notes you take for your team not included in the meeting description.
-          title: Meeting internal notes
-          type: string
-        standard__activity_meeting_key_takeaways:
-          description: Key takeaways of the meeting
-          items:
-            type: string
-          title: Meeting key takeaways
-          type: array
-        standard__activity_meeting_last_analyzed_date:
-          description: Last analyzed by AI date of the meeting
-          format: date
-          title: Meeting last analyzed date
-          type: string
-        standard__activity_meeting_location:
-          description: Where the meeting takes place. The value could be a physical address, a conference room, a videoconference link, or a phone number.
-          title: Meeting location
-          type: string
-        standard__activity_meeting_outcome:
-          description: 'Outcome of the meeting, e.g.: SCHEDULED, COMPLETED, RESCHEDULED, NO_SHOW, CANCELLED'
-          title: Meeting outcome
-          type: string
-        standard__activity_meeting_recording_url:
-          description: Recording URL of the meeting
-          title: Meeting recording URL
-          type: string
-        standard__activity_meeting_sentiment:
-          description: Sentiment of the meeting
-          title: Meeting sentiment
-          type: number
-        standard__activity_meeting_start_time:
-          format: date-time
-          title: Meeting start time
-          type: string
-        standard__activity_meeting_status:
-          description: Meeting status ex. SCHEDULED, COMPLETED, RESCHEDULED, etc.
-          title: Meeting status
-          type: string
-        standard__activity_meeting_summary_body:
-          description: Body of the summary of the meeting
-          title: Meeting summary body
-          type: string
-        standard__activity_meeting_summary_title:
-          description: Title of the summary of the meeting
-          title: Meeting summary title
-          type: string
-        standard__activity_meeting_transcript:
-          description: Transcript of the meeting
-          title: Meeting transcript
-          type: string
-        standard__activity_meeting_transcript_url:
-          description: Transcript URL of the meeting
-          title: Meeting transcript URL
-          type: string
-        standard__activity_meeting_url:
-          description: Link to a calendar, for example Google Calendar, Calendar Hero, etc.
-          title: Meeting URL
-          type: string
-        standard__activity_name:
-          description: Display name used when showing a summary of the activity.
-          title: Name
-          type: string
-        standard__activity_source_drill_1:
-          description: Activity record source drill down 1
-          title: Record source drill down 1
-          type: string
-        standard__activity_source_drill_2:
-          description: Activity record source drill down 2
-          title: Record source drill down 2
-          type: string
-        standard__activity_source_drill_3:
-          description: Activity record source drill down 3
-          title: Record source drill down 3
-          type: string
-        standard__activity_source_name:
-          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__activity_tags:
-          description: List of tags useful for segmentation of activities.
-          title: Tags
-          type: string
-        standard__activity_url:
-          description: Link to more information about the activity.
-          title: URL
-          type: string
-        standard__activity_url_name:
-          description: Name of the link to more information about the activity.
-          title: URL name
-          type: string
-        system__activity_activity_type:
-          description: Type of activity
-          title: Activity type
-          type: string
-        system__activity_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__activity_effective:
-          description: Relevant date for the type
-          format: date-time
-          title: Effective date
-          type: string
-        system__activity_external_id:
-          description: External identifier for the record, optional
-          readOnly: true
-          title: External ID
-          type: string
-        system__activity_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__activity_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__activity_source_id:
-          description: ID in the source system
-          title: Source ID
-          type: string
-        system__activity_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-      title: CRM Meeting
-      type: object
     CRMCompany:
       description: CRM Company Field Schema for AG-L56V52BMMW
       properties:
@@ -1839,6 +1921,288 @@ components:
           type: string
       title: CRM Company
       type: object
+    CRMEmailActivity:
+      description: CRM Email Field Schema for AG-L56V52BMMW
+      properties:
+        standard__activity_campaign_id:
+          description: An optional ID for the campaign that the email is associated with
+          title: Campaign ID
+          type: string
+        standard__activity_email_body:
+          description: Text or HTML body of the email
+          title: Email body
+          type: string
+        standard__activity_email_date:
+          description: Date and time the email was sent.
+          format: date-time
+          title: Email date
+          type: string
+        standard__activity_email_direction:
+          description: 'The direction the email is going from/to, e.g.: SENT, INCOMING, FORWARDED, etc…'
+          title: Email direction
+          type: string
+        standard__activity_email_headers:
+          description: JSON string of email headers.
+          title: Email headers
+          type: string
+        standard__activity_email_id:
+          description: The ID is a consistent ID for an email across multiple status activities
+          title: Email ID
+          type: string
+        standard__activity_email_status:
+          description: 'Status for the email delivery, e.g.: BOUNCED, FAILED, SCHEDULED, SENDING, SENT, etc…'
+          title: Email status
+          type: string
+        standard__activity_email_subject:
+          description: Subject line of the logged email.
+          title: Email subject
+          type: string
+        standard__activity_email_type:
+          description: 'The email type, e.g.: Marketing, Sales, etc…'
+          title: Email type
+          type: string
+        standard__activity_manually_logged:
+          description: Whether the activity was manually logged
+          format: boolean
+          readOnly: true
+          title: Manually logged
+          type: boolean
+        standard__activity_name:
+          description: Display name used when showing a summary of the activity.
+          title: Name
+          type: string
+        standard__activity_source_drill_1:
+          description: Activity record source drill down 1
+          title: Record source drill down 1
+          type: string
+        standard__activity_source_drill_2:
+          description: Activity record source drill down 2
+          title: Record source drill down 2
+          type: string
+        standard__activity_source_drill_3:
+          description: Activity record source drill down 3
+          title: Record source drill down 3
+          type: string
+        standard__activity_source_name:
+          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__activity_tags:
+          description: List of tags useful for segmentation of activities.
+          title: Tags
+          type: string
+        standard__activity_url:
+          description: Link to more information about the activity.
+          title: URL
+          type: string
+        standard__activity_url_name:
+          description: Name of the link to more information about the activity.
+          title: URL name
+          type: string
+        system__activity_activity_type:
+          description: Type of activity
+          title: Activity type
+          type: string
+        system__activity_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__activity_effective:
+          description: Relevant date for the type
+          format: date-time
+          title: Effective date
+          type: string
+        system__activity_external_id:
+          description: External identifier for the record, optional
+          readOnly: true
+          title: External ID
+          type: string
+        system__activity_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__activity_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__activity_source_id:
+          description: ID in the source system
+          title: Source ID
+          type: string
+        system__activity_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+      title: CRM Email
+      type: object
+    CRMMeetingActivity:
+      description: CRM Meeting Field Schema for AG-L56V52BMMW
+      properties:
+        standard__activity_manually_logged:
+          description: Whether the activity was manually logged
+          format: boolean
+          readOnly: true
+          title: Manually logged
+          type: boolean
+        standard__activity_meeting_action_items:
+          description: Action items of the meeting
+          items:
+            type: string
+          title: Meeting action items
+          type: array
+        standard__activity_meeting_analysis_processed_transcript_id:
+          description: Processed transcript ID of the meeting analysis
+          title: Meeting transcript ID
+          type: string
+        standard__activity_meeting_body:
+          description: Meeting description.
+          title: Meeting body
+          type: string
+        standard__activity_meeting_duration:
+          description: Duration of the meeting in milliseconds.
+          title: Meeting duration
+          type: number
+        standard__activity_meeting_end_time:
+          format: date-time
+          title: Meeting end time
+          type: string
+        standard__activity_meeting_internal_notes:
+          description: Internal notes you take for your team not included in the meeting description.
+          title: Meeting internal notes
+          type: string
+        standard__activity_meeting_key_takeaways:
+          description: Key takeaways of the meeting
+          items:
+            type: string
+          title: Meeting key takeaways
+          type: array
+        standard__activity_meeting_last_analyzed_date:
+          description: Last analyzed by AI date of the meeting
+          format: date
+          title: Meeting last analyzed date
+          type: string
+        standard__activity_meeting_location:
+          description: Where the meeting takes place. The value could be a physical address, a conference room, a videoconference link, or a phone number.
+          title: Meeting location
+          type: string
+        standard__activity_meeting_outcome:
+          description: 'Outcome of the meeting, e.g.: SCHEDULED, COMPLETED, RESCHEDULED, NO_SHOW, CANCELLED'
+          title: Meeting outcome
+          type: string
+        standard__activity_meeting_recording_url:
+          description: Recording URL of the meeting
+          title: Meeting recording URL
+          type: string
+        standard__activity_meeting_sentiment:
+          description: Sentiment of the meeting
+          title: Meeting sentiment
+          type: number
+        standard__activity_meeting_start_time:
+          format: date-time
+          title: Meeting start time
+          type: string
+        standard__activity_meeting_status:
+          description: Meeting status ex. SCHEDULED, COMPLETED, RESCHEDULED, etc.
+          title: Meeting status
+          type: string
+        standard__activity_meeting_summary_body:
+          description: Body of the summary of the meeting
+          title: Meeting summary body
+          type: string
+        standard__activity_meeting_summary_title:
+          description: Title of the summary of the meeting
+          title: Meeting summary title
+          type: string
+        standard__activity_meeting_transcript:
+          description: Transcript of the meeting
+          title: Meeting transcript
+          type: string
+        standard__activity_meeting_transcript_url:
+          description: Transcript URL of the meeting
+          title: Meeting transcript URL
+          type: string
+        standard__activity_meeting_url:
+          description: Link to a calendar, for example Google Calendar, Calendar Hero, etc.
+          title: Meeting URL
+          type: string
+        standard__activity_name:
+          description: Display name used when showing a summary of the activity.
+          title: Name
+          type: string
+        standard__activity_source_drill_1:
+          description: Activity record source drill down 1
+          title: Record source drill down 1
+          type: string
+        standard__activity_source_drill_2:
+          description: Activity record source drill down 2
+          title: Record source drill down 2
+          type: string
+        standard__activity_source_drill_3:
+          description: Activity record source drill down 3
+          title: Record source drill down 3
+          type: string
+        standard__activity_source_name:
+          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__activity_tags:
+          description: List of tags useful for segmentation of activities.
+          title: Tags
+          type: string
+        standard__activity_url:
+          description: Link to more information about the activity.
+          title: URL
+          type: string
+        standard__activity_url_name:
+          description: Name of the link to more information about the activity.
+          title: URL name
+          type: string
+        system__activity_activity_type:
+          description: Type of activity
+          title: Activity type
+          type: string
+        system__activity_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__activity_effective:
+          description: Relevant date for the type
+          format: date-time
+          title: Effective date
+          type: string
+        system__activity_external_id:
+          description: External identifier for the record, optional
+          readOnly: true
+          title: External ID
+          type: string
+        system__activity_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__activity_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__activity_source_id:
+          description: ID in the source system
+          title: Source ID
+          type: string
+        system__activity_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+      title: CRM Meeting
+      type: object
     CRMContact:
       title: CRM Contact
       type: object
@@ -2175,6 +2539,140 @@ components:
           readOnly: true
           title: Updated date
           type: string
+    CRMRecordChangeActivity:
+      description: CRM RecordChange Field Schema for AG-L56V52BMMW
+      properties:
+        standard__activity_manually_logged:
+          description: Whether the activity was manually logged
+          format: boolean
+          readOnly: true
+          title: Manually logged
+          type: boolean
+        standard__activity_name:
+          description: Display name used when showing a summary of the activity.
+          title: Name
+          type: string
+        standard__activity_record_change_field_ids_list:
+          items:
+            type: string
+          title: List of the Field ID's for the fields changed
+          type: array
+        standard__activity_record_change_reference_id:
+          description: The ChangeID that references the change
+          title: Record change reference ID
+          type: string
+        standard__activity_record_change_type:
+          description: 'The type of change associated with a CRM object record, e.g.: CREATED, CHANGED_TO, etc…'
+          title: Record change type
+          type: string
+        standard__activity_record_change_user_id:
+          title: ID of the person who made the change
+          type: string
+        standard__activity_source_drill_1:
+          description: Activity record source drill down 1
+          title: Record source drill down 1
+          type: string
+        standard__activity_source_drill_2:
+          description: Activity record source drill down 2
+          title: Record source drill down 2
+          type: string
+        standard__activity_source_drill_3:
+          description: Activity record source drill down 3
+          title: Record source drill down 3
+          type: string
+        standard__activity_source_name:
+          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__activity_tags:
+          description: List of tags useful for segmentation of activities.
+          title: Tags
+          type: string
+        standard__activity_url:
+          description: Link to more information about the activity.
+          title: URL
+          type: string
+        standard__activity_url_name:
+          description: Name of the link to more information about the activity.
+          title: URL name
+          type: string
+        system__activity_activity_type:
+          description: Type of activity
+          title: Activity type
+          type: string
+        system__activity_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__activity_effective:
+          description: Relevant date for the type
+          format: date-time
+          title: Effective date
+          type: string
+        system__activity_external_id:
+          description: External identifier for the record, optional
+          readOnly: true
+          title: External ID
+          type: string
+        system__activity_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__activity_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__activity_source_id:
+          description: ID in the source system
+          title: Source ID
+          type: string
+        system__activity_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+      title: CRM RecordChange
+      type: object
+    CRMObject:
+      title: CRMObject
+      x-stoplight:
+        id: tu3kganhi8b6f
+      oneOf:
+      - $ref: '#/components/schemas/CRMContact'
+      - $ref: '#/components/schemas/CRMCompany'
+        x-stoplight:
+          id: 2iessaiq2ndfp
+      - $ref: '#/components/schemas/CRMCallActivity'
+        x-stoplight:
+          id: emre66gqp0rzv
+      - $ref: '#/components/schemas/CRMCommunicationActivity'
+        x-stoplight:
+          id: 4odazxy8mwrv9
+      - $ref: '#/components/schemas/CRMEmailActivity'
+        x-stoplight:
+          id: 6rui8f6g164bw
+      - $ref: '#/components/schemas/CRMMeetingActivity'
+        x-stoplight:
+          id: acbsbhqol6i4r
+      - $ref: '#/components/schemas/CRMNoteActivity'
+        x-stoplight:
+          id: qve9btsp5rkxq
+      - $ref: '#/components/schemas/CRMOpportunityChangeActivity'
+        x-stoplight:
+          id: 95a6k6girrtvb
+      - $ref: '#/components/schemas/CRMRecordChangeActivity'
+        x-stoplight:
+          id: g1bjdj8pq6q7y
+      - $ref: '#/components/schemas/CRMTaskActivity'
+        x-stoplight:
+          id: 4i1mkjtcigkpe
+      - $ref: '#/components/schemas/CRMCustomObject'
+        x-stoplight:
+          id: 8216ee28ad244
     CRMTaskActivity:
       description: CRM Task Field Schema for AG-L56V52BMMW
       properties:
@@ -2406,481 +2904,6 @@ components:
           title: Updated date
           type: string
       title: CRM Call
-      type: object
-    CRMEmailActivity:
-      description: CRM Email Field Schema for AG-L56V52BMMW
-      properties:
-        standard__activity_campaign_id:
-          description: An optional ID for the campaign that the email is associated with
-          title: Campaign ID
-          type: string
-        standard__activity_email_body:
-          description: Text or HTML body of the email
-          title: Email body
-          type: string
-        standard__activity_email_date:
-          description: Date and time the email was sent.
-          format: date-time
-          title: Email date
-          type: string
-        standard__activity_email_direction:
-          description: 'The direction the email is going from/to, e.g.: SENT, INCOMING, FORWARDED, etc…'
-          title: Email direction
-          type: string
-        standard__activity_email_headers:
-          description: JSON string of email headers.
-          title: Email headers
-          type: string
-        standard__activity_email_id:
-          description: The ID is a consistent ID for an email across multiple status activities
-          title: Email ID
-          type: string
-        standard__activity_email_status:
-          description: 'Status for the email delivery, e.g.: BOUNCED, FAILED, SCHEDULED, SENDING, SENT, etc…'
-          title: Email status
-          type: string
-        standard__activity_email_subject:
-          description: Subject line of the logged email.
-          title: Email subject
-          type: string
-        standard__activity_email_type:
-          description: 'The email type, e.g.: Marketing, Sales, etc…'
-          title: Email type
-          type: string
-        standard__activity_manually_logged:
-          description: Whether the activity was manually logged
-          format: boolean
-          readOnly: true
-          title: Manually logged
-          type: boolean
-        standard__activity_name:
-          description: Display name used when showing a summary of the activity.
-          title: Name
-          type: string
-        standard__activity_source_drill_1:
-          description: Activity record source drill down 1
-          title: Record source drill down 1
-          type: string
-        standard__activity_source_drill_2:
-          description: Activity record source drill down 2
-          title: Record source drill down 2
-          type: string
-        standard__activity_source_drill_3:
-          description: Activity record source drill down 3
-          title: Record source drill down 3
-          type: string
-        standard__activity_source_name:
-          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__activity_tags:
-          description: List of tags useful for segmentation of activities.
-          title: Tags
-          type: string
-        standard__activity_url:
-          description: Link to more information about the activity.
-          title: URL
-          type: string
-        standard__activity_url_name:
-          description: Name of the link to more information about the activity.
-          title: URL name
-          type: string
-        system__activity_activity_type:
-          description: Type of activity
-          title: Activity type
-          type: string
-        system__activity_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__activity_effective:
-          description: Relevant date for the type
-          format: date-time
-          title: Effective date
-          type: string
-        system__activity_external_id:
-          description: External identifier for the record, optional
-          readOnly: true
-          title: External ID
-          type: string
-        system__activity_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__activity_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__activity_source_id:
-          description: ID in the source system
-          title: Source ID
-          type: string
-        system__activity_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-      title: CRM Email
-      type: object
-    CRMNoteActivity:
-      description: CRM Note Field Schema for AG-L56V52BMMW
-      properties:
-        standard__activity_manually_logged:
-          description: Whether the activity was manually logged
-          format: boolean
-          readOnly: true
-          title: Manually logged
-          type: boolean
-        standard__activity_name:
-          description: Display name used when showing a summary of the activity.
-          title: Name
-          type: string
-        standard__activity_note:
-          title: Note
-          type: string
-        standard__activity_note_title:
-          title: Note title
-          type: string
-        standard__activity_source_drill_1:
-          description: Activity record source drill down 1
-          title: Record source drill down 1
-          type: string
-        standard__activity_source_drill_2:
-          description: Activity record source drill down 2
-          title: Record source drill down 2
-          type: string
-        standard__activity_source_drill_3:
-          description: Activity record source drill down 3
-          title: Record source drill down 3
-          type: string
-        standard__activity_source_name:
-          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__activity_tags:
-          description: List of tags useful for segmentation of activities.
-          title: Tags
-          type: string
-        standard__activity_url:
-          description: Link to more information about the activity.
-          title: URL
-          type: string
-        standard__activity_url_name:
-          description: Name of the link to more information about the activity.
-          title: URL name
-          type: string
-        system__activity_activity_type:
-          description: Type of activity
-          title: Activity type
-          type: string
-        system__activity_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__activity_effective:
-          description: Relevant date for the type
-          format: date-time
-          title: Effective date
-          type: string
-        system__activity_external_id:
-          description: External identifier for the record, optional
-          readOnly: true
-          title: External ID
-          type: string
-        system__activity_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__activity_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__activity_source_id:
-          description: ID in the source system
-          title: Source ID
-          type: string
-        system__activity_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-      title: CRM Note
-      type: object
-    CRMCommunicationActivity:
-      description: CRM Communication Field Schema for AG-L56V52BMMW
-      x-stoplight:
-        id: 6d4b14936d092
-      properties:
-        standard__activity_communication_body:
-          description: Text of the body.
-          title: Communication body
-          type: string
-        standard__activity_communication_channel:
-          description: 'Communication channels different than email, or a call, e.g.: SMS, VENDASTA_INBOX, WHATS_APP, LINKEDIN_MESSAGE, etc…'
-          title: Communication channel
-          type: string
-        standard__activity_communication_date:
-          description: Date and time the activity was made.
-          format: date-time
-          title: Communication date
-          type: string
-        standard__activity_communication_direction:
-          description: 'Direction of the communication activity, e.g.: INBOUND, OUTBOUND, etc…'
-          title: Communication direction
-          type: string
-        standard__activity_communication_from_id:
-          description: If the communication channel has an ID used for sending and receiving it can be recorded here.
-          title: Communication from ID
-          type: string
-        standard__activity_communication_outcome:
-          description: 'Outcome of the communication, e.g.: SCHEDULED, COMPLETED, RESCHEDULED, NO_SHOW, CANCELLED'
-          title: Communication outcome
-          type: string
-        standard__activity_communication_status:
-          description: 'status of the communication, e.g.: DELIVERED, PROCESSED, BOUNCED'
-          title: Communication status
-          type: string
-        standard__activity_communication_to_id:
-          description: If the communication channel has an ID used for sending and receiving it can be recorded here.
-          title: Communication to ID
-          type: string
-        standard__activity_communication_type:
-          description: 'Type of the communication, e.g: General, Campaign, Reputation review request'
-          title: Communication type
-          type: string
-        standard__activity_manually_logged:
-          description: Whether the activity was manually logged
-          format: boolean
-          readOnly: true
-          title: Manually logged
-          type: boolean
-        standard__activity_name:
-          description: Display name used when showing a summary of the activity.
-          title: Name
-          type: string
-        standard__activity_source_drill_1:
-          description: Activity record source drill down 1
-          title: Record source drill down 1
-          type: string
-        standard__activity_source_drill_2:
-          description: Activity record source drill down 2
-          title: Record source drill down 2
-          type: string
-        standard__activity_source_drill_3:
-          description: Activity record source drill down 3
-          title: Record source drill down 3
-          type: string
-        standard__activity_source_name:
-          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__activity_tags:
-          description: List of tags useful for segmentation of activities.
-          title: Tags
-          type: string
-        standard__activity_url:
-          description: Link to more information about the activity.
-          title: URL
-          type: string
-        standard__activity_url_name:
-          description: Name of the link to more information about the activity.
-          title: URL name
-          type: string
-        system__activity_activity_type:
-          description: Type of activity
-          title: Activity type
-          type: string
-        system__activity_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__activity_effective:
-          description: Relevant date for the type
-          format: date-time
-          title: Effective date
-          type: string
-        system__activity_external_id:
-          description: External identifier for the record, optional
-          readOnly: true
-          title: External ID
-          type: string
-        system__activity_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__activity_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__activity_source_id:
-          description: ID in the source system
-          title: Source ID
-          type: string
-        system__activity_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-      title: CRM Communication
-      type: object
-    CRMObject:
-      title: CRMObject
-      x-stoplight:
-        id: tu3kganhi8b6f
-      oneOf:
-      - $ref: '#/components/schemas/CRMContact'
-      - $ref: '#/components/schemas/CRMCompany'
-        x-stoplight:
-          id: 2iessaiq2ndfp
-      - $ref: '#/components/schemas/CRMCallActivity'
-        x-stoplight:
-          id: emre66gqp0rzv
-      - $ref: '#/components/schemas/CRMCommunicationActivity'
-        x-stoplight:
-          id: 4odazxy8mwrv9
-      - $ref: '#/components/schemas/CRMEmailActivity'
-        x-stoplight:
-          id: 6rui8f6g164bw
-      - $ref: '#/components/schemas/CRMMeetingActivity'
-        x-stoplight:
-          id: acbsbhqol6i4r
-      - $ref: '#/components/schemas/CRMNoteActivity'
-        x-stoplight:
-          id: qve9btsp5rkxq
-      - $ref: '#/components/schemas/CRMOpportunityChangeActivity'
-        x-stoplight:
-          id: 95a6k6girrtvb
-      - $ref: '#/components/schemas/CRMRecordChangeActivity'
-        x-stoplight:
-          id: g1bjdj8pq6q7y
-      - $ref: '#/components/schemas/CRMTaskActivity'
-        x-stoplight:
-          id: 4i1mkjtcigkpe
-      - $ref: '#/components/schemas/CRMCustomObject'
-        x-stoplight:
-          id: 8216ee28ad244
-    CRMOpportunityChangeActivity:
-      description: CRM OpportunityChange Field Schema for AG-L56V52BMMW
-      properties:
-        standard__activity_manually_logged:
-          description: Whether the activity was manually logged
-          format: boolean
-          readOnly: true
-          title: Manually logged
-          type: boolean
-        standard__activity_name:
-          description: Display name used when showing a summary of the activity.
-          title: Name
-          type: string
-        standard__activity_opportunity_change_id:
-          description: The unique identifier for an Opportunity
-          title: Opportunity ID
-          type: string
-        standard__activity_opportunity_change_last_edit_salesperson_id:
-          description: The ID of the salesperson who last edited the Opportunity
-          title: Last edit salesperson ID
-          type: string
-        standard__activity_opportunity_change_lost_reason:
-          description: Explanation of why the Opportunity was lost
-          title: Lost reason
-          type: string
-        standard__activity_opportunity_change_name:
-          description: The name/title of the Opportunity
-          title: Opportunity name
-          type: string
-        standard__activity_opportunity_change_notes:
-          description: Notes about the Opportunity
-          title: Notes
-          type: string
-        standard__activity_opportunity_change_pipeline_stage:
-          description: The pipeline status of the Opportunity in the pipeline, (closed-won, closed-lost, open, etc)
-          title: Pipeline stage
-          type: string
-        standard__activity_opportunity_change_updated_date:
-          description: The date the Opportunity was last updated
-          format: date
-          title: Updated date
-          type: string
-        standard__activity_source_drill_1:
-          description: Activity record source drill down 1
-          title: Record source drill down 1
-          type: string
-        standard__activity_source_drill_2:
-          description: Activity record source drill down 2
-          title: Record source drill down 2
-          type: string
-        standard__activity_source_drill_3:
-          description: Activity record source drill down 3
-          title: Record source drill down 3
-          type: string
-        standard__activity_source_name:
-          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__activity_tags:
-          description: List of tags useful for segmentation of activities.
-          title: Tags
-          type: string
-        standard__activity_url:
-          description: Link to more information about the activity.
-          title: URL
-          type: string
-        standard__activity_url_name:
-          description: Name of the link to more information about the activity.
-          title: URL name
-          type: string
-        system__activity_activity_type:
-          description: Type of activity
-          title: Activity type
-          type: string
-        system__activity_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__activity_effective:
-          description: Relevant date for the type
-          format: date-time
-          title: Effective date
-          type: string
-        system__activity_external_id:
-          description: External identifier for the record, optional
-          readOnly: true
-          title: External ID
-          type: string
-        system__activity_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__activity_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__activity_source_id:
-          description: ID in the source system
-          title: Source ID
-          type: string
-        system__activity_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-      title: CRM OpportunityChange
       type: object
   securitySchemes:
     OAuth2Demo:

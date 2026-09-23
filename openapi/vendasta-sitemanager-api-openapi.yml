@@ -63,7 +63,7 @@ paths:
       security:
       - OAuth2:
         - admin
-      summary: ListPlugins represents a method for returning a list of plugins that the specified site has installed
+      summary: ListPlugins represents a method for returning a list of plugins that the…
       tags:
       - SiteManager
   /v1/wph/support-tools/plugins/activate:
@@ -92,7 +92,7 @@ paths:
       security:
       - OAuth2:
         - admin
-      summary: ActivatePlugins represents a method for activating a list of plugins for the specified site
+      summary: ActivatePlugins represents a method for activating a list of plugins for the…
       tags:
       - SiteManager
   /v1/wph/support-tools/plugins/deactivate:
@@ -121,7 +121,7 @@ paths:
       security:
       - OAuth2:
         - admin
-      summary: DeactivatePlugins represents a method for deactivating a list of plugins for the site
+      summary: DeactivatePlugins represents a method for deactivating a list of plugins for…
       tags:
       - SiteManager
   /v1/wph/support-tools/resource-usage:
@@ -150,11 +150,55 @@ paths:
       security:
       - OAuth2:
         - admin
-      summary: GetSiteSummary represents a method for getting the site details given an account id
+      summary: GetSiteSummary represents a method for getting the site details given an…
       tags:
       - SiteManager
 components:
   schemas:
+    v1GetSiteResourceUsagesResponse:
+      description: GetSiteResourceUsagesResponse is the response message for GetSiteResourceUsagesSummary.
+      properties:
+        siteResourceUsages:
+          $ref: '#/components/schemas/v1SiteResourceUsages'
+      type: object
+    v1ChatCompletionResponse:
+      description: ChatCompletionResponse is the response message for ChatCompletion.
+      properties:
+        resp:
+          description: Output only. The generated response text.
+          readOnly: true
+          type: string
+      type: object
+    v1SiteResourceUsages:
+      description: SiteResourceUsages contains resource usage data for a WordPress site.
+      properties:
+        bandwidth:
+          description: Output only. The bandwidth usage of the site.
+          readOnly: true
+          type: string
+        visitors:
+          description: Output only. The visitor count for the site.
+          readOnly: true
+          type: string
+      type: object
+    v1ListPluginsResponse:
+      description: ListPluginsResponse is the response message for ListPlugins.
+      properties:
+        hasMore:
+          description: Output only. Whether or not more results exist.
+          readOnly: true
+          type: boolean
+        nextCursor:
+          description: Output only. The cursor to use for the next page of results.
+          readOnly: true
+          type: string
+        plugins:
+          description: Output only. The list of plugins.
+          items:
+            $ref: '#/components/schemas/v1Plugin'
+          readOnly: true
+          type: array
+      type: object
     rpcStatus:
       properties:
         code:
@@ -166,15 +210,6 @@ components:
           type: array
         message:
           type: string
-      type: object
-    v1ChatCompletionRequest:
-      description: ChatCompletionRequest is the request message for ChatCompletion.
-      properties:
-        text:
-          description: Required. The input text for the chat completion.
-          type: string
-      required:
-      - text
       type: object
     v1DeactivatePluginRequest:
       description: DeactivatePluginRequest is the request message for DeactivatePlugin.
@@ -191,13 +226,29 @@ components:
       - siteId
       - pluginIds
       type: object
-    v1ChatCompletionResponse:
-      description: ChatCompletionResponse is the response message for ChatCompletion.
+    v1ChatCompletionRequest:
+      description: ChatCompletionRequest is the request message for ChatCompletion.
       properties:
-        resp:
-          description: Output only. The generated response text.
-          readOnly: true
+        text:
+          description: Required. The input text for the chat completion.
           type: string
+      required:
+      - text
+      type: object
+    v1ActivatePluginRequest:
+      description: ActivatePluginRequest is the request message for ActivatePlugin.
+      properties:
+        pluginIds:
+          description: Required. The list of plugin IDs to activate.
+          items:
+            type: string
+          type: array
+        siteId:
+          description: Required. The unique identifier of the site.
+          type: string
+      required:
+      - siteId
+      - pluginIds
       type: object
     v1Plugin:
       description: Plugin represents a WordPress plugin installed on a site.
@@ -219,11 +270,17 @@ components:
           readOnly: true
           type: string
       type: object
-    v1GetSiteResourceUsagesResponse:
-      description: GetSiteResourceUsagesResponse is the response message for GetSiteResourceUsagesSummary.
+    v1GetSiteResourceUsagesRequest:
+      description: GetSiteResourceUsagesRequest is the request message for GetSiteResourceUsagesSummary.
       properties:
-        siteResourceUsages:
-          $ref: '#/components/schemas/v1SiteResourceUsages'
+        monthYear:
+          description: Optional. The month and year to get resource usage for (e.g., "2024-01").
+          type: string
+        siteId:
+          description: Required. The unique identifier of the site.
+          type: string
+      required:
+      - siteId
       type: object
     v1ListPluginsRequest:
       description: ListPluginsRequest is the request message for ListPlugins.
@@ -241,68 +298,11 @@ components:
       required:
       - siteId
       type: object
-    v1ListPluginsResponse:
-      description: ListPluginsResponse is the response message for ListPlugins.
-      properties:
-        hasMore:
-          description: Output only. Whether or not more results exist.
-          readOnly: true
-          type: boolean
-        nextCursor:
-          description: Output only. The cursor to use for the next page of results.
-          readOnly: true
-          type: string
-        plugins:
-          description: Output only. The list of plugins.
-          items:
-            $ref: '#/components/schemas/v1Plugin'
-          readOnly: true
-          type: array
-      type: object
-    v1SiteResourceUsages:
-      description: SiteResourceUsages contains resource usage data for a WordPress site.
-      properties:
-        bandwidth:
-          description: Output only. The bandwidth usage of the site.
-          readOnly: true
-          type: string
-        visitors:
-          description: Output only. The visitor count for the site.
-          readOnly: true
-          type: string
-      type: object
-    v1GetSiteResourceUsagesRequest:
-      description: GetSiteResourceUsagesRequest is the request message for GetSiteResourceUsagesSummary.
-      properties:
-        monthYear:
-          description: Optional. The month and year to get resource usage for (e.g., "2024-01").
-          type: string
-        siteId:
-          description: Required. The unique identifier of the site.
-          type: string
-      required:
-      - siteId
-      type: object
     protobufAny:
       additionalProperties: {}
       properties:
         '@type':
           type: string
-      type: object
-    v1ActivatePluginRequest:
-      description: ActivatePluginRequest is the request message for ActivatePlugin.
-      properties:
-        pluginIds:
-          description: Required. The list of plugin IDs to activate.
-          items:
-            type: string
-          type: array
-        siteId:
-          description: Required. The unique identifier of the site.
-          type: string
-      required:
-      - siteId
-      - pluginIds
       type: object
   securitySchemes:
     OAuth2:

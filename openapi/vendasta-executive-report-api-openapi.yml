@@ -1,8 +1,8 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
   version: '1.0'
-  title: Vendasta Marketplace API V1 Endpoints account executive_report API
-  description: The Account APIs allow you to perform actions against a single account that your application has been added to.
+  title: Vendasta Marketplace API V1 Endpoints Executive Report API
+  description: The executive report APIs are used to submit data to the executive report for a single app on an account.
 servers:
 - url: https://developers.vendasta.com/api/v1
   description: Production Server
@@ -63,8 +63,9 @@ paths:
                   items:
                     $ref: '#/components/schemas/executive_report_data'
               type: object
-      description: Submit data to populate the [Executive Report](https://support.vendasta.com/hc/en-us/articles/4406961302935) with cards aggregated for the past Week. See [Guide](https://developers.vendasta.com/vendor/64ecf7b9ac031-executive-report) for further details.
-      operationId: ''
+      description: Submit data to populate the Executive Report with cards aggregated for the past Week. See Guide for further details.
+      operationId: postExecutiveReportWeekly
+      x-operation-id-source: derived
   /executive_report/monthly/:
     post:
       tags:
@@ -116,7 +117,9 @@ paths:
                     $ref: '#/components/schemas/executive_report_data'
               type: object
         required: true
-      description: Submit data to populate the [Executive Report](https://support.vendasta.com/hc/en-us/articles/4406961302935) with cards aggregated for the past Month. See [Guide](https://developers.vendasta.com/vendor/64ecf7b9ac031-executive-report) for further details.
+      description: Submit data to populate the Executive Report with cards aggregated for the past Month. See Guide for further details.
+      operationId: postExecutiveReportMonthly
+      x-operation-id-source: derived
 components:
   schemas:
     executive_report_data:

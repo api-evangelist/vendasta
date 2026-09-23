@@ -77,7 +77,7 @@ paths:
                         description: The URI at which the next batch of citations can be fetched from
                         format: uri
       operationId: get-citationData
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+      description: 'Status: `Trusted Tester`
 
         Get the citation data information for a specific business. The citations that are returned are sorted by the `foundAt` property in descending order.'
       x-lifecycle:
@@ -111,7 +111,7 @@ paths:
     options:
       operationId: options-citationData
       summary: List valid HTTP verbs for /citations
-      description: 'Used solely for [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user''s security. You should not call this operation directly. '
+      description: Used solely for CORS the OPTIONS request returns the list of possible HTTP methods and other headers that browsers use to protect user's security. You should not call this operation directly.
       responses:
         '204':
           description: No Content
@@ -134,16 +134,17 @@ paths:
       description: Localhost
 components:
   schemas:
-    rpcStatus:
+    v1HistoricalCitationsDataPoint:
       properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
+        date:
+          description: Output only. Date of the data point.
+          format: date-time
+          readOnly: true
+          type: string
+        value:
+          description: Output only. Total citations found up to this date.
+          format: int64
+          readOnly: true
           type: string
       type: object
     v1Citation:
@@ -185,18 +186,45 @@ components:
           readOnly: true
           type: string
       type: object
-    v1HistoricalCitationsDataPoint:
+    rpcStatus:
       properties:
-        date:
-          description: Output only. Date of the data point.
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1GetCitationDataRequest:
+      description: Request to retrieve citation data for a business, including citation counts, historical trends, and citations grouped by domain.
+      properties:
+        businessId:
+          description: Required. The business ID (account group ID) for which to retrieve citation data.
+          type: string
+        endDate:
+          description: Optional. The end date of the date range for citation data retrieval.
           format: date-time
-          readOnly: true
           type: string
-        value:
-          description: Output only. Total citations found up to this date.
-          format: int64
-          readOnly: true
+        startDate:
+          description: Optional. The start date of the date range for citation data retrieval.
+          format: date-time
           type: string
+      required:
+      - businessId
+      title: GetCitationDataRequest
+      type: object
+    v1CitationsByDomain:
+      properties:
+        citations:
+          items:
+            $ref: '#/components/schemas/v1Citation'
+          type: array
+        domain:
+          type: string
+      title: CitationsByDomain contains all citations for a domain
       type: object
     v1GetCitationDataResponse:
       description: Contains citation data for a business including total count, historical trends, and citations grouped by domain.
@@ -234,34 +262,6 @@ components:
           readOnly: true
           type: string
       title: GetCitationDataResponse
-      type: object
-    v1CitationsByDomain:
-      properties:
-        citations:
-          items:
-            $ref: '#/components/schemas/v1Citation'
-          type: array
-        domain:
-          type: string
-      title: CitationsByDomain contains all citations for a domain
-      type: object
-    v1GetCitationDataRequest:
-      description: Request to retrieve citation data for a business, including citation counts, historical trends, and citations grouped by domain.
-      properties:
-        businessId:
-          description: Required. The business ID (account group ID) for which to retrieve citation data.
-          type: string
-        endDate:
-          description: Optional. The end date of the date range for citation data retrieval.
-          format: date-time
-          type: string
-        startDate:
-          description: Optional. The start date of the date range for citation data retrieval.
-          format: date-time
-          type: string
-      required:
-      - businessId
-      title: GetCitationDataRequest
       type: object
     protobufAny:
       additionalProperties: {}
