@@ -57,7 +57,7 @@ tags:
 - Company
 - Software-as-a-Service
 - Marketplace
-- SMB
+- Small Business
 - White Label
 - Reseller
 - Marketing
@@ -82,7 +82,7 @@ maintainers:
   email: info@apis.io
 apis:
 - aid: vendasta:vendasta-account-api
-  name: Vendasta account API
+  name: Vendasta Account API
   description: >-
     The Account APIs allow you to perform actions against a single account that your application has been
     added to.
@@ -96,7 +96,7 @@ apis:
   - type: OpenAPI
     url: openapi/vendasta-account-api-openapi.yml
 - aid: vendasta:vendasta-activity-api
-  name: Vendasta activity API
+  name: Vendasta Activity API
   description: >-
     The Activity API lets you inform us of new activity from your Marketplace App.  It will be displayed
     in the user's activity stream and used for notifications.  Note: This endpoint has duplicate detection.  Within
@@ -113,7 +113,7 @@ apis:
   - type: OpenAPI
     url: openapi/vendasta-activity-api-openapi.yml
 - aid: vendasta:vendasta-change-spend-api
-  name: Vendasta change_spend API
+  name: Vendasta Change Spend API
   description: >-
     The Change Spend APIs allow interact with change spend requests, like resolving them by approving
     or rejecting
@@ -126,7 +126,7 @@ apis:
   - type: OpenAPI
     url: openapi/vendasta-change-spend-api-openapi.yml
 - aid: vendasta:vendasta-customer-api
-  name: Vendasta customer API
+  name: Vendasta Customer API
   description: >-
     The Customer APIs allow you to perform actions against customers of the account that your application
     has been added to.
@@ -140,7 +140,7 @@ apis:
   - type: OpenAPI
     url: openapi/vendasta-customer-api-openapi.yml
 - aid: vendasta:vendasta-executive-report-api
-  name: Vendasta executive_report API
+  name: Vendasta Executive Report API
   description: >-
     The executive report APIs are used to submit data to the executive report for a single app on an account.
   humanURL: https://developers.vendasta.com/vendor
@@ -152,7 +152,7 @@ apis:
   - type: OpenAPI
     url: openapi/vendasta-executive-report-api-openapi.yml
 - aid: vendasta:vendasta-marketplace-app-api
-  name: Vendasta marketplace_app API
+  name: Vendasta Marketplace App API
   description: >-
     The Marketplace App APIs allow you to perform actions against your applications, as well as certain
     operations against all marketplace apps.
@@ -165,7 +165,7 @@ apis:
   - type: OpenAPI
     url: openapi/vendasta-marketplace-app-api-openapi.yml
 - aid: vendasta:vendasta-user-api
-  name: Vendasta user API
+  name: Vendasta User API
   description: >-
     The User APIs allow you to perform operations against Vendasta Users. Each user has a unique identifier
     in the format UID-{}. This ID is guaranteed to stay the same, while the email associated to a user
@@ -1010,8 +1010,6 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - SocialPosts
-  tags_raw:
   - Social Posts
   properties:
   - type: OpenAPI

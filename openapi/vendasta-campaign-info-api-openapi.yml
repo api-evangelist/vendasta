@@ -119,24 +119,6 @@ paths:
         status: trustedTester
 components:
   parameters:
-    Authorization:
-      name: Authorization
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^Bearer\s\S+
-        example: Bearer <access token>
-      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
-    endAt:
-      name: endAt
-      in: query
-      required: false
-      schema:
-        type: string
-        format: date-time
-        example: '2021-01-01T00:00:01Z'
-      description: Only return data from before the specified end date and time. If not specified all data will be returned.
     pageLimit:
       name: page[limit]
       in: query
@@ -147,6 +129,15 @@ components:
         minimum: 1
         default: 25
       description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^Bearer\s\S+
+        example: Bearer <access token>
+      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
     startAt:
       name: startAt
       in: query
@@ -164,6 +155,15 @@ components:
       schema:
         type: string
       description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    endAt:
+      name: endAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data from before the specified end date and time. If not specified all data will be returned.
   schemas:
     campaignInfo:
       title: Campaign Info

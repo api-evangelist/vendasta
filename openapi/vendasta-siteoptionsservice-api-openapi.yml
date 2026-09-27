@@ -83,18 +83,18 @@ components:
           type: string
       title: SiteUpdate
       type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
     v1GetSiteUpdateResponse:
       description: Response containing update information for a WordPress site.
       properties:
         update:
           $ref: '#/components/schemas/v1SiteUpdate'
       title: GetSiteUpdateResponse
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
       type: object
   securitySchemes:
     OAuth2:

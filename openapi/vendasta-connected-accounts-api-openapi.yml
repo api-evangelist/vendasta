@@ -108,15 +108,6 @@ paths:
       - Connected Accounts
 components:
   parameters:
-    Authorization:
-      name: Authorization
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^Bearer\s\S+
-        example: Bearer <access token>
-      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
     pageLimit:
       name: page[limit]
       in: query
@@ -127,15 +118,26 @@ components:
         minimum: 1
         default: 25
       description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
-    connectedAccount.resourceId:
-      name: filter[connectedAccount.id]
+    provider:
+      name: filter[provider]
       in: query
+      required: false
       schema:
         type: string
-        example: AG-AHFJEHD:google:1324354657
-        uniqueItems: true
-      description: Comma separated list of Resource IDs of Connected Advertising Accounts
-      allowEmptyValue: true
+        enum:
+        - google
+        - facebook
+        - localads
+      description: Comma separated list of Advertising Providers
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^Bearer\s\S+
+        example: Bearer <access token>
+      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
     businessLocation.id:
       name: filter[businessLocation.id]
       in: query
@@ -154,17 +156,15 @@ components:
       schema:
         type: string
       description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
-    provider:
-      name: filter[provider]
+    connectedAccount.resourceId:
+      name: filter[connectedAccount.id]
       in: query
-      required: false
       schema:
         type: string
-        enum:
-        - google
-        - facebook
-        - localads
-      description: Comma separated list of Advertising Providers
+        example: AG-AHFJEHD:google:1324354657
+        uniqueItems: true
+      description: Comma separated list of Resource IDs of Connected Advertising Accounts
+      allowEmptyValue: true
   schemas:
     connectedAccounts:
       title: connectedAccounts

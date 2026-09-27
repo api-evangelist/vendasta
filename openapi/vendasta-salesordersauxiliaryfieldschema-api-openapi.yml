@@ -60,38 +60,17 @@ paths:
       - SalesOrdersAuxiliaryFieldSchema
 components:
   schemas:
-    v1GetAuxiliaryDataFieldSchemaResponse:
+    vendastatypesPagedResponseMetadata:
       properties:
-        fieldSchema:
-          $ref: '#/components/schemas/v1AuxiliaryDataFieldSchema'
-      type: object
-    v1AuxiliaryDataFieldType:
-      default: AUXILIARY_DATA_FIELD_TYPE_INVALID
-      enum:
-      - AUXILIARY_DATA_FIELD_TYPE_INVALID
-      - AUXILIARY_DATA_FIELD_TYPE_STRING
-      - AUXILIARY_DATA_FIELD_TYPE_INTEGER
-      - AUXILIARY_DATA_FIELD_TYPE_DATE
-      - AUXILIARY_DATA_FIELD_TYPE_DROPDOWN
-      - AUXILIARY_DATA_FIELD_TYPE_CURRENCY
-      type: string
-    googlerpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
           type: string
-      type: object
-    v1DropdownOption:
-      properties:
-        label:
-          type: string
-        value:
+        totalResults:
+          format: int64
+          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
           type: string
       type: object
     v1FieldSchemaIdentifier:
@@ -110,6 +89,12 @@ components:
         pagingOptions:
           $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
         partnerId:
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
           type: string
       type: object
     v1AuxiliaryDataFieldSchema:
@@ -143,39 +128,6 @@ components:
           format: date-time
           type: string
       type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
-      type: object
-    v1ListAuxiliaryDataFieldSchemaResponse:
-      properties:
-        fieldSchemas:
-          items:
-            $ref: '#/components/schemas/v1AuxiliaryDataFieldSchema'
-          type: array
-        pagingMetadata:
-          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
-      type: object
-    vendastatypesPagedResponseMetadata:
-      properties:
-        hasMore:
-          title: Whether or not more results exist
-          type: boolean
-        nextCursor:
-          title: A cursor that can be provided to retrieve the next page of results
-          type: string
-        totalResults:
-          format: int64
-          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
-          type: string
-      type: object
-    v1ListAuxiliaryDataFieldSchemaRequestFilters:
-      properties:
-        onlyArchived:
-          type: boolean
-      type: object
     vendastatypesPagedRequestOptions:
       properties:
         cursor:
@@ -186,11 +138,59 @@ components:
           format: int64
           type: string
       type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
     v1GetAuxiliaryDataFieldSchemaRequest:
       properties:
         identifier:
           $ref: '#/components/schemas/v1FieldSchemaIdentifier'
       type: object
+    v1DropdownOption:
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+      type: object
+    v1ListAuxiliaryDataFieldSchemaRequestFilters:
+      properties:
+        onlyArchived:
+          type: boolean
+      type: object
+    v1ListAuxiliaryDataFieldSchemaResponse:
+      properties:
+        fieldSchemas:
+          items:
+            $ref: '#/components/schemas/v1AuxiliaryDataFieldSchema'
+          type: array
+        pagingMetadata:
+          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
+      type: object
+    v1GetAuxiliaryDataFieldSchemaResponse:
+      properties:
+        fieldSchema:
+          $ref: '#/components/schemas/v1AuxiliaryDataFieldSchema'
+      type: object
+    v1AuxiliaryDataFieldType:
+      default: AUXILIARY_DATA_FIELD_TYPE_INVALID
+      enum:
+      - AUXILIARY_DATA_FIELD_TYPE_INVALID
+      - AUXILIARY_DATA_FIELD_TYPE_STRING
+      - AUXILIARY_DATA_FIELD_TYPE_INTEGER
+      - AUXILIARY_DATA_FIELD_TYPE_DATE
+      - AUXILIARY_DATA_FIELD_TYPE_DROPDOWN
+      - AUXILIARY_DATA_FIELD_TYPE_CURRENCY
+      type: string
   securitySchemes:
     OAuth2:
       flows:

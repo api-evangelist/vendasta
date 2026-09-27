@@ -46,35 +46,6 @@ paths:
       - SiteDetail Service
 components:
   schemas:
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
-    v1ListSiteDetailsResponse:
-      description: Response message containing paginated site domain information.
-      properties:
-        hasMore:
-          description: Whether or not more results exist.
-          type: boolean
-        sites:
-          description: The list of site domain information.
-          items:
-            $ref: '#/components/schemas/v1SiteDetails'
-          type: array
-        totalResults:
-          description: The total number of results for this query across all pages.
-          format: int64
-          type: string
-      title: List Site Details Response
-      type: object
     v1SiteDetails:
       description: Domain information for a single WordPress site including primary and alternate domains.
       properties:
@@ -90,6 +61,18 @@ components:
           description: The primary domain of the site.
           type: string
       title: Site Details
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
       type: object
     v1ListSiteDetailsRequest:
       description: Request message for listing primary and alternate domains for all WordPress sites owned by a partner.
@@ -114,6 +97,23 @@ components:
       properties:
         '@type':
           type: string
+      type: object
+    v1ListSiteDetailsResponse:
+      description: Response message containing paginated site domain information.
+      properties:
+        hasMore:
+          description: Whether or not more results exist.
+          type: boolean
+        sites:
+          description: The list of site domain information.
+          items:
+            $ref: '#/components/schemas/v1SiteDetails'
+          type: array
+        totalResults:
+          description: The total number of results for this query across all pages.
+          format: int64
+          type: string
+      title: List Site Details Response
       type: object
   securitySchemes:
     OAuth2:

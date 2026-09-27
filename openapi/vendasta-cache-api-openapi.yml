@@ -48,6 +48,12 @@ components:
         message:
           type: string
       type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
     v1InvalidateCacheRequest:
       description: Request to invalidate page cache, object cache, and CDN for a WordPress site.
       properties:
@@ -57,12 +63,6 @@ components:
       required:
       - siteId
       title: InvalidateCacheRequest
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
       type: object
   securitySchemes:
     OAuth2:

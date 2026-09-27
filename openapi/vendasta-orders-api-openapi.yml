@@ -442,126 +442,6 @@ paths:
       - Orders
 components:
   schemas:
-    orders:
-      title: Order
-      type: object
-      x-lifecycle:
-        status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
-
-
-        An order records a sale to a business location. For example requests see the [Sales guide](../../../../../../docs/Guides/Sell/Overview.md).'
-      x-tags:
-      - Orders
-      properties:
-        id:
-          type: string
-          example: AG-1234:ORD-1234567
-          readOnly: true
-        type:
-          type: string
-          default: orders
-          enum:
-          - orders
-        attributes:
-          type: object
-          properties:
-            currencyCode:
-              type: string
-              minLength: 3
-              maxLength: 3
-              example: CAD
-              description: The 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
-            lineItems:
-              type: array
-              items:
-                $ref: '#/components/schemas/lineItem'
-            statusCode:
-              type: string
-              default: processing
-              enum:
-              - draft
-              - submitted
-              - processing
-              - declined
-              - fulfilled
-              - error
-              - archived
-              - NotReady
-              description: 'The status of the order will be automatically set to one of the following by the system:
-
-                - `draft`: The order has not yet been sent for approval
-
-                - `submitted`: The order is ready for approval
-
-                - `processing`: The order and its items are being processed
-
-                - `declined`: The order has been declined by an admin or a customer
-
-                - `fulfilled`: The order and its items have been successfully processed. This includes activating the products with the vendor(s).
-
-                - `error`: One or more of the orders items failed to be processed
-
-                - `archived`: The order has been marked as archived
-
-                - `NotReady`: The order could not be created as a dependent resource is not yet ready to be used'
-            tags:
-              type: array
-              maxItems: 30
-              description: A tag is a label that can be used for grouping and filtering your list of orders. They may be any string upto 30 characters in length.
-              items:
-                type: string
-                maxLength: 30
-                minLength: 1
-            notes:
-              type: string
-              description: Free-text notes associated with the order.
-        relationships:
-          type: object
-          properties:
-            businessLocation:
-              type: object
-              description: 'Required during creation: The business location the order is for'
-              required:
-              - data
-              properties:
-                data:
-                  type: object
-                  required:
-                  - id
-                  - type
-                  properties:
-                    id:
-                      type: string
-                      example: AG-1234567
-                    type:
-                      type: string
-                      default: businessLocations
-                      enum:
-                      - businessLocations
-            salesPerson:
-              type: object
-              description: 'The user who will be credited with the sale. Used to associate orders with salespersons in reports.
-
-
-                Note the user must have the salesperson role.'
-              required:
-              - data
-              properties:
-                data:
-                  type: object
-                  required:
-                  - id
-                  - type
-                  properties:
-                    id:
-                      type: string
-                      example: U-1234567
-                    type:
-                      type: string
-                      enum:
-                      - users
-                      default: users
     orderCustomFields:
       title: Order Custom Fields
       type: object
@@ -810,6 +690,126 @@ components:
           readOnly: true
       required:
       - sku
+    orders:
+      title: Order
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        An order records a sale to a business location. For example requests see the [Sales guide](../../../../../../docs/Guides/Sell/Overview.md).'
+      x-tags:
+      - Orders
+      properties:
+        id:
+          type: string
+          example: AG-1234:ORD-1234567
+          readOnly: true
+        type:
+          type: string
+          default: orders
+          enum:
+          - orders
+        attributes:
+          type: object
+          properties:
+            currencyCode:
+              type: string
+              minLength: 3
+              maxLength: 3
+              example: CAD
+              description: The 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+            lineItems:
+              type: array
+              items:
+                $ref: '#/components/schemas/lineItem'
+            statusCode:
+              type: string
+              default: processing
+              enum:
+              - draft
+              - submitted
+              - processing
+              - declined
+              - fulfilled
+              - error
+              - archived
+              - NotReady
+              description: 'The status of the order will be automatically set to one of the following by the system:
+
+                - `draft`: The order has not yet been sent for approval
+
+                - `submitted`: The order is ready for approval
+
+                - `processing`: The order and its items are being processed
+
+                - `declined`: The order has been declined by an admin or a customer
+
+                - `fulfilled`: The order and its items have been successfully processed. This includes activating the products with the vendor(s).
+
+                - `error`: One or more of the orders items failed to be processed
+
+                - `archived`: The order has been marked as archived
+
+                - `NotReady`: The order could not be created as a dependent resource is not yet ready to be used'
+            tags:
+              type: array
+              maxItems: 30
+              description: A tag is a label that can be used for grouping and filtering your list of orders. They may be any string upto 30 characters in length.
+              items:
+                type: string
+                maxLength: 30
+                minLength: 1
+            notes:
+              type: string
+              description: Free-text notes associated with the order.
+        relationships:
+          type: object
+          properties:
+            businessLocation:
+              type: object
+              description: 'Required during creation: The business location the order is for'
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - id
+                  - type
+                  properties:
+                    id:
+                      type: string
+                      example: AG-1234567
+                    type:
+                      type: string
+                      default: businessLocations
+                      enum:
+                      - businessLocations
+            salesPerson:
+              type: object
+              description: 'The user who will be credited with the sale. Used to associate orders with salespersons in reports.
+
+
+                Note the user must have the salesperson role.'
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - id
+                  - type
+                  properties:
+                    id:
+                      type: string
+                      example: U-1234567
+                    type:
+                      type: string
+                      enum:
+                      - users
+                      default: users
   securitySchemes:
     JWT:
       type: http

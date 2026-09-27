@@ -1127,6 +1127,347 @@ components:
                     required:
                     - type
                     - id
+    timeOfDay:
+      type: string
+      title: a time of day
+      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
+      pattern: ^\d{2}:\d{2}$
+      example: 09:45
+    dayOfTheWeek:
+      type: string
+      title: a day of the week
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      example: wednesday
+    businessCategories:
+      title: Business Category
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        The taxonomy to be applied to business locations indicating the type of services that they provide.'
+      x-tags:
+      - Business Categories
+      properties:
+        id:
+          type: string
+          example: AG-1234567
+          readOnly: true
+        type:
+          type: string
+          default: businessCategories
+          enum:
+          - businessCategories
+          readOnly: true
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              description: A user friendly description for the category. It will have been translated based on the Accept-Language header.
+              readOnly: true
+            isActive:
+              type: boolean
+              description: Whether the category is active. Inactive categories may still be returned when looking up by ID but should not be used for new assignments.
+              readOnly: true
+    hoursOfOperation:
+      type:
+      - array
+      - 'null'
+      description: The operating hours for the business location. Each entry in the array is a set of hours for a particular department or customer of the business. It is recommended to provide the `general` hours for all locations. Some locations may have additional definitions for other departments.
+      items:
+        type: object
+        required:
+        - hoursTypeId
+        properties:
+          hoursTypeId:
+            type: string
+            enum:
+            - general
+            - delivery
+            - kitchen
+            - driveThrough
+            - pickup
+            - takeout
+            description: "The category of hours that may apply to a specific department or service. Not all types are valid for all business categories.\n\nThe general hours for a location must be set before defining hours for other departments. \n\nCurrently only `general` is supported in the Vendasta platform. We intend to add others in the future."
+          regularHours:
+            title: Hours on the days of the week
+            type:
+            - array
+            - 'null'
+            description: 'A collection of times that this location is open for business. Each period represents a range of hours when the location is open during the week.
+
+
+              You may specify multiple entries for the same date if you are open for multiple periods (Example lunch and supper).'
+            items:
+              type: object
+              required:
+              - openDay
+              - closeDay
+              - openTime
+              - closeTime
+              properties:
+                openDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period starts on.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                closeDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period ends on. It should be the same as `openDay` except when the period goes over midnight. The total period may not be more than 24 hours.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                openTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                closeTime:
+                  $ref: '#/components/schemas/timeOfDay'
+          specialHours:
+            type:
+            - array
+            - 'null'
+            description: "Represents a set of time periods when a location's operational hours differ from its regular business hours. This may be a holiday or special event. These hours replace the regular hours for the day.\n\nA special hour period must represent a range of less than 24 hours. The `openTime` and `startDate` must predate the `closeTime` and `endDate`. \nThe `closeTime` and `endDate` can extend to 11:59 a.m. on the day after the specified `startDate`.\n\nNote: Most listing sites only support special hours for the general type."
+            items:
+              type: object
+              required:
+              - startDate
+              - endDate
+              - startTime
+              - endTime
+              properties:
+                status:
+                  x-stoplight:
+                    id: nav2z12fnl9fr
+                  enum:
+                  - open
+                  - closed
+                  description: Describes the different modes that apply to special hour periods. Currently only `open` and `closed` are supported in the Vendasta platform. Overlapping `open` and `closed` periods are not allowed. When status is `open`, for the given business it will be open for the mentioned time period for the selected date. When status is `closed`, for the given business it will be closed for the selected date.
+                startDate:
+                  description: The calendar date this special hour period starts on.
+                  type: string
+                  format: date
+                endDate:
+                  description: The calendar date this special hour period ends on. If `endDate` field is not set, default to the date specified in `startDate`. If set, this field must be equal to or at most 1 day after `startDate`.
+                  type: string
+                  format: date
+                startTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                endTime:
+                  $ref: '#/components/schemas/timeOfDay'
+    salesAccountCustomFields:
+      title: Sales Accounts Custom Fields
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Custom fields associated with a sales account. The field definitions can be managed at Partner Center -> Administration -> Custom Fields.
+
+
+        One form of identifier should be chosen, either `fieldId` or `externalId`.
+
+        `fieldId` is the computer generated ID (like `FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99`) and `externalId` is a optional human-readable ID that can be set in the administration panel.
+
+
+        Dropdown possible value and the currency code are also configured in the Administration panel.'
+      x-examples:
+        Custom Fields with string value Example:
+          data:
+            id: AG-1231231
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+              stringValue: A good string value
+              title: Title of abc448ca field
+              description: Description for abc448ca field
+              fieldType: string
+        Custom Fields with integer value Example:
+          data:
+            id: AG-1231232
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+              integerValue: 1000
+              title: Title of 123448ca field
+              description: Description for 123448ca field
+              fieldType: integer
+        Custom Fields with Date value Example:
+          data:
+            id: AG-1231233
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+              dateValue: '2016-01-02T15:04:05Z'
+              title: Title of 987448ca field
+              description: Description for 987448ca field
+              fieldType: date
+        Custom Fields Full:
+          data:
+            id: AG-1231235
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+              stringValue: A good string value
+              title: Title of abc448ca field
+              description: Description for abc448ca field
+              fieldType: string
+            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+              integerValue: 1000
+              title: Title of 123448ca field
+              description: Description for 123448ca field
+              fieldType: integer
+            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+              dateValue: '2022-01-02T15:04:05Z'
+              title: Title of 987448ca field
+              description: Description for 987448ca field
+              fieldType: date
+            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
+              dropdownValue: red
+              title: Title of 987448f2 field
+              description: Description for 987448f2 field
+              fieldType: dropdown
+            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
+              currencyValue: 10000
+              title: Title of 98744854 field
+              description: Description for 98744854 field
+              fieldType: currency
+              currencyCode: CAD
+        Custom Fields with Dropdown Example:
+          data:
+            id: AG-1231233
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
+              dropdownValue: red
+              title: Title of 987448f2 field
+              description: Description for 987448f2 field
+              fieldType: dropdown
+        Custom Fields with Currency Example:
+          data:
+            id: AG-1231233
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
+              currencyValue: 10000
+              title: Title of 98744854 field
+              description: Description for 98744854 field
+              fieldType: currency
+              currencyCode: CAD
+      x-tags:
+      - Sales Account Custom Fields
+      properties:
+        id:
+          type: string
+          example: AG-1231232
+          description: An identifier for the parent entity, for example salesAccount (AG-1231231)
+          readOnly: true
+        type:
+          type: string
+          default: salesAccountCustomFields
+          enum:
+          - salesAccountCustomFields
+          description: Should always be salesAccountCustomFields
+        partnerFields:
+          type: array
+          description: 'List of custom fields specific to the partner with a direct relationship to the sales account.
+
+            To send a new value each field must have at least the fieldId and its correspondent value.
+
+            For example a field of type string must have the stringValue attribute filled.
+
+
+            string -> stringValue
+
+
+            integer -> integerValue
+
+
+            date -> dateValue
+
+
+            Only the fields that you wish to modify need to be sent.'
+          items:
+            type: object
+            properties:
+              fieldId:
+                type: string
+                description: Field identifier, can be retrieved by listing the attributes
+              externalId:
+                type: string
+                description: Alternative field identifier, can be set on admin panel and can be retrieved by listing the attributes
+              fieldType:
+                type: string
+                example: string
+                enum:
+                - string
+                - integer
+                - date
+                - dropdown
+                - currency
+                description: 'Indicates which of the value fields to use to read or write the data. It can only be modified from within partner center.
+
+
+                  string -> stringValue
+
+                  integer -> integerValue
+
+                  date -> dateValue
+
+                  dropdown -> dropdownValue
+
+                  currency -> currencyValue'
+                readOnly: true
+              stringValue:
+                type: string
+                description: Required when the field type is `string`
+              integerValue:
+                type: integer
+                description: Required when the field type is `integer`
+              dateValue:
+                type: string
+                description: Required when the field type is `date`
+                format: date
+              dropdownValue:
+                type: string
+                description: Required when type is `dropdown`. The possible values can be discovered using the administration panel.
+              currencyValue:
+                type: integer
+                description: 'Required when the field type is `currency`.
+
+
+                  This field represents the cents (or the smallest part of the currency).
+
+
+                  Example:
+
+                  USD 600.00 -> currencyValue=60000'
+              currencyCode:
+                type: string
+                minLength: 3
+                maxLength: 3
+                description: 'Represents the type of currency when the field is type `currency`. It will be the 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+
+
+                  Ex: USD, CAD, AUD'
+                example: USD
+                readOnly: true
+              title:
+                type: string
+                description: The main label for the field, appearing in most user interfaces that show the value. This field is not read when setting a value.
+                readOnly: true
+              description:
+                type: string
+                description: A longer text explanation of the field, it optionally appears in the UI. This field is not read when setting a value.
+                readOnly: true
+      required:
+      - id
+      - type
     salesAccounts:
       title: Sales Account
       type: object
@@ -1546,347 +1887,6 @@ components:
             - $ref: '#/components/schemas/users'
             - $ref: '#/components/schemas/businessCategories'
           readOnly: true
-    hoursOfOperation:
-      type:
-      - array
-      - 'null'
-      description: The operating hours for the business location. Each entry in the array is a set of hours for a particular department or customer of the business. It is recommended to provide the `general` hours for all locations. Some locations may have additional definitions for other departments.
-      items:
-        type: object
-        required:
-        - hoursTypeId
-        properties:
-          hoursTypeId:
-            type: string
-            enum:
-            - general
-            - delivery
-            - kitchen
-            - driveThrough
-            - pickup
-            - takeout
-            description: "The category of hours that may apply to a specific department or service. Not all types are valid for all business categories.\n\nThe general hours for a location must be set before defining hours for other departments. \n\nCurrently only `general` is supported in the Vendasta platform. We intend to add others in the future."
-          regularHours:
-            title: Hours on the days of the week
-            type:
-            - array
-            - 'null'
-            description: 'A collection of times that this location is open for business. Each period represents a range of hours when the location is open during the week.
-
-
-              You may specify multiple entries for the same date if you are open for multiple periods (Example lunch and supper).'
-            items:
-              type: object
-              required:
-              - openDay
-              - closeDay
-              - openTime
-              - closeTime
-              properties:
-                openDay:
-                  allOf:
-                  - description: Indicates the day of the week that this period starts on.
-                  - $ref: '#/components/schemas/dayOfTheWeek'
-                closeDay:
-                  allOf:
-                  - description: Indicates the day of the week that this period ends on. It should be the same as `openDay` except when the period goes over midnight. The total period may not be more than 24 hours.
-                  - $ref: '#/components/schemas/dayOfTheWeek'
-                openTime:
-                  $ref: '#/components/schemas/timeOfDay'
-                closeTime:
-                  $ref: '#/components/schemas/timeOfDay'
-          specialHours:
-            type:
-            - array
-            - 'null'
-            description: "Represents a set of time periods when a location's operational hours differ from its regular business hours. This may be a holiday or special event. These hours replace the regular hours for the day.\n\nA special hour period must represent a range of less than 24 hours. The `openTime` and `startDate` must predate the `closeTime` and `endDate`. \nThe `closeTime` and `endDate` can extend to 11:59 a.m. on the day after the specified `startDate`.\n\nNote: Most listing sites only support special hours for the general type."
-            items:
-              type: object
-              required:
-              - startDate
-              - endDate
-              - startTime
-              - endTime
-              properties:
-                status:
-                  x-stoplight:
-                    id: nav2z12fnl9fr
-                  enum:
-                  - open
-                  - closed
-                  description: Describes the different modes that apply to special hour periods. Currently only `open` and `closed` are supported in the Vendasta platform. Overlapping `open` and `closed` periods are not allowed. When status is `open`, for the given business it will be open for the mentioned time period for the selected date. When status is `closed`, for the given business it will be closed for the selected date.
-                startDate:
-                  description: The calendar date this special hour period starts on.
-                  type: string
-                  format: date
-                endDate:
-                  description: The calendar date this special hour period ends on. If `endDate` field is not set, default to the date specified in `startDate`. If set, this field must be equal to or at most 1 day after `startDate`.
-                  type: string
-                  format: date
-                startTime:
-                  $ref: '#/components/schemas/timeOfDay'
-                endTime:
-                  $ref: '#/components/schemas/timeOfDay'
-    salesAccountCustomFields:
-      title: Sales Accounts Custom Fields
-      type: object
-      x-lifecycle:
-        status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
-
-
-        Custom fields associated with a sales account. The field definitions can be managed at Partner Center -> Administration -> Custom Fields.
-
-
-        One form of identifier should be chosen, either `fieldId` or `externalId`.
-
-        `fieldId` is the computer generated ID (like `FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99`) and `externalId` is a optional human-readable ID that can be set in the administration panel.
-
-
-        Dropdown possible value and the currency code are also configured in the Administration panel.'
-      x-examples:
-        Custom Fields with string value Example:
-          data:
-            id: AG-1231231
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
-              stringValue: A good string value
-              title: Title of abc448ca field
-              description: Description for abc448ca field
-              fieldType: string
-        Custom Fields with integer value Example:
-          data:
-            id: AG-1231232
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
-              integerValue: 1000
-              title: Title of 123448ca field
-              description: Description for 123448ca field
-              fieldType: integer
-        Custom Fields with Date value Example:
-          data:
-            id: AG-1231233
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
-              dateValue: '2016-01-02T15:04:05Z'
-              title: Title of 987448ca field
-              description: Description for 987448ca field
-              fieldType: date
-        Custom Fields Full:
-          data:
-            id: AG-1231235
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
-              stringValue: A good string value
-              title: Title of abc448ca field
-              description: Description for abc448ca field
-              fieldType: string
-            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
-              integerValue: 1000
-              title: Title of 123448ca field
-              description: Description for 123448ca field
-              fieldType: integer
-            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
-              dateValue: '2022-01-02T15:04:05Z'
-              title: Title of 987448ca field
-              description: Description for 987448ca field
-              fieldType: date
-            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
-              dropdownValue: red
-              title: Title of 987448f2 field
-              description: Description for 987448f2 field
-              fieldType: dropdown
-            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
-              currencyValue: 10000
-              title: Title of 98744854 field
-              description: Description for 98744854 field
-              fieldType: currency
-              currencyCode: CAD
-        Custom Fields with Dropdown Example:
-          data:
-            id: AG-1231233
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
-              dropdownValue: red
-              title: Title of 987448f2 field
-              description: Description for 987448f2 field
-              fieldType: dropdown
-        Custom Fields with Currency Example:
-          data:
-            id: AG-1231233
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
-              currencyValue: 10000
-              title: Title of 98744854 field
-              description: Description for 98744854 field
-              fieldType: currency
-              currencyCode: CAD
-      x-tags:
-      - Sales Account Custom Fields
-      properties:
-        id:
-          type: string
-          example: AG-1231232
-          description: An identifier for the parent entity, for example salesAccount (AG-1231231)
-          readOnly: true
-        type:
-          type: string
-          default: salesAccountCustomFields
-          enum:
-          - salesAccountCustomFields
-          description: Should always be salesAccountCustomFields
-        partnerFields:
-          type: array
-          description: 'List of custom fields specific to the partner with a direct relationship to the sales account.
-
-            To send a new value each field must have at least the fieldId and its correspondent value.
-
-            For example a field of type string must have the stringValue attribute filled.
-
-
-            string -> stringValue
-
-
-            integer -> integerValue
-
-
-            date -> dateValue
-
-
-            Only the fields that you wish to modify need to be sent.'
-          items:
-            type: object
-            properties:
-              fieldId:
-                type: string
-                description: Field identifier, can be retrieved by listing the attributes
-              externalId:
-                type: string
-                description: Alternative field identifier, can be set on admin panel and can be retrieved by listing the attributes
-              fieldType:
-                type: string
-                example: string
-                enum:
-                - string
-                - integer
-                - date
-                - dropdown
-                - currency
-                description: 'Indicates which of the value fields to use to read or write the data. It can only be modified from within partner center.
-
-
-                  string -> stringValue
-
-                  integer -> integerValue
-
-                  date -> dateValue
-
-                  dropdown -> dropdownValue
-
-                  currency -> currencyValue'
-                readOnly: true
-              stringValue:
-                type: string
-                description: Required when the field type is `string`
-              integerValue:
-                type: integer
-                description: Required when the field type is `integer`
-              dateValue:
-                type: string
-                description: Required when the field type is `date`
-                format: date
-              dropdownValue:
-                type: string
-                description: Required when type is `dropdown`. The possible values can be discovered using the administration panel.
-              currencyValue:
-                type: integer
-                description: 'Required when the field type is `currency`.
-
-
-                  This field represents the cents (or the smallest part of the currency).
-
-
-                  Example:
-
-                  USD 600.00 -> currencyValue=60000'
-              currencyCode:
-                type: string
-                minLength: 3
-                maxLength: 3
-                description: 'Represents the type of currency when the field is type `currency`. It will be the 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
-
-
-                  Ex: USD, CAD, AUD'
-                example: USD
-                readOnly: true
-              title:
-                type: string
-                description: The main label for the field, appearing in most user interfaces that show the value. This field is not read when setting a value.
-                readOnly: true
-              description:
-                type: string
-                description: A longer text explanation of the field, it optionally appears in the UI. This field is not read when setting a value.
-                readOnly: true
-      required:
-      - id
-      - type
-    timeOfDay:
-      type: string
-      title: a time of day
-      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
-      pattern: ^\d{2}:\d{2}$
-      example: 09:45
-    businessCategories:
-      title: Business Category
-      type: object
-      x-lifecycle:
-        status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
-
-
-        The taxonomy to be applied to business locations indicating the type of services that they provide.'
-      x-tags:
-      - Business Categories
-      properties:
-        id:
-          type: string
-          example: AG-1234567
-          readOnly: true
-        type:
-          type: string
-          default: businessCategories
-          enum:
-          - businessCategories
-          readOnly: true
-        attributes:
-          type: object
-          properties:
-            name:
-              type: string
-              description: A user friendly description for the category. It will have been translated based on the Accept-Language header.
-              readOnly: true
-            isActive:
-              type: boolean
-              description: Whether the category is active. Inactive categories may still be returned when looking up by ID but should not be used for new assignments.
-              readOnly: true
-    dayOfTheWeek:
-      type: string
-      title: a day of the week
-      enum:
-      - monday
-      - tuesday
-      - wednesday
-      - thursday
-      - friday
-      - saturday
-      - sunday
-      example: wednesday
   securitySchemes:
     JWT:
       type: http

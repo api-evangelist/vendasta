@@ -128,6 +128,48 @@ paths:
         You can sideload this list along with the context info using `/contexts/{contextID}?include=glossaryTerms`'
 components:
   schemas:
+    GlossaryContext:
+      title: Glossary Context
+      type: object
+      description: A context is the frame of reference used when describing a term
+      x-tags:
+      - Glossary-Contexts
+      properties:
+        id:
+          type: string
+          maxLength: 20
+          minLength: 0
+        type:
+          type: string
+          enum:
+          - glossaryContexts
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+            definition:
+              type: string
+        relationships:
+          type: object
+          properties:
+            terms:
+              type: array
+              items:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      type:
+                        type: string
+                        enum:
+                        - glossaryTerms
+                    required:
+                    - id
+                    - type
     GlossaryTerms:
       title: Terms
       type: object
@@ -180,48 +222,6 @@ components:
       x-tags:
       - Glossary-Terms
       - Glossary-Contexts
-    GlossaryContext:
-      title: Glossary Context
-      type: object
-      description: A context is the frame of reference used when describing a term
-      x-tags:
-      - Glossary-Contexts
-      properties:
-        id:
-          type: string
-          maxLength: 20
-          minLength: 0
-        type:
-          type: string
-          enum:
-          - glossaryContexts
-        attributes:
-          type: object
-          properties:
-            name:
-              type: string
-            definition:
-              type: string
-        relationships:
-          type: object
-          properties:
-            terms:
-              type: array
-              items:
-                type: object
-                properties:
-                  data:
-                    type: object
-                    properties:
-                      id:
-                        type: string
-                      type:
-                        type: string
-                        enum:
-                        - glossaryTerms
-                    required:
-                    - id
-                    - type
   securitySchemes:
     JWT:
       type: http

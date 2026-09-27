@@ -414,105 +414,6 @@ paths:
                   $ref: '#/components/schemas/businessLocations'
 components:
   schemas:
-    dayOfTheWeek:
-      type: string
-      title: a day of the week
-      enum:
-      - monday
-      - tuesday
-      - wednesday
-      - thursday
-      - friday
-      - saturday
-      - sunday
-      example: wednesday
-    timeOfDay:
-      type: string
-      title: a time of day
-      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
-      pattern: ^\d{2}:\d{2}$
-      example: 09:45
-    hoursOfOperation:
-      type:
-      - array
-      - 'null'
-      description: The operating hours for the business location. Each entry in the array is a set of hours for a particular department or customer of the business. It is recommended to provide the `general` hours for all locations. Some locations may have additional definitions for other departments.
-      items:
-        type: object
-        required:
-        - hoursTypeId
-        properties:
-          hoursTypeId:
-            type: string
-            enum:
-            - general
-            - delivery
-            - kitchen
-            - driveThrough
-            - pickup
-            - takeout
-            description: "The category of hours that may apply to a specific department or service. Not all types are valid for all business categories.\n\nThe general hours for a location must be set before defining hours for other departments. \n\nCurrently only `general` is supported in the Vendasta platform. We intend to add others in the future."
-          regularHours:
-            title: Hours on the days of the week
-            type:
-            - array
-            - 'null'
-            description: 'A collection of times that this location is open for business. Each period represents a range of hours when the location is open during the week.
-
-
-              You may specify multiple entries for the same date if you are open for multiple periods (Example lunch and supper).'
-            items:
-              type: object
-              required:
-              - openDay
-              - closeDay
-              - openTime
-              - closeTime
-              properties:
-                openDay:
-                  allOf:
-                  - description: Indicates the day of the week that this period starts on.
-                  - $ref: '#/components/schemas/dayOfTheWeek'
-                closeDay:
-                  allOf:
-                  - description: Indicates the day of the week that this period ends on. It should be the same as `openDay` except when the period goes over midnight. The total period may not be more than 24 hours.
-                  - $ref: '#/components/schemas/dayOfTheWeek'
-                openTime:
-                  $ref: '#/components/schemas/timeOfDay'
-                closeTime:
-                  $ref: '#/components/schemas/timeOfDay'
-          specialHours:
-            type:
-            - array
-            - 'null'
-            description: "Represents a set of time periods when a location's operational hours differ from its regular business hours. This may be a holiday or special event. These hours replace the regular hours for the day.\n\nA special hour period must represent a range of less than 24 hours. The `openTime` and `startDate` must predate the `closeTime` and `endDate`. \nThe `closeTime` and `endDate` can extend to 11:59 a.m. on the day after the specified `startDate`.\n\nNote: Most listing sites only support special hours for the general type."
-            items:
-              type: object
-              required:
-              - startDate
-              - endDate
-              - startTime
-              - endTime
-              properties:
-                status:
-                  x-stoplight:
-                    id: nav2z12fnl9fr
-                  enum:
-                  - open
-                  - closed
-                  description: Describes the different modes that apply to special hour periods. Currently only `open` and `closed` are supported in the Vendasta platform. Overlapping `open` and `closed` periods are not allowed. When status is `open`, for the given business it will be open for the mentioned time period for the selected date. When status is `closed`, for the given business it will be closed for the selected date.
-                startDate:
-                  description: The calendar date this special hour period starts on.
-                  type: string
-                  format: date
-                endDate:
-                  description: The calendar date this special hour period ends on. If `endDate` field is not set, default to the date specified in `startDate`. If set, this field must be equal to or at most 1 day after `startDate`.
-                  type: string
-                  format: date
-                startTime:
-                  $ref: '#/components/schemas/timeOfDay'
-                endTime:
-                  $ref: '#/components/schemas/timeOfDay'
     businessLocations:
       title: Business Location
       type: object
@@ -775,6 +676,105 @@ components:
                       id:
                         type: string
                         example: active:diving:freediving
+    hoursOfOperation:
+      type:
+      - array
+      - 'null'
+      description: The operating hours for the business location. Each entry in the array is a set of hours for a particular department or customer of the business. It is recommended to provide the `general` hours for all locations. Some locations may have additional definitions for other departments.
+      items:
+        type: object
+        required:
+        - hoursTypeId
+        properties:
+          hoursTypeId:
+            type: string
+            enum:
+            - general
+            - delivery
+            - kitchen
+            - driveThrough
+            - pickup
+            - takeout
+            description: "The category of hours that may apply to a specific department or service. Not all types are valid for all business categories.\n\nThe general hours for a location must be set before defining hours for other departments. \n\nCurrently only `general` is supported in the Vendasta platform. We intend to add others in the future."
+          regularHours:
+            title: Hours on the days of the week
+            type:
+            - array
+            - 'null'
+            description: 'A collection of times that this location is open for business. Each period represents a range of hours when the location is open during the week.
+
+
+              You may specify multiple entries for the same date if you are open for multiple periods (Example lunch and supper).'
+            items:
+              type: object
+              required:
+              - openDay
+              - closeDay
+              - openTime
+              - closeTime
+              properties:
+                openDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period starts on.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                closeDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period ends on. It should be the same as `openDay` except when the period goes over midnight. The total period may not be more than 24 hours.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                openTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                closeTime:
+                  $ref: '#/components/schemas/timeOfDay'
+          specialHours:
+            type:
+            - array
+            - 'null'
+            description: "Represents a set of time periods when a location's operational hours differ from its regular business hours. This may be a holiday or special event. These hours replace the regular hours for the day.\n\nA special hour period must represent a range of less than 24 hours. The `openTime` and `startDate` must predate the `closeTime` and `endDate`. \nThe `closeTime` and `endDate` can extend to 11:59 a.m. on the day after the specified `startDate`.\n\nNote: Most listing sites only support special hours for the general type."
+            items:
+              type: object
+              required:
+              - startDate
+              - endDate
+              - startTime
+              - endTime
+              properties:
+                status:
+                  x-stoplight:
+                    id: nav2z12fnl9fr
+                  enum:
+                  - open
+                  - closed
+                  description: Describes the different modes that apply to special hour periods. Currently only `open` and `closed` are supported in the Vendasta platform. Overlapping `open` and `closed` periods are not allowed. When status is `open`, for the given business it will be open for the mentioned time period for the selected date. When status is `closed`, for the given business it will be closed for the selected date.
+                startDate:
+                  description: The calendar date this special hour period starts on.
+                  type: string
+                  format: date
+                endDate:
+                  description: The calendar date this special hour period ends on. If `endDate` field is not set, default to the date specified in `startDate`. If set, this field must be equal to or at most 1 day after `startDate`.
+                  type: string
+                  format: date
+                startTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                endTime:
+                  $ref: '#/components/schemas/timeOfDay'
+    timeOfDay:
+      type: string
+      title: a time of day
+      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
+      pattern: ^\d{2}:\d{2}$
+      example: 09:45
+    dayOfTheWeek:
+      type: string
+      title: a day of the week
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      example: wednesday
   securitySchemes:
     JWT:
       type: http

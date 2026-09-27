@@ -62,39 +62,14 @@ paths:
       - BlogPostsService
 components:
   schemas:
-    v2MetadataV2:
-      description: A key-value pair used to store generic metadata information associated with a post or media.
+    socialpostsv2Category:
       properties:
+        id:
+          format: int64
+          title: This is the categoryId
+          type: string
         name:
-          description: Required. The property name or key.
-          type: string
-        value:
-          description: Required. The property value associated with the name/key.
-          type: string
-      required:
-      - name
-      - value
-      title: MetadataV2
-      type: object
-    v2UpdateBlogPostRequest:
-      description: Request message for updating an existing blog post.
-      properties:
-        blogPost:
-          $ref: '#/components/schemas/v2BlogPost'
-      required:
-      - blogPost
-      title: UpdateBlogPostRequest
-      type: object
-    googlerpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
+          title: This is the category name
           type: string
       type: object
     socialpostsv2Author:
@@ -213,6 +188,12 @@ components:
           title: Video property for Blog
           type: array
       type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
     v2DeleteBlogPostRequest:
       description: Request message for deleting a blog post.
       properties:
@@ -230,15 +211,40 @@ components:
       - internalPostId
       title: DeleteBlogPostRequest
       type: object
-    socialpostsv2Category:
+    googlerpcStatus:
       properties:
-        id:
-          format: int64
-          title: This is the categoryId
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
           type: string
+      type: object
+    v2UpdateBlogPostRequest:
+      description: Request message for updating an existing blog post.
+      properties:
+        blogPost:
+          $ref: '#/components/schemas/v2BlogPost'
+      required:
+      - blogPost
+      title: UpdateBlogPostRequest
+      type: object
+    v2MetadataV2:
+      description: A key-value pair used to store generic metadata information associated with a post or media.
+      properties:
         name:
-          title: This is the category name
+          description: Required. The property name or key.
           type: string
+        value:
+          description: Required. The property value associated with the name/key.
+          type: string
+      required:
+      - name
+      - value
+      title: MetadataV2
       type: object
     v2MediaProperty:
       properties:
@@ -247,12 +253,6 @@ components:
           type: string
         publicUrl:
           title: Public Url for the blog media
-          type: string
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
           type: string
       type: object
   securitySchemes:

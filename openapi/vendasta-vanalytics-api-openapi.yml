@@ -191,55 +191,6 @@ paths:
       - VAnalytics
 components:
   schemas:
-    v1Error:
-      description: Error details for a failed operation.
-      properties:
-        code:
-          description: 'Output only. Error code. Code 1: point does not exist or is already deleted.'
-          format: int64
-          readOnly: true
-          type: string
-        message:
-          description: Output only. Human-readable error message.
-          readOnly: true
-          type: string
-      title: Error
-      type: object
-    v1DeleteBusinessMetricResponse:
-      description: Result of a single metric point deletion, indicating success or failure.
-      properties:
-        error:
-          $ref: '#/components/schemas/v1Error'
-        id:
-          description: Output only. UUID of the processed metric point.
-          readOnly: true
-          type: string
-      title: DeleteBusinessMetricResponse
-      type: object
-    v1DeleteMultiBusinessMetricsRequest:
-      description: Request to soft delete multiple metric points in a single call.
-      properties:
-        businessMetrics:
-          description: Required. List of metric point IDs to delete.
-          items:
-            $ref: '#/components/schemas/v1DeleteBusinessMetricRequest'
-          type: array
-      required:
-      - businessMetrics
-      title: DeleteMultiBusinessMetricsRequest
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
     v1GetBusinessMetricRequest:
       description: Request to retrieve metric points for a business, filtered by label and date range.
       properties:
@@ -264,6 +215,18 @@ components:
       - dateRange
       title: GetBusinessMetricRequest
       type: object
+    v1DeleteMultiBusinessMetricsRequest:
+      description: Request to soft delete multiple metric points in a single call.
+      properties:
+        businessMetrics:
+          description: Required. List of metric point IDs to delete.
+          items:
+            $ref: '#/components/schemas/v1DeleteBusinessMetricRequest'
+          type: array
+      required:
+      - businessMetrics
+      title: DeleteMultiBusinessMetricsRequest
+      type: object
     v1DateRange:
       description: A date range filter with inclusive start and end dates.
       properties:
@@ -279,47 +242,6 @@ components:
       - startDate
       - endDate
       title: DateRange
-      type: object
-    v1DeleteMultiBusinessMetricsResponse:
-      description: Response containing results for each deletion attempt in a batch delete.
-      properties:
-        businessMetrics:
-          description: Output only. Deletion results. Successfully deleted points have no error field.
-          items:
-            $ref: '#/components/schemas/v1DeleteBusinessMetricResponse'
-          readOnly: true
-          type: array
-      title: DeleteMultiBusinessMetricsResponse
-      type: object
-    v1DeleteBusinessMetricRequest:
-      description: Request to soft delete a metric point by its unique identifier.
-      properties:
-        id:
-          description: Required. Unique identifier (UUID) of the metric point to delete.
-          type: string
-      required:
-      - id
-      title: DeleteBusinessMetricRequest
-      type: object
-    v1BusinessMetric:
-      description: A business identifier, label, and one or more data points for analytics reporting.
-      properties:
-        businessId:
-          title: 'Required. Business ID (Account ID). Format: AG-XXXXXXXX'
-          type: string
-        label:
-          title: 'Required. Label identifying the metric type. Example: "click", "NetSyncGoogleMapViews"'
-          type: string
-        points:
-          description: Required. Data points to be collected and aggregated.
-          items:
-            $ref: '#/components/schemas/v1Point'
-          type: array
-      required:
-      - businessId
-      - label
-      - points
-      title: BusinessMetric
       type: object
     v1Point:
       description: A single measurement or event at a specific time. Points with the same aggregation_key are grouped together.
@@ -357,6 +279,89 @@ components:
         metric:
           $ref: '#/components/schemas/v1BusinessMetric'
       title: GetBusinessMetricResponse
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1DeleteBusinessMetricResponse:
+      description: Result of a single metric point deletion, indicating success or failure.
+      properties:
+        error:
+          $ref: '#/components/schemas/v1Error'
+        id:
+          description: Output only. UUID of the processed metric point.
+          readOnly: true
+          type: string
+      title: DeleteBusinessMetricResponse
+      type: object
+    v1BusinessMetric:
+      description: A business identifier, label, and one or more data points for analytics reporting.
+      properties:
+        businessId:
+          title: 'Required. Business ID (Account ID). Format: AG-XXXXXXXX'
+          type: string
+        label:
+          title: 'Required. Label identifying the metric type. Example: "click", "NetSyncGoogleMapViews"'
+          type: string
+        points:
+          description: Required. Data points to be collected and aggregated.
+          items:
+            $ref: '#/components/schemas/v1Point'
+          type: array
+      required:
+      - businessId
+      - label
+      - points
+      title: BusinessMetric
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1Error:
+      description: Error details for a failed operation.
+      properties:
+        code:
+          description: 'Output only. Error code. Code 1: point does not exist or is already deleted.'
+          format: int64
+          readOnly: true
+          type: string
+        message:
+          description: Output only. Human-readable error message.
+          readOnly: true
+          type: string
+      title: Error
+      type: object
+    v1DeleteBusinessMetricRequest:
+      description: Request to soft delete a metric point by its unique identifier.
+      properties:
+        id:
+          description: Required. Unique identifier (UUID) of the metric point to delete.
+          type: string
+      required:
+      - id
+      title: DeleteBusinessMetricRequest
+      type: object
+    v1GetBusinessMetricPointRequest:
+      description: Request to retrieve a single metric point by its unique identifier.
+      properties:
+        id:
+          description: Required. Unique identifier (UUID) of the metric point to retrieve.
+          type: string
+      required:
+      - id
+      title: GetBusinessMetricPointRequest
       type: object
     v1GetBusinessMetricPointResponse:
       description: Complete details for a single metric point including source, value, and timestamps.
@@ -406,21 +411,16 @@ components:
           type: string
       title: GetBusinessMetricPointResponse
       type: object
-    v1GetBusinessMetricPointRequest:
-      description: Request to retrieve a single metric point by its unique identifier.
+    v1DeleteMultiBusinessMetricsResponse:
+      description: Response containing results for each deletion attempt in a batch delete.
       properties:
-        id:
-          description: Required. Unique identifier (UUID) of the metric point to retrieve.
-          type: string
-      required:
-      - id
-      title: GetBusinessMetricPointRequest
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
+        businessMetrics:
+          description: Output only. Deletion results. Successfully deleted points have no error field.
+          items:
+            $ref: '#/components/schemas/v1DeleteBusinessMetricResponse'
+          readOnly: true
+          type: array
+      title: DeleteMultiBusinessMetricsResponse
       type: object
   securitySchemes:
     OAuth2:

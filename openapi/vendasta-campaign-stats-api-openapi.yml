@@ -103,24 +103,6 @@ paths:
         status: trustedTester
 components:
   parameters:
-    Authorization:
-      name: Authorization
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^Bearer\s\S+
-        example: Bearer <access token>
-      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
-    endAt:
-      name: endAt
-      in: query
-      required: false
-      schema:
-        type: string
-        format: date-time
-        example: '2021-01-01T00:00:01Z'
-      description: Only return data from before the specified end date and time. If not specified all data will be returned.
     pageLimit:
       name: page[limit]
       in: query
@@ -131,6 +113,15 @@ components:
         minimum: 1
         default: 25
       description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^Bearer\s\S+
+        example: Bearer <access token>
+      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
     startAt:
       name: startAt
       in: query
@@ -148,60 +139,16 @@ components:
       schema:
         type: string
       description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    endAt:
+      name: endAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data from before the specified end date and time. If not specified all data will be returned.
   schemas:
-    campaignStats:
-      title: Campaign Stats
-      type: object
-      x-examples: {}
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
-
-
-        Total Stats for a connected Advertising Campaign'
-      x-lifecycle:
-        status: trustedTester
-      x-tags:
-      - Campaign Stats
-      properties:
-        id:
-          type: string
-          description: The resource ID of the Connected Advertising Campaign
-          example: AG-HDV4JKPXFR:google:8362684505:14501114557
-        type:
-          type: string
-          description: campaignStats
-          default: campaignStats
-          enum:
-          - campaignStats
-        attributes:
-          type: object
-          properties:
-            impressions:
-              type: integer
-              description: Number of times ads under this campaign were viewed
-            clicks:
-              type: integer
-              description: Number of times ads under this campaign were clicked
-            conversions:
-              type: integer
-              description: Total number of conversions from campaigns under this account
-            costMicros:
-              type: integer
-              description: Total account spend denoted in millionths of a dollar
-            averageCostPerClickMicros:
-              type: integer
-              description: Average cost per click denoted in millionths of a dollar
-            clickThroughRate:
-              type: number
-              description: Rate of the number of clicks per number of impressions
-            currencyCode:
-              type: string
-              description: The 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
-              minLength: 3
-              maxLength: 3
-      required:
-      - id
-      - type
-      - attributes
     campaignInfo:
       title: Campaign Info
       type: object
@@ -277,6 +224,59 @@ components:
               format: date-time
               example: '2022-02-17T00:00:00Z'
               description: End date of the campaign
+      required:
+      - id
+      - type
+      - attributes
+    campaignStats:
+      title: Campaign Stats
+      type: object
+      x-examples: {}
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Total Stats for a connected Advertising Campaign'
+      x-lifecycle:
+        status: trustedTester
+      x-tags:
+      - Campaign Stats
+      properties:
+        id:
+          type: string
+          description: The resource ID of the Connected Advertising Campaign
+          example: AG-HDV4JKPXFR:google:8362684505:14501114557
+        type:
+          type: string
+          description: campaignStats
+          default: campaignStats
+          enum:
+          - campaignStats
+        attributes:
+          type: object
+          properties:
+            impressions:
+              type: integer
+              description: Number of times ads under this campaign were viewed
+            clicks:
+              type: integer
+              description: Number of times ads under this campaign were clicked
+            conversions:
+              type: integer
+              description: Total number of conversions from campaigns under this account
+            costMicros:
+              type: integer
+              description: Total account spend denoted in millionths of a dollar
+            averageCostPerClickMicros:
+              type: integer
+              description: Average cost per click denoted in millionths of a dollar
+            clickThroughRate:
+              type: number
+              description: Rate of the number of clicks per number of impressions
+            currencyCode:
+              type: string
+              description: The 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+              minLength: 3
+              maxLength: 3
       required:
       - id
       - type

@@ -578,6 +578,27 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    pending_activation:
+      type: object
+      properties:
+        addon_id:
+          type: string
+        app_id:
+          type: string
+        business_id:
+          type: string
+          description: A unique ID that can be used to identify a business location. This is equivalent to the `account_id`. In legacy apis, it may be referred to as `accountId`, or `accountGroupId`.
+        activation_id:
+          type: string
+        created_date:
+          type: string
+    active_addon:
+      type: object
+      properties:
+        addon_id:
+          type: string
+        activation_id:
+          type: string
     account_richdata:
       description: ''
       type: object
@@ -979,37 +1000,13 @@ components:
             description: Open 24 hours
           landmark: 20th Street
           country: CA
-    active_addon:
-      type: object
+    session_transfer_url:
+      required:
+      - session_transfer_url
       properties:
-        addon_id:
+        session_transfer_url:
           type: string
-        activation_id:
-          type: string
-    file_group:
       type: object
-      properties:
-        account_id:
-          type: string
-        file_group_id:
-          type: string
-        title:
-          type: string
-        description:
-          type: string
-        created:
-          type: string
-        modified:
-          type: string
-        files:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              url:
-                type: string
     account:
       required:
       - company_name
@@ -1116,32 +1113,35 @@ components:
         email:
           type: string
       type: object
-    pending_activation:
-      type: object
-      properties:
-        addon_id:
-          type: string
-        app_id:
-          type: string
-        business_id:
-          type: string
-          description: A unique ID that can be used to identify a business location. This is equivalent to the `account_id`. In legacy apis, it may be referred to as `accountId`, or `accountGroupId`.
-        activation_id:
-          type: string
-        created_date:
-          type: string
     associated_user:
       type: object
       properties:
         user_id:
           type: string
-    session_transfer_url:
-      required:
-      - session_transfer_url
-      properties:
-        session_transfer_url:
-          type: string
+    file_group:
       type: object
+      properties:
+        account_id:
+          type: string
+        file_group_id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        created:
+          type: string
+        modified:
+          type: string
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              url:
+                type: string
     account_settings:
       required:
       - account_id

@@ -123,7 +123,7 @@
     "vendasta-siteoptionsservice-api-openapi.yml"
   ],
   "archived": [
-    "deleted 5 superseded output(s) from the previous generation"
+    "deleted 4 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
@@ -168,8 +168,8 @@
     "tag 'Options' spans 7 source specs (vendasta-advertising-openapi.yml, vendasta-business-openapi.yml, vendasta-customer-voice-openapi.yml, vendasta-local-seo-openapi.yml, vendasta-platform-openapi.yml, vendasta-reputation-openapi.yml, vendasta-social-openapi.yml): per-path servers applied",
     "tag 'Citations' spans 2 source specs (vendasta-listing-products-openapi.json, vendasta-local-seo-openapi.yml): per-path servers applied",
     "tag 'user' spans 2 source specs (vendasta-marketplace-openapi-original.yml, vendasta-scim-openapi.yml): per-path servers applied",
-    "superseded outputs removed: vendasta-o-auth-api-openapi.yml, vendasta-sales-orders-api-openapi.yml, vendasta-search-service-api-openapi.yml, vendasta-site-info-api-openapi.yml, vendasta-social-posts-api-openapi.yml",
-    "apis.yml register: written (+5 apis, 87 total)"
+    "superseded outputs removed: vendasta-sales-orders-api-openapi.yml, vendasta-search-service-api-openapi.yml, vendasta-site-info-api-openapi.yml, vendasta-social-posts-api-openapi.yml",
+    "apis.yml register: written (+4 apis, 87 total)"
   ],
   "skipped": [
     "vendasta-account-api-openapi.yml: previously refined output, superseded by openapi/_original/",
@@ -221,7 +221,7 @@
     "vendasta-messages-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "vendasta-monitor-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "vendasta-netpromoterscoreservice-api-openapi.yml: previously refined output, superseded by openapi/_original/",
-    "vendasta-o-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "vendasta-oauth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "vendasta-options-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "vendasta-order-custom-fields-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "vendasta-order-fulfillment-forms-api-openapi.yml: previously refined output, superseded by openapi/_original/",

@@ -432,6 +432,32 @@ components:
         id:
           type: string
       type: object
+    ListResponseUsers:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          example:
+          - urn:ietf:params:scim:api:messages:2.0:ListResponse
+        Resources:
+          type: array
+          items:
+            $ref: '#/components/schemas/User'
+        startIndex:
+          type: number
+          description: 'The 1-based index of the first result in the current set of list results.
+
+            REQUIRED when partial results are returned due to pagination.'
+        itemsPerPage:
+          type: number
+          description: 'The number of resources returned in a list response page.
+
+            REQUIRED when partial results are returned due to pagination.'
+        totalResults:
+          type: number
+          description: The total number of results returned by the list or query operation
     Address:
       type: object
       properties:
@@ -482,44 +508,19 @@ components:
           example: work
         primary:
           type: boolean
-    ListResponseUsers:
+    Member:
       type: object
       properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          example:
-          - urn:ietf:params:scim:api:messages:2.0:ListResponse
-        Resources:
-          type: array
-          items:
-            $ref: '#/components/schemas/User'
-        startIndex:
-          type: number
-          description: 'The 1-based index of the first result in the current set of list results.
-
-            REQUIRED when partial results are returned due to pagination.'
-        itemsPerPage:
-          type: number
-          description: 'The number of resources returned in a list response page.
-
-            REQUIRED when partial results are returned due to pagination.'
-        totalResults:
-          type: number
-          description: The total number of results returned by the list or query operation
-    Operation:
-      type: object
-      properties:
-        op:
-          type: string
-          example: Replace
-        path:
-          type: string
-          example: emails[type eq "work"].value
         value:
           type: string
-          example: updatedEmail@mail.com
+          example: 2819c223-7f76-453a-919d-413861904646
+        $ref:
+          type: string
+          format: uri
+          example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
+        display:
+          type: string
+          example: Babs Jensen
     Meta:
       type: object
       properties:
@@ -559,19 +560,6 @@ components:
         location:
           type: string
           example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
-    Member:
-      type: object
-      properties:
-        value:
-          type: string
-          example: 2819c223-7f76-453a-919d-413861904646
-        $ref:
-          type: string
-          format: uri
-          example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
-        display:
-          type: string
-          example: Babs Jensen
     Name:
       type: object
       properties:
@@ -599,16 +587,19 @@ components:
           description: <b>This field currently NOT SUPPORTED</b>
       required:
       - givenName
-    PhoneNumber:
+    PatchOp:
       type: object
       properties:
-        value:
-          type: string
-          example: +1-306-555-1234
-          description: phone number format should match the region / country given in address against the type
-        type:
-          type: string
-          example: work
+        schemas:
+          type: array
+          items:
+            type: string
+          example:
+          - urn:ietf:params:scim:api:messages:2.0:PatchOp
+        Operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation'
     User:
       type: object
       properties:
@@ -719,28 +710,29 @@ components:
       - userName
       - name
       - emails
-    PatchOp:
+    PhoneNumber:
       type: object
       properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          example:
-          - urn:ietf:params:scim:api:messages:2.0:PatchOp
-        Operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Operation'
+        value:
+          type: string
+          example: +1-306-555-1234
+          description: phone number format should match the region / country given in address against the type
+        type:
+          type: string
+          example: work
+    Operation:
+      type: object
+      properties:
+        op:
+          type: string
+          example: Replace
+        path:
+          type: string
+          example: emails[type eq "work"].value
+        value:
+          type: string
+          example: updatedEmail@mail.com
   parameters:
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      schema:
-        type: string
-        example: VUNI
-      description: Currently this must be the id of the partner that you wish to manage users for. In the future we plan to support other types of namespaces such as marketplace apps
     accept-charset-scim:
       name: Accept-Charset
       in: header
@@ -751,6 +743,14 @@ components:
         - UTF-8
         example: UTF-8
       description: Indicates that the response body contains content in UTF-8
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      schema:
+        type: string
+        example: VUNI
+      description: Currently this must be the id of the partner that you wish to manage users for. In the future we plan to support other types of namespaces such as marketplace apps
     accept-scim:
       name: Accept
       in: header

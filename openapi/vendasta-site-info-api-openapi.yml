@@ -36,28 +36,6 @@ paths:
       - Site Info
 components:
   schemas:
-    v1ListResponse:
-      description: Response containing a paginated list of WordPress sites.
-      properties:
-        invalidSiteIds:
-          description: Output only. Site IDs that could not be retrieved.
-          items:
-            type: string
-          readOnly: true
-          type: array
-        nextCursor:
-          description: Output only. The cursor to use for the next page of results.
-          format: int32
-          readOnly: true
-          type: integer
-        validSites:
-          description: Output only. The list of valid sites for the current page.
-          items:
-            $ref: '#/components/schemas/v1Site'
-          readOnly: true
-          type: array
-      title: ListResponse
-      type: object
     v1SubsiteInfo:
       description: Information about a subsite within a WordPress multisite installation.
       properties:
@@ -91,6 +69,28 @@ components:
           readOnly: true
           type: string
       title: SubsiteInfo
+      type: object
+    v1ListResponse:
+      description: Response containing a paginated list of WordPress sites.
+      properties:
+        invalidSiteIds:
+          description: Output only. Site IDs that could not be retrieved.
+          items:
+            type: string
+          readOnly: true
+          type: array
+        nextCursor:
+          description: Output only. The cursor to use for the next page of results.
+          format: int32
+          readOnly: true
+          type: integer
+        validSites:
+          description: Output only. The list of valid sites for the current page.
+          items:
+            $ref: '#/components/schemas/v1Site'
+          readOnly: true
+          type: array
+      title: ListResponse
       type: object
     rpcStatus:
       properties:
@@ -276,6 +276,12 @@ components:
           type: string
       title: Site
       type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
     v1ListRequest:
       description: Request to list WordPress sites with pagination support.
       properties:
@@ -288,12 +294,6 @@ components:
           format: int32
           type: integer
       title: ListRequest
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
       type: object
   securitySchemes:
     OAuth2:

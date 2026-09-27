@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   version: '1.0'
-  title: Vendasta Marketplace API V1 Endpoints OAUTH API
+  title: Vendasta Marketplace API V1 Endpoints OAuth API
   description: The OAuth APIs allow applications to retrieve a bearer token that must be supplied with all API calls. See the Authentication documentation for more details.
 servers:
 - url: https://developers.vendasta.com/api/v1

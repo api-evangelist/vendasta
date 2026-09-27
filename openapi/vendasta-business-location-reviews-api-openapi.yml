@@ -179,6 +179,33 @@ paths:
                       $ref: '#/components/schemas/businessLocationReviewResponseSuggestion'
 components:
   schemas:
+    businessLocationReviewResponseSuggestion:
+      x-stoplight:
+        id: kyuk59cfolgz8
+      type: object
+      title: Suggested review response
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        A suggested response to a business location review'
+      properties:
+        type:
+          type: string
+          default: businessLocationReviewResponseSuggestion
+          enum:
+          - businessLocationReviewResponseSuggestion
+        attributes:
+          type: object
+          properties:
+            suggestion:
+              type: string
+              x-stoplight:
+                id: 1jtit00f5byan
+              description: The suggested response to the review
+          required:
+          - suggestion
     businessLocationReviews:
       title: Business Location Reviews
       type: object
@@ -245,33 +272,6 @@ components:
                     type: string
       x-tags:
       - Business Location Reviews
-    businessLocationReviewResponseSuggestion:
-      x-stoplight:
-        id: kyuk59cfolgz8
-      type: object
-      title: Suggested review response
-      x-lifecycle:
-        status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
-
-
-        A suggested response to a business location review'
-      properties:
-        type:
-          type: string
-          default: businessLocationReviewResponseSuggestion
-          enum:
-          - businessLocationReviewResponseSuggestion
-        attributes:
-          type: object
-          properties:
-            suggestion:
-              type: string
-              x-stoplight:
-                id: 1jtit00f5byan
-              description: The suggested response to the review
-          required:
-          - suggestion
   securitySchemes:
     JWT:
       type: http

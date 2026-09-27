@@ -389,85 +389,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    filters:
-      type: object
-      properties:
-        source:
-          type: array
-          description: Only include contacts that were created from one of the specified app ids.
-          items:
-            type: string
-            example: MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV
-        created:
-          type: object
-          description: Only return contacts that were created between the specified times.
-          properties:
-            begin_range:
-              type: string
-              format: date-time
-            end_range:
-              type: string
-              format: date-time
-        tag:
-          type: array
-          description: Only return contacts with at least one of the specified tags. See `nagate_tags`.
-          items:
-            type: string
-        negate_tags:
-          type: boolean
-          description: When true contacts who have any of the specified tags will not be returned.
-          default: false
-    customer:
-      required:
-      - account_id
-      - customer_id
-      properties:
-        city:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        account_id:
-          type: string
-        country:
-          type: string
-        customer_id:
-          type: string
-        phone:
-          items:
-            type: string
-          type: array
-        state:
-          type: string
-        address:
-          type: string
-        email:
-          items:
-            type: string
-          type: array
-      type: object
-    sort_options:
-      type: object
-      description: Optionally specify a field to sort the results by and a direction
-      properties:
-        field:
-          type: string
-          description: Which field should the list be sorted on?
-          enum:
-          - Name
-          - Created
-          - FirstName
-          - LastName
-        direction:
-          type: string
-          description: What direction should the field be sorted in?
-          enum:
-          - Ascending
-          - Descending
-      required:
-      - field
-      - direction
     return_customer:
       type: object
       properties:
@@ -520,6 +441,85 @@ components:
         deleted:
           type: string
           format: date-time
+    filters:
+      type: object
+      properties:
+        source:
+          type: array
+          description: Only include contacts that were created from one of the specified app ids.
+          items:
+            type: string
+            example: MP-QGFFBCCZMLQPZ5F8HTKGKPSV3P3STGKV
+        created:
+          type: object
+          description: Only return contacts that were created between the specified times.
+          properties:
+            begin_range:
+              type: string
+              format: date-time
+            end_range:
+              type: string
+              format: date-time
+        tag:
+          type: array
+          description: Only return contacts with at least one of the specified tags. See `nagate_tags`.
+          items:
+            type: string
+        negate_tags:
+          type: boolean
+          description: When true contacts who have any of the specified tags will not be returned.
+          default: false
+    sort_options:
+      type: object
+      description: Optionally specify a field to sort the results by and a direction
+      properties:
+        field:
+          type: string
+          description: Which field should the list be sorted on?
+          enum:
+          - Name
+          - Created
+          - FirstName
+          - LastName
+        direction:
+          type: string
+          description: What direction should the field be sorted in?
+          enum:
+          - Ascending
+          - Descending
+      required:
+      - field
+      - direction
+    customer:
+      required:
+      - account_id
+      - customer_id
+      properties:
+        city:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        account_id:
+          type: string
+        country:
+          type: string
+        customer_id:
+          type: string
+        phone:
+          items:
+            type: string
+          type: array
+        state:
+          type: string
+        address:
+          type: string
+        email:
+          items:
+            type: string
+          type: array
+      type: object
   securitySchemes:
     BearerAuth:
       type: http
