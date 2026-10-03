@@ -406,35 +406,6 @@ paths:
       - Countries
 components:
   schemas:
-    countries:
-      title: Country
-      type: object
-      x-lifecycle:
-        status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
-
-
-        A country that is valid for use with the API'
-      x-tags:
-      - Countries
-      properties:
-        id:
-          type: string
-          example: CA
-          readOnly: true
-        type:
-          type: string
-          default: countries
-          enum:
-          - countries
-          readOnly: true
-        attributes:
-          type: object
-          properties:
-            name:
-              type: string
-              description: A user friendly description for the Country.
-              readOnly: true
     countryRegions:
       title: Country Region
       type: object
@@ -481,6 +452,35 @@ components:
                       example: countries
                       enum:
                       - countries
+    countries:
+      title: Country
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        A country that is valid for use with the API'
+      x-tags:
+      - Countries
+      properties:
+        id:
+          type: string
+          example: CA
+          readOnly: true
+        type:
+          type: string
+          default: countries
+          enum:
+          - countries
+          readOnly: true
+        attributes:
+          type: object
+          properties:
+            name:
+              type: string
+              description: A user friendly description for the Country.
+              readOnly: true
   securitySchemes:
     JWT:
       type: http

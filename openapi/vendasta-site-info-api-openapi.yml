@@ -36,39 +36,30 @@ paths:
       - Site Info
 components:
   schemas:
-    v1SubsiteInfo:
-      description: Information about a subsite within a WordPress multisite installation.
+    v1ListRequest:
+      description: Request to list WordPress sites with pagination support.
       properties:
-        blogId:
-          description: Output only. The unique integer ID of the subsite.
-          format: int64
-          readOnly: true
+        cursor:
+          description: Optional. The cursor specifying the page to return. Use the next_cursor from a previous response to paginate.
+          format: int32
+          type: integer
+        pageSize:
+          description: Optional. The number of sites to return per page.
+          format: int32
+          type: integer
+      title: ListRequest
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
           type: string
-        blogName:
-          description: Output only. The title description of the subsite added by the user.
-          readOnly: true
-          type: string
-        createdAt:
-          description: Output only. The time when the subsite was created.
-          readOnly: true
-          type: string
-        lastUpdated:
-          description: Output only. The time when the subsite was last updated.
-          readOnly: true
-          type: string
-        metadata:
-          description: Output only. The subsite metadata.
-          readOnly: true
-          type: string
-        path:
-          description: Output only. The path of the subsite in the URL after the domain.
-          readOnly: true
-          type: string
-        status:
-          description: Output only. The status of the subsite.
-          readOnly: true
-          type: string
-      title: SubsiteInfo
       type: object
     v1ListResponse:
       description: Response containing a paginated list of WordPress sites.
@@ -92,16 +83,10 @@ components:
           type: array
       title: ListResponse
       type: object
-    rpcStatus:
+    protobufAny:
+      additionalProperties: {}
       properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
+        '@type':
           type: string
       type: object
     v1Site:
@@ -276,24 +261,39 @@ components:
           type: string
       title: Site
       type: object
-    protobufAny:
-      additionalProperties: {}
+    v1SubsiteInfo:
+      description: Information about a subsite within a WordPress multisite installation.
       properties:
-        '@type':
+        blogId:
+          description: Output only. The unique integer ID of the subsite.
+          format: int64
+          readOnly: true
           type: string
-      type: object
-    v1ListRequest:
-      description: Request to list WordPress sites with pagination support.
-      properties:
-        cursor:
-          description: Optional. The cursor specifying the page to return. Use the next_cursor from a previous response to paginate.
-          format: int32
-          type: integer
-        pageSize:
-          description: Optional. The number of sites to return per page.
-          format: int32
-          type: integer
-      title: ListRequest
+        blogName:
+          description: Output only. The title description of the subsite added by the user.
+          readOnly: true
+          type: string
+        createdAt:
+          description: Output only. The time when the subsite was created.
+          readOnly: true
+          type: string
+        lastUpdated:
+          description: Output only. The time when the subsite was last updated.
+          readOnly: true
+          type: string
+        metadata:
+          description: Output only. The subsite metadata.
+          readOnly: true
+          type: string
+        path:
+          description: Output only. The path of the subsite in the URL after the domain.
+          readOnly: true
+          type: string
+        status:
+          description: Output only. The status of the subsite.
+          readOnly: true
+          type: string
+      title: SubsiteInfo
       type: object
   securitySchemes:
     OAuth2:

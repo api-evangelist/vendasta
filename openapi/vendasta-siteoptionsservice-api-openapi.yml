@@ -49,6 +49,13 @@ components:
       - siteId
       title: GetSiteUpdateRequest
       type: object
+    v1GetSiteUpdateResponse:
+      description: Response containing update information for a WordPress site.
+      properties:
+        update:
+          $ref: '#/components/schemas/v1SiteUpdate'
+      title: GetSiteUpdateResponse
+      type: object
     rpcStatus:
       properties:
         code:
@@ -59,6 +66,12 @@ components:
             $ref: '#/components/schemas/protobufAny'
           type: array
         message:
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
           type: string
       type: object
     v1SiteUpdate:
@@ -82,19 +95,6 @@ components:
           readOnly: true
           type: string
       title: SiteUpdate
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
-      type: object
-    v1GetSiteUpdateResponse:
-      description: Response containing update information for a WordPress site.
-      properties:
-        update:
-          $ref: '#/components/schemas/v1SiteUpdate'
-      title: GetSiteUpdateResponse
       type: object
   securitySchemes:
     OAuth2:

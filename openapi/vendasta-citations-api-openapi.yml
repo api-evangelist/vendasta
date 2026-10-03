@@ -134,6 +134,29 @@ paths:
       description: Localhost
 components:
   schemas:
+    v1HistoricalCitationsDataPoint:
+      properties:
+        date:
+          description: Output only. Date of the data point.
+          format: date-time
+          readOnly: true
+          type: string
+        value:
+          description: Output only. Total citations found up to this date.
+          format: int64
+          readOnly: true
+          type: string
+      type: object
+    v1CitationsByDomain:
+      properties:
+        citations:
+          items:
+            $ref: '#/components/schemas/v1Citation'
+          type: array
+        domain:
+          type: string
+      title: CitationsByDomain contains all citations for a domain
+      type: object
     v1GetCitationDataRequest:
       description: Request to retrieve citation data for a business, including citation counts, historical trends, and citations grouped by domain.
       properties:
@@ -151,18 +174,6 @@ components:
       required:
       - businessId
       title: GetCitationDataRequest
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
       type: object
     v1GetCitationDataResponse:
       description: Contains citation data for a business including total count, historical trends, and citations grouped by domain.
@@ -200,25 +211,6 @@ components:
           readOnly: true
           type: string
       title: GetCitationDataResponse
-      type: object
-    v1HistoricalCitationsDataPoint:
-      properties:
-        date:
-          description: Output only. Date of the data point.
-          format: date-time
-          readOnly: true
-          type: string
-        value:
-          description: Output only. Total citations found up to this date.
-          format: int64
-          readOnly: true
-          type: string
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
       type: object
     v1Citation:
       description: Citation contains details for a citation.
@@ -259,15 +251,23 @@ components:
           readOnly: true
           type: string
       type: object
-    v1CitationsByDomain:
+    rpcStatus:
       properties:
-        citations:
+        code:
+          format: int32
+          type: integer
+        details:
           items:
-            $ref: '#/components/schemas/v1Citation'
+            $ref: '#/components/schemas/protobufAny'
           type: array
-        domain:
+        message:
           type: string
-      title: CitationsByDomain contains all citations for a domain
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
       type: object
     citations:
       title: Citations

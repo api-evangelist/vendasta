@@ -676,6 +676,12 @@ components:
                       id:
                         type: string
                         example: active:diving:freediving
+    timeOfDay:
+      type: string
+      title: a time of day
+      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
+      pattern: ^\d{2}:\d{2}$
+      example: 09:45
     hoursOfOperation:
       type:
       - array
@@ -757,12 +763,6 @@ components:
                   $ref: '#/components/schemas/timeOfDay'
                 endTime:
                   $ref: '#/components/schemas/timeOfDay'
-    timeOfDay:
-      type: string
-      title: a time of day
-      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
-      pattern: ^\d{2}:\d{2}$
-      example: 09:45
     dayOfTheWeek:
       type: string
       title: a day of the week

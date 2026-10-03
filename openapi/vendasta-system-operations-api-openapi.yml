@@ -215,6 +215,44 @@ paths:
 
         The SCIM standard defines an optional `/Bulk` endpoint for performing multiple operations at the same time. The Vendasta platform does not currently support it.'
 components:
+  parameters:
+    excludedAttributes:
+      name: excludedAttributes
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: "SCIM service providers MUST support both `attributes` and `excludedAttributes` query parameters. \nClients may optionally send either of them to control which attributes are returned in responses.\n\nWhen `attributes` is provided it overrides the default set.\n\nWhen `excludedAttributes` is provided the listed attributes shall be removed from the default set. \nThis parameter SHALL have no effect on attributes whose schema \"returned\" setting is \"always\".\n\nAttribute names MUST be in standard attribute notation (Section 3.10) form.  See\nrfc7644 Section 3.9 for additional retrieval query parameters."
+    Accept:
+      name: Accept
+      in: header
+      schema:
+        type: string
+        default: application/scim+json
+        enum:
+        - application/scim+json
+        - application/json
+        example: application/scim+json
+      description: Indicates that the response body contains content formated according to SCIM rules
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      schema:
+        type: string
+        example: VUNI
+      description: Currently this must be the id of the partner that you wish to manage users for. In the future we plan to support other types of namespaces such as marketplace apps
+    attributes:
+      name: attributes
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: "SCIM service providers MUST support both `attributes` and `excludedAttributes` query parameters. \nClients may optionally send either of them to control which attributes are returned in responses.\n\nWhen `attributes` is provided it overrides the default set.\n\nWhen `excludedAttributes` is provided the listed attributes shall be removed from the default set. \nThis parameter SHALL have no effect on attributes whose schema \"returned\" setting is \"always\".\n\nAttribute names MUST be in standard attribute notation (Section 3.10) form.  See\nrfc7644 Section 3.9 for additional retrieval query parameters."
   headers:
     Location:
       required: true
@@ -237,81 +275,6 @@ components:
         example: application/scim+json
       description: Indicates that the response body contains content formated according to SCIM rules
   schemas:
-    ResourceSchema:
-      title: schema:core:2.0:Schema
-      x-stoplight:
-        id: unazswsqjjclk
-      type: object
-      description: "This section defines a way to specify the schema in use by resources\n   available and accepted by a SCIM service provider.  For each\n   \"schemas\" URI value, this schema specifies the defined attribute(s)\n   and their characteristics (mutability, returnability, etc).  For\n   every schema URI used in a resource object, there is a corresponding\n   \"Schema\" resource.  \"Schema\" resources are not modifiable, and their\n   associated attributes have a mutability of \"readOnly\".  Except for\n   \"id\" (which is always returned), all attributes have a \"returned\"\n   characteristic of \"default\".  Unless otherwise specified, all schema\n   attributes are case insensitive.  These resources have a \"schemas\"\n   attribute with the following schema URI:\n\n   urn:ietf:params:scim:schemas:core:2.0:Schema\n\n   Unlike other core resources, the \"Schema\" resource MAY contain a\n   complex object within a sub-attribute, and all attributes are\n   REQUIRED unless otherwise specified."
-      properties:
-        schemas:
-          type: array
-          items:
-            type: string
-            default: urn:ietf:params:scim:schemas:core:2.0:Schema
-            enum:
-            - urn:ietf:params:scim:schemas:core:2.0:Schema
-        id:
-          type: string
-          description: "The unique URI of the schema.  When applicable, service providers\n      MUST specify the URI, e.g.,\n      \"urn:ietf:params:scim:schemas:core:2.0:User\".  Unlike most other\n      schemas, which use some sort of Globally Unique Identifier (GUID)\n      for the \"id\", the schema \"id\" is a URI so that it can be\n      registered and is portable between different service providers and\n      clients.  REQUIRED."
-        name:
-          type: string
-          description: "The schema's human-readable name.  When applicable, service\n      providers MUST specify the name, e.g., \"User\" or \"Group\".\n      OPTIONAL."
-        description:
-          type: string
-          description: "The schema's human-readable description.  When applicable, service\n      providers MUST specify the description.  OPTIONAL."
-        attributes:
-          type: array
-          description: "A complex type that defines service provider attributes and their\n      qualities"
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: 'The attribute''s name.
-
-                  '
-              type:
-                type: string
-                description: "The attribute's data type.  Valid values are \"string\",\n         \"boolean\", \"decimal\", \"integer\", \"dateTime\", \"reference\", and\n         \"complex\".  When an attribute is of type \"complex\", there\n         SHOULD be a corresponding schema attribute \"subAttributes\"\n         defined, listing the sub-attributes of the attribute."
-              subAttributes:
-                type: array
-                description: "When an attribute is of type \"complex\",\n         \"subAttributes\" defines a set of sub-attributes.\n         \"subAttributes\" has the same schema sub-attributes as\n         \"attributes\"."
-                items:
-                  type: object
-              multiValued:
-                type: boolean
-                description: A Boolean value indicating the attribute's plurality.
-              description:
-                type: string
-                description: "The attribute's human-readable description.  When\n         applicable, service providers MUST specify the description."
-              required:
-                type: boolean
-                description: "A Boolean value that specifies whether or not the\n         attribute is required."
-              canonicalValues:
-                type: array
-                description: "A collection of suggested canonical values that\n         MAY be used (e.g., \"work\" and \"home\").  In some cases, service\n         providers MAY choose to ignore unsupported values.  OPTIONAL."
-                items: {}
-              caseExact:
-                type: boolean
-                description: "A Boolean value that specifies whether or not a string\n         attribute is case sensitive.  The server SHALL use case\n         sensitivity when evaluating filters.  For attributes that are\n         case exact, the server SHALL preserve case for any value\n         submitted.  If the attribute is case insensitive, the server\n         MAY alter case for a submitted value.  Case sensitivity also\n         impacts how attribute values MAY be compared against filter\n         values (see Section 3.4.2.2 of [RFC7644])."
-              mutability:
-                type: string
-                description: "A single keyword indicating the circumstances under\nwhich the value of the attribute can be (re)defined:\n\n`readOnly` - The attribute SHALL NOT be modified.\n\n`readWrite` - The attribute MAY be updated and read at any time.\n  This is the default value.\n\n`immutable` - The attribute MAY be defined at resource creation\n  (e.g., POST) or at record replacement via a request (e.g., a\n  PUT).  The attribute SHALL NOT be updated.\n\n`writeOnly` - The attribute MAY be updated at any time.  Attribute\n  values SHALL NOT be returned (e.g., because the value is a\n  stored hash).  Note: An attribute with a mutability of\n  \"writeOnly\" usually also has a returned setting of \"never\"."
-              returned:
-                type: string
-                description: "A single keyword that indicates when an attribute and\nassociated values are returned in response to a GET request or\nin response to a PUT, POST, or PATCH request.  Valid keywords\nare as follows:\n\n`always` - The attribute is always returned, regardless of the\n    contents of the \"attributes\" parameter.  For example, \"id\"\n    is always returned to identify a SCIM resource.\n\n`never` - The attribute is never returned.  This may occur because\n    the original attribute value (e.g., a hashed value) is not\n    retained by the service provider.  A service provider MAY\n    allow attributes to be used in a search filter.\n\n`default` - The attribute is returned by default in all SCIM\n    operation responses where attribute values are returned.  If\n    the GET request \"attributes\" parameter is specified,\n    attribute values are only returned if the attribute is named\n    in the \"attributes\" parameter.  DEFAULT.\n\n`request` - The attribute is returned in response to any PUT,\n    POST, or PATCH operations if the attribute was specified by\n    the client (for example, the attribute was modified).  The\n    attribute is returned in a SCIM query operation only if\n    specified in the \"attributes\" parameter."
-              uniqueness:
-                type: string
-                description: "A single keyword value that specifies how the service\nprovider enforces uniqueness of attribute values.  A server MAY\nreject an invalid value based on uniqueness by returning HTTP\nresponse code 400 (Bad Request).  A client MAY enforce\nuniqueness on the client side to a greater degree than the\nservice provider enforces.  For example, a client could make a\nvalue unique while the server has uniqueness of \"none\".  Valid\nkeywords are as follows:\n\n`none` ` The values are not intended to be unique in any way.\n    DEFAULT.\n\n`server` - The value SHOULD be unique within the context of the\n    current SCIM endpoint (or tenancy) and MAY be globally\n    unique (e.g., a \"username\", email address, or other\n    server-generated key or counter).  No two resources on the\n    same server SHOULD possess the same value.\n\n`global` - The value SHOULD be globally unique (e.g., an email\n    address, a GUID, or other value).  No two resources on any\n    server SHOULD possess the same value."
-              referenceTypes:
-                type: array
-                items:
-                  type: string
-                description: "A multi-valued array of JSON strings that indicate\nthe SCIM resource types that may be referenced.  Valid values\nare as follows:\n- A SCIM resource type (e.g., \"User\" or \"Group\"),\n-  \"external\" - indicating that the resource is an external\n    resource (e.g., a photo), or\n\n-  \"uri\" - indicating that the reference is to a service\n    endpoint or an identifier (e.g., a schema URN).\n\nThis attribute is only applicable for attributes that are of\ntype \"reference\" (Section 2.3.7)."
-      required:
-      - schemas
-      - id
     MessageListResponse:
       type: object
       description: 'All seach requests should return a response with this format.
@@ -653,6 +616,81 @@ components:
       - sort
       - etag
       - authenticationSchemes
+    ResourceSchema:
+      title: schema:core:2.0:Schema
+      x-stoplight:
+        id: unazswsqjjclk
+      type: object
+      description: "This section defines a way to specify the schema in use by resources\n   available and accepted by a SCIM service provider.  For each\n   \"schemas\" URI value, this schema specifies the defined attribute(s)\n   and their characteristics (mutability, returnability, etc).  For\n   every schema URI used in a resource object, there is a corresponding\n   \"Schema\" resource.  \"Schema\" resources are not modifiable, and their\n   associated attributes have a mutability of \"readOnly\".  Except for\n   \"id\" (which is always returned), all attributes have a \"returned\"\n   characteristic of \"default\".  Unless otherwise specified, all schema\n   attributes are case insensitive.  These resources have a \"schemas\"\n   attribute with the following schema URI:\n\n   urn:ietf:params:scim:schemas:core:2.0:Schema\n\n   Unlike other core resources, the \"Schema\" resource MAY contain a\n   complex object within a sub-attribute, and all attributes are\n   REQUIRED unless otherwise specified."
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+            default: urn:ietf:params:scim:schemas:core:2.0:Schema
+            enum:
+            - urn:ietf:params:scim:schemas:core:2.0:Schema
+        id:
+          type: string
+          description: "The unique URI of the schema.  When applicable, service providers\n      MUST specify the URI, e.g.,\n      \"urn:ietf:params:scim:schemas:core:2.0:User\".  Unlike most other\n      schemas, which use some sort of Globally Unique Identifier (GUID)\n      for the \"id\", the schema \"id\" is a URI so that it can be\n      registered and is portable between different service providers and\n      clients.  REQUIRED."
+        name:
+          type: string
+          description: "The schema's human-readable name.  When applicable, service\n      providers MUST specify the name, e.g., \"User\" or \"Group\".\n      OPTIONAL."
+        description:
+          type: string
+          description: "The schema's human-readable description.  When applicable, service\n      providers MUST specify the description.  OPTIONAL."
+        attributes:
+          type: array
+          description: "A complex type that defines service provider attributes and their\n      qualities"
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: 'The attribute''s name.
+
+                  '
+              type:
+                type: string
+                description: "The attribute's data type.  Valid values are \"string\",\n         \"boolean\", \"decimal\", \"integer\", \"dateTime\", \"reference\", and\n         \"complex\".  When an attribute is of type \"complex\", there\n         SHOULD be a corresponding schema attribute \"subAttributes\"\n         defined, listing the sub-attributes of the attribute."
+              subAttributes:
+                type: array
+                description: "When an attribute is of type \"complex\",\n         \"subAttributes\" defines a set of sub-attributes.\n         \"subAttributes\" has the same schema sub-attributes as\n         \"attributes\"."
+                items:
+                  type: object
+              multiValued:
+                type: boolean
+                description: A Boolean value indicating the attribute's plurality.
+              description:
+                type: string
+                description: "The attribute's human-readable description.  When\n         applicable, service providers MUST specify the description."
+              required:
+                type: boolean
+                description: "A Boolean value that specifies whether or not the\n         attribute is required."
+              canonicalValues:
+                type: array
+                description: "A collection of suggested canonical values that\n         MAY be used (e.g., \"work\" and \"home\").  In some cases, service\n         providers MAY choose to ignore unsupported values.  OPTIONAL."
+                items: {}
+              caseExact:
+                type: boolean
+                description: "A Boolean value that specifies whether or not a string\n         attribute is case sensitive.  The server SHALL use case\n         sensitivity when evaluating filters.  For attributes that are\n         case exact, the server SHALL preserve case for any value\n         submitted.  If the attribute is case insensitive, the server\n         MAY alter case for a submitted value.  Case sensitivity also\n         impacts how attribute values MAY be compared against filter\n         values (see Section 3.4.2.2 of [RFC7644])."
+              mutability:
+                type: string
+                description: "A single keyword indicating the circumstances under\nwhich the value of the attribute can be (re)defined:\n\n`readOnly` - The attribute SHALL NOT be modified.\n\n`readWrite` - The attribute MAY be updated and read at any time.\n  This is the default value.\n\n`immutable` - The attribute MAY be defined at resource creation\n  (e.g., POST) or at record replacement via a request (e.g., a\n  PUT).  The attribute SHALL NOT be updated.\n\n`writeOnly` - The attribute MAY be updated at any time.  Attribute\n  values SHALL NOT be returned (e.g., because the value is a\n  stored hash).  Note: An attribute with a mutability of\n  \"writeOnly\" usually also has a returned setting of \"never\"."
+              returned:
+                type: string
+                description: "A single keyword that indicates when an attribute and\nassociated values are returned in response to a GET request or\nin response to a PUT, POST, or PATCH request.  Valid keywords\nare as follows:\n\n`always` - The attribute is always returned, regardless of the\n    contents of the \"attributes\" parameter.  For example, \"id\"\n    is always returned to identify a SCIM resource.\n\n`never` - The attribute is never returned.  This may occur because\n    the original attribute value (e.g., a hashed value) is not\n    retained by the service provider.  A service provider MAY\n    allow attributes to be used in a search filter.\n\n`default` - The attribute is returned by default in all SCIM\n    operation responses where attribute values are returned.  If\n    the GET request \"attributes\" parameter is specified,\n    attribute values are only returned if the attribute is named\n    in the \"attributes\" parameter.  DEFAULT.\n\n`request` - The attribute is returned in response to any PUT,\n    POST, or PATCH operations if the attribute was specified by\n    the client (for example, the attribute was modified).  The\n    attribute is returned in a SCIM query operation only if\n    specified in the \"attributes\" parameter."
+              uniqueness:
+                type: string
+                description: "A single keyword value that specifies how the service\nprovider enforces uniqueness of attribute values.  A server MAY\nreject an invalid value based on uniqueness by returning HTTP\nresponse code 400 (Bad Request).  A client MAY enforce\nuniqueness on the client side to a greater degree than the\nservice provider enforces.  For example, a client could make a\nvalue unique while the server has uniqueness of \"none\".  Valid\nkeywords are as follows:\n\n`none` ` The values are not intended to be unique in any way.\n    DEFAULT.\n\n`server` - The value SHOULD be unique within the context of the\n    current SCIM endpoint (or tenancy) and MAY be globally\n    unique (e.g., a \"username\", email address, or other\n    server-generated key or counter).  No two resources on the\n    same server SHOULD possess the same value.\n\n`global` - The value SHOULD be globally unique (e.g., an email\n    address, a GUID, or other value).  No two resources on any\n    server SHOULD possess the same value."
+              referenceTypes:
+                type: array
+                items:
+                  type: string
+                description: "A multi-valued array of JSON strings that indicate\nthe SCIM resource types that may be referenced.  Valid values\nare as follows:\n- A SCIM resource type (e.g., \"User\" or \"Group\"),\n-  \"external\" - indicating that the resource is an external\n    resource (e.g., a photo), or\n\n-  \"uri\" - indicating that the reference is to a service\n    endpoint or an identifier (e.g., a schema URN).\n\nThis attribute is only applicable for attributes that are of\ntype \"reference\" (Section 2.3.7)."
+      required:
+      - schemas
+      - id
   responses:
     error:
       description: https://www.rfc-editor.org/rfc/rfc7644#section-3.12 details the expected values along with some tables describing their usage.
@@ -663,44 +701,6 @@ components:
         application/scim+json:
           schema:
             $ref: '#/components/schemas/MessageError'
-  parameters:
-    excludedAttributes:
-      name: excludedAttributes
-      in: query
-      required: false
-      schema:
-        type: array
-        items:
-          type: string
-      description: "SCIM service providers MUST support both `attributes` and `excludedAttributes` query parameters. \nClients may optionally send either of them to control which attributes are returned in responses.\n\nWhen `attributes` is provided it overrides the default set.\n\nWhen `excludedAttributes` is provided the listed attributes shall be removed from the default set. \nThis parameter SHALL have no effect on attributes whose schema \"returned\" setting is \"always\".\n\nAttribute names MUST be in standard attribute notation (Section 3.10) form.  See\nrfc7644 Section 3.9 for additional retrieval query parameters."
-    attributes:
-      name: attributes
-      in: query
-      required: false
-      schema:
-        type: array
-        items:
-          type: string
-      description: "SCIM service providers MUST support both `attributes` and `excludedAttributes` query parameters. \nClients may optionally send either of them to control which attributes are returned in responses.\n\nWhen `attributes` is provided it overrides the default set.\n\nWhen `excludedAttributes` is provided the listed attributes shall be removed from the default set. \nThis parameter SHALL have no effect on attributes whose schema \"returned\" setting is \"always\".\n\nAttribute names MUST be in standard attribute notation (Section 3.10) form.  See\nrfc7644 Section 3.9 for additional retrieval query parameters."
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      schema:
-        type: string
-        example: VUNI
-      description: Currently this must be the id of the partner that you wish to manage users for. In the future we plan to support other types of namespaces such as marketplace apps
-    Accept:
-      name: Accept
-      in: header
-      schema:
-        type: string
-        default: application/scim+json
-        enum:
-        - application/scim+json
-        - application/json
-        example: application/scim+json
-      description: Indicates that the response body contains content formated according to SCIM rules
   securitySchemes:
     bearerAuth:
       type: http

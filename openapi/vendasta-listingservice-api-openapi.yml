@@ -91,6 +91,100 @@ paths:
       - ListingService
 components:
   schemas:
+    v1GetListingsRequest:
+      description: Request message for retrieving a set of listings by their identifiers.
+      properties:
+        listingIds:
+          description: Required. A set of listing identifiers to retrieve.
+          items:
+            $ref: '#/components/schemas/v1ListingIdentifier'
+          type: array
+      required:
+      - listingIds
+      title: Get Listings Request
+      type: object
+    v1LookupListingsResponse:
+      description: Response message containing listings grouped by source.
+      properties:
+        listingsBySource:
+          description: Output only. The listings grouped by source.
+          items:
+            $ref: '#/components/schemas/v1LookupResponseForSource'
+          readOnly: true
+          type: array
+      title: Lookup Listings Response
+      type: object
+    v1ForceRefreshListingRequest:
+      description: Request message to force refresh a specific listing.
+      properties:
+        accountGroupId:
+          description: Required. The account group ID which the listing belongs to.
+          type: string
+        listingId:
+          description: Required. The ID of the listing which needs to be force refreshed.
+          type: string
+        listingUrl:
+          description: Optional. The URL of the listing which needs to be force refreshed.
+          type: string
+        sourceId:
+          description: Optional. The source of the listing.
+          format: int64
+          type: string
+      required:
+      - accountGroupId
+      - listingId
+      title: Force Refresh Listing Request
+      type: object
+    v1LookupListingsRequest:
+      description: Request message for looking up listings for a business, with filtering options by source and match quality.
+      properties:
+        businessId:
+          description: Required. The business ID to look up listings for.
+          type: string
+        includeAnchorDataMatches:
+          description: Optional. Whether to include anchor data matches.
+          type: boolean
+        includeGoodListings:
+          description: Optional. Whether to include good listings.
+          type: boolean
+        includeInternetProviderListings:
+          description: Optional. Whether to include internet provider listings.
+          type: boolean
+        includeNotDoneListings:
+          description: Optional. Whether to include not-done listings.
+          type: boolean
+        includePoorListings:
+          description: Optional. Whether to include poor listings.
+          type: boolean
+        sourceIds:
+          description: Optional. The source IDs to filter listings by.
+          items:
+            format: int64
+            type: string
+          type: array
+      required:
+      - businessId
+      title: Lookup Listings Request
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    ListingMatchQuality:
+      default: LISTING_MATCH_QUALITY_GOOD
+      enum:
+      - LISTING_MATCH_QUALITY_GOOD
+      - LISTING_MATCH_QUALITY_POOR
+      - LISTING_MATCH_QUALITY_NO_MATCH
+      type: string
     v1GetListingsResponse:
       description: Response message containing the retrieved listings.
       properties:
@@ -131,79 +225,12 @@ components:
           type: string
       title: NAP
       type: object
-    v1GetListingsRequest:
-      description: Request message for retrieving a set of listings by their identifiers.
-      properties:
-        listingIds:
-          description: Required. A set of listing identifiers to retrieve.
-          items:
-            $ref: '#/components/schemas/v1ListingIdentifier'
-          type: array
-      required:
-      - listingIds
-      title: Get Listings Request
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
-    v1LookupResponseForSource:
-      description: Listings grouped by match quality for a single source.
-      properties:
-        goodListings:
-          description: Output only. Listings with good match quality.
-          items:
-            $ref: '#/components/schemas/v1Listing'
-          readOnly: true
-          type: array
-        notDoneListings:
-          description: Output only. Listings that are not yet done.
-          items:
-            $ref: '#/components/schemas/v1Listing'
-          readOnly: true
-          type: array
-        poorListings:
-          description: Output only. Listings with poor match quality.
-          items:
-            $ref: '#/components/schemas/v1Listing'
-          readOnly: true
-          type: array
-        sourceId:
-          description: Output only. The source ID.
-          format: int64
-          readOnly: true
-          type: string
-        sourceName:
-          description: Output only. The source name.
-          readOnly: true
-          type: string
-        userFriendlySourceName:
-          description: Output only. The user-friendly source name.
-          readOnly: true
-          type: string
-      title: Lookup Response For Source
-      type: object
     protobufAny:
       additionalProperties: {}
       properties:
         '@type':
           type: string
       type: object
-    ListingMatchQuality:
-      default: LISTING_MATCH_QUALITY_GOOD
-      enum:
-      - LISTING_MATCH_QUALITY_GOOD
-      - LISTING_MATCH_QUALITY_POOR
-      - LISTING_MATCH_QUALITY_NO_MATCH
-      type: string
     v1ListingIdentifier:
       description: Uniquely identifies a listing by its account group and listing ID.
       properties:
@@ -294,68 +321,41 @@ components:
           type: boolean
       title: Listing
       type: object
-    v1LookupListingsResponse:
-      description: Response message containing listings grouped by source.
+    v1LookupResponseForSource:
+      description: Listings grouped by match quality for a single source.
       properties:
-        listingsBySource:
-          description: Output only. The listings grouped by source.
+        goodListings:
+          description: Output only. Listings with good match quality.
           items:
-            $ref: '#/components/schemas/v1LookupResponseForSource'
+            $ref: '#/components/schemas/v1Listing'
           readOnly: true
           type: array
-      title: Lookup Listings Response
-      type: object
-    v1LookupListingsRequest:
-      description: Request message for looking up listings for a business, with filtering options by source and match quality.
-      properties:
-        businessId:
-          description: Required. The business ID to look up listings for.
-          type: string
-        includeAnchorDataMatches:
-          description: Optional. Whether to include anchor data matches.
-          type: boolean
-        includeGoodListings:
-          description: Optional. Whether to include good listings.
-          type: boolean
-        includeInternetProviderListings:
-          description: Optional. Whether to include internet provider listings.
-          type: boolean
-        includeNotDoneListings:
-          description: Optional. Whether to include not-done listings.
-          type: boolean
-        includePoorListings:
-          description: Optional. Whether to include poor listings.
-          type: boolean
-        sourceIds:
-          description: Optional. The source IDs to filter listings by.
+        notDoneListings:
+          description: Output only. Listings that are not yet done.
           items:
-            format: int64
-            type: string
+            $ref: '#/components/schemas/v1Listing'
+          readOnly: true
           type: array
-      required:
-      - businessId
-      title: Lookup Listings Request
-      type: object
-    v1ForceRefreshListingRequest:
-      description: Request message to force refresh a specific listing.
-      properties:
-        accountGroupId:
-          description: Required. The account group ID which the listing belongs to.
-          type: string
-        listingId:
-          description: Required. The ID of the listing which needs to be force refreshed.
-          type: string
-        listingUrl:
-          description: Optional. The URL of the listing which needs to be force refreshed.
-          type: string
+        poorListings:
+          description: Output only. Listings with poor match quality.
+          items:
+            $ref: '#/components/schemas/v1Listing'
+          readOnly: true
+          type: array
         sourceId:
-          description: Optional. The source of the listing.
+          description: Output only. The source ID.
           format: int64
+          readOnly: true
           type: string
-      required:
-      - accountGroupId
-      - listingId
-      title: Force Refresh Listing Request
+        sourceName:
+          description: Output only. The source name.
+          readOnly: true
+          type: string
+        userFriendlySourceName:
+          description: Output only. The user-friendly source name.
+          readOnly: true
+          type: string
+      title: Lookup Response For Source
       type: object
   securitySchemes:
     OAuth2:

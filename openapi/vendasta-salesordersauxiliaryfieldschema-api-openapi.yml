@@ -60,26 +60,21 @@ paths:
       - SalesOrdersAuxiliaryFieldSchema
 components:
   schemas:
-    vendastatypesPagedResponseMetadata:
+    v1ListAuxiliaryDataFieldSchemaRequestFilters:
       properties:
-        hasMore:
-          title: Whether or not more results exist
+        onlyArchived:
           type: boolean
-        nextCursor:
-          title: A cursor that can be provided to retrieve the next page of results
-          type: string
-        totalResults:
-          format: int64
-          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
-          type: string
       type: object
-    v1FieldSchemaIdentifier:
+    googlerpcStatus:
       properties:
-        externalId:
-          type: string
-        fieldId:
-          type: string
-        partnerId:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
           type: string
       type: object
     v1ListAuxiliaryDataFieldSchemaRequest:
@@ -89,12 +84,6 @@ components:
         pagingOptions:
           $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
         partnerId:
-          type: string
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
           type: string
       type: object
     v1AuxiliaryDataFieldSchema:
@@ -128,44 +117,14 @@ components:
           format: date-time
           type: string
       type: object
-    vendastatypesPagedRequestOptions:
+    v1FieldSchemaIdentifier:
       properties:
-        cursor:
-          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
+        externalId:
           type: string
-        pageSize:
-          description: Optional. The maximum number of items to return per page.
-          format: int64
+        fieldId:
           type: string
-      type: object
-    googlerpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
+        partnerId:
           type: string
-      type: object
-    v1GetAuxiliaryDataFieldSchemaRequest:
-      properties:
-        identifier:
-          $ref: '#/components/schemas/v1FieldSchemaIdentifier'
-      type: object
-    v1DropdownOption:
-      properties:
-        label:
-          type: string
-        value:
-          type: string
-      type: object
-    v1ListAuxiliaryDataFieldSchemaRequestFilters:
-      properties:
-        onlyArchived:
-          type: boolean
       type: object
     v1ListAuxiliaryDataFieldSchemaResponse:
       properties:
@@ -175,11 +134,6 @@ components:
           type: array
         pagingMetadata:
           $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
-      type: object
-    v1GetAuxiliaryDataFieldSchemaResponse:
-      properties:
-        fieldSchema:
-          $ref: '#/components/schemas/v1AuxiliaryDataFieldSchema'
       type: object
     v1AuxiliaryDataFieldType:
       default: AUXILIARY_DATA_FIELD_TYPE_INVALID
@@ -191,6 +145,52 @@ components:
       - AUXILIARY_DATA_FIELD_TYPE_DROPDOWN
       - AUXILIARY_DATA_FIELD_TYPE_CURRENCY
       type: string
+    vendastatypesPagedRequestOptions:
+      properties:
+        cursor:
+          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
+          type: string
+        pageSize:
+          description: Optional. The maximum number of items to return per page.
+          format: int64
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1DropdownOption:
+      properties:
+        label:
+          type: string
+        value:
+          type: string
+      type: object
+    v1GetAuxiliaryDataFieldSchemaRequest:
+      properties:
+        identifier:
+          $ref: '#/components/schemas/v1FieldSchemaIdentifier'
+      type: object
+    v1GetAuxiliaryDataFieldSchemaResponse:
+      properties:
+        fieldSchema:
+          $ref: '#/components/schemas/v1AuxiliaryDataFieldSchema'
+      type: object
+    vendastatypesPagedResponseMetadata:
+      properties:
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
+          type: string
+        totalResults:
+          format: int64
+          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
+          type: string
+      type: object
   securitySchemes:
     OAuth2:
       flows:

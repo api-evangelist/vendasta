@@ -133,19 +133,63 @@ components:
           type: number
         itemsPerPage:
           type: number
-    Member:
+    Group:
       type: object
       properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          example:
+          - urn:ietf:params:scim:schemas:core:2.0:Group
+        id:
+          type: string
+          example: e9e30dba-f08f-4109-8486-d5c6a331660a
+        displayName:
+          type: string
+          example: Tour Guides
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/Member'
+        meta:
+          $ref: '#/components/schemas/Meta'
+      x-examples:
+        Example 1:
+          schemas:
+          - urn:ietf:params:scim:schemas:core:2.0:Group
+          id: ba:getStarted:AG-1234567890
+          displayName: Get Started for AG-1234567890
+          members:
+          - value: 2819c223-7f76-453a-919d-413861904646
+            display: Babs Jensen
+          meta:
+            resourceType: Group
+    PatchOp:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          example:
+          - urn:ietf:params:scim:api:messages:2.0:PatchOp
+        Operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation'
+    Operation:
+      type: object
+      properties:
+        op:
+          type: string
+          example: Replace
+        path:
+          type: string
+          example: emails[type eq "work"].value
         value:
           type: string
-          example: 2819c223-7f76-453a-919d-413861904646
-        $ref:
-          type: string
-          format: uri
-          example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
-        display:
-          type: string
-          example: Babs Jensen
+          example: updatedEmail@mail.com
     Meta:
       type: object
       properties:
@@ -185,63 +229,19 @@ components:
         location:
           type: string
           example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
-    PatchOp:
+    Member:
       type: object
       properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          example:
-          - urn:ietf:params:scim:api:messages:2.0:PatchOp
-        Operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Operation'
-    Operation:
-      type: object
-      properties:
-        op:
-          type: string
-          example: Replace
-        path:
-          type: string
-          example: emails[type eq "work"].value
         value:
           type: string
-          example: updatedEmail@mail.com
-    Group:
-      type: object
-      properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          example:
-          - urn:ietf:params:scim:schemas:core:2.0:Group
-        id:
+          example: 2819c223-7f76-453a-919d-413861904646
+        $ref:
           type: string
-          example: e9e30dba-f08f-4109-8486-d5c6a331660a
-        displayName:
+          format: uri
+          example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
+        display:
           type: string
-          example: Tour Guides
-        members:
-          type: array
-          items:
-            $ref: '#/components/schemas/Member'
-        meta:
-          $ref: '#/components/schemas/Meta'
-      x-examples:
-        Example 1:
-          schemas:
-          - urn:ietf:params:scim:schemas:core:2.0:Group
-          id: ba:getStarted:AG-1234567890
-          displayName: Get Started for AG-1234567890
-          members:
-          - value: 2819c223-7f76-453a-919d-413861904646
-            display: Babs Jensen
-          meta:
-            resourceType: Group
+          example: Babs Jensen
   parameters:
     namespace:
       name: namespace

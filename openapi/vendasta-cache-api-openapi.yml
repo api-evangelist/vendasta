@@ -36,6 +36,16 @@ paths:
       - Cache
 components:
   schemas:
+    v1InvalidateCacheRequest:
+      description: Request to invalidate page cache, object cache, and CDN for a WordPress site.
+      properties:
+        siteId:
+          description: Required. The unique identifier of the site whose cache should be invalidated.
+          type: string
+      required:
+      - siteId
+      title: InvalidateCacheRequest
+      type: object
     rpcStatus:
       properties:
         code:
@@ -53,16 +63,6 @@ components:
       properties:
         '@type':
           type: string
-      type: object
-    v1InvalidateCacheRequest:
-      description: Request to invalidate page cache, object cache, and CDN for a WordPress site.
-      properties:
-        siteId:
-          description: Required. The unique identifier of the site whose cache should be invalidated.
-          type: string
-      required:
-      - siteId
-      title: InvalidateCacheRequest
       type: object
   securitySchemes:
     OAuth2:

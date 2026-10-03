@@ -36,6 +36,35 @@ paths:
       - WordpressPluginService
 components:
   schemas:
+    v2BlogVideo:
+      properties:
+        path:
+          title: The path of the video
+          type: string
+        publicUrl:
+          title: The public url of the video
+          type: string
+      type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    socialpostsv2Author:
+      properties:
+        id:
+          format: int64
+          type: string
+        name:
+          type: string
+      type: object
     socialpostsv2Category:
       properties:
         id:
@@ -54,64 +83,6 @@ components:
           readOnly: true
           type: string
       title: PublishPostResponse
-      type: object
-    socialpostsv2Author:
-      properties:
-        id:
-          format: int64
-          type: string
-        name:
-          type: string
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
-      type: object
-    googlerpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
-    v2BlogVideo:
-      properties:
-        path:
-          title: The path of the video
-          type: string
-        publicUrl:
-          title: The public url of the video
-          type: string
-      type: object
-    v2MetadataV2:
-      description: A key-value pair used to store generic metadata information associated with a post or media.
-      properties:
-        name:
-          description: Required. The property name or key.
-          type: string
-        value:
-          description: Required. The property value associated with the name/key.
-          type: string
-      required:
-      - name
-      - value
-      title: MetadataV2
-      type: object
-    v2BlogImage:
-      properties:
-        path:
-          title: The path of the image
-          type: string
-        publicUrl:
-          title: The public url of the image
-          type: string
       type: object
     v2PublishPostRequest:
       description: Request message for publishing a blog post to a WordPress site.
@@ -192,6 +163,35 @@ components:
       - title
       - content
       title: PublishPostRequest
+      type: object
+    v2BlogImage:
+      properties:
+        path:
+          title: The path of the image
+          type: string
+        publicUrl:
+          title: The public url of the image
+          type: string
+      type: object
+    v2MetadataV2:
+      description: A key-value pair used to store generic metadata information associated with a post or media.
+      properties:
+        name:
+          description: Required. The property name or key.
+          type: string
+        value:
+          description: Required. The property value associated with the name/key.
+          type: string
+      required:
+      - name
+      - value
+      title: MetadataV2
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
       type: object
   securitySchemes:
     OAuth2:

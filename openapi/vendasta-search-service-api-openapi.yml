@@ -115,28 +115,6 @@ components:
           type: string
       title: SiteHealths
       type: object
-    v1GetHealthCheckRequest:
-      description: Request to get health check data for one or more sites.
-      properties:
-        siteId:
-          description: Required. The site IDs to get health check data for.
-          items:
-            type: string
-          type: array
-      required:
-      - siteId
-      title: GetHealthCheckRequest
-      type: object
-    v1GetPluginUpdatesCountRequest:
-      description: Request to get the count of plugins that need updating for a partner.
-      properties:
-        partnerId:
-          description: Required. The partner ID to get plugin update counts for.
-          type: string
-      required:
-      - partnerId
-      title: GetPluginUpdatesCountRequest
-      type: object
     rpcStatus:
       properties:
         code:
@@ -147,32 +125,6 @@ components:
             $ref: '#/components/schemas/protobufAny'
           type: array
         message:
-          type: string
-      type: object
-    v1GetHealthCheckResponse:
-      description: Response containing site health check data with pagination.
-      properties:
-        hasMore:
-          description: Output only. Whether or not more results exist.
-          readOnly: true
-          type: boolean
-        siteHealths:
-          description: Output only. The list of site health records.
-          items:
-            $ref: '#/components/schemas/v1SiteHealths'
-          readOnly: true
-          type: array
-        totalResults:
-          description: Output only. The total number of results for this query across all pages.
-          format: int64
-          readOnly: true
-          type: string
-      title: GetHealthCheckResponse
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
           type: string
       type: object
     v1HealthCheckValues:
@@ -194,6 +146,16 @@ components:
           type: string
       title: HealthCheckValues
       type: object
+    v1GetPluginUpdatesCountRequest:
+      description: Request to get the count of plugins that need updating for a partner.
+      properties:
+        partnerId:
+          description: Required. The partner ID to get plugin update counts for.
+          type: string
+      required:
+      - partnerId
+      title: GetPluginUpdatesCountRequest
+      type: object
     v1GetPluginUpdatesCountResponse:
       description: Response containing the total count of plugins that need updating.
       properties:
@@ -203,6 +165,44 @@ components:
           readOnly: true
           type: string
       title: GetPluginUpdatesCountResponse
+      type: object
+    v1GetHealthCheckRequest:
+      description: Request to get health check data for one or more sites.
+      properties:
+        siteId:
+          description: Required. The site IDs to get health check data for.
+          items:
+            type: string
+          type: array
+      required:
+      - siteId
+      title: GetHealthCheckRequest
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1GetHealthCheckResponse:
+      description: Response containing site health check data with pagination.
+      properties:
+        hasMore:
+          description: Output only. Whether or not more results exist.
+          readOnly: true
+          type: boolean
+        siteHealths:
+          description: Output only. The list of site health records.
+          items:
+            $ref: '#/components/schemas/v1SiteHealths'
+          readOnly: true
+          type: array
+        totalResults:
+          description: Output only. The total number of results for this query across all pages.
+          format: int64
+          readOnly: true
+          type: string
+      title: GetHealthCheckResponse
       type: object
   securitySchemes:
     OAuth2:

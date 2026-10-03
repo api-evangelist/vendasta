@@ -155,6 +155,63 @@ paths:
       - CRMCustomObjectTypeService
 components:
   schemas:
+    v1GetMultiCustomObjectTypeResponse:
+      description: Response containing the requested custom object types.
+      properties:
+        customObjectTypes:
+          description: Output only. The retrieved custom object types.
+          items:
+            $ref: '#/components/schemas/v1CustomObjectType'
+          readOnly: true
+          type: array
+      title: Get Multi Custom Object Type Response
+      type: object
+    v1ListCustomObjectTypesRequest:
+      description: Request to list all custom object types within a namespace.
+      properties:
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) to list custom object types for.
+          type: string
+      required:
+      - namespace
+      title: List Custom Object Types Request
+      type: object
+    v1CreateCustomObjectTypeRequest:
+      description: Request to create a new custom object type within a namespace.
+      properties:
+        customObjectType:
+          $ref: '#/components/schemas/v1CustomObjectType'
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the custom object type will belong to.
+          type: string
+      required:
+      - namespace
+      - customObjectType
+      title: Create Custom Object Type Request
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1ListCustomObjectTypesResponse:
+      description: Response containing all custom object types in the namespace.
+      properties:
+        customObjectTypes:
+          description: Output only. The custom object types in the namespace.
+          items:
+            $ref: '#/components/schemas/v1CustomObjectType'
+          readOnly: true
+          type: array
+      title: List Custom Object Types Response
+      type: object
     v1CustomObjectType:
       description: Defines a partner-created custom object type in the CRM, including its display names and system-managed timestamps.
       properties:
@@ -198,97 +255,6 @@ components:
           type: array
       title: '`FieldMask` represents a set of symbolic field paths, for example:'
       type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
-    v1CreateCustomObjectTypeRequest:
-      description: Request to create a new custom object type within a namespace.
-      properties:
-        customObjectType:
-          $ref: '#/components/schemas/v1CustomObjectType'
-        namespace:
-          description: Required. The namespace (partner ID or account group ID) the custom object type will belong to.
-          type: string
-      required:
-      - namespace
-      - customObjectType
-      title: Create Custom Object Type Request
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
-      type: object
-    v1DeleteCustomObjectTypeRequest:
-      description: Request to delete a custom object type within a namespace.
-      properties:
-        customObjectTypeId:
-          description: Required. The identifier of the custom object type to delete.
-          type: string
-        namespace:
-          description: Required. The namespace (partner ID or account group ID) the custom object type belongs to.
-          type: string
-      required:
-      - namespace
-      - customObjectTypeId
-      title: Delete Custom Object Type Request
-      type: object
-    v1UpdateCustomObjectTypeRequest:
-      description: Request to update an existing custom object type within a namespace.
-      properties:
-        customObjectType:
-          $ref: '#/components/schemas/v1CustomObjectType'
-        fieldMask:
-          $ref: '#/components/schemas/vendastatypesFieldMask'
-        namespace:
-          description: Required. The namespace (partner ID or account group ID) the custom object type belongs to.
-          type: string
-      required:
-      - namespace
-      - customObjectType
-      title: Update Custom Object Type Request
-      type: object
-    v1CreateCustomObjectTypeResponse:
-      description: Response containing the identifier of the newly created custom object type.
-      properties:
-        customObjectTypeId:
-          description: Output only. The unique identifier of the newly created custom object type.
-          readOnly: true
-          type: string
-      title: Create Custom Object Type Response
-      type: object
-    v1GetMultiCustomObjectTypeResponse:
-      description: Response containing the requested custom object types.
-      properties:
-        customObjectTypes:
-          description: Output only. The retrieved custom object types.
-          items:
-            $ref: '#/components/schemas/v1CustomObjectType'
-          readOnly: true
-          type: array
-      title: Get Multi Custom Object Type Response
-      type: object
-    v1ListCustomObjectTypesResponse:
-      description: Response containing all custom object types in the namespace.
-      properties:
-        customObjectTypes:
-          description: Output only. The custom object types in the namespace.
-          items:
-            $ref: '#/components/schemas/v1CustomObjectType'
-          readOnly: true
-          type: array
-      title: List Custom Object Types Response
-      type: object
     v1GetMultiCustomObjectTypeRequest:
       description: Request to retrieve multiple custom object types by their IDs within a namespace.
       properties:
@@ -308,15 +274,49 @@ components:
       - customObjectTypeIds
       title: Get Multi Custom Object Type Request
       type: object
-    v1ListCustomObjectTypesRequest:
-      description: Request to list all custom object types within a namespace.
+    v1DeleteCustomObjectTypeRequest:
+      description: Request to delete a custom object type within a namespace.
       properties:
+        customObjectTypeId:
+          description: Required. The identifier of the custom object type to delete.
+          type: string
         namespace:
-          description: Required. The namespace (partner ID or account group ID) to list custom object types for.
+          description: Required. The namespace (partner ID or account group ID) the custom object type belongs to.
           type: string
       required:
       - namespace
-      title: List Custom Object Types Request
+      - customObjectTypeId
+      title: Delete Custom Object Type Request
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1CreateCustomObjectTypeResponse:
+      description: Response containing the identifier of the newly created custom object type.
+      properties:
+        customObjectTypeId:
+          description: Output only. The unique identifier of the newly created custom object type.
+          readOnly: true
+          type: string
+      title: Create Custom Object Type Response
+      type: object
+    v1UpdateCustomObjectTypeRequest:
+      description: Request to update an existing custom object type within a namespace.
+      properties:
+        customObjectType:
+          $ref: '#/components/schemas/v1CustomObjectType'
+        fieldMask:
+          $ref: '#/components/schemas/vendastatypesFieldMask'
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the custom object type belongs to.
+          type: string
+      required:
+      - namespace
+      - customObjectType
+      title: Update Custom Object Type Request
       type: object
   securitySchemes:
     OAuth2:

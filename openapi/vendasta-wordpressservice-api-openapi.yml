@@ -88,23 +88,21 @@ paths:
       - WordpressService
 components:
   schemas:
-    rpcStatus:
+    v1WordPressAddon:
+      description: A WordPress plugin or theme, including current and latest version information.
       properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
+        currentVersion:
+          description: Optional. The current installed version of the addon.
           type: string
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
+        id:
+          description: Required. The unique identifier of the addon (plugin slug or theme slug).
           type: string
+        latestVersion:
+          description: Optional. The latest available version of the addon.
+          type: string
+      required:
+      - id
+      title: WordPressAddon
       type: object
     v1UpdatePluginsRequest:
       description: Request to update a WordPress site with the latest plugin information.
@@ -125,6 +123,18 @@ components:
       - plugins
       title: UpdatePluginsRequest
       type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
     v1UpdateCoreRequest:
       description: Request to update a WordPress site with the latest core version information.
       properties:
@@ -143,21 +153,11 @@ components:
       - coreLatestVersion
       title: UpdateCoreRequest
       type: object
-    v1WordPressAddon:
-      description: A WordPress plugin or theme, including current and latest version information.
+    protobufAny:
+      additionalProperties: {}
       properties:
-        currentVersion:
-          description: Optional. The current installed version of the addon.
+        '@type':
           type: string
-        id:
-          description: Required. The unique identifier of the addon (plugin slug or theme slug).
-          type: string
-        latestVersion:
-          description: Optional. The latest available version of the addon.
-          type: string
-      required:
-      - id
-      title: WordPressAddon
       type: object
     v1UpdateThemeRequest:
       description: Request to update a WordPress site with the latest theme information.

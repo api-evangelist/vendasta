@@ -332,6 +332,43 @@ paths:
         required: true
 components:
   schemas:
+    orderFormField:
+      title: Order Form Field
+      type: object
+      description: A single field within an order form.
+      properties:
+        id:
+          type: string
+          description: The unique identifier of the field within its form.
+          example: business_name
+        value:
+          type: string
+          description: 'The answer or value for this field.
+
+
+            For `file` fields, provide a plain URL string pointing to any publicly accessible file. The filename will be derived from the URL path. To use Vendasta-hosted file storage, first upload the file to `https://order-fulfillment-api-prod.apigateway.co/fulfillment-form/attachments/upload` and use the returned URL as the value.'
+          example: Acme Corp
+        label:
+          type: string
+          readOnly: true
+          description: Human-readable label for the field. Read-only; returned on GET but ignored on create/update.
+        description:
+          type: string
+          readOnly: true
+          description: Description or help text for the field. Read-only.
+        type:
+          type: string
+          description: The input type of the field. Required when creating or updating order forms.
+          enum:
+          - text
+          - textarea
+          - dropdown
+          - checkbox
+          - file
+          - vbcUser
+      required:
+      - id
+      - value
     orderFulfillmentForms:
       title: Order Fulfillment Form
       type: object
@@ -400,43 +437,6 @@ components:
               description: The form fields and their submitted values.
               items:
                 $ref: '#/components/schemas/orderFormField'
-    orderFormField:
-      title: Order Form Field
-      type: object
-      description: A single field within an order form.
-      properties:
-        id:
-          type: string
-          description: The unique identifier of the field within its form.
-          example: business_name
-        value:
-          type: string
-          description: 'The answer or value for this field.
-
-
-            For `file` fields, provide a plain URL string pointing to any publicly accessible file. The filename will be derived from the URL path. To use Vendasta-hosted file storage, first upload the file to `https://order-fulfillment-api-prod.apigateway.co/fulfillment-form/attachments/upload` and use the returned URL as the value.'
-          example: Acme Corp
-        label:
-          type: string
-          readOnly: true
-          description: Human-readable label for the field. Read-only; returned on GET but ignored on create/update.
-        description:
-          type: string
-          readOnly: true
-          description: Description or help text for the field. Read-only.
-        type:
-          type: string
-          description: The input type of the field. Required when creating or updating order forms.
-          enum:
-          - text
-          - textarea
-          - dropdown
-          - checkbox
-          - file
-          - vbcUser
-      required:
-      - id
-      - value
   securitySchemes:
     JWT:
       type: http

@@ -577,7 +577,77 @@ paths:
       operationId: getActivationListPending
       x-operation-id-source: derived
 components:
+  requestBodies:
+    Body:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - title
+            - files
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+              files:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    url:
+                      type: string
+      required: true
   schemas:
+    file_group:
+      type: object
+      properties:
+        account_id:
+          type: string
+        file_group_id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        created:
+          type: string
+        modified:
+          type: string
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              url:
+                type: string
+    account_settings:
+      required:
+      - account_id
+      properties:
+        account_id:
+          type: string
+        partner_id:
+          type: string
+        market_id:
+          type: string
+        platform_settings:
+          type: object
+          properties:
+            partner_name:
+              type: string
+            partner_logo_url:
+              type: string
+            partner_primary_branding_hex_color:
+              type: string
+        white_label_active:
+          type: boolean
+      type: object
     pending_activation:
       type: object
       properties:
@@ -1000,13 +1070,6 @@ components:
             description: Open 24 hours
           landmark: 20th Street
           country: CA
-    session_transfer_url:
-      required:
-      - session_transfer_url
-      properties:
-        session_transfer_url:
-          type: string
-      type: object
     account:
       required:
       - company_name
@@ -1113,81 +1176,18 @@ components:
         email:
           type: string
       type: object
+    session_transfer_url:
+      required:
+      - session_transfer_url
+      properties:
+        session_transfer_url:
+          type: string
+      type: object
     associated_user:
       type: object
       properties:
         user_id:
           type: string
-    file_group:
-      type: object
-      properties:
-        account_id:
-          type: string
-        file_group_id:
-          type: string
-        title:
-          type: string
-        description:
-          type: string
-        created:
-          type: string
-        modified:
-          type: string
-        files:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              url:
-                type: string
-    account_settings:
-      required:
-      - account_id
-      properties:
-        account_id:
-          type: string
-        partner_id:
-          type: string
-        market_id:
-          type: string
-        platform_settings:
-          type: object
-          properties:
-            partner_name:
-              type: string
-            partner_logo_url:
-              type: string
-            partner_primary_branding_hex_color:
-              type: string
-        white_label_active:
-          type: boolean
-      type: object
-  requestBodies:
-    Body:
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - title
-            - files
-            properties:
-              title:
-                type: string
-              description:
-                type: string
-              files:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    url:
-                      type: string
-      required: true
   securitySchemes:
     BearerAuth:
       type: http

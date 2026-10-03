@@ -289,6 +289,44 @@ paths:
       - MeetingExternal
 components:
   schemas:
+    v1BookMeetingExternalRequest:
+      description: Request message for booking a new meeting for a specified event type in a given business.
+      properties:
+        attendees:
+          description: Required. List of attendees to invite. Each must include at minimum a valid email address or valid phone number based on event type configuration.
+          items:
+            $ref: '#/components/schemas/meetingsv1Contact'
+          type: array
+        businessId:
+          description: Required. The business ID (starts with "AG-").
+          type: string
+        comment:
+          description: Optional. Additional notes or description for the meeting; included in calendar invitations.
+          type: string
+        eventTypeId:
+          description: Required. Unique identifier of the event type to be booked (defines duration, availability, and settings).
+          type: string
+        formAnswers:
+          $ref: '#/components/schemas/v1Answers'
+        hostUserId:
+          description: 'Optional. Host user ID. Required for Team event type - ClientChoice and PriorityRoundRobin; ignored for RoundRobin and MultiHost.
+
+            Must be one of the event type''s configured host user IDs.'
+          type: string
+        location:
+          description: Optional. Location for the meeting. Empty for virtual; physical address for in-person.
+          type: string
+        start:
+          description: Required. Desired start time of the meeting in UTC. System validates the slot is available.
+          format: date-time
+          type: string
+      required:
+      - businessId
+      - eventTypeId
+      - start
+      - attendees
+      title: BookMeetingExternalRequest
+      type: object
     typeTimeZone:
       description: 'Represents a time zone from the
 
@@ -300,35 +338,6 @@ components:
         version:
           description: Optional. IANA Time Zone Database version number, e.g. "2019a".
           type: string
-      type: object
-    v1FormFieldType:
-      default: FORM_FIELD_TYPE_INVALID
-      description: " - FORM_FIELD_TYPE_SELECT: Legacy single-select; superseded by FORM_FIELD_TYPE_DROPDOWN.\n - FORM_FIELD_TYPE_MULTIPLE_CHOICE: Multiple choice: guest selects one or more of Field.options.\n - FORM_FIELD_TYPE_DROPDOWN: Dropdown: guest selects exactly one of Field.options."
-      enum:
-      - FORM_FIELD_TYPE_INVALID
-      - FORM_FIELD_TYPE_TEXT
-      - FORM_FIELD_TYPE_EMAIL
-      - FORM_FIELD_TYPE_PHONE_NUMBER
-      - FORM_FIELD_TYPE_SELECT
-      - FORM_FIELD_TYPE_MULTIPLE_CHOICE
-      - FORM_FIELD_TYPE_DROPDOWN
-      type: string
-    v1ListTeamEventTypesRequest:
-      description: Request message for listing team event types for a given business (paginated).
-      properties:
-        businessId:
-          description: Required. The business ID (starts with "AG-").
-          type: string
-        cursor:
-          description: Optional. Pagination cursor from previous response. Empty for first request.
-          type: string
-        pageSize:
-          description: Optional. Number of items to return per page. Default/max page size is 50.
-          format: int64
-          type: string
-      required:
-      - businessId
-      title: ListTeamEventTypesRequest
       type: object
     v1BookMeetingExternalResponse:
       description: Response containing the details of the successfully booked meeting.
@@ -371,121 +380,6 @@ components:
           type: string
       title: BookMeetingExternalResponse
       type: object
-    v1ExternalRescheduleMeetingRequest:
-      description: Request message for rescheduling an existing meeting to a new time and/or location. Either start_time or location is required.
-      properties:
-        businessId:
-          description: Required. The business ID (starts with "AG-").
-          type: string
-        location:
-          description: Optional. The new location for the meeting. For virtual meetings, leave empty. For in-person, use physical address.
-          type: string
-        meetingId:
-          description: Required. Identifier for the meeting to reschedule.
-          type: string
-        startTime:
-          description: Optional. The new desired start time for the meeting in UTC. Either start_time or location is required.
-          format: date-time
-          type: string
-        timeZone:
-          $ref: '#/components/schemas/typeTimeZone'
-      required:
-      - businessId
-      - meetingId
-      - timeZone
-      title: ExternalRescheduleMeetingRequest
-      type: object
-    v1Answers:
-      properties:
-        formAnswers:
-          items:
-            $ref: '#/components/schemas/v1Answer'
-          title: The order of fields specified here is the order they will be displayed in
-          type: array
-      type: object
-    v1DateRangeType:
-      default: RELATIVE
-      enum:
-      - RELATIVE
-      - CUSTOM
-      type: string
-    v1AvailableTimeSlotsResponse:
-      description: Response containing a list of available time slots for booking.
-      properties:
-        timeSlots:
-          description: Output only. Ordered list of available time slots in ISO date-time format, in the requested time zone.
-          items:
-            $ref: '#/components/schemas/v1IsoDateTimeRange'
-          readOnly: true
-          type: array
-      title: AvailableTimeSlotsResponse
-      type: object
-    v1ExternalCancelMeetingRequest:
-      description: Request message for cancelling an existing meeting.
-      properties:
-        businessId:
-          description: Required. The business ID (starts with "AG-").
-          type: string
-        cancellationReason:
-          description: Optional. Reason for the cancellation.
-          type: string
-        meetingId:
-          description: Required. Identifier for the meeting to cancel.
-          type: string
-      required:
-      - businessId
-      - meetingId
-      title: ExternalCancelMeetingRequest
-      type: object
-    v1ListTeamEventTypesResponse:
-      description: Response containing a paginated list of team event types.
-      properties:
-        eventTypes:
-          description: Output only. List of event types available for the specified business.
-          items:
-            $ref: '#/components/schemas/v1EventType'
-          readOnly: true
-          type: array
-        hasMore:
-          description: Output only. Whether more results are available beyond the current page.
-          readOnly: true
-          type: boolean
-        nextCursor:
-          description: Output only. Cursor for next page. Pass to ListTeamEventTypesRequest.cursor. Empty means no more pages.
-          readOnly: true
-          type: string
-      title: ListTeamEventTypesResponse
-      type: object
-    vendastatypesDateRange:
-      properties:
-        end:
-          format: date-time
-          type: string
-        start:
-          format: date-time
-          type: string
-      type: object
-    v1RelativeTimeUnit:
-      default: DAYS
-      enum:
-      - DAYS
-      - WEEKS
-      - MONTHS
-      type: string
-    v1ListUserEventTypesRequest:
-      description: Request message for listing event types for a user (personal and team) scoped by partner/business.
-      properties:
-        businessId:
-          description: Required. The business ID (starts with "AG-").
-          type: string
-        userId:
-          description: Required. Unique identifier of the user to get their event types (user must belong to business).
-          type: string
-      required:
-      - businessId
-      - userId
-      title: ListUserEventTypesRequest
-      type: object
     v1ServicesResponse:
       description: Response containing a list of all services for the specified business.
       properties:
@@ -497,37 +391,74 @@ components:
           type: array
       title: ServicesResponse
       type: object
-    v1AvailableTimeSlotsRequest:
-      description: Request message for listing available time slots for booking a meeting of a specific event type.
+    v1IsoDateTimeRange:
+      properties:
+        end:
+          type: string
+        start:
+          type: string
+      type: object
+    v1AvailableTimeSlotsResponse:
+      description: Response containing a list of available time slots for booking.
+      properties:
+        timeSlots:
+          description: Output only. Ordered list of available time slots in ISO date-time format, in the requested time zone.
+          items:
+            $ref: '#/components/schemas/v1IsoDateTimeRange'
+          readOnly: true
+          type: array
+      title: AvailableTimeSlotsResponse
+      type: object
+    v1EventTypeDateRange:
+      properties:
+        customDateRange:
+          $ref: '#/components/schemas/vendastatypesDateRange'
+        dateRangeType:
+          $ref: '#/components/schemas/v1DateRangeType'
+        relativeDateRange:
+          $ref: '#/components/schemas/v1RelativeDateRange'
+      type: object
+    v1RelativeDateRange:
+      properties:
+        unit:
+          $ref: '#/components/schemas/v1RelativeTimeUnit'
+        value:
+          format: int64
+          type: string
+      type: object
+    v1ServicesRequest:
+      description: Request message for listing all services for a given business.
       properties:
         businessId:
           description: Required. The business ID (starts with "AG-").
           type: string
-        eventTypeId:
-          description: Required. Identifier for the event type to retrieve available time slots for.
-          type: string
-        hostUserId:
-          description: Optional. Host user ID; only used for ClientChoice and PriorityRoundRobin event types. Other types use event type's configured hosts.
-          type: string
-        timeSpan:
-          $ref: '#/components/schemas/vendastatypesDateRange'
-        timeZone:
-          $ref: '#/components/schemas/typeTimeZone'
       required:
       - businessId
-      - eventTypeId
-      - timeSpan
-      - timeZone
-      title: AvailableTimeSlotsRequest
+      title: ServicesRequest
       type: object
-    v1TeamEventMeetingType:
-      default: ROUND_ROBIN
-      enum:
-      - ROUND_ROBIN
-      - CLIENT_CHOICE
-      - MULTI_HOST
-      - PRIORITY_ROUND_ROBIN
-      type: string
+    v1GetUsersResponse:
+      description: Response containing a list of users with their meeting connection status.
+      properties:
+        users:
+          description: Output only. List of users with their configuration status.
+          items:
+            $ref: '#/components/schemas/v1UserResponse'
+          readOnly: true
+          type: array
+      title: GetUsersResponse
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
     v1ServiceResponse:
       description: Details of a single service within a business.
       properties:
@@ -553,74 +484,47 @@ components:
           type: string
       title: ServiceResponse
       type: object
-    v1GetUsersResponse:
-      description: Response containing a list of users with their meeting connection status.
+    v1RelativeTimeUnit:
+      default: DAYS
+      enum:
+      - DAYS
+      - WEEKS
+      - MONTHS
+      type: string
+    v1GroupResponse:
+      description: Details of a single group within a business.
       properties:
-        users:
-          description: Output only. List of users with their configuration status.
-          items:
-            $ref: '#/components/schemas/v1UserResponse'
+        bookingUrl:
+          description: Output only. Public URL where users can book meetings with this group.
           readOnly: true
-          type: array
-      title: GetUsersResponse
-      type: object
-    v1HostOrderDetails:
-      properties:
-        hostOrder:
-          format: int64
           type: string
-        userId:
-          type: string
-      type: object
-    v1GroupsResponse:
-      description: Response containing a list of all groups for the specified business.
-      properties:
-        groups:
-          description: Output only. List of groups available for the specified business.
-          items:
-            $ref: '#/components/schemas/v1GroupResponse'
+        description:
+          description: Output only. Optional. Description of the group and its purpose.
           readOnly: true
-          type: array
-      title: GroupsResponse
+          type: string
+        hexColor:
+          description: Output only. Hex color code used for visual representation of the group.
+          readOnly: true
+          type: string
+        id:
+          description: Output only. Unique identifier of the group.
+          readOnly: true
+          type: string
+        name:
+          description: Output only. Display name of the group.
+          readOnly: true
+          type: string
+      title: GroupResponse
       type: object
-    v1PhoneFields:
+    v1GroupsRequest:
+      description: Request message for listing all groups for a given business.
       properties:
-        countryCode:
-          title: Numeric country calling code (e.g., 1 for Canada, 91 for India)
+        businessId:
+          description: Required. The business ID (starts with "AG-").
           type: string
-        extension:
-          title: An extension number
-          type: string
-        nationalNumber:
-          title: The main phone number without the country code
-          type: string
-      type: object
-    v1EventTypeDateRange:
-      properties:
-        customDateRange:
-          $ref: '#/components/schemas/vendastatypesDateRange'
-        dateRangeType:
-          $ref: '#/components/schemas/v1DateRangeType'
-        relativeDateRange:
-          $ref: '#/components/schemas/v1RelativeDateRange'
-      type: object
-    meetingsv1Contact:
-      properties:
-        email:
-          type: string
-        firstName:
-          type: string
-        isPrimary:
-          type: boolean
-        lastName:
-          type: string
-        phoneFields:
-          $ref: '#/components/schemas/v1PhoneFields'
-        phoneNumber:
-          type: string
-        timeZone:
-          $ref: '#/components/schemas/typeTimeZone'
-      title: 'TODO: For v2 of API, we''d like to merge Contact and Attendee into one message type'
+      required:
+      - businessId
+      title: GroupsRequest
       type: object
     v1UserResponse:
       description: User information including meeting connection status.
@@ -641,16 +545,36 @@ components:
           type: string
       title: UserResponse
       type: object
-    v1GroupsRequest:
-      description: Request message for listing all groups for a given business.
+    v1ExternalRescheduleMeetingRequest:
+      description: Request message for rescheduling an existing meeting to a new time and/or location. Either start_time or location is required.
       properties:
         businessId:
           description: Required. The business ID (starts with "AG-").
           type: string
+        location:
+          description: Optional. The new location for the meeting. For virtual meetings, leave empty. For in-person, use physical address.
+          type: string
+        meetingId:
+          description: Required. Identifier for the meeting to reschedule.
+          type: string
+        startTime:
+          description: Optional. The new desired start time for the meeting in UTC. Either start_time or location is required.
+          format: date-time
+          type: string
+        timeZone:
+          $ref: '#/components/schemas/typeTimeZone'
       required:
       - businessId
-      title: GroupsRequest
+      - meetingId
+      - timeZone
+      title: ExternalRescheduleMeetingRequest
       type: object
+    v1DateRangeType:
+      default: RELATIVE
+      enum:
+      - RELATIVE
+      - CUSTOM
+      type: string
     v1ListUserEventTypesResponse:
       description: Response containing the list of event types accessible for the given user and context.
       properties:
@@ -662,6 +586,14 @@ components:
           type: array
       title: ListUserEventTypesResponse
       type: object
+    v1TeamEventMeetingType:
+      default: ROUND_ROBIN
+      enum:
+      - ROUND_ROBIN
+      - CLIENT_CHOICE
+      - MULTI_HOST
+      - PRIORITY_ROUND_ROBIN
+      type: string
     v1MeetingLocationType:
       default: VIDEO
       enum:
@@ -669,19 +601,6 @@ components:
       - IN_PERSON_USER_SITE
       - IN_PERSON_CLIENT_SITE
       type: string
-    v1Answer:
-      properties:
-        answer:
-          items:
-            type: string
-          type: array
-        id:
-          type: string
-        label:
-          type: string
-        type:
-          $ref: '#/components/schemas/v1FormFieldType'
-      type: object
     v1EventType:
       description: Event type configuration describing a bookable meeting type, including duration, location, and host details.
       properties:
@@ -749,17 +668,55 @@ components:
           type: string
       title: EventType
       type: object
-    rpcStatus:
+    v1AvailableTimeSlotsRequest:
+      description: Request message for listing available time slots for booking a meeting of a specific event type.
       properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
+        businessId:
+          description: Required. The business ID (starts with "AG-").
           type: string
+        eventTypeId:
+          description: Required. Identifier for the event type to retrieve available time slots for.
+          type: string
+        hostUserId:
+          description: Optional. Host user ID; only used for ClientChoice and PriorityRoundRobin event types. Other types use event type's configured hosts.
+          type: string
+        timeSpan:
+          $ref: '#/components/schemas/vendastatypesDateRange'
+        timeZone:
+          $ref: '#/components/schemas/typeTimeZone'
+      required:
+      - businessId
+      - eventTypeId
+      - timeSpan
+      - timeZone
+      title: AvailableTimeSlotsRequest
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1HostOrderDetails:
+      properties:
+        hostOrder:
+          format: int64
+          type: string
+        userId:
+          type: string
+      type: object
+    v1Answer:
+      properties:
+        answer:
+          items:
+            type: string
+          type: array
+        id:
+          type: string
+        label:
+          type: string
+        type:
+          $ref: '#/components/schemas/v1FormFieldType'
       type: object
     v1ExternalRescheduleMeetingResponse:
       description: Response containing the updated details of the rescheduled meeting.
@@ -792,11 +749,57 @@ components:
           type: string
       title: ExternalRescheduleMeetingResponse
       type: object
-    protobufAny:
-      additionalProperties: {}
+    v1FormFieldType:
+      default: FORM_FIELD_TYPE_INVALID
+      description: " - FORM_FIELD_TYPE_SELECT: Legacy single-select; superseded by FORM_FIELD_TYPE_DROPDOWN.\n - FORM_FIELD_TYPE_MULTIPLE_CHOICE: Multiple choice: guest selects one or more of Field.options.\n - FORM_FIELD_TYPE_DROPDOWN: Dropdown: guest selects exactly one of Field.options."
+      enum:
+      - FORM_FIELD_TYPE_INVALID
+      - FORM_FIELD_TYPE_TEXT
+      - FORM_FIELD_TYPE_EMAIL
+      - FORM_FIELD_TYPE_PHONE_NUMBER
+      - FORM_FIELD_TYPE_SELECT
+      - FORM_FIELD_TYPE_MULTIPLE_CHOICE
+      - FORM_FIELD_TYPE_DROPDOWN
+      type: string
+    v1ExternalCancelMeetingRequest:
+      description: Request message for cancelling an existing meeting.
       properties:
-        '@type':
+        businessId:
+          description: Required. The business ID (starts with "AG-").
           type: string
+        cancellationReason:
+          description: Optional. Reason for the cancellation.
+          type: string
+        meetingId:
+          description: Required. Identifier for the meeting to cancel.
+          type: string
+      required:
+      - businessId
+      - meetingId
+      title: ExternalCancelMeetingRequest
+      type: object
+    vendastatypesDateRange:
+      properties:
+        end:
+          format: date-time
+          type: string
+        start:
+          format: date-time
+          type: string
+      type: object
+    v1ListUserEventTypesRequest:
+      description: Request message for listing event types for a user (personal and team) scoped by partner/business.
+      properties:
+        businessId:
+          description: Required. The business ID (starts with "AG-").
+          type: string
+        userId:
+          description: Required. Unique identifier of the user to get their event types (user must belong to business).
+          type: string
+      required:
+      - businessId
+      - userId
+      title: ListUserEventTypesRequest
       type: object
     v1GetUsersRequest:
       description: Request message for listing users with their meeting configuration status for a given business.
@@ -808,93 +811,90 @@ components:
       - businessId
       title: GetUsersRequest
       type: object
-    v1ServicesRequest:
-      description: Request message for listing all services for a given business.
+    v1ListTeamEventTypesResponse:
+      description: Response containing a paginated list of team event types.
+      properties:
+        eventTypes:
+          description: Output only. List of event types available for the specified business.
+          items:
+            $ref: '#/components/schemas/v1EventType'
+          readOnly: true
+          type: array
+        hasMore:
+          description: Output only. Whether more results are available beyond the current page.
+          readOnly: true
+          type: boolean
+        nextCursor:
+          description: Output only. Cursor for next page. Pass to ListTeamEventTypesRequest.cursor. Empty means no more pages.
+          readOnly: true
+          type: string
+      title: ListTeamEventTypesResponse
+      type: object
+    v1PhoneFields:
+      properties:
+        countryCode:
+          title: Numeric country calling code (e.g., 1 for Canada, 91 for India)
+          type: string
+        extension:
+          title: An extension number
+          type: string
+        nationalNumber:
+          title: The main phone number without the country code
+          type: string
+      type: object
+    v1GroupsResponse:
+      description: Response containing a list of all groups for the specified business.
+      properties:
+        groups:
+          description: Output only. List of groups available for the specified business.
+          items:
+            $ref: '#/components/schemas/v1GroupResponse'
+          readOnly: true
+          type: array
+      title: GroupsResponse
+      type: object
+    v1Answers:
+      properties:
+        formAnswers:
+          items:
+            $ref: '#/components/schemas/v1Answer'
+          title: The order of fields specified here is the order they will be displayed in
+          type: array
+      type: object
+    meetingsv1Contact:
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        isPrimary:
+          type: boolean
+        lastName:
+          type: string
+        phoneFields:
+          $ref: '#/components/schemas/v1PhoneFields'
+        phoneNumber:
+          type: string
+        timeZone:
+          $ref: '#/components/schemas/typeTimeZone'
+      title: 'TODO: For v2 of API, we''d like to merge Contact and Attendee into one message type'
+      type: object
+    v1ListTeamEventTypesRequest:
+      description: Request message for listing team event types for a given business (paginated).
       properties:
         businessId:
           description: Required. The business ID (starts with "AG-").
           type: string
-      required:
-      - businessId
-      title: ServicesRequest
-      type: object
-    v1RelativeDateRange:
-      properties:
-        unit:
-          $ref: '#/components/schemas/v1RelativeTimeUnit'
-        value:
+        cursor:
+          description: Optional. Pagination cursor from previous response. Empty for first request.
+          type: string
+        pageSize:
+          description: Optional. Number of items to return per page. Default/max page size is 50.
           format: int64
           type: string
-      type: object
-    v1BookMeetingExternalRequest:
-      description: Request message for booking a new meeting for a specified event type in a given business.
-      properties:
-        attendees:
-          description: Required. List of attendees to invite. Each must include at minimum a valid email address or valid phone number based on event type configuration.
-          items:
-            $ref: '#/components/schemas/meetingsv1Contact'
-          type: array
-        businessId:
-          description: Required. The business ID (starts with "AG-").
-          type: string
-        comment:
-          description: Optional. Additional notes or description for the meeting; included in calendar invitations.
-          type: string
-        eventTypeId:
-          description: Required. Unique identifier of the event type to be booked (defines duration, availability, and settings).
-          type: string
-        formAnswers:
-          $ref: '#/components/schemas/v1Answers'
-        hostUserId:
-          description: 'Optional. Host user ID. Required for Team event type - ClientChoice and PriorityRoundRobin; ignored for RoundRobin and MultiHost.
-
-            Must be one of the event type''s configured host user IDs.'
-          type: string
-        location:
-          description: Optional. Location for the meeting. Empty for virtual; physical address for in-person.
-          type: string
-        start:
-          description: Required. Desired start time of the meeting in UTC. System validates the slot is available.
-          format: date-time
-          type: string
       required:
       - businessId
-      - eventTypeId
-      - start
-      - attendees
-      title: BookMeetingExternalRequest
-      type: object
-    v1GroupResponse:
-      description: Details of a single group within a business.
-      properties:
-        bookingUrl:
-          description: Output only. Public URL where users can book meetings with this group.
-          readOnly: true
-          type: string
-        description:
-          description: Output only. Optional. Description of the group and its purpose.
-          readOnly: true
-          type: string
-        hexColor:
-          description: Output only. Hex color code used for visual representation of the group.
-          readOnly: true
-          type: string
-        id:
-          description: Output only. Unique identifier of the group.
-          readOnly: true
-          type: string
-        name:
-          description: Output only. Display name of the group.
-          readOnly: true
-          type: string
-      title: GroupResponse
-      type: object
-    v1IsoDateTimeRange:
-      properties:
-        end:
-          type: string
-        start:
-          type: string
+      title: ListTeamEventTypesRequest
       type: object
   securitySchemes:
     OAuth2:
