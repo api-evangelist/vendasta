@@ -815,6 +815,215 @@ paths:
           description: Accepted
 components:
   schemas:
+    userCustomFields:
+      title: User Custom Fields
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        Custom fields associated with a user. The field definitions can be managed at Partner Center -> Administration -> Custom Fields.
+
+
+        One form of identifier should be chosen, either `fieldId` or `externalId`.
+
+        `fieldId` is the computer generated ID (like `FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99`) and `externalId` is a optional human-readable ID that can be set in the administration panel.
+
+
+        Dropdown possible value and the currency code are also configured in the Administration panel.'
+      x-examples:
+        Custom Fields with string value Example:
+          data:
+            id: U-12345678-abcd-1234-abcd-123456789abc
+            type: userCustomFields
+            partnerFields:
+            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+              stringValue: A good string value
+              title: Title of abc448ca field
+              description: Description for abc448ca field
+              fieldType: string
+        Custom Fields with integer value Example:
+          data:
+            id: U-12345678-abcd-1234-abcd-123456789abd
+            type: userCustomFields
+            partnerFields:
+            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+              integerValue: 1000
+              title: Title of 123448ca field
+              description: Description for 123448ca field
+              fieldType: integer
+        Custom Fields with Date value Example:
+          data:
+            id: U-12345678-abcd-1234-abcd-123456789abe
+            type: userCustomFields
+            partnerFields:
+            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+              dateValue: '2016-01-02T15:04:05Z'
+              title: Title of 987448ca field
+              description: Description for 987448ca field
+              fieldType: date
+        Custom Fields Full:
+          data:
+            id: U-12345678-abcd-1234-abcd-123456789abf
+            type: userCustomFields
+            partnerFields:
+            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+              stringValue: A good string value
+              title: Title of abc448ca field
+              description: Description for abc448ca field
+              fieldType: string
+            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+              integerValue: 1000
+              title: Title of 123448ca field
+              description: Description for 123448ca field
+              fieldType: integer
+            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+              dateValue: '2022-01-02T15:04:05Z'
+              title: Title of 987448ca field
+              description: Description for 987448ca field
+              fieldType: date
+            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
+              dropdownValue: red
+              title: Title of 987448f2 field
+              description: Description for 987448f2 field
+              fieldType: dropdown
+            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
+              currencyValue: 10000
+              title: Title of 98744854 field
+              description: Description for 98744854 field
+              fieldType: currency
+              currencyCode: CAD
+        Custom Fields with Dropdown Example:
+          data:
+            id: U-12345678-abcd-1234-abcd-123456789abc
+            type: userCustomFields
+            partnerFields:
+            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
+              dropdownValue: red
+              title: Title of 987448f2 field
+              description: Description for 987448f2 field
+              fieldType: dropdown
+        Custom Fields with Currency Example:
+          data:
+            id: U-12345678-abcd-1234-abcd-123456789abc
+            type: userCustomFields
+            partnerFields:
+            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
+              currencyValue: 10000
+              title: Title of 98744854 field
+              description: Description for 98744854 field
+              fieldType: currency
+              currencyCode: CAD
+      x-tags:
+      - User Custom Fields
+      properties:
+        id:
+          type: string
+          example: U-12345678-abcd-1234-abcd-123456789abc
+          description: An identifier for the parent entity, in this case user
+          readOnly: true
+        type:
+          type: string
+          default: userCustomFields
+          enum:
+          - userCustomFields
+          description: Should always be userCustomFields
+        partnerFields:
+          type: array
+          description: 'List of custom fields specific to the partner with a direct relationship to the user/contact.
+
+            To send a new value each field must have at least the fieldId and its correspondent value.
+
+            For example a field of type string must have the stringValue attribute filled.
+
+
+            string -> stringValue
+
+
+            integer -> integerValue
+
+
+            date -> dateValue
+
+
+            Only the fields that you wish to modify need to be sent.'
+          items:
+            type: object
+            properties:
+              fieldId:
+                type: string
+                description: Field identifier, can be retrieved by listing the attributes
+              externalId:
+                type: string
+                description: Alternative field identifier, can be set on admin panel and can be retrieved by listing the attributes
+              fieldType:
+                type: string
+                example: string
+                enum:
+                - string
+                - integer
+                - date
+                - dropdown
+                - currency
+                description: 'Indicates which of the value fields to use to read or write the data. It can only be modified from within partner center.
+
+
+                  string -> stringValue
+
+                  integer -> integerValue
+
+                  date -> dateValue
+
+                  dropdown -> dropdownValue
+
+                  currency -> currencyValue'
+                readOnly: true
+              stringValue:
+                type: string
+                description: Required when the field type is `string`
+              integerValue:
+                type: integer
+                description: Required when the field type is `integer`
+              dateValue:
+                type: string
+                description: Required when the field type is `date`
+                format: date
+              dropdownValue:
+                type: string
+                description: Required when type is `dropdown`. The possible values can be discovered using the administration panel.
+              currencyValue:
+                type: integer
+                description: 'Required when the field type is `currency`.
+
+
+                  This field represents the cents (or the smallest part of the currency).
+
+
+                  Example:
+
+                  USD 600.00 -> currencyValue=60000'
+              currencyCode:
+                type: string
+                minLength: 3
+                maxLength: 3
+                description: 'Represents the type of currency when the field is type `currency`. It will be the 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+
+
+                  Ex: USD, CAD, AUD'
+                example: USD
+                readOnly: true
+              title:
+                type: string
+                description: The main label for the field, appearing in most user interfaces that show the value. This field is not read when setting a value.
+                readOnly: true
+              description:
+                type: string
+                description: A longer text explanation of the field, it optionally appears in the UI. This field is not read when setting a value.
+                readOnly: true
+      required:
+      - id
+      - type
     users:
       title: Users
       type: object
@@ -1138,215 +1347,6 @@ components:
                     required:
                     - type
                     - id
-    userCustomFields:
-      title: User Custom Fields
-      type: object
-      x-lifecycle:
-        status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
-
-
-        Custom fields associated with a user. The field definitions can be managed at Partner Center -> Administration -> Custom Fields.
-
-
-        One form of identifier should be chosen, either `fieldId` or `externalId`.
-
-        `fieldId` is the computer generated ID (like `FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99`) and `externalId` is a optional human-readable ID that can be set in the administration panel.
-
-
-        Dropdown possible value and the currency code are also configured in the Administration panel.'
-      x-examples:
-        Custom Fields with string value Example:
-          data:
-            id: U-12345678-abcd-1234-abcd-123456789abc
-            type: userCustomFields
-            partnerFields:
-            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
-              stringValue: A good string value
-              title: Title of abc448ca field
-              description: Description for abc448ca field
-              fieldType: string
-        Custom Fields with integer value Example:
-          data:
-            id: U-12345678-abcd-1234-abcd-123456789abd
-            type: userCustomFields
-            partnerFields:
-            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
-              integerValue: 1000
-              title: Title of 123448ca field
-              description: Description for 123448ca field
-              fieldType: integer
-        Custom Fields with Date value Example:
-          data:
-            id: U-12345678-abcd-1234-abcd-123456789abe
-            type: userCustomFields
-            partnerFields:
-            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
-              dateValue: '2016-01-02T15:04:05Z'
-              title: Title of 987448ca field
-              description: Description for 987448ca field
-              fieldType: date
-        Custom Fields Full:
-          data:
-            id: U-12345678-abcd-1234-abcd-123456789abf
-            type: userCustomFields
-            partnerFields:
-            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
-              stringValue: A good string value
-              title: Title of abc448ca field
-              description: Description for abc448ca field
-              fieldType: string
-            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
-              integerValue: 1000
-              title: Title of 123448ca field
-              description: Description for 123448ca field
-              fieldType: integer
-            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
-              dateValue: '2022-01-02T15:04:05Z'
-              title: Title of 987448ca field
-              description: Description for 987448ca field
-              fieldType: date
-            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
-              dropdownValue: red
-              title: Title of 987448f2 field
-              description: Description for 987448f2 field
-              fieldType: dropdown
-            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
-              currencyValue: 10000
-              title: Title of 98744854 field
-              description: Description for 98744854 field
-              fieldType: currency
-              currencyCode: CAD
-        Custom Fields with Dropdown Example:
-          data:
-            id: U-12345678-abcd-1234-abcd-123456789abc
-            type: userCustomFields
-            partnerFields:
-            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
-              dropdownValue: red
-              title: Title of 987448f2 field
-              description: Description for 987448f2 field
-              fieldType: dropdown
-        Custom Fields with Currency Example:
-          data:
-            id: U-12345678-abcd-1234-abcd-123456789abc
-            type: userCustomFields
-            partnerFields:
-            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
-              currencyValue: 10000
-              title: Title of 98744854 field
-              description: Description for 98744854 field
-              fieldType: currency
-              currencyCode: CAD
-      x-tags:
-      - User Custom Fields
-      properties:
-        id:
-          type: string
-          example: U-12345678-abcd-1234-abcd-123456789abc
-          description: An identifier for the parent entity, in this case user
-          readOnly: true
-        type:
-          type: string
-          default: userCustomFields
-          enum:
-          - userCustomFields
-          description: Should always be userCustomFields
-        partnerFields:
-          type: array
-          description: 'List of custom fields specific to the partner with a direct relationship to the user/contact.
-
-            To send a new value each field must have at least the fieldId and its correspondent value.
-
-            For example a field of type string must have the stringValue attribute filled.
-
-
-            string -> stringValue
-
-
-            integer -> integerValue
-
-
-            date -> dateValue
-
-
-            Only the fields that you wish to modify need to be sent.'
-          items:
-            type: object
-            properties:
-              fieldId:
-                type: string
-                description: Field identifier, can be retrieved by listing the attributes
-              externalId:
-                type: string
-                description: Alternative field identifier, can be set on admin panel and can be retrieved by listing the attributes
-              fieldType:
-                type: string
-                example: string
-                enum:
-                - string
-                - integer
-                - date
-                - dropdown
-                - currency
-                description: 'Indicates which of the value fields to use to read or write the data. It can only be modified from within partner center.
-
-
-                  string -> stringValue
-
-                  integer -> integerValue
-
-                  date -> dateValue
-
-                  dropdown -> dropdownValue
-
-                  currency -> currencyValue'
-                readOnly: true
-              stringValue:
-                type: string
-                description: Required when the field type is `string`
-              integerValue:
-                type: integer
-                description: Required when the field type is `integer`
-              dateValue:
-                type: string
-                description: Required when the field type is `date`
-                format: date
-              dropdownValue:
-                type: string
-                description: Required when type is `dropdown`. The possible values can be discovered using the administration panel.
-              currencyValue:
-                type: integer
-                description: 'Required when the field type is `currency`.
-
-
-                  This field represents the cents (or the smallest part of the currency).
-
-
-                  Example:
-
-                  USD 600.00 -> currencyValue=60000'
-              currencyCode:
-                type: string
-                minLength: 3
-                maxLength: 3
-                description: 'Represents the type of currency when the field is type `currency`. It will be the 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
-
-
-                  Ex: USD, CAD, AUD'
-                example: USD
-                readOnly: true
-              title:
-                type: string
-                description: The main label for the field, appearing in most user interfaces that show the value. This field is not read when setting a value.
-                readOnly: true
-              description:
-                type: string
-                description: A longer text explanation of the field, it optionally appears in the UI. This field is not read when setting a value.
-                readOnly: true
-      required:
-      - id
-      - type
   securitySchemes:
     JWT:
       type: http

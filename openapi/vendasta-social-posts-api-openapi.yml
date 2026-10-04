@@ -94,106 +94,53 @@ paths:
       - Social Posts
 components:
   schemas:
-    v1YoutubeCustomizationPrivacyStatus:
-      default: YOUTUBE_PRIVACY_STATUS_INVALID
-      description: " - YOUTUBE_PRIVACY_STATUS_PUBLIC: Video is visible to everyone on YouTube and can appear in search results.\nUse this for public content meant to reach a wide audience.\n - YOUTUBE_PRIVACY_STATUS_PRIVATE: Video is only visible to the owner and cannot be shared or found in search.\nUse this for videos that should not be accessible to anyone else.\n - YOUTUBE_PRIVACY_STATUS_UNLISTED: Video can be viewed by anyone with the direct link but won't appear in search results\nor on the channel page. Use this for semi-private sharing (e.g., sharing with clients)."
-      enum:
-      - YOUTUBE_PRIVACY_STATUS_INVALID
-      - YOUTUBE_PRIVACY_STATUS_PUBLIC
-      - YOUTUBE_PRIVACY_STATUS_PRIVATE
-      - YOUTUBE_PRIVACY_STATUS_UNLISTED
-      type: string
-    v1MediaEntry:
-      description: A single media item (image, video, etc.) attached to a social post.
+    protobufAny:
+      additionalProperties: {}
       properties:
-        containerId:
-          description: Output only. The container identifier, if the network requires it.
-          readOnly: true
+        '@type':
           type: string
-        mediaEntryId:
-          description: Output only. The unique identifier of this media entry.
-          readOnly: true
-          type: string
-        mediaPath:
-          description: Output only. The storage path of the media.
-          readOnly: true
-          type: string
-        mediaType:
-          description: Output only. The MIME type or classification of the media (e.g. image, video).
-          readOnly: true
-          type: string
-        mediaUrl:
-          description: Output only. The URL where the media is hosted.
-          readOnly: true
-          type: string
-        metaData:
-          description: Output only. Metadata associated with this media entry.
-          items:
-            $ref: '#/components/schemas/v1MetaData'
-          readOnly: true
-          type: array
-      title: MediaEntry
       type: object
-    SocialPostService:
-      default: TWITTER
-      enum:
-      - TWITTER
-      - FACEBOOK
-      - LINKED_IN
-      - GOOGLE_PLUS
-      - GOOGLE_MY_BUSINESS
-      - UNKNOWN
-      - INSTAGRAM
-      - CURATED_CONTENT
-      - YOUTUBE
-      - TIKTOK
-      - WORDPRESS
-      type: string
-    v1ListSocialPostsRequest:
-      description: Request message for listing social posts for a business.
+    v1TikTokCustomization:
+      description: TikTok-specific options for video posts, including community interaction and branding settings.
       properties:
-        businessId:
-          description: Required. The business to list the social posts for.
-          type: string
-        cursor:
-          description: Optional. A cursor that can be provided to retrieve the next page of results.
-          type: string
-        end:
-          description: 'Optional. If an end time is provided, a page of the posts older than it will be
+        allowComment:
+          description: 'Output only. Whether viewers can comment on the video. Default: true for public engagement.'
+          readOnly: true
+          type: boolean
+        allowDuet:
+          description: Output only. Whether other users can create duet videos (side-by-side reactions).
+          readOnly: true
+          type: boolean
+        allowStitch:
+          description: Output only. Whether other users can stitch/use clips from this video in their content.
+          readOnly: true
+          type: boolean
+        isBrandOrganic:
+          description: 'Output only. Whether this is organic brand content (not paid promotion).
 
-            returned. If an end time of the current date time is provided you will not
+            REQUIRED by TikTok. Set to true for regular business posts, false for paid advertising.'
+          readOnly: true
+          type: boolean
+        isBrandedContent:
+          description: 'Output only. Whether this video contains branded content or product placement.
 
-            get any posts that are scheduled to be posted.'
-          format: date-time
+            REQUIRED by TikTok. Set to true if showcasing products/services, false for general content.'
+          readOnly: true
+          type: boolean
+      title: TikTokCustomization
+      type: object
+    v1SocialCampaign:
+      description: Campaign details associated with a social post.
+      properties:
+        id:
+          description: Output only. The unique ID of the campaign.
+          readOnly: true
           type: string
-        pageSize:
-          description: Optional. Number of results to grab.
-          format: int64
+        name:
+          description: Output only. The name of the campaign.
+          readOnly: true
           type: string
-        partnerId:
-          description: Optional. The partner the social posts belong to.
-          type: string
-        socialServiceIds:
-          description: Optional. A list of social service IDs to request posts for.
-          items:
-            type: string
-          type: array
-        start:
-          description: 'Optional. If a start time is provided, a page of the posts that are newer than it
-
-            will be returned. If a start time of the current date time is provided you
-
-            will get a page of posts that are scheduled to be posted.'
-          format: date-time
-          type: string
-        tags:
-          description: Optional. A list of tags to request posts for.
-          items:
-            type: string
-          type: array
-      required:
-      - businessId
-      title: ListSocialPostsRequest
+      title: SocialCampaign
       type: object
     v1SocialPost:
       description: Represents a social media post, including its content, scheduling, status, and metadata.
@@ -349,16 +296,115 @@ components:
           $ref: '#/components/schemas/v1YoutubeCustomization'
       title: SocialPost
       type: object
-    v1CallToAction:
-      description: A call-to-action button associated with a Google My Business social post.
+    v1ListSocialPostsRequest:
+      description: Request message for listing social posts for a business.
       properties:
-        actionType:
-          $ref: '#/components/schemas/v1CallToActionCallToActionType'
-        url:
-          description: Output only. The URL for the CTA.
+        businessId:
+          description: Required. The business to list the social posts for.
+          type: string
+        cursor:
+          description: Optional. A cursor that can be provided to retrieve the next page of results.
+          type: string
+        end:
+          description: 'Optional. If an end time is provided, a page of the posts older than it will be
+
+            returned. If an end time of the current date time is provided you will not
+
+            get any posts that are scheduled to be posted.'
+          format: date-time
+          type: string
+        pageSize:
+          description: Optional. Number of results to grab.
+          format: int64
+          type: string
+        partnerId:
+          description: Optional. The partner the social posts belong to.
+          type: string
+        socialServiceIds:
+          description: Optional. A list of social service IDs to request posts for.
+          items:
+            type: string
+          type: array
+        start:
+          description: 'Optional. If a start time is provided, a page of the posts that are newer than it
+
+            will be returned. If a start time of the current date time is provided you
+
+            will get a page of posts that are scheduled to be posted.'
+          format: date-time
+          type: string
+        tags:
+          description: Optional. A list of tags to request posts for.
+          items:
+            type: string
+          type: array
+      required:
+      - businessId
+      title: ListSocialPostsRequest
+      type: object
+    SocialPostService:
+      default: TWITTER
+      enum:
+      - TWITTER
+      - FACEBOOK
+      - LINKED_IN
+      - GOOGLE_PLUS
+      - GOOGLE_MY_BUSINESS
+      - UNKNOWN
+      - INSTAGRAM
+      - CURATED_CONTENT
+      - YOUTUBE
+      - TIKTOK
+      - WORDPRESS
+      type: string
+    v1MetaData:
+      description: A key-value pair of metadata associated with a social post or media entry.
+      properties:
+        propertyName:
+          description: Required. The name of the metadata property.
+          type: string
+        propertyValue:
+          description: Required. The value of the metadata property.
+          type: string
+      title: MetaData
+      type: object
+    SocialPostDeletionStatus:
+      default: NONE
+      enum:
+      - NONE
+      - FAILED
+      - IN_PROGRESS
+      type: string
+    v1MediaEntry:
+      description: A single media item (image, video, etc.) attached to a social post.
+      properties:
+        containerId:
+          description: Output only. The container identifier, if the network requires it.
           readOnly: true
           type: string
-      title: CallToAction
+        mediaEntryId:
+          description: Output only. The unique identifier of this media entry.
+          readOnly: true
+          type: string
+        mediaPath:
+          description: Output only. The storage path of the media.
+          readOnly: true
+          type: string
+        mediaType:
+          description: Output only. The MIME type or classification of the media (e.g. image, video).
+          readOnly: true
+          type: string
+        mediaUrl:
+          description: Output only. The URL where the media is hosted.
+          readOnly: true
+          type: string
+        metaData:
+          description: Output only. Metadata associated with this media entry.
+          items:
+            $ref: '#/components/schemas/v1MetaData'
+          readOnly: true
+          type: array
+      title: MediaEntry
       type: object
     googlerpcStatus:
       properties:
@@ -371,6 +417,36 @@ components:
           type: array
         message:
           type: string
+      type: object
+    socialpostsv1Category:
+      description: A blog post category.
+      properties:
+        id:
+          description: Output only. The category id.
+          format: int64
+          readOnly: true
+          type: string
+        name:
+          description: Output only. The category name.
+          readOnly: true
+          type: string
+      title: Category
+      type: object
+    v1GetMultiSocialPostsRequest:
+      description: Request message for retrieving multiple social posts by their IDs.
+      properties:
+        businessId:
+          description: Required. The business ID.
+          type: string
+        internalPostIds:
+          description: Required. The internal post IDs.
+          items:
+            type: string
+          type: array
+      required:
+      - businessId
+      - internalPostIds
+      title: GetMultiSocialPostsRequest
       type: object
     v1Event:
       description: An event associated with a Google My Business social post.
@@ -391,184 +467,6 @@ components:
           type: string
       title: Event
       type: object
-    v1Error:
-      description: Describes the reason and category of an error that occurred while scheduling or posting.
-      properties:
-        category:
-          description: Output only. The category of the error.
-          readOnly: true
-          type: string
-        reason:
-          description: Output only. The reason for the error.
-          readOnly: true
-          type: string
-      title: Error
-      type: object
-    socialpostsv1Author:
-      description: The author of a blog post.
-      properties:
-        id:
-          description: Output only. The id of the author.
-          format: int64
-          readOnly: true
-          type: string
-        name:
-          description: Output only. The name of the author.
-          readOnly: true
-          type: string
-      title: Author
-      type: object
-    v1GetMultiSocialPostsRequest:
-      description: Request message for retrieving multiple social posts by their IDs.
-      properties:
-        businessId:
-          description: Required. The business ID.
-          type: string
-        internalPostIds:
-          description: Required. The internal post IDs.
-          items:
-            type: string
-          type: array
-      required:
-      - businessId
-      - internalPostIds
-      title: GetMultiSocialPostsRequest
-      type: object
-    v1SocialCampaign:
-      description: Campaign details associated with a social post.
-      properties:
-        id:
-          description: Output only. The unique ID of the campaign.
-          readOnly: true
-          type: string
-        name:
-          description: Output only. The name of the campaign.
-          readOnly: true
-          type: string
-      title: SocialCampaign
-      type: object
-    v1YoutubeCustomization:
-      description: YouTube-specific customization options for video posts, including title and privacy settings.
-      properties:
-        privacyStatus:
-          $ref: '#/components/schemas/v1YoutubeCustomizationPrivacyStatus'
-        title:
-          description: Output only. Title of the YouTube video.
-          readOnly: true
-          type: string
-      title: YoutubeCustomization
-      type: object
-    v1MetaData:
-      description: A key-value pair of metadata associated with a social post or media entry.
-      properties:
-        propertyName:
-          description: Required. The name of the metadata property.
-          type: string
-        propertyValue:
-          description: Required. The value of the metadata property.
-          type: string
-      title: MetaData
-      type: object
-    socialpostsv1Category:
-      description: A blog post category.
-      properties:
-        id:
-          description: Output only. The category id.
-          format: int64
-          readOnly: true
-          type: string
-        name:
-          description: Output only. The category name.
-          readOnly: true
-          type: string
-      title: Category
-      type: object
-    v1CallToActionCallToActionType:
-      default: LEARN_MORE
-      enum:
-      - LEARN_MORE
-      - BOOK
-      - ORDER
-      - SHOP
-      - SIGN_UP
-      - GET_OFFER
-      - CALL
-      title: The type of the CTA
-      type: string
-    SocialPostDeletionStatus:
-      default: NONE
-      enum:
-      - NONE
-      - FAILED
-      - IN_PROGRESS
-      type: string
-    v1PostType:
-      default: POST_TYPE_INVALID
-      enum:
-      - POST_TYPE_INVALID
-      - POST_TYPE_IMAGE
-      - POST_TYPE_VIDEO
-      - POST_TYPE_GIF
-      - POST_TYPE_REEL
-      - POST_TYPE_CAROUSEL
-      - POST_TYPE_STORIES
-      - POST_TYPE_TEXT
-      - POST_TYPE_IMAGE_STORY
-      - POST_TYPE_VIDEO_STORY
-      type: string
-    v1PostingStatus:
-      default: POSTING_IN_PROGRESS
-      enum:
-      - POSTING_IN_PROGRESS
-      - POSTING_FAILED
-      - POSTING_COMPLETED
-      type: string
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
-      type: object
-    v1TikTokCustomization:
-      description: TikTok-specific options for video posts, including community interaction and branding settings.
-      properties:
-        allowComment:
-          description: 'Output only. Whether viewers can comment on the video. Default: true for public engagement.'
-          readOnly: true
-          type: boolean
-        allowDuet:
-          description: Output only. Whether other users can create duet videos (side-by-side reactions).
-          readOnly: true
-          type: boolean
-        allowStitch:
-          description: Output only. Whether other users can stitch/use clips from this video in their content.
-          readOnly: true
-          type: boolean
-        isBrandOrganic:
-          description: 'Output only. Whether this is organic brand content (not paid promotion).
-
-            REQUIRED by TikTok. Set to true for regular business posts, false for paid advertising.'
-          readOnly: true
-          type: boolean
-        isBrandedContent:
-          description: 'Output only. Whether this video contains branded content or product placement.
-
-            REQUIRED by TikTok. Set to true if showcasing products/services, false for general content.'
-          readOnly: true
-          type: boolean
-      title: TikTokCustomization
-      type: object
-    v1GetMultiSocialPostsResponse:
-      description: Response message containing the requested social posts.
-      properties:
-        socialPosts:
-          description: Output only. The requested social posts.
-          items:
-            $ref: '#/components/schemas/v1SocialPost'
-          readOnly: true
-          type: array
-      title: GetMultiSocialPostsResponse
-      type: object
     v1ListSocialPostsResponse:
       description: Response message containing a page of social posts.
       properties:
@@ -587,6 +485,59 @@ components:
           readOnly: true
           type: array
       title: ListSocialPostsResponse
+      type: object
+    v1DeleteSocialPostRequest:
+      description: Request message for deleting a social post.
+      properties:
+        businessId:
+          description: Required. The business to delete the social post for.
+          type: string
+        socialPostId:
+          description: Required. The post id that is going to be deleted.
+          type: string
+      required:
+      - businessId
+      - socialPostId
+      title: DeleteSocialPostRequest
+      type: object
+    v1PostType:
+      default: POST_TYPE_INVALID
+      enum:
+      - POST_TYPE_INVALID
+      - POST_TYPE_IMAGE
+      - POST_TYPE_VIDEO
+      - POST_TYPE_GIF
+      - POST_TYPE_REEL
+      - POST_TYPE_CAROUSEL
+      - POST_TYPE_STORIES
+      - POST_TYPE_TEXT
+      - POST_TYPE_IMAGE_STORY
+      - POST_TYPE_VIDEO_STORY
+      type: string
+    v1YoutubeCustomization:
+      description: YouTube-specific customization options for video posts, including title and privacy settings.
+      properties:
+        privacyStatus:
+          $ref: '#/components/schemas/v1YoutubeCustomizationPrivacyStatus'
+        title:
+          description: Output only. Title of the YouTube video.
+          readOnly: true
+          type: string
+      title: YoutubeCustomization
+      type: object
+    socialpostsv1Author:
+      description: The author of a blog post.
+      properties:
+        id:
+          description: Output only. The id of the author.
+          format: int64
+          readOnly: true
+          type: string
+        name:
+          description: Output only. The name of the author.
+          readOnly: true
+          type: string
+      title: Author
       type: object
     v1BlogPostCustomization:
       description: Blog post-specific customization options, including author, categories, and tags.
@@ -611,20 +562,69 @@ components:
           type: array
       title: BlogPostCustomization
       type: object
-    v1DeleteSocialPostRequest:
-      description: Request message for deleting a social post.
+    v1CallToActionCallToActionType:
+      default: LEARN_MORE
+      enum:
+      - LEARN_MORE
+      - BOOK
+      - ORDER
+      - SHOP
+      - SIGN_UP
+      - GET_OFFER
+      - CALL
+      title: The type of the CTA
+      type: string
+    v1CallToAction:
+      description: A call-to-action button associated with a Google My Business social post.
       properties:
-        businessId:
-          description: Required. The business to delete the social post for.
+        actionType:
+          $ref: '#/components/schemas/v1CallToActionCallToActionType'
+        url:
+          description: Output only. The URL for the CTA.
+          readOnly: true
           type: string
-        socialPostId:
-          description: Required. The post id that is going to be deleted.
-          type: string
-      required:
-      - businessId
-      - socialPostId
-      title: DeleteSocialPostRequest
+      title: CallToAction
       type: object
+    v1YoutubeCustomizationPrivacyStatus:
+      default: YOUTUBE_PRIVACY_STATUS_INVALID
+      description: " - YOUTUBE_PRIVACY_STATUS_PUBLIC: Video is visible to everyone on YouTube and can appear in search results.\nUse this for public content meant to reach a wide audience.\n - YOUTUBE_PRIVACY_STATUS_PRIVATE: Video is only visible to the owner and cannot be shared or found in search.\nUse this for videos that should not be accessible to anyone else.\n - YOUTUBE_PRIVACY_STATUS_UNLISTED: Video can be viewed by anyone with the direct link but won't appear in search results\nor on the channel page. Use this for semi-private sharing (e.g., sharing with clients)."
+      enum:
+      - YOUTUBE_PRIVACY_STATUS_INVALID
+      - YOUTUBE_PRIVACY_STATUS_PUBLIC
+      - YOUTUBE_PRIVACY_STATUS_PRIVATE
+      - YOUTUBE_PRIVACY_STATUS_UNLISTED
+      type: string
+    v1Error:
+      description: Describes the reason and category of an error that occurred while scheduling or posting.
+      properties:
+        category:
+          description: Output only. The category of the error.
+          readOnly: true
+          type: string
+        reason:
+          description: Output only. The reason for the error.
+          readOnly: true
+          type: string
+      title: Error
+      type: object
+    v1GetMultiSocialPostsResponse:
+      description: Response message containing the requested social posts.
+      properties:
+        socialPosts:
+          description: Output only. The requested social posts.
+          items:
+            $ref: '#/components/schemas/v1SocialPost'
+          readOnly: true
+          type: array
+      title: GetMultiSocialPostsResponse
+      type: object
+    v1PostingStatus:
+      default: POSTING_IN_PROGRESS
+      enum:
+      - POSTING_IN_PROGRESS
+      - POSTING_FAILED
+      - POSTING_COMPLETED
+      type: string
   securitySchemes:
     OAuth2:
       flows:

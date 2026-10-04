@@ -36,25 +36,11 @@ paths:
       - SiteOptionsService
 components:
   schemas:
-    v1GetSiteUpdateRequest:
-      description: Request to retrieve update information for a WordPress site including PHP version, core version, and available plugin updates.
+    protobufAny:
+      additionalProperties: {}
       properties:
-        siteId:
-          description: Required. The unique identifier of the site to retrieve update information for.
+        '@type':
           type: string
-        staging:
-          description: Optional. Whether to retrieve update information for the staging site.
-          type: boolean
-      required:
-      - siteId
-      title: GetSiteUpdateRequest
-      type: object
-    v1GetSiteUpdateResponse:
-      description: Response containing update information for a WordPress site.
-      properties:
-        update:
-          $ref: '#/components/schemas/v1SiteUpdate'
-      title: GetSiteUpdateResponse
       type: object
     rpcStatus:
       properties:
@@ -66,12 +52,6 @@ components:
             $ref: '#/components/schemas/protobufAny'
           type: array
         message:
-          type: string
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
           type: string
       type: object
     v1SiteUpdate:
@@ -95,6 +75,26 @@ components:
           readOnly: true
           type: string
       title: SiteUpdate
+      type: object
+    v1GetSiteUpdateRequest:
+      description: Request to retrieve update information for a WordPress site including PHP version, core version, and available plugin updates.
+      properties:
+        siteId:
+          description: Required. The unique identifier of the site to retrieve update information for.
+          type: string
+        staging:
+          description: Optional. Whether to retrieve update information for the staging site.
+          type: boolean
+      required:
+      - siteId
+      title: GetSiteUpdateRequest
+      type: object
+    v1GetSiteUpdateResponse:
+      description: Response containing update information for a WordPress site.
+      properties:
+        update:
+          $ref: '#/components/schemas/v1SiteUpdate'
+      title: GetSiteUpdateResponse
       type: object
   securitySchemes:
     OAuth2:

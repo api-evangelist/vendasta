@@ -45,18 +45,6 @@ paths:
       - Assistants
 components:
   schemas:
-    googlerpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
     ai_assistantsv2Assistant:
       description: An AI Employee available on an account.
       properties:
@@ -79,6 +67,25 @@ components:
           readOnly: true
           type: string
       type: object
+    vendastatypesPagedResponseMetadata:
+      properties:
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
+          type: string
+        totalResults:
+          format: int64
+          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
     v2ListAssistantsRequest:
       description: Request to list the AI Employees on an account.
       properties:
@@ -95,16 +102,6 @@ components:
             partner''s own partner id.'
           type: string
       type: object
-    vendastatypesPagedRequestOptions:
-      properties:
-        cursor:
-          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
-          type: string
-        pageSize:
-          description: Optional. The maximum number of items to return per page.
-          format: int64
-          type: string
-      type: object
     v2ListAssistantsResponse:
       description: A page of AI Employees with pagination metadata.
       properties:
@@ -117,23 +114,26 @@ components:
         pagingMetadata:
           $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
       type: object
-    protobufAny:
-      additionalProperties: {}
+    vendastatypesPagedRequestOptions:
       properties:
-        '@type':
+        cursor:
+          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
+          type: string
+        pageSize:
+          description: Optional. The maximum number of items to return per page.
+          format: int64
           type: string
       type: object
-    vendastatypesPagedResponseMetadata:
+    googlerpcStatus:
       properties:
-        hasMore:
-          title: Whether or not more results exist
-          type: boolean
-        nextCursor:
-          title: A cursor that can be provided to retrieve the next page of results
-          type: string
-        totalResults:
-          format: int64
-          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
           type: string
       type: object
   securitySchemes:

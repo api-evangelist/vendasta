@@ -125,83 +125,6 @@ paths:
       tags:
       - Account Stats
 components:
-  parameters:
-    provider:
-      name: filter[provider]
-      in: query
-      required: false
-      schema:
-        type: string
-        enum:
-        - google
-        - facebook
-        - localads
-      description: Comma separated list of Advertising Providers
-    pageLimit:
-      name: page[limit]
-      in: query
-      required: false
-      schema:
-        type: number
-        maximum: 100
-        minimum: 1
-        default: 25
-      description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
-    pageCursor:
-      name: page[cursor]
-      in: query
-      required: false
-      schema:
-        type: string
-      description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
-    startAt:
-      name: startAt
-      in: query
-      required: false
-      schema:
-        type: string
-        format: date-time
-        default: '1970-01-01T00:00:01Z'
-        example: '2021-01-01T00:00:01Z'
-      description: Only return data starting from the specified start date and time
-    businessLocation.id:
-      name: filter[businessLocation.id]
-      in: query
-      schema:
-        type: string
-        example: AG-HDABCKDEFR
-        uniqueItems: true
-        minItems: 0
-      description: A single Business Location ID
-      allowEmptyValue: true
-      required: true
-    connectedAccount.resourceId:
-      name: filter[connectedAccount.id]
-      in: query
-      schema:
-        type: string
-        example: AG-AHFJEHD:google:1324354657
-        uniqueItems: true
-      description: Comma separated list of Resource IDs of Connected Advertising Accounts
-      allowEmptyValue: true
-    Authorization:
-      name: Authorization
-      in: header
-      required: true
-      schema:
-        type: string
-        pattern: ^Bearer\s\S+
-        example: Bearer <access token>
-      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
-    endAt:
-      name: endAt
-      in: query
-      required: false
-      schema:
-        type: string
-        format: date-time
-        example: '2021-01-01T00:00:01Z'
-      description: Only return data from before the specified end date and time. If not specified all data will be returned.
   schemas:
     accountStats:
       title: Account Stats
@@ -263,6 +186,83 @@ components:
       - id
       - type
       - attributes
+  parameters:
+    pageLimit:
+      name: page[limit]
+      in: query
+      required: false
+      schema:
+        type: number
+        maximum: 100
+        minimum: 1
+        default: 25
+      description: The maximum number of items you would like returned in a single batch. Use the links.next member in the response to get the next batch. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    Authorization:
+      name: Authorization
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^Bearer\s\S+
+        example: Bearer <access token>
+      description: A Bearer access token to identify the user the app is acting on behalf of. See the Authorization guide for details.
+    provider:
+      name: filter[provider]
+      in: query
+      required: false
+      schema:
+        type: string
+        enum:
+        - google
+        - facebook
+        - localads
+      description: Comma separated list of Advertising Providers
+    endAt:
+      name: endAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data from before the specified end date and time. If not specified all data will be returned.
+    startAt:
+      name: startAt
+      in: query
+      required: false
+      schema:
+        type: string
+        format: date-time
+        default: '1970-01-01T00:00:01Z'
+        example: '2021-01-01T00:00:01Z'
+      description: Only return data starting from the specified start date and time
+    pageCursor:
+      name: page[cursor]
+      in: query
+      required: false
+      schema:
+        type: string
+      description: The cursor stores all your filters and current location in the list to allow paging over the results in smaller batches. The value will be provided in the response links. [Pagination Docs](https://developers.vendasta.com/platform/ZG9jOjEwMTkzMDg0-overview#paging).
+    businessLocation.id:
+      name: filter[businessLocation.id]
+      in: query
+      schema:
+        type: string
+        example: AG-HDABCKDEFR
+        uniqueItems: true
+        minItems: 0
+      description: A single Business Location ID
+      allowEmptyValue: true
+      required: true
+    connectedAccount.resourceId:
+      name: filter[connectedAccount.id]
+      in: query
+      schema:
+        type: string
+        example: AG-AHFJEHD:google:1324354657
+        uniqueItems: true
+      description: Comma separated list of Resource IDs of Connected Advertising Accounts
+      allowEmptyValue: true
   securitySchemes:
     JWT:
       type: http

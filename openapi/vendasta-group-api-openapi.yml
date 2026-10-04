@@ -114,6 +114,31 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Operation:
+      type: object
+      properties:
+        op:
+          type: string
+          example: Replace
+        path:
+          type: string
+          example: emails[type eq "work"].value
+        value:
+          type: string
+          example: updatedEmail@mail.com
+    Member:
+      type: object
+      properties:
+        value:
+          type: string
+          example: 2819c223-7f76-453a-919d-413861904646
+        $ref:
+          type: string
+          format: uri
+          example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
+        display:
+          type: string
+          example: Babs Jensen
     ListResponseGroup:
       type: object
       properties:
@@ -178,18 +203,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Operation'
-    Operation:
-      type: object
-      properties:
-        op:
-          type: string
-          example: Replace
-        path:
-          type: string
-          example: emails[type eq "work"].value
-        value:
-          type: string
-          example: updatedEmail@mail.com
     Meta:
       type: object
       properties:
@@ -229,19 +242,6 @@ components:
         location:
           type: string
           example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
-    Member:
-      type: object
-      properties:
-        value:
-          type: string
-          example: 2819c223-7f76-453a-919d-413861904646
-        $ref:
-          type: string
-          format: uri
-          example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
-        display:
-          type: string
-          example: Babs Jensen
   parameters:
     namespace:
       name: namespace

@@ -1010,8 +1010,6 @@ apis:
   humanURL: https://developers.vendasta.com/vendor
   baseURL: https://developers.vendasta.com/api/v1
   tags:
-  - SocialPosts
-  tags_raw:
   - Social Posts
   properties:
   - type: OpenAPI

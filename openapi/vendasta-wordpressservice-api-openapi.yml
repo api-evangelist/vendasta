@@ -104,6 +104,30 @@ components:
       - id
       title: WordPressAddon
       type: object
+    v1UpdateCoreRequest:
+      description: Request to update a WordPress site with the latest core version information.
+      properties:
+        coreCurrentVersion:
+          description: Required. The current WordPress core version.
+          type: string
+        coreLatestVersion:
+          description: Required. The latest available WordPress core version.
+          type: string
+        siteId:
+          description: Required. The unique identifier of the site to update.
+          type: string
+      required:
+      - siteId
+      - coreCurrentVersion
+      - coreLatestVersion
+      title: UpdateCoreRequest
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
     v1UpdatePluginsRequest:
       description: Request to update a WordPress site with the latest plugin information.
       properties:
@@ -133,30 +157,6 @@ components:
             $ref: '#/components/schemas/protobufAny'
           type: array
         message:
-          type: string
-      type: object
-    v1UpdateCoreRequest:
-      description: Request to update a WordPress site with the latest core version information.
-      properties:
-        coreCurrentVersion:
-          description: Required. The current WordPress core version.
-          type: string
-        coreLatestVersion:
-          description: Required. The latest available WordPress core version.
-          type: string
-        siteId:
-          description: Required. The unique identifier of the site to update.
-          type: string
-      required:
-      - siteId
-      - coreCurrentVersion
-      - coreLatestVersion
-      title: UpdateCoreRequest
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
           type: string
       type: object
     v1UpdateThemeRequest:

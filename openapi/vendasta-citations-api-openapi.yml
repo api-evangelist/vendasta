@@ -134,19 +134,6 @@ paths:
       description: Localhost
 components:
   schemas:
-    v1HistoricalCitationsDataPoint:
-      properties:
-        date:
-          description: Output only. Date of the data point.
-          format: date-time
-          readOnly: true
-          type: string
-        value:
-          description: Output only. Total citations found up to this date.
-          format: int64
-          readOnly: true
-          type: string
-      type: object
     v1CitationsByDomain:
       properties:
         citations:
@@ -156,24 +143,6 @@ components:
         domain:
           type: string
       title: CitationsByDomain contains all citations for a domain
-      type: object
-    v1GetCitationDataRequest:
-      description: Request to retrieve citation data for a business, including citation counts, historical trends, and citations grouped by domain.
-      properties:
-        businessId:
-          description: Required. The business ID (account group ID) for which to retrieve citation data.
-          type: string
-        endDate:
-          description: Optional. The end date of the date range for citation data retrieval.
-          format: date-time
-          type: string
-        startDate:
-          description: Optional. The start date of the date range for citation data retrieval.
-          format: date-time
-          type: string
-      required:
-      - businessId
-      title: GetCitationDataRequest
       type: object
     v1GetCitationDataResponse:
       description: Contains citation data for a business including total count, historical trends, and citations grouped by domain.
@@ -251,6 +220,43 @@ components:
           readOnly: true
           type: string
       type: object
+    v1GetCitationDataRequest:
+      description: Request to retrieve citation data for a business, including citation counts, historical trends, and citations grouped by domain.
+      properties:
+        businessId:
+          description: Required. The business ID (account group ID) for which to retrieve citation data.
+          type: string
+        endDate:
+          description: Optional. The end date of the date range for citation data retrieval.
+          format: date-time
+          type: string
+        startDate:
+          description: Optional. The start date of the date range for citation data retrieval.
+          format: date-time
+          type: string
+      required:
+      - businessId
+      title: GetCitationDataRequest
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1HistoricalCitationsDataPoint:
+      properties:
+        date:
+          description: Output only. Date of the data point.
+          format: date-time
+          readOnly: true
+          type: string
+        value:
+          description: Output only. Total citations found up to this date.
+          format: int64
+          readOnly: true
+          type: string
+      type: object
     rpcStatus:
       properties:
         code:
@@ -261,12 +267,6 @@ components:
             $ref: '#/components/schemas/protobufAny'
           type: array
         message:
-          type: string
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
           type: string
       type: object
     citations:

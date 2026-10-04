@@ -237,6 +237,201 @@ components:
           type: string
       title: Association
       type: object
+    v1ListAssociationsRequest:
+      description: Request to list associations within a namespace, with optional filtering and pagination.
+      properties:
+        filtersV2:
+          $ref: '#/components/schemas/v1FilterGroup'
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) to list associations for.
+          type: string
+        pagingOptions:
+          $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
+      required:
+      - namespace
+      title: List Associations Request
+      type: object
+    v1Filter:
+      properties:
+        fieldId:
+          type: string
+        floatTolerance:
+          format: float
+          type: number
+        operator:
+          $ref: '#/components/schemas/v1FilterOperator'
+        values:
+          items:
+            $ref: '#/components/schemas/v1FilterValue'
+          title: "This is repeated to support operations that take zero or more than one value.\nFor example\n   isEmpty()\n   isAnyOf(a, b, c)\n   isBetween(date1, date2)"
+          type: array
+      type: object
+    v1FilterOperator:
+      default: FILTER_OPERATOR_INVALID
+      enum:
+      - FILTER_OPERATOR_INVALID
+      - FILTER_OPERATOR_IS_EMPTY
+      - FILTER_OPERATOR_IS_NOT_EMPTY
+      - FILTER_OPERATOR_IS
+      - FILTER_OPERATOR_IS_NOT
+      - FILTER_OPERATOR_IS_ANY
+      - FILTER_OPERATOR_IS_NOT_ANY
+      - FILTER_OPERATOR_IS_ALL
+      - FILTER_OPERATOR_IS_NOT_ALL
+      - FILTER_OPERATOR_CONTAINS
+      - FILTER_OPERATOR_DOES_NOT_CONTAIN
+      - FILTER_OPERATOR_IS_EQUAL_TO
+      - FILTER_OPERATOR_IS_NOT_EQUAL_TO
+      - FILTER_OPERATOR_IS_GREATER_THAN
+      - FILTER_OPERATOR_IS_GREATER_THAN_OR_EQUAL_TO
+      - FILTER_OPERATOR_IS_LESS_THAN
+      - FILTER_OPERATOR_IS_LESS_THAN_OR_EQUAL_TO
+      - FILTER_OPERATOR_IS_BEFORE
+      - FILTER_OPERATOR_IS_BEFORE_OR_ON
+      - FILTER_OPERATOR_IS_AFTER
+      - FILTER_OPERATOR_IS_AFTER_OR_ON
+      - FILTER_OPERATOR_IS_BETWEEN
+      - FILTER_OPERATOR_IS_NOT_BETWEEN
+      - FILTER_OPERATOR_IS_VALID
+      - FILTER_OPERATOR_IS_NOT_VALID
+      - FILTER_OPERATOR_ANNIVERSARY_IS
+      type: string
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v1ListAssociationFieldOptionsRequest:
+      description: Request to list valid values for a field on associations of a given type.
+      properties:
+        associationType:
+          description: Required. The association type to list field options for.
+          type: string
+        fieldId:
+          description: Required. The identifier of the field whose options should be listed.
+          type: string
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) to list field options for.
+          type: string
+        pageSize:
+          description: Optional. The maximum number of options to return.
+          format: int64
+          type: string
+        searchTerm:
+          description: Optional. A search term to filter options by substring match.
+          type: string
+      required:
+      - namespace
+      - associationType
+      - fieldId
+      title: List Association Field Options Request
+      type: object
+    vendastatypesPagedRequestOptions:
+      properties:
+        cursor:
+          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
+          type: string
+        pageSize:
+          description: Optional. The maximum number of items to return per page.
+          format: int64
+          type: string
+      type: object
+    v1DateDefault:
+      default: DATE_DEFAULT_INVALID
+      enum:
+      - DATE_DEFAULT_INVALID
+      - DATE_DEFAULT_TODAY
+      - DATE_DEFAULT_YESTERDAY
+      - DATE_DEFAULT_TOMORROW
+      - DATE_DEFAULT_THIS_WEEK
+      - DATE_DEFAULT_LAST_WEEK
+      - DATE_DEFAULT_NEXT_WEEK
+      - DATE_DEFAULT_THIS_MONTH
+      - DATE_DEFAULT_LAST_MONTH
+      - DATE_DEFAULT_NEXT_MONTH
+      - DATE_DEFAULT_THIS_QUARTER
+      - DATE_DEFAULT_LAST_QUARTER
+      - DATE_DEFAULT_NEXT_QUARTER
+      - DATE_DEFAULT_THIS_YEAR
+      - DATE_DEFAULT_LAST_YEAR
+      - DATE_DEFAULT_NEXT_YEAR
+      type: string
+    v1ListAssociationsResponse:
+      description: Response containing a page of associations matching the request criteria.
+      properties:
+        associations:
+          description: Output only. The associations matching the request criteria for this page.
+          items:
+            $ref: '#/components/schemas/v1Association'
+          readOnly: true
+          type: array
+        pagingMetadata:
+          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
+        statusCode:
+          description: Output only. HTTP-style status codes for each association in the response (e.g. 200, 403, or 404).
+          items:
+            format: int64
+            type: string
+          readOnly: true
+          type: array
+      title: List Associations Response
+      type: object
+    crmv1Tag:
+      properties:
+        tagValue:
+          description: Required. The tag value string.
+          type: string
+      type: object
+    v1Phone:
+      properties:
+        extension:
+          type: string
+        isoCountryCode:
+          title: ISO country code is the 2 or 3 letter code for the country, example 'CA' for Canada
+          type: string
+        nationalNumber:
+          type: string
+      title: This follows the E164 international standard specification for phone numbers
+      type: object
+    v1DeleteAssociationRequest:
+      description: Request to delete an association between CRM objects within a namespace.
+      properties:
+        associationId:
+          description: Required. The identifier of the association to delete.
+          type: string
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the association belongs to.
+          type: string
+      required:
+      - namespace
+      - associationId
+      title: Delete Association Request
+      type: object
+    vendastatypesPagedResponseMetadata:
+      properties:
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
+          type: string
+        totalResults:
+          format: int64
+          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
+          type: string
+      type: object
+    v1ListAssociationFieldOptionsResponse:
+      description: Response containing the valid values for the requested association field.
+      properties:
+        options:
+          description: Output only. The list of valid option values for the field.
+          items:
+            type: string
+          readOnly: true
+          type: array
+      title: List Association Field Options Response
+      type: object
     v1FilterGroupOperator:
       default: FILTER_GROUP_OPERATOR_INVALID
       enum:
@@ -262,34 +457,6 @@ components:
           type: array
       title: Get Multi Association Response
       type: object
-    v1Filter:
-      properties:
-        fieldId:
-          type: string
-        floatTolerance:
-          format: float
-          type: number
-        operator:
-          $ref: '#/components/schemas/v1FilterOperator'
-        values:
-          items:
-            $ref: '#/components/schemas/v1FilterValue'
-          title: "This is repeated to support operations that take zero or more than one value.\nFor example\n   isEmpty()\n   isAnyOf(a, b, c)\n   isBetween(date1, date2)"
-          type: array
-      type: object
-    v1CreateAssociationRequest:
-      description: Request to create a new association between two CRM objects within a namespace.
-      properties:
-        association:
-          $ref: '#/components/schemas/v1Association'
-        namespace:
-          description: Required. The namespace (partner ID or account group ID) the association belongs to.
-          type: string
-      required:
-      - namespace
-      - association
-      title: Create Association Request
-      type: object
     v1GetMultiAssociationRequest:
       description: Request to retrieve multiple associations by their IDs within a namespace.
       properties:
@@ -306,18 +473,46 @@ components:
       - associationIds
       title: Get Multi Association Request
       type: object
-    vendastatypesPagedResponseMetadata:
+    v1CreateAssociationRequest:
+      description: Request to create a new association between two CRM objects within a namespace.
       properties:
-        hasMore:
-          title: Whether or not more results exist
-          type: boolean
-        nextCursor:
-          title: A cursor that can be provided to retrieve the next page of results
+        association:
+          $ref: '#/components/schemas/v1Association'
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the association belongs to.
           type: string
-        totalResults:
-          format: int64
-          title: The total number of results. This is not supported on all paged apis and will be 0 if it is not supported
+      required:
+      - namespace
+      - association
+      title: Create Association Request
+      type: object
+    v1FilterGroup:
+      properties:
+        filters:
+          items:
+            $ref: '#/components/schemas/v1Filter'
+          type: array
+        operator:
+          $ref: '#/components/schemas/v1FilterGroupOperator'
+      type: object
+    v1UpdateAssociationRequest:
+      description: Request to update the tags on an existing association.
+      properties:
+        associationId:
+          description: Required. The identifier of the association to update.
           type: string
+        namespace:
+          description: Required. The namespace (partner ID or account group ID) the association belongs to.
+          type: string
+        tags:
+          description: Optional. The updated set of tags for this association. Replaces all existing tags.
+          items:
+            $ref: '#/components/schemas/crmv1Tag'
+          type: array
+      required:
+      - namespace
+      - associationId
+      title: Update Association Request
       type: object
     rpcStatus:
       properties:
@@ -351,177 +546,6 @@ components:
         string:
           type: string
       type: object
-    v1ListAssociationsRequest:
-      description: Request to list associations within a namespace, with optional filtering and pagination.
-      properties:
-        filtersV2:
-          $ref: '#/components/schemas/v1FilterGroup'
-        namespace:
-          description: Required. The namespace (partner ID or account group ID) to list associations for.
-          type: string
-        pagingOptions:
-          $ref: '#/components/schemas/vendastatypesPagedRequestOptions'
-      required:
-      - namespace
-      title: List Associations Request
-      type: object
-    crmv1Tag:
-      properties:
-        tagValue:
-          description: Required. The tag value string.
-          type: string
-      type: object
-    v1Phone:
-      properties:
-        extension:
-          type: string
-        isoCountryCode:
-          title: ISO country code is the 2 or 3 letter code for the country, example 'CA' for Canada
-          type: string
-        nationalNumber:
-          type: string
-      title: This follows the E164 international standard specification for phone numbers
-      type: object
-    v1UpdateAssociationRequest:
-      description: Request to update the tags on an existing association.
-      properties:
-        associationId:
-          description: Required. The identifier of the association to update.
-          type: string
-        namespace:
-          description: Required. The namespace (partner ID or account group ID) the association belongs to.
-          type: string
-        tags:
-          description: Optional. The updated set of tags for this association. Replaces all existing tags.
-          items:
-            $ref: '#/components/schemas/crmv1Tag'
-          type: array
-      required:
-      - namespace
-      - associationId
-      title: Update Association Request
-      type: object
-    v1FilterOperator:
-      default: FILTER_OPERATOR_INVALID
-      enum:
-      - FILTER_OPERATOR_INVALID
-      - FILTER_OPERATOR_IS_EMPTY
-      - FILTER_OPERATOR_IS_NOT_EMPTY
-      - FILTER_OPERATOR_IS
-      - FILTER_OPERATOR_IS_NOT
-      - FILTER_OPERATOR_IS_ANY
-      - FILTER_OPERATOR_IS_NOT_ANY
-      - FILTER_OPERATOR_IS_ALL
-      - FILTER_OPERATOR_IS_NOT_ALL
-      - FILTER_OPERATOR_CONTAINS
-      - FILTER_OPERATOR_DOES_NOT_CONTAIN
-      - FILTER_OPERATOR_IS_EQUAL_TO
-      - FILTER_OPERATOR_IS_NOT_EQUAL_TO
-      - FILTER_OPERATOR_IS_GREATER_THAN
-      - FILTER_OPERATOR_IS_GREATER_THAN_OR_EQUAL_TO
-      - FILTER_OPERATOR_IS_LESS_THAN
-      - FILTER_OPERATOR_IS_LESS_THAN_OR_EQUAL_TO
-      - FILTER_OPERATOR_IS_BEFORE
-      - FILTER_OPERATOR_IS_BEFORE_OR_ON
-      - FILTER_OPERATOR_IS_AFTER
-      - FILTER_OPERATOR_IS_AFTER_OR_ON
-      - FILTER_OPERATOR_IS_BETWEEN
-      - FILTER_OPERATOR_IS_NOT_BETWEEN
-      - FILTER_OPERATOR_IS_VALID
-      - FILTER_OPERATOR_IS_NOT_VALID
-      - FILTER_OPERATOR_ANNIVERSARY_IS
-      type: string
-    v1ListAssociationFieldOptionsResponse:
-      description: Response containing the valid values for the requested association field.
-      properties:
-        options:
-          description: Output only. The list of valid option values for the field.
-          items:
-            type: string
-          readOnly: true
-          type: array
-      title: List Association Field Options Response
-      type: object
-    v1FilterGroup:
-      properties:
-        filters:
-          items:
-            $ref: '#/components/schemas/v1Filter'
-          type: array
-        operator:
-          $ref: '#/components/schemas/v1FilterGroupOperator'
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
-      type: object
-    v1ListAssociationFieldOptionsRequest:
-      description: Request to list valid values for a field on associations of a given type.
-      properties:
-        associationType:
-          description: Required. The association type to list field options for.
-          type: string
-        fieldId:
-          description: Required. The identifier of the field whose options should be listed.
-          type: string
-        namespace:
-          description: Required. The namespace (partner ID or account group ID) to list field options for.
-          type: string
-        pageSize:
-          description: Optional. The maximum number of options to return.
-          format: int64
-          type: string
-        searchTerm:
-          description: Optional. A search term to filter options by substring match.
-          type: string
-      required:
-      - namespace
-      - associationType
-      - fieldId
-      title: List Association Field Options Request
-      type: object
-    v1ListAssociationsResponse:
-      description: Response containing a page of associations matching the request criteria.
-      properties:
-        associations:
-          description: Output only. The associations matching the request criteria for this page.
-          items:
-            $ref: '#/components/schemas/v1Association'
-          readOnly: true
-          type: array
-        pagingMetadata:
-          $ref: '#/components/schemas/vendastatypesPagedResponseMetadata'
-        statusCode:
-          description: Output only. HTTP-style status codes for each association in the response (e.g. 200, 403, or 404).
-          items:
-            format: int64
-            type: string
-          readOnly: true
-          type: array
-      title: List Associations Response
-      type: object
-    v1DateDefault:
-      default: DATE_DEFAULT_INVALID
-      enum:
-      - DATE_DEFAULT_INVALID
-      - DATE_DEFAULT_TODAY
-      - DATE_DEFAULT_YESTERDAY
-      - DATE_DEFAULT_TOMORROW
-      - DATE_DEFAULT_THIS_WEEK
-      - DATE_DEFAULT_LAST_WEEK
-      - DATE_DEFAULT_NEXT_WEEK
-      - DATE_DEFAULT_THIS_MONTH
-      - DATE_DEFAULT_LAST_MONTH
-      - DATE_DEFAULT_NEXT_MONTH
-      - DATE_DEFAULT_THIS_QUARTER
-      - DATE_DEFAULT_LAST_QUARTER
-      - DATE_DEFAULT_NEXT_QUARTER
-      - DATE_DEFAULT_THIS_YEAR
-      - DATE_DEFAULT_LAST_YEAR
-      - DATE_DEFAULT_NEXT_YEAR
-      type: string
     v1CreateAssociationResponse:
       description: Response containing the identifier of the newly created association.
       properties:
@@ -530,30 +554,6 @@ components:
           readOnly: true
           type: string
       title: Create Association Response
-      type: object
-    vendastatypesPagedRequestOptions:
-      properties:
-        cursor:
-          description: Optional. An opaque token from a previous response's next_cursor to retrieve the next page of results. Omit or leave empty for the first page.
-          type: string
-        pageSize:
-          description: Optional. The maximum number of items to return per page.
-          format: int64
-          type: string
-      type: object
-    v1DeleteAssociationRequest:
-      description: Request to delete an association between CRM objects within a namespace.
-      properties:
-        associationId:
-          description: Required. The identifier of the association to delete.
-          type: string
-        namespace:
-          description: Required. The namespace (partner ID or account group ID) the association belongs to.
-          type: string
-      required:
-      - namespace
-      - associationId
-      title: Delete Association Request
       type: object
   securitySchemes:
     OAuth2:

@@ -804,87 +804,556 @@ paths:
       - Sales Accounts
 components:
   schemas:
-    hoursOfOperation:
-      type:
-      - array
-      - 'null'
-      description: The operating hours for the business location. Each entry in the array is a set of hours for a particular department or customer of the business. It is recommended to provide the `general` hours for all locations. Some locations may have additional definitions for other departments.
-      items:
-        type: object
-        required:
-        - hoursTypeId
-        properties:
-          hoursTypeId:
-            type: string
-            enum:
-            - general
-            - delivery
-            - kitchen
-            - driveThrough
-            - pickup
-            - takeout
-            description: "The category of hours that may apply to a specific department or service. Not all types are valid for all business categories.\n\nThe general hours for a location must be set before defining hours for other departments. \n\nCurrently only `general` is supported in the Vendasta platform. We intend to add others in the future."
-          regularHours:
-            title: Hours on the days of the week
-            type:
-            - array
-            - 'null'
-            description: 'A collection of times that this location is open for business. Each period represents a range of hours when the location is open during the week.
+    salesAccountCustomFields:
+      title: Sales Accounts Custom Fields
+      type: object
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
 
 
-              You may specify multiple entries for the same date if you are open for multiple periods (Example lunch and supper).'
-            items:
+        Custom fields associated with a sales account. The field definitions can be managed at Partner Center -> Administration -> Custom Fields.
+
+
+        One form of identifier should be chosen, either `fieldId` or `externalId`.
+
+        `fieldId` is the computer generated ID (like `FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99`) and `externalId` is a optional human-readable ID that can be set in the administration panel.
+
+
+        Dropdown possible value and the currency code are also configured in the Administration panel.'
+      x-examples:
+        Custom Fields with string value Example:
+          data:
+            id: AG-1231231
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+              stringValue: A good string value
+              title: Title of abc448ca field
+              description: Description for abc448ca field
+              fieldType: string
+        Custom Fields with integer value Example:
+          data:
+            id: AG-1231232
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+              integerValue: 1000
+              title: Title of 123448ca field
+              description: Description for 123448ca field
+              fieldType: integer
+        Custom Fields with Date value Example:
+          data:
+            id: AG-1231233
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+              dateValue: '2016-01-02T15:04:05Z'
+              title: Title of 987448ca field
+              description: Description for 987448ca field
+              fieldType: date
+        Custom Fields Full:
+          data:
+            id: AG-1231235
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
+              stringValue: A good string value
+              title: Title of abc448ca field
+              description: Description for abc448ca field
+              fieldType: string
+            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
+              integerValue: 1000
+              title: Title of 123448ca field
+              description: Description for 123448ca field
+              fieldType: integer
+            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
+              dateValue: '2022-01-02T15:04:05Z'
+              title: Title of 987448ca field
+              description: Description for 987448ca field
+              fieldType: date
+            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
+              dropdownValue: red
+              title: Title of 987448f2 field
+              description: Description for 987448f2 field
+              fieldType: dropdown
+            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
+              currencyValue: 10000
+              title: Title of 98744854 field
+              description: Description for 98744854 field
+              fieldType: currency
+              currencyCode: CAD
+        Custom Fields with Dropdown Example:
+          data:
+            id: AG-1231233
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
+              dropdownValue: red
+              title: Title of 987448f2 field
+              description: Description for 987448f2 field
+              fieldType: dropdown
+        Custom Fields with Currency Example:
+          data:
+            id: AG-1231233
+            type: salesAccountCustomFields
+            partnerFields:
+            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
+              currencyValue: 10000
+              title: Title of 98744854 field
+              description: Description for 98744854 field
+              fieldType: currency
+              currencyCode: CAD
+      x-tags:
+      - Sales Account Custom Fields
+      properties:
+        id:
+          type: string
+          example: AG-1231232
+          description: An identifier for the parent entity, for example salesAccount (AG-1231231)
+          readOnly: true
+        type:
+          type: string
+          default: salesAccountCustomFields
+          enum:
+          - salesAccountCustomFields
+          description: Should always be salesAccountCustomFields
+        partnerFields:
+          type: array
+          description: 'List of custom fields specific to the partner with a direct relationship to the sales account.
+
+            To send a new value each field must have at least the fieldId and its correspondent value.
+
+            For example a field of type string must have the stringValue attribute filled.
+
+
+            string -> stringValue
+
+
+            integer -> integerValue
+
+
+            date -> dateValue
+
+
+            Only the fields that you wish to modify need to be sent.'
+          items:
+            type: object
+            properties:
+              fieldId:
+                type: string
+                description: Field identifier, can be retrieved by listing the attributes
+              externalId:
+                type: string
+                description: Alternative field identifier, can be set on admin panel and can be retrieved by listing the attributes
+              fieldType:
+                type: string
+                example: string
+                enum:
+                - string
+                - integer
+                - date
+                - dropdown
+                - currency
+                description: 'Indicates which of the value fields to use to read or write the data. It can only be modified from within partner center.
+
+
+                  string -> stringValue
+
+                  integer -> integerValue
+
+                  date -> dateValue
+
+                  dropdown -> dropdownValue
+
+                  currency -> currencyValue'
+                readOnly: true
+              stringValue:
+                type: string
+                description: Required when the field type is `string`
+              integerValue:
+                type: integer
+                description: Required when the field type is `integer`
+              dateValue:
+                type: string
+                description: Required when the field type is `date`
+                format: date
+              dropdownValue:
+                type: string
+                description: Required when type is `dropdown`. The possible values can be discovered using the administration panel.
+              currencyValue:
+                type: integer
+                description: 'Required when the field type is `currency`.
+
+
+                  This field represents the cents (or the smallest part of the currency).
+
+
+                  Example:
+
+                  USD 600.00 -> currencyValue=60000'
+              currencyCode:
+                type: string
+                minLength: 3
+                maxLength: 3
+                description: 'Represents the type of currency when the field is type `currency`. It will be the 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+
+
+                  Ex: USD, CAD, AUD'
+                example: USD
+                readOnly: true
+              title:
+                type: string
+                description: The main label for the field, appearing in most user interfaces that show the value. This field is not read when setting a value.
+                readOnly: true
+              description:
+                type: string
+                description: A longer text explanation of the field, it optionally appears in the UI. This field is not read when setting a value.
+                readOnly: true
+      required:
+      - id
+      - type
+    dayOfTheWeek:
+      type: string
+      title: a day of the week
+      enum:
+      - monday
+      - tuesday
+      - wednesday
+      - thursday
+      - friday
+      - saturday
+      - sunday
+      example: wednesday
+    timeOfDay:
+      type: string
+      title: a time of day
+      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
+      pattern: ^\d{2}:\d{2}$
+      example: 09:45
+    users:
+      title: Users
+      type: object
+      x-lifecycle:
+        status: proposed
+      description: "[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`\n\t\nA “user” is a person or bot that could potentially interact with the platform. If they have not been granted access to any features they will not be able to do anything after logging in.\n\nA person who is the customer of multiple businesses may have multiple separate user records within the platform so it is important to always include an organization filter when searching by email or name. \n\nTo learn more and view sample requests visit the [user management guide](../../../../../docs/Guides/Users.md)"
+      x-tags:
+      - Users
+      properties:
+        type:
+          type: string
+          default: users
+          enum:
+          - users
+        id:
+          type: string
+          description: 'The id will be assigned by the server and must be included on all update requests. Values sent during creation will be ignored. It is globally unique across all platform instances and will not change.
+
+
+            You may use the special id `me` to operate on the current user if you have the scope `openid`.'
+          example: U-3ca38c57-7677-45d4-81e8-cd29eab91d63
+        attributes:
+          type:
+          - object
+          - 'null'
+          properties:
+            displayName:
+              type: string
+              example: Bill Smith
+              description: The user’s name formatted for display. This will always have a value.
+              readOnly: true
+            givenName:
+              type: string
+              description: Given name(s) or first name(s) of the End-User. Note that in some cultures, people can have multiple given names; all can be present, with the names being separated by space characters.
+              minLength: 0
+              maxLength: 50
+              example: William
+            familyName:
+              type: string
+              description: Surname(s) or last name(s) of the End-User. Note that in some cultures, people can have multiple family names or no family name; all can be present, with the names being separated by space characters.
+              minLength: 0
+              maxLength: 50
+              example: Smith
+            greetingName:
+              type: string
+              description: The name to use at the opening of messages addressed to the user. Note that in some cultures this is an alternate spelling or shortened form of the first name. Defaults to givenName.
+              minLength: 0
+              maxLength: 50
+              example: Billy
+            email:
+              type: string
+              format: email
+              example: bill@example.com
+              minLength: 5
+              description: 'The primary email address for the user.
+
+                This is required when creating a user.'
+            emailVerified:
+              type: boolean
+              default: false
+              description: 'True if the End-User''s e-mail address has been verified; otherwise false. When true affirmative steps to ensure that this e-mail address was controlled by the End-User at the time the verification was performed. '
+              readOnly: true
+            emailSet:
+              type: boolean
+              description: Indicates there is an email address available that can have messages sent to it using the notifications system.
+              readOnly: true
+            languageLocaleCode:
+              type: string
+              pattern: ^[a-z]{2}(-[A-Z]{2})?$
+              example: en-US
+              description: 'The local language that content should be displayed to this user in.
+
+
+                Note: We currently have a limited set of allowed languages but expect to support many more in the future. When the requested language is not supported US English will be used.
+
+
+                It should be a single BCP47/RFC5646 language tag. This is an [ISO 639-1 Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) language code in lowercase and an [ISO 3166-1 Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) country code in uppercase, separated by a dash.
+
+
+                Examples:
+
+                - `en-US` English (US)
+
+                - `fr-FR` French (France)
+
+                - `cs-CZ` Czech (Czech Republic)
+
+                - `de-DE` German (Germany)
+
+                - `nl-BE` Dutch (Belgium)
+
+                - `it` Italian'
+            phoneNumbersSet:
+              type: boolean
+            phoneNumbers:
+              type: array
+              minItems: 0
+              description: "A list of phone numbers for the user. \n\nNote: Do not send a phone number object or \n type if the user does not have a phone number."
+              items:
+                type: object
+                properties:
+                  number:
+                    type: string
+                    description: 'The standard phone numbers for the location.
+
+                      Formatting characters may be included.
+
+
+                      **Extensions**
+
+
+                      It is recommended that extensions are included at the end of the number after an appropriate separator: Pause: `,` Wait: `;` Default: `ext.`
+
+
+                      You may test the parsibility of a number using https://phonenumbers.temba.io/
+
+
+                      All partial phone numbers are assumed to be in the same country as this user''s address.'
+                    example: +1-306-555-1234 ext. 56
+                  typeCode:
+                    type: string
+                    description: 'A classification of what the number should be used for.
+
+
+                      The mobile number should be preferred when sending SMS messages to the user however they may also be sent to work or home numbers.'
+                    enum:
+                    - mobile
+                    - work
+                    - home
+                    - fax
+                    - pager
+                required:
+                - number
+                - typeCode
+            address:
               type: object
-              required:
-              - openDay
-              - closeDay
-              - openTime
-              - closeTime
+              description: The primary address where this user can be reached.
               properties:
-                openDay:
-                  allOf:
-                  - description: Indicates the day of the week that this period starts on.
-                  - $ref: '#/components/schemas/dayOfTheWeek'
-                closeDay:
-                  allOf:
-                  - description: Indicates the day of the week that this period ends on. It should be the same as `openDay` except when the period goes over midnight. The total period may not be more than 24 hours.
-                  - $ref: '#/components/schemas/dayOfTheWeek'
-                openTime:
-                  $ref: '#/components/schemas/timeOfDay'
-                closeTime:
-                  $ref: '#/components/schemas/timeOfDay'
-          specialHours:
-            type:
-            - array
-            - 'null'
-            description: "Represents a set of time periods when a location's operational hours differ from its regular business hours. This may be a holiday or special event. These hours replace the regular hours for the day.\n\nA special hour period must represent a range of less than 24 hours. The `openTime` and `startDate` must predate the `closeTime` and `endDate`. \nThe `closeTime` and `endDate` can extend to 11:59 a.m. on the day after the specified `startDate`.\n\nNote: Most listing sites only support special hours for the general type."
-            items:
+                line1:
+                  type: string
+                  example: 109 8th Street E.
+                  description: The primary information. Typically a street address.
+                line2:
+                  type: string
+                  example: Suite 23
+                  description: An additional line of information to add after the street address.
+                streetAddress:
+                  type: string
+                  example: 109 8th Street E.
+                  deprecated: true
+                  description: Deprecated - This field has been renamed line1
+                  x-lifecycle:
+                    status: deprecated
+                    deprecated: '2021-10-04'
+                    proposedRemoval: '2021-11-04'
+                    description: This field was renamed to line1 while at the trusted tester phase. It will be removed shortly.
+                additionalAddress:
+                  type: string
+                  example: Suite 23
+                  deprecated: true
+                  description: Deprecated - This field has been renamed line2. An additional line of information to add after the street address.
+                  x-lifecycle:
+                    status: deprecated
+                    deprecated: '2021-10-04'
+                    proposedRemoval: '2021-11-04'
+                    description: This field was renamed to line2 while at the trusted tester phase. It will be removed shortly.
+                city:
+                  type: string
+                  description: The city, town or locality component of an address.
+                  example: Saskatoon
+                postalCode:
+                  type: string
+                  description: The zip code or postal code component of an address.
+                  example: S7M 1R3
+                regionCode:
+                  type: string
+                  description: 'The code for the top level subdivision within the country (state/province). For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
+
+
+                    Examples: CA-SK, US-FL, AG-08, AU-NSW'
+                  example: CA-SK
+                  maxLength: 6
+                  minLength: 4
+                  pattern: ^[A-Z]{2}-[\w]{1,3}$
+                countryCode:
+                  type: string
+                  maxLength: 2
+                  minLength: 2
+                  example: CA
+                  description: 'The two letter country code. For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
+
+
+                    Examples: CA, US, AU'
+                  pattern: ^[A-Z]{2}$
+            profileImage:
+              type: string
+              format: uri
+              description: A photo that can be used to represent this user. If the user does not have a custom image set a default image will be returned.
+              example: https://storage.googleapis.com/wordpress-www-vendasta/vw-wordpress/Brendan-King-1.jpg
+              readOnly: true
+            timeZone:
+              type: string
+              description: 'The User''s time zone in the IANA [time zone database format](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+
+
+                Example: `America/Los_Angeles`'
+              example: America/Regina
+            createdAt:
+              type: string
+              format: date-time
+              description: The time at which the user was initially created in the platform.
+              readOnly: true
+            updatedAt:
+              type: string
+              format: date-time
+              description: 'The time at which the user’s profile was last updated. Note: Changes to permissions will not affect this field.'
+              readOnly: true
+        relationships:
+          type: object
+          properties:
+            partner:
               type: object
-              required:
-              - startDate
-              - endDate
-              - startTime
-              - endTime
+              description: A link to the organization that provides the platform to this user.
               properties:
-                status:
-                  x-stoplight:
-                    id: nav2z12fnl9fr
-                  enum:
-                  - open
-                  - closed
-                  description: Describes the different modes that apply to special hour periods. Currently only `open` and `closed` are supported in the Vendasta platform. Overlapping `open` and `closed` periods are not allowed. When status is `open`, for the given business it will be open for the mentioned time period for the selected date. When status is `closed`, for the given business it will be closed for the selected date.
-                startDate:
-                  description: The calendar date this special hour period starts on.
-                  type: string
-                  format: date
-                endDate:
-                  description: The calendar date this special hour period ends on. If `endDate` field is not set, default to the date specified in `startDate`. If set, this field must be equal to or at most 1 day after `startDate`.
-                  type: string
-                  format: date
-                startTime:
-                  $ref: '#/components/schemas/timeOfDay'
-                endTime:
-                  $ref: '#/components/schemas/timeOfDay'
+                data:
+                  type: object
+                  required:
+                  - type
+                  - id
+                  properties:
+                    type:
+                      type: string
+                      default: partners
+                      enum:
+                      - partners
+                    id:
+                      type: string
+                      example: ABC
+              required:
+              - data
+            businessLocations:
+              type: object
+              description: 'The business locations that this user is a member of.
+
+
+                When a new location is added to a user they will be granted the default business user permissions.
+
+
+                Fine grained permissions currently must be managed in Partner Center''s UI. We are gathering interest to determine how it should work by API so please send us your use cases.'
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    properties:
+                      type:
+                        type: string
+                        default: businessLocations
+                        example: businessLocations
+                        enum:
+                        - businessLocations
+                      id:
+                        type: string
+                        example: AG-1234567
+                        description: The ID of a previously created business location record.
+                    required:
+                    - type
+                    - id
+            platformAccess:
+              type: object
+              description: '`Proposed` The platform access functionality is still at a `proposed` status. Not all options are currently available.
+
+
+                Use this field to grant access to platform level features to your employees and contractors.'
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        default: appFeatures
+                        example: appFeatures
+                      id:
+                        type: string
+                        enum:
+                        - pc:access
+                        - pc:canCustomizeWhitelabel
+                        - pc:canAccessBilling
+                        - pc:canManageSales
+                        - pc:canManageAccounts
+                        - pc:canManageTasks
+                        - pc:canAccessBrands
+                        - pc:canAccessMarketing
+                        - pc:canAccessDashboard
+                        - pc:canAccessOrders
+                        - pc:canManageAdmins
+                        - pc:canAccessMarketplace
+                        - pc:canEnableApps
+                        - pc:canAccessCompanyProfile
+                        - pc:canAccessAutomations
+                        - ssc:access
+                        - ssc:manage
+                        - tm:access
+                        - tm:manage
+                        - crm:contacts:write:own
+                        - crm:contacts:write:ownunowned
+                        - crm:contacts:write:all
+                        - crm:contacts:manage
+                        - crm:companies:write:own
+                        - crm:companies:write:ownunowned
+                        - crm:companies:write:all
+                        - crm:companies:manage
+                        - crm:custom_objects:write:own
+                        - crm:custom_objects:write:ownunowned
+                        - crm:custom_objects:write:all
+                        - crm:custom_objects:manage
+                        description: 'The platform access functionality is still at a `proposed` status. Not all options are currently available. '
+                    required:
+                    - type
+                    - id
     salesAccounts:
       title: Sales Account
       type: object
@@ -1304,221 +1773,87 @@ components:
             - $ref: '#/components/schemas/users'
             - $ref: '#/components/schemas/businessCategories'
           readOnly: true
-    salesAccountCustomFields:
-      title: Sales Accounts Custom Fields
-      type: object
-      x-lifecycle:
-        status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+    hoursOfOperation:
+      type:
+      - array
+      - 'null'
+      description: The operating hours for the business location. Each entry in the array is a set of hours for a particular department or customer of the business. It is recommended to provide the `general` hours for all locations. Some locations may have additional definitions for other departments.
+      items:
+        type: object
+        required:
+        - hoursTypeId
+        properties:
+          hoursTypeId:
+            type: string
+            enum:
+            - general
+            - delivery
+            - kitchen
+            - driveThrough
+            - pickup
+            - takeout
+            description: "The category of hours that may apply to a specific department or service. Not all types are valid for all business categories.\n\nThe general hours for a location must be set before defining hours for other departments. \n\nCurrently only `general` is supported in the Vendasta platform. We intend to add others in the future."
+          regularHours:
+            title: Hours on the days of the week
+            type:
+            - array
+            - 'null'
+            description: 'A collection of times that this location is open for business. Each period represents a range of hours when the location is open during the week.
 
 
-        Custom fields associated with a sales account. The field definitions can be managed at Partner Center -> Administration -> Custom Fields.
-
-
-        One form of identifier should be chosen, either `fieldId` or `externalId`.
-
-        `fieldId` is the computer generated ID (like `FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99`) and `externalId` is a optional human-readable ID that can be set in the administration panel.
-
-
-        Dropdown possible value and the currency code are also configured in the Administration panel.'
-      x-examples:
-        Custom Fields with string value Example:
-          data:
-            id: AG-1231231
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
-              stringValue: A good string value
-              title: Title of abc448ca field
-              description: Description for abc448ca field
-              fieldType: string
-        Custom Fields with integer value Example:
-          data:
-            id: AG-1231232
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
-              integerValue: 1000
-              title: Title of 123448ca field
-              description: Description for 123448ca field
-              fieldType: integer
-        Custom Fields with Date value Example:
-          data:
-            id: AG-1231233
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
-              dateValue: '2016-01-02T15:04:05Z'
-              title: Title of 987448ca field
-              description: Description for 987448ca field
-              fieldType: date
-        Custom Fields Full:
-          data:
-            id: AG-1231235
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-abc448ca-abc0-abc5-abc2-abc640bf4b99
-              stringValue: A good string value
-              title: Title of abc448ca field
-              description: Description for abc448ca field
-              fieldType: string
-            - fieldId: FieldID-123448ca-abc0-abc5-abc2-abc640bf4b99
-              integerValue: 1000
-              title: Title of 123448ca field
-              description: Description for 123448ca field
-              fieldType: integer
-            - fieldId: FieldID-987448ca-abc0-abc5-abc2-abc640bf4b99
-              dateValue: '2022-01-02T15:04:05Z'
-              title: Title of 987448ca field
-              description: Description for 987448ca field
-              fieldType: date
-            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
-              dropdownValue: red
-              title: Title of 987448f2 field
-              description: Description for 987448f2 field
-              fieldType: dropdown
-            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
-              currencyValue: 10000
-              title: Title of 98744854 field
-              description: Description for 98744854 field
-              fieldType: currency
-              currencyCode: CAD
-        Custom Fields with Dropdown Example:
-          data:
-            id: AG-1231233
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-987448f2-abc0-abc5-abc2-abc640bf4b00
-              dropdownValue: red
-              title: Title of 987448f2 field
-              description: Description for 987448f2 field
-              fieldType: dropdown
-        Custom Fields with Currency Example:
-          data:
-            id: AG-1231233
-            type: salesAccountCustomFields
-            partnerFields:
-            - fieldId: FieldID-98744854-abc0-abc5-abc2-abc640bf4b01
-              currencyValue: 10000
-              title: Title of 98744854 field
-              description: Description for 98744854 field
-              fieldType: currency
-              currencyCode: CAD
-      x-tags:
-      - Sales Account Custom Fields
-      properties:
-        id:
-          type: string
-          example: AG-1231232
-          description: An identifier for the parent entity, for example salesAccount (AG-1231231)
-          readOnly: true
-        type:
-          type: string
-          default: salesAccountCustomFields
-          enum:
-          - salesAccountCustomFields
-          description: Should always be salesAccountCustomFields
-        partnerFields:
-          type: array
-          description: 'List of custom fields specific to the partner with a direct relationship to the sales account.
-
-            To send a new value each field must have at least the fieldId and its correspondent value.
-
-            For example a field of type string must have the stringValue attribute filled.
-
-
-            string -> stringValue
-
-
-            integer -> integerValue
-
-
-            date -> dateValue
-
-
-            Only the fields that you wish to modify need to be sent.'
-          items:
-            type: object
-            properties:
-              fieldId:
-                type: string
-                description: Field identifier, can be retrieved by listing the attributes
-              externalId:
-                type: string
-                description: Alternative field identifier, can be set on admin panel and can be retrieved by listing the attributes
-              fieldType:
-                type: string
-                example: string
-                enum:
-                - string
-                - integer
-                - date
-                - dropdown
-                - currency
-                description: 'Indicates which of the value fields to use to read or write the data. It can only be modified from within partner center.
-
-
-                  string -> stringValue
-
-                  integer -> integerValue
-
-                  date -> dateValue
-
-                  dropdown -> dropdownValue
-
-                  currency -> currencyValue'
-                readOnly: true
-              stringValue:
-                type: string
-                description: Required when the field type is `string`
-              integerValue:
-                type: integer
-                description: Required when the field type is `integer`
-              dateValue:
-                type: string
-                description: Required when the field type is `date`
-                format: date
-              dropdownValue:
-                type: string
-                description: Required when type is `dropdown`. The possible values can be discovered using the administration panel.
-              currencyValue:
-                type: integer
-                description: 'Required when the field type is `currency`.
-
-
-                  This field represents the cents (or the smallest part of the currency).
-
-
-                  Example:
-
-                  USD 600.00 -> currencyValue=60000'
-              currencyCode:
-                type: string
-                minLength: 3
-                maxLength: 3
-                description: 'Represents the type of currency when the field is type `currency`. It will be the 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
-
-
-                  Ex: USD, CAD, AUD'
-                example: USD
-                readOnly: true
-              title:
-                type: string
-                description: The main label for the field, appearing in most user interfaces that show the value. This field is not read when setting a value.
-                readOnly: true
-              description:
-                type: string
-                description: A longer text explanation of the field, it optionally appears in the UI. This field is not read when setting a value.
-                readOnly: true
-      required:
-      - id
-      - type
-    timeOfDay:
-      type: string
-      title: a time of day
-      description: Valid values are 00:00-24:00, where 24:00 represents midnight at the end of the specified day field.
-      pattern: ^\d{2}:\d{2}$
-      example: 09:45
+              You may specify multiple entries for the same date if you are open for multiple periods (Example lunch and supper).'
+            items:
+              type: object
+              required:
+              - openDay
+              - closeDay
+              - openTime
+              - closeTime
+              properties:
+                openDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period starts on.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                closeDay:
+                  allOf:
+                  - description: Indicates the day of the week that this period ends on. It should be the same as `openDay` except when the period goes over midnight. The total period may not be more than 24 hours.
+                  - $ref: '#/components/schemas/dayOfTheWeek'
+                openTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                closeTime:
+                  $ref: '#/components/schemas/timeOfDay'
+          specialHours:
+            type:
+            - array
+            - 'null'
+            description: "Represents a set of time periods when a location's operational hours differ from its regular business hours. This may be a holiday or special event. These hours replace the regular hours for the day.\n\nA special hour period must represent a range of less than 24 hours. The `openTime` and `startDate` must predate the `closeTime` and `endDate`. \nThe `closeTime` and `endDate` can extend to 11:59 a.m. on the day after the specified `startDate`.\n\nNote: Most listing sites only support special hours for the general type."
+            items:
+              type: object
+              required:
+              - startDate
+              - endDate
+              - startTime
+              - endTime
+              properties:
+                status:
+                  x-stoplight:
+                    id: nav2z12fnl9fr
+                  enum:
+                  - open
+                  - closed
+                  description: Describes the different modes that apply to special hour periods. Currently only `open` and `closed` are supported in the Vendasta platform. Overlapping `open` and `closed` periods are not allowed. When status is `open`, for the given business it will be open for the mentioned time period for the selected date. When status is `closed`, for the given business it will be closed for the selected date.
+                startDate:
+                  description: The calendar date this special hour period starts on.
+                  type: string
+                  format: date
+                endDate:
+                  description: The calendar date this special hour period ends on. If `endDate` field is not set, default to the date specified in `startDate`. If set, this field must be equal to or at most 1 day after `startDate`.
+                  type: string
+                  format: date
+                startTime:
+                  $ref: '#/components/schemas/timeOfDay'
+                endTime:
+                  $ref: '#/components/schemas/timeOfDay'
     businessCategories:
       title: Business Category
       type: object
@@ -1552,341 +1887,6 @@ components:
               type: boolean
               description: Whether the category is active. Inactive categories may still be returned when looking up by ID but should not be used for new assignments.
               readOnly: true
-    users:
-      title: Users
-      type: object
-      x-lifecycle:
-        status: proposed
-      description: "[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Proposed`\n\t\nA “user” is a person or bot that could potentially interact with the platform. If they have not been granted access to any features they will not be able to do anything after logging in.\n\nA person who is the customer of multiple businesses may have multiple separate user records within the platform so it is important to always include an organization filter when searching by email or name. \n\nTo learn more and view sample requests visit the [user management guide](../../../../../docs/Guides/Users.md)"
-      x-tags:
-      - Users
-      properties:
-        type:
-          type: string
-          default: users
-          enum:
-          - users
-        id:
-          type: string
-          description: 'The id will be assigned by the server and must be included on all update requests. Values sent during creation will be ignored. It is globally unique across all platform instances and will not change.
-
-
-            You may use the special id `me` to operate on the current user if you have the scope `openid`.'
-          example: U-3ca38c57-7677-45d4-81e8-cd29eab91d63
-        attributes:
-          type:
-          - object
-          - 'null'
-          properties:
-            displayName:
-              type: string
-              example: Bill Smith
-              description: The user’s name formatted for display. This will always have a value.
-              readOnly: true
-            givenName:
-              type: string
-              description: Given name(s) or first name(s) of the End-User. Note that in some cultures, people can have multiple given names; all can be present, with the names being separated by space characters.
-              minLength: 0
-              maxLength: 50
-              example: William
-            familyName:
-              type: string
-              description: Surname(s) or last name(s) of the End-User. Note that in some cultures, people can have multiple family names or no family name; all can be present, with the names being separated by space characters.
-              minLength: 0
-              maxLength: 50
-              example: Smith
-            greetingName:
-              type: string
-              description: The name to use at the opening of messages addressed to the user. Note that in some cultures this is an alternate spelling or shortened form of the first name. Defaults to givenName.
-              minLength: 0
-              maxLength: 50
-              example: Billy
-            email:
-              type: string
-              format: email
-              example: bill@example.com
-              minLength: 5
-              description: 'The primary email address for the user.
-
-                This is required when creating a user.'
-            emailVerified:
-              type: boolean
-              default: false
-              description: 'True if the End-User''s e-mail address has been verified; otherwise false. When true affirmative steps to ensure that this e-mail address was controlled by the End-User at the time the verification was performed. '
-              readOnly: true
-            emailSet:
-              type: boolean
-              description: Indicates there is an email address available that can have messages sent to it using the notifications system.
-              readOnly: true
-            languageLocaleCode:
-              type: string
-              pattern: ^[a-z]{2}(-[A-Z]{2})?$
-              example: en-US
-              description: 'The local language that content should be displayed to this user in.
-
-
-                Note: We currently have a limited set of allowed languages but expect to support many more in the future. When the requested language is not supported US English will be used.
-
-
-                It should be a single BCP47/RFC5646 language tag. This is an [ISO 639-1 Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) language code in lowercase and an [ISO 3166-1 Alpha-2](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes) country code in uppercase, separated by a dash.
-
-
-                Examples:
-
-                - `en-US` English (US)
-
-                - `fr-FR` French (France)
-
-                - `cs-CZ` Czech (Czech Republic)
-
-                - `de-DE` German (Germany)
-
-                - `nl-BE` Dutch (Belgium)
-
-                - `it` Italian'
-            phoneNumbersSet:
-              type: boolean
-            phoneNumbers:
-              type: array
-              minItems: 0
-              description: "A list of phone numbers for the user. \n\nNote: Do not send a phone number object or \n type if the user does not have a phone number."
-              items:
-                type: object
-                properties:
-                  number:
-                    type: string
-                    description: 'The standard phone numbers for the location.
-
-                      Formatting characters may be included.
-
-
-                      **Extensions**
-
-
-                      It is recommended that extensions are included at the end of the number after an appropriate separator: Pause: `,` Wait: `;` Default: `ext.`
-
-
-                      You may test the parsibility of a number using https://phonenumbers.temba.io/
-
-
-                      All partial phone numbers are assumed to be in the same country as this user''s address.'
-                    example: +1-306-555-1234 ext. 56
-                  typeCode:
-                    type: string
-                    description: 'A classification of what the number should be used for.
-
-
-                      The mobile number should be preferred when sending SMS messages to the user however they may also be sent to work or home numbers.'
-                    enum:
-                    - mobile
-                    - work
-                    - home
-                    - fax
-                    - pager
-                required:
-                - number
-                - typeCode
-            address:
-              type: object
-              description: The primary address where this user can be reached.
-              properties:
-                line1:
-                  type: string
-                  example: 109 8th Street E.
-                  description: The primary information. Typically a street address.
-                line2:
-                  type: string
-                  example: Suite 23
-                  description: An additional line of information to add after the street address.
-                streetAddress:
-                  type: string
-                  example: 109 8th Street E.
-                  deprecated: true
-                  description: Deprecated - This field has been renamed line1
-                  x-lifecycle:
-                    status: deprecated
-                    deprecated: '2021-10-04'
-                    proposedRemoval: '2021-11-04'
-                    description: This field was renamed to line1 while at the trusted tester phase. It will be removed shortly.
-                additionalAddress:
-                  type: string
-                  example: Suite 23
-                  deprecated: true
-                  description: Deprecated - This field has been renamed line2. An additional line of information to add after the street address.
-                  x-lifecycle:
-                    status: deprecated
-                    deprecated: '2021-10-04'
-                    proposedRemoval: '2021-11-04'
-                    description: This field was renamed to line2 while at the trusted tester phase. It will be removed shortly.
-                city:
-                  type: string
-                  description: The city, town or locality component of an address.
-                  example: Saskatoon
-                postalCode:
-                  type: string
-                  description: The zip code or postal code component of an address.
-                  example: S7M 1R3
-                regionCode:
-                  type: string
-                  description: 'The code for the top level subdivision within the country (state/province). For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
-
-
-                    Examples: CA-SK, US-FL, AG-08, AU-NSW'
-                  example: CA-SK
-                  maxLength: 6
-                  minLength: 4
-                  pattern: ^[A-Z]{2}-[\w]{1,3}$
-                countryCode:
-                  type: string
-                  maxLength: 2
-                  minLength: 2
-                  example: CA
-                  description: 'The two letter country code. For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
-
-
-                    Examples: CA, US, AU'
-                  pattern: ^[A-Z]{2}$
-            profileImage:
-              type: string
-              format: uri
-              description: A photo that can be used to represent this user. If the user does not have a custom image set a default image will be returned.
-              example: https://storage.googleapis.com/wordpress-www-vendasta/vw-wordpress/Brendan-King-1.jpg
-              readOnly: true
-            timeZone:
-              type: string
-              description: 'The User''s time zone in the IANA [time zone database format](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
-
-
-                Example: `America/Los_Angeles`'
-              example: America/Regina
-            createdAt:
-              type: string
-              format: date-time
-              description: The time at which the user was initially created in the platform.
-              readOnly: true
-            updatedAt:
-              type: string
-              format: date-time
-              description: 'The time at which the user’s profile was last updated. Note: Changes to permissions will not affect this field.'
-              readOnly: true
-        relationships:
-          type: object
-          properties:
-            partner:
-              type: object
-              description: A link to the organization that provides the platform to this user.
-              properties:
-                data:
-                  type: object
-                  required:
-                  - type
-                  - id
-                  properties:
-                    type:
-                      type: string
-                      default: partners
-                      enum:
-                      - partners
-                    id:
-                      type: string
-                      example: ABC
-              required:
-              - data
-            businessLocations:
-              type: object
-              description: 'The business locations that this user is a member of.
-
-
-                When a new location is added to a user they will be granted the default business user permissions.
-
-
-                Fine grained permissions currently must be managed in Partner Center''s UI. We are gathering interest to determine how it should work by API so please send us your use cases.'
-              properties:
-                data:
-                  type: array
-                  items:
-                    type: object
-                    additionalProperties: false
-                    properties:
-                      type:
-                        type: string
-                        default: businessLocations
-                        example: businessLocations
-                        enum:
-                        - businessLocations
-                      id:
-                        type: string
-                        example: AG-1234567
-                        description: The ID of a previously created business location record.
-                    required:
-                    - type
-                    - id
-            platformAccess:
-              type: object
-              description: '`Proposed` The platform access functionality is still at a `proposed` status. Not all options are currently available.
-
-
-                Use this field to grant access to platform level features to your employees and contractors.'
-              properties:
-                data:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      type:
-                        type: string
-                        default: appFeatures
-                        example: appFeatures
-                      id:
-                        type: string
-                        enum:
-                        - pc:access
-                        - pc:canCustomizeWhitelabel
-                        - pc:canAccessBilling
-                        - pc:canManageSales
-                        - pc:canManageAccounts
-                        - pc:canManageTasks
-                        - pc:canAccessBrands
-                        - pc:canAccessMarketing
-                        - pc:canAccessDashboard
-                        - pc:canAccessOrders
-                        - pc:canManageAdmins
-                        - pc:canAccessMarketplace
-                        - pc:canEnableApps
-                        - pc:canAccessCompanyProfile
-                        - pc:canAccessAutomations
-                        - ssc:access
-                        - ssc:manage
-                        - tm:access
-                        - tm:manage
-                        - crm:contacts:write:own
-                        - crm:contacts:write:ownunowned
-                        - crm:contacts:write:all
-                        - crm:contacts:manage
-                        - crm:companies:write:own
-                        - crm:companies:write:ownunowned
-                        - crm:companies:write:all
-                        - crm:companies:manage
-                        - crm:custom_objects:write:own
-                        - crm:custom_objects:write:ownunowned
-                        - crm:custom_objects:write:all
-                        - crm:custom_objects:manage
-                        description: 'The platform access functionality is still at a `proposed` status. Not all options are currently available. '
-                    required:
-                    - type
-                    - id
-    dayOfTheWeek:
-      type: string
-      title: a day of the week
-      enum:
-      - monday
-      - tuesday
-      - wednesday
-      - thursday
-      - friday
-      - saturday
-      - sunday
-      example: wednesday
   securitySchemes:
     JWT:
       type: http

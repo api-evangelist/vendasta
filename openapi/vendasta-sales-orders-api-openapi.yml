@@ -96,77 +96,6 @@ paths:
       - Sales Orders
 components:
   schemas:
-    v1AddonActivation:
-      description: A single addon and its corresponding activation status within an order.
-      properties:
-        activationStatus:
-          $ref: '#/components/schemas/v1ActivationStatus'
-        addonId:
-          description: Output only. Unique identifier of the addon that is going through the activation process.
-          readOnly: true
-          type: string
-        appId:
-          description: Output only. Unique identifier of the parent app for the addon.
-          readOnly: true
-          type: string
-      title: Addon Activation
-      type: object
-    v1FulfillmentOrderStatus:
-      default: FULFILLMENT_STATUS_UNSET
-      description: " - FULFILLMENT_STATUS_DETAILS_NEEDED: Details Needed: Fulfillment Form needs to be submitted\n - FULFILLMENT_STATUS_IN_REVIEW: In Review: Fulfillment Form has been submitted. Vendor is reviewing submission\n - FULFILLMENT_STATUS_IN_PROGRESS: In Progress: Fulfillment Form has required info and work has begun to deliver order.\n - FULFILLMENT_STATUS_COMPLETED: Completed: Work for the order is done and has been delivered.\n - FULFILLMENT_STATUS_CANCELLED: Cancelled: Fulfillment has not been completed and will not be completed."
-      enum:
-      - FULFILLMENT_STATUS_UNSET
-      - FULFILLMENT_STATUS_DETAILS_NEEDED
-      - FULFILLMENT_STATUS_IN_REVIEW
-      - FULFILLMENT_STATUS_IN_PROGRESS
-      - FULFILLMENT_STATUS_COMPLETED
-      - FULFILLMENT_STATUS_CANCELLED
-      type: string
-    v1ListSalesOrderResponse:
-      properties:
-        hasMore:
-          title: Whether or not more results exist
-          type: boolean
-        nextCursor:
-          title: A cursor that can be provided to retrieve the next page of results
-          type: string
-        orders:
-          items:
-            $ref: '#/components/schemas/v1Order'
-          title: list of the requested sales order data
-          type: array
-        totalResults:
-          format: int64
-          title: The number of total results there are
-          type: string
-      title: Response to get a list of orders for a partner
-      type: object
-    salesv1Duration:
-      properties:
-        duration:
-          $ref: '#/components/schemas/v1DurationPeriod'
-        value:
-          description: Value for duration of time of a given operation.
-          format: int64
-          type: string
-      type: object
-    v1CommonField:
-      description: A field answer that may be shared across multiple products or addons.
-      properties:
-        addonKeys:
-          description: Optional. List of addon keys that share the common field.
-          items:
-            $ref: '#/components/schemas/v1AddonKey'
-          type: array
-        field:
-          $ref: '#/components/schemas/v1Field'
-        productIds:
-          description: Optional. List of unique product identifiers that share the common field.
-          items:
-            type: string
-          type: array
-      title: Common Field
-      type: object
     v1Origin:
       default: SSC
       enum:
@@ -175,157 +104,6 @@ components:
       - PC
       - IMPORT
       title: Origin of the create request, whether a salesperson or smb created it
-      type: string
-    v1Salesperson:
-      description: Details about the salesperson who submitted the order.
-      properties:
-        email:
-          description: Output only. The email address of the salesperson.
-          readOnly: true
-          type: string
-        firstName:
-          description: Output only. The first name of the salesperson.
-          readOnly: true
-          type: string
-        lastName:
-          description: Output only. The last name of the salesperson.
-          readOnly: true
-          type: string
-        phoneNumber:
-          description: Output only. The phone number of the salesperson.
-          readOnly: true
-          type: string
-      title: Salesperson
-      type: object
-    v1CreateSalesOrderResponse:
-      properties:
-        orderId:
-          title: Unique identifier of an order
-          type: string
-      title: Response of creating an order
-      type: object
-    v1Revenue:
-      properties:
-        revenueComponents:
-          items:
-            $ref: '#/components/schemas/v1RevenueComponent'
-          type: array
-      title: Revenue represents the retail price of an order
-      type: object
-    v1LineItem:
-      properties:
-        appKey:
-          $ref: '#/components/schemas/LineItemAppKey'
-        autoBillable:
-          title: 'DEPRECATED: use non_billable instead'
-          type: boolean
-        billToRecipientId:
-          description: 'The billing recipient for this line item.
-
-            When set to a partner_id, wholesale billing applies (default behavior).
-
-            When set to an account_group_id, retail billing is triggered for that customer.
-
-            When empty, defaults to the merchant (partner) paying wholesale.'
-          type: string
-        billingPeriod:
-          $ref: '#/components/schemas/v1BillingPeriod'
-        cost:
-          $ref: '#/components/schemas/v1Cost'
-        currency:
-          $ref: '#/components/schemas/v1Currency'
-        currencyCode:
-          description: The 3-letter currency code defined in ISO 4217.
-          type: string
-        currentRevenue:
-          $ref: '#/components/schemas/v1Revenue'
-        customPrices:
-          items:
-            $ref: '#/components/schemas/v1CustomPriceMapping'
-          title: The custom price mapping for variable priced products in a package in the order
-          type: array
-        initialRevenue:
-          $ref: '#/components/schemas/v1Revenue'
-        isTrial:
-          title: Only used when AppKey is the identifier
-          type: boolean
-        nonBillable:
-          title: 'Indicates whether this line item should be billable or not
-
-            If true, the item will not be billed'
-          type: boolean
-        packageId:
-          type: string
-        quantity:
-          format: int64
-          type: string
-        retailSubscriptionGroupId:
-          title: The retail subscription group id that this line item belongs to (if any)
-          type: string
-        taxRateIds:
-          items:
-            type: string
-          title: The tax rate ids that apply to this line item
-          type: array
-      type: object
-    v1RetailSubscriptionGroup:
-      properties:
-        displayOption:
-          $ref: '#/components/schemas/v1RetailSubscriptionGroupDisplayOption'
-        iconUrl:
-          title: The icon url of the retail subscription group
-          type: string
-        name:
-          title: The name of the retail subscription group
-          type: string
-        sourceIdentifier:
-          title: The source identifier of the retail subscription group
-          type: string
-      type: object
-    v1SalesOrderProjectionFilter:
-      properties:
-        includeCustomerRecipient:
-          title: Indicates whether customer recipient data should be included
-          type: boolean
-        includeUserInfoInStatusHistory:
-          title: Indicates whether info and role should be included about the user in the status history
-          type: boolean
-      type: object
-    salesordersv1Status:
-      default: SUBMITTED
-      description: "- SUBMITTED: Submitted is the status when an order is ready for admin approval\n - APPROVED: Approved is the status when an order is has been approved by an admin\n - DECLINED: Declined is the status when an order is has been declined by an admin or a smb\n - DRAFTED: Drafted is currently not used but would be the state the order can be created in before it's sent to someone else\n - FULFILLED: Fulfilled is the status when an order has had all of the products activated\n - PROCESSING: Processing is the status when an order is currently activating the products\n - ACTIVATION_ERRORS: ActivationErrors is the status when an order is has encountered an error when activating products\n - ARCHIVED: Archived is the status to use when hiding the orders from the ui unless explicitly asked for\n - SUBMITTED_FOR_CUSTOMER_APPROVAL: SubmittedForCustomerApproval is the status when an order has been sent to a SMB to approve\n - CANCELLATION_REQUESTED: CancellationRequested is the status when a sales person requests to cancel a full order\n - CANCELLED: Cancelled is the status when a after an admin has approved a Cancellation\n - SCHEDULED_ACTIVATION: ScheduledActivation is the status of an order after the admin requests to activate products on the contract start date\n - AWAITING_PAYMENT: AwaitingPayment is the status of a BIY order on creation before we attempt to charge\n - PROCESSING_PAYMENT: ProcessingPayment is the status of a BIY order while waiting on confirmation for the charge\n - RESUBMITTED: Resubmitted is the status of an order when it has been resubmitted for admin approval, after being submitted at least one other time in the past"
-      enum:
-      - SUBMITTED
-      - APPROVED
-      - DECLINED
-      - DRAFTED
-      - FULFILLED
-      - PROCESSING
-      - ACTIVATION_ERRORS
-      - ARCHIVED
-      - SUBMITTED_FOR_CUSTOMER_APPROVAL
-      - CANCELLATION_REQUESTED
-      - CANCELLED
-      - SCHEDULED_ACTIVATION
-      - AWAITING_PAYMENT
-      - PROCESSING_PAYMENT
-      - RESUBMITTED
-      title: The different statuses representing any given state an order can be in
-      type: string
-    v1ListSalesOrderRequestSortOption:
-      properties:
-        direction:
-          $ref: '#/components/schemas/v1ListSalesOrderRequestSortDirection'
-        field:
-          $ref: '#/components/schemas/v1ListSalesOrderRequestSortField'
-      title: Options for controlling the order of query results
-      type: object
-    v1Source:
-      default: SOURCE_INVALID
-      enum:
-      - SOURCE_INVALID
-      - SOURCE_SYSTEM
-      - SOURCE_SYSTEM_ADMIN
       type: string
     v1RevenueComponent:
       properties:
@@ -339,49 +117,27 @@ components:
           format: int64
           type: string
       type: object
-    v1Field:
-      description: An information field pertaining to a product, containing a question and its answer.
+    v1DurationPeriod:
+      default: UNSPECIFIED
+      enum:
+      - UNSPECIFIED
+      - MONTH
+      - YEAR
+      - DAY
+      - WEEK
+      type: string
+    v1RetailSubscriptionGroupDisplayOption:
+      default: DISPLAY_OPTION_INVALID
+      enum:
+      - DISPLAY_OPTION_INVALID
+      - SHOW_CONTENT_SHOW_PRICES
+      - SHOW_CONTENT_HIDE_PRICES
+      - HIDE_CONTENT_HIDE_PRICES
+      type: string
+    protobufAny:
+      additionalProperties: {}
       properties:
-        answer:
-          description: Optional. Response related to the question of the field_id.
-          type: string
-        description:
-          description: Optional. The description of the field.
-          type: string
-        fieldId:
-          description: Required. Unique identifier of a custom or common field.
-          type: string
-        fieldType:
-          $ref: '#/components/schemas/v1FieldType'
-        label:
-          description: Optional. The question for the custom or common field.
-          type: string
-        prefix:
-          description: Optional. For textbox fields, this string will be displayed in front of the textbox.
-          type: string
-        regexErrorMessage:
-          description: Optional. The error message displayed if the regex_validator does not match the answer.
-          type: string
-        regexValidator:
-          description: Optional. A regex string used to validate a field's answer.
-          type: string
-        suffix:
-          description: Optional. For textbox fields, this string will be displayed behind the textbox.
-          type: string
-      required:
-      - fieldId
-      title: Field
-      type: object
-    googlerpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
+        '@type':
           type: string
       type: object
     v1CreateSalesOrderRequest:
@@ -485,6 +241,26 @@ components:
           type: boolean
       title: Containing information to create a new order
       type: object
+    v1FulfillmentOrderStatus:
+      default: FULFILLMENT_STATUS_UNSET
+      description: " - FULFILLMENT_STATUS_DETAILS_NEEDED: Details Needed: Fulfillment Form needs to be submitted\n - FULFILLMENT_STATUS_IN_REVIEW: In Review: Fulfillment Form has been submitted. Vendor is reviewing submission\n - FULFILLMENT_STATUS_IN_PROGRESS: In Progress: Fulfillment Form has required info and work has begun to deliver order.\n - FULFILLMENT_STATUS_COMPLETED: Completed: Work for the order is done and has been delivered.\n - FULFILLMENT_STATUS_CANCELLED: Cancelled: Fulfillment has not been completed and will not be completed."
+      enum:
+      - FULFILLMENT_STATUS_UNSET
+      - FULFILLMENT_STATUS_DETAILS_NEEDED
+      - FULFILLMENT_STATUS_IN_REVIEW
+      - FULFILLMENT_STATUS_IN_PROGRESS
+      - FULFILLMENT_STATUS_COMPLETED
+      - FULFILLMENT_STATUS_CANCELLED
+      type: string
+    v1AddonKey:
+      properties:
+        addonId:
+          title: Unique identifier of an addon
+          type: string
+        appId:
+          title: The parent app for the addon
+          type: string
+      type: object
     v1UserRole:
       default: USER_ROLE_UNSPECIFIED
       enum:
@@ -493,24 +269,25 @@ components:
       - USER_ROLE_SALESPERSON
       - USER_ROLE_CLIENT
       type: string
-    LineItemAppKey:
-      properties:
-        appId:
-          type: string
-        editionId:
-          type: string
-        packageId:
-          description: A package id is optional, it is used to group line items together in a package.
-          type: string
-        packageInstanceId:
-          description: 'A package instance id keeps track of the package instance that a line item belongs to. For example, if the customer purchases two packages that contain the same product,
-
-            this will identify which package the product belongs to.
-
-
-            This must be provided if a package id is provided, and should not be provided if there is no package id provided. The ID should be a uuid.'
-          type: string
-      type: object
+    v1Source:
+      default: SOURCE_INVALID
+      enum:
+      - SOURCE_INVALID
+      - SOURCE_SYSTEM
+      - SOURCE_SYSTEM_ADMIN
+      type: string
+    v1Currency:
+      default: USD
+      description: '- ZAR: Do not add to this list. If more currencies are required currency_code should be used instead'
+      enum:
+      - USD
+      - CAD
+      - EUR
+      - AUD
+      - GBP
+      - NZD
+      - ZAR
+      type: string
     v1CustomField:
       description: A set of custom field answers that are unique to a specific product or addon.
       properties:
@@ -526,269 +303,36 @@ components:
           type: string
       title: Custom Field
       type: object
-    v1ActivationStatus:
-      default: PENDING
-      description: "- PENDING: The product is in the process of being activated\n - ACTIVATED: The product was successfully activated via the order\n - ERRORED: An error occured while activating the product during the activation step\n - ALREADY_ACTIVATED: The product was already active prior to fulfilling the order\n - IGNORED_ERRORS: An error occurred while activating the product during the activation step but then the item was marked as ignored errors\n - CANCELED: The product was requested to be deactivated at a time in the future (awaiting a deactivation date)\n - DEACTIVATED: The product has been deactivated/turned off\n - UNKNOWN: The product activation status is in an unknown status. Otherwise a client will inaccurately assume the default status is Pending.\n - SCHEDULED: The product activation has been scheduled\n - UNSCHEDULED: The product activation has been unscheduled"
-      enum:
-      - PENDING
-      - ACTIVATED
-      - ERRORED
-      - ALREADY_ACTIVATED
-      - IGNORED_ERRORS
-      - CANCELED
-      - DEACTIVATED
-      - UNKNOWN
-      - SCHEDULED
-      - UNSCHEDULED
-      title: The different statuses representing any given state that a product can be in during the activation process
-      type: string
-    v1FieldType:
-      default: NOT_SPECIFIED
-      enum:
-      - NOT_SPECIFIED
-      - TEXT
-      - TEXTAREA
-      - DROPDOWN
-      - CHECKBOX
-      - FILE
-      - VBCUSER
-      title: Available types that a field can be
-      type: string
-    v1ListSalesOrderRequestFilters:
-      properties:
-        businessId:
-          title: Singular business filter
-          type: string
-        created:
-          $ref: '#/components/schemas/v1ListSalesOrderRequestDateRangeFilter'
-        expiryDate:
-          $ref: '#/components/schemas/v1ListSalesOrderRequestDateRangeFilter'
-        includeArchivedOrders:
-          title: Will include archived orders if true
-          type: boolean
-        marketId:
-          title: 'DEPRECATED: Singular market filter. Use market_ids instead. If both are supplied, market_ids will be used instead'
-          type: string
-        marketIds:
-          items:
-            type: string
-          title: Multi market request
-          type: array
-        orderId:
-          title: 'DEPRECATED: Singular order identifier to filter for. Use order_ids instead. If both are supplied, order_ids will be used instead'
-          type: string
-        orderIds:
-          items:
-            type: string
-          title: Multiple order identifiers to filter for
-          type: array
-        packageId:
-          title: Singular package filter
-          type: string
-        productEditionId:
-          title: Singular product edition filter
-          type: string
-        productId:
-          title: Singular product filter
-          type: string
-        requestedActivation:
-          $ref: '#/components/schemas/v1ListSalesOrderRequestDateRangeFilter'
-        salespersonId:
-          title: 'DEPRECATED: Singular salesperson filter.  Use salesperson_ids instead.  If both are supplied, salesperson_ids
-
-            will be used instead'
-          type: string
-        salespersonIds:
-          items:
-            type: string
-          title: Multiple salesperson filter
-          type: array
-        statuses:
-          items:
-            $ref: '#/components/schemas/salesordersv1Status'
-          title: Multiple status filter
-          type: array
-        tags:
-          items:
-            type: string
-          title: Tags required to be on the order
-          type: array
-        untagged:
-          description: Will filter for orders that don't have tags if true.
-          type: boolean
-      title: Filters to list sales orders based on given filter criterias
-      type: object
-    v1CustomerRecipient:
-      description: Details about the customer who receives the order.
-      properties:
-        firstName:
-          description: Output only. The user's first name.
-          readOnly: true
-          type: string
-        lastName:
-          description: Output only. The user's last name.
-          readOnly: true
-          type: string
-        userId:
-          description: Output only. The ID of the user.
-          readOnly: true
-          type: string
-      title: Customer Recipient
-      type: object
-    v1Business:
-      description: Details about the business that an order is associated with.
-      properties:
-        address:
-          description: Output only. The primary address of the business.
-          readOnly: true
-          type: string
-        address2:
-          description: Output only. The secondary address line of the business.
-          readOnly: true
-          type: string
-        city:
-          description: Output only. The city of the business.
-          readOnly: true
-          type: string
-        companyName:
-          description: Output only. The company name of the business.
-          readOnly: true
-          type: string
-        country:
-          description: Output only. The country of the business.
-          readOnly: true
-          type: string
-        deleted:
-          description: Output only. Whether the business has been deleted.
-          readOnly: true
-          type: boolean
-        phoneNumber:
-          description: Output only. The phone number of the business.
-          readOnly: true
-          type: string
-        state:
-          description: Output only. The state or province of the business.
-          readOnly: true
-          type: string
-        website:
-          description: Output only. The website URL of the business.
-          readOnly: true
-          type: string
-        zip:
-          description: Output only. The postal or zip code of the business.
-          readOnly: true
-          type: string
-      title: Business
-      type: object
-    v1RevenuePeriod:
-      default: ONETIME
-      enum:
-      - ONETIME
-      - DAILY
-      - WEEKLY
-      - BIWEEKLY
-      - MONTHLY
-      - YEARLY
-      type: string
-    v1RetailSubscriptionGroupDisplayOption:
-      default: DISPLAY_OPTION_INVALID
-      enum:
-      - DISPLAY_OPTION_INVALID
-      - SHOW_CONTENT_SHOW_PRICES
-      - SHOW_CONTENT_HIDE_PRICES
-      - HIDE_CONTENT_HIDE_PRICES
-      type: string
-    v1CustomPriceMapping:
-      properties:
-        customPrice:
-          format: int64
-          title: The custom price value of the product
-          type: string
-        productId:
-          title: The ID of the product
-          type: string
-      title: Representing custom prices for variable priced products in a package
-      type: object
-    v1BillingPeriod:
-      properties:
-        duration:
-          $ref: '#/components/schemas/salesv1Duration'
-        endDate:
-          format: date-time
-          title: The end date of the billing period
-          type: string
-        startDate:
-          format: date-time
-          title: The start date of the billing period
-          type: string
-      title: The Time frame to bill for
-      type: object
-    v1ListSalesOrderRequestDateRangeFilter:
-      properties:
-        beginRange:
-          format: date-time
-          type: string
-        endRange:
-          format: date-time
-          type: string
-      title: Begin and end of date range
-      type: object
-    v1Package:
+    v1CommonField:
+      description: A field answer that may be shared across multiple products or addons.
       properties:
         addonKeys:
+          description: Optional. List of addon keys that share the common field.
           items:
             $ref: '#/components/schemas/v1AddonKey'
-          title: 'DEPRECATED: get the addons that are in a package from marketplace'
           type: array
-        currency:
-          $ref: '#/components/schemas/v1Currency'
-        customPrices:
-          items:
-            $ref: '#/components/schemas/v1CustomPriceMapping'
-          title: The custom price mapping of the order
-          type: array
-        packageId:
-          title: Unique identifier of a package
-          type: string
+        field:
+          $ref: '#/components/schemas/v1Field'
         productIds:
+          description: Optional. List of unique product identifiers that share the common field.
           items:
             type: string
-          title: 'List of unique identifiers for the products that belong to the package
-
-            DEPRECATED: get the products that are in a package from marketplace'
           type: array
-        quantity:
-          format: int64
-          title: How many of the package is being requested
-          type: string
-        revenue:
-          $ref: '#/components/schemas/v1Revenue'
-      title: Representing a package in an order
+      title: Common Field
       type: object
-    v1TaxOptions:
+    v1RetailSubscriptionGroup:
       properties:
-        initialAmount:
-          format: int64
-          title: The initial amount (in cents) of tax to be applied to an order after all tax rules have been taken into account
+        displayOption:
+          $ref: '#/components/schemas/v1RetailSubscriptionGroupDisplayOption'
+        iconUrl:
+          title: The icon url of the retail subscription group
           type: string
-        label:
-          title: Setting that defines a name for a given tax that should be applied to an order
+        name:
+          title: The name of the retail subscription group
           type: string
-        percentageMultiplier:
-          format: double
-          title: Setting that defines a tax percentage multiplier with a precision between 0.0000 and 1.0000
-          type: number
-        taxRateId:
-          title: The id of the tax rate that this tax corresponds to
+        sourceIdentifier:
+          title: The source identifier of the retail subscription group
           type: string
-      type: object
-    v1Cost:
-      properties:
-        customPrice:
-          format: int64
-          title: The custom price of the order item. Can only be changed if the application supports custom pricing
-          type: string
-      title: Cost represents the wholesale cost of an order
       type: object
     v1Order:
       description: A sales order representing a request to activate products for a business.
@@ -981,11 +525,430 @@ components:
       - businessId
       title: Order
       type: object
-    protobufAny:
-      additionalProperties: {}
+    v1TaxOptions:
       properties:
-        '@type':
+        initialAmount:
+          format: int64
+          title: The initial amount (in cents) of tax to be applied to an order after all tax rules have been taken into account
           type: string
+        label:
+          title: Setting that defines a name for a given tax that should be applied to an order
+          type: string
+        percentageMultiplier:
+          format: double
+          title: Setting that defines a tax percentage multiplier with a precision between 0.0000 and 1.0000
+          type: number
+        taxRateId:
+          title: The id of the tax rate that this tax corresponds to
+          type: string
+      type: object
+    v1Field:
+      description: An information field pertaining to a product, containing a question and its answer.
+      properties:
+        answer:
+          description: Optional. Response related to the question of the field_id.
+          type: string
+        description:
+          description: Optional. The description of the field.
+          type: string
+        fieldId:
+          description: Required. Unique identifier of a custom or common field.
+          type: string
+        fieldType:
+          $ref: '#/components/schemas/v1FieldType'
+        label:
+          description: Optional. The question for the custom or common field.
+          type: string
+        prefix:
+          description: Optional. For textbox fields, this string will be displayed in front of the textbox.
+          type: string
+        regexErrorMessage:
+          description: Optional. The error message displayed if the regex_validator does not match the answer.
+          type: string
+        regexValidator:
+          description: Optional. A regex string used to validate a field's answer.
+          type: string
+        suffix:
+          description: Optional. For textbox fields, this string will be displayed behind the textbox.
+          type: string
+      required:
+      - fieldId
+      title: Field
+      type: object
+    v1CustomPriceMapping:
+      properties:
+        customPrice:
+          format: int64
+          title: The custom price value of the product
+          type: string
+        productId:
+          title: The ID of the product
+          type: string
+      title: Representing custom prices for variable priced products in a package
+      type: object
+    v1Agreement:
+      description: A terms of service agreement that a customer has accepted or declined on an order.
+      properties:
+        agreed:
+          description: Required. Whether or not the user agreed.
+          type: boolean
+        term:
+          description: Required. The term that the user may have agreed to.
+          type: string
+        userId:
+          description: Required. The user who may have agreed to this agreement.
+          type: string
+      required:
+      - userId
+      - term
+      - agreed
+      title: Agreement
+      type: object
+    v1CustomerRecipient:
+      description: Details about the customer who receives the order.
+      properties:
+        firstName:
+          description: Output only. The user's first name.
+          readOnly: true
+          type: string
+        lastName:
+          description: Output only. The user's last name.
+          readOnly: true
+          type: string
+        userId:
+          description: Output only. The ID of the user.
+          readOnly: true
+          type: string
+      title: Customer Recipient
+      type: object
+    v1Business:
+      description: Details about the business that an order is associated with.
+      properties:
+        address:
+          description: Output only. The primary address of the business.
+          readOnly: true
+          type: string
+        address2:
+          description: Output only. The secondary address line of the business.
+          readOnly: true
+          type: string
+        city:
+          description: Output only. The city of the business.
+          readOnly: true
+          type: string
+        companyName:
+          description: Output only. The company name of the business.
+          readOnly: true
+          type: string
+        country:
+          description: Output only. The country of the business.
+          readOnly: true
+          type: string
+        deleted:
+          description: Output only. Whether the business has been deleted.
+          readOnly: true
+          type: boolean
+        phoneNumber:
+          description: Output only. The phone number of the business.
+          readOnly: true
+          type: string
+        state:
+          description: Output only. The state or province of the business.
+          readOnly: true
+          type: string
+        website:
+          description: Output only. The website URL of the business.
+          readOnly: true
+          type: string
+        zip:
+          description: Output only. The postal or zip code of the business.
+          readOnly: true
+          type: string
+      title: Business
+      type: object
+    v1ListSalesOrderResponse:
+      properties:
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
+          type: string
+        orders:
+          items:
+            $ref: '#/components/schemas/v1Order'
+          title: list of the requested sales order data
+          type: array
+        totalResults:
+          format: int64
+          title: The number of total results there are
+          type: string
+      title: Response to get a list of orders for a partner
+      type: object
+    v1BillingPeriod:
+      properties:
+        duration:
+          $ref: '#/components/schemas/salesv1Duration'
+        endDate:
+          format: date-time
+          title: The end date of the billing period
+          type: string
+        startDate:
+          format: date-time
+          title: The start date of the billing period
+          type: string
+      title: The Time frame to bill for
+      type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1FieldType:
+      default: NOT_SPECIFIED
+      enum:
+      - NOT_SPECIFIED
+      - TEXT
+      - TEXTAREA
+      - DROPDOWN
+      - CHECKBOX
+      - FILE
+      - VBCUSER
+      title: Available types that a field can be
+      type: string
+    v1SalesOrderProjectionFilter:
+      properties:
+        includeCustomerRecipient:
+          title: Indicates whether customer recipient data should be included
+          type: boolean
+        includeUserInfoInStatusHistory:
+          title: Indicates whether info and role should be included about the user in the status history
+          type: boolean
+      type: object
+    v1Attachment:
+      description: A file attachment associated with an order.
+      properties:
+        name:
+          description: Required. The name of the attachment.
+          type: string
+        url:
+          description: Required. The URL to the attachment.
+          type: string
+      required:
+      - name
+      - url
+      title: Attachment
+      type: object
+    v1GetSalesOrderRequest:
+      properties:
+        businessId:
+          title: The business the order belongs to
+          type: string
+        orderId:
+          title: Unique identifier of an order
+          type: string
+        projectionFilter:
+          $ref: '#/components/schemas/v1SalesOrderProjectionFilter'
+      title: Containing information to get an order
+      type: object
+    v1RevenuePeriod:
+      default: ONETIME
+      enum:
+      - ONETIME
+      - DAILY
+      - WEEKLY
+      - BIWEEKLY
+      - MONTHLY
+      - YEARLY
+      type: string
+    v1ListSalesOrderRequestFilters:
+      properties:
+        businessId:
+          title: Singular business filter
+          type: string
+        created:
+          $ref: '#/components/schemas/v1ListSalesOrderRequestDateRangeFilter'
+        expiryDate:
+          $ref: '#/components/schemas/v1ListSalesOrderRequestDateRangeFilter'
+        includeArchivedOrders:
+          title: Will include archived orders if true
+          type: boolean
+        marketId:
+          title: 'DEPRECATED: Singular market filter. Use market_ids instead. If both are supplied, market_ids will be used instead'
+          type: string
+        marketIds:
+          items:
+            type: string
+          title: Multi market request
+          type: array
+        orderId:
+          title: 'DEPRECATED: Singular order identifier to filter for. Use order_ids instead. If both are supplied, order_ids will be used instead'
+          type: string
+        orderIds:
+          items:
+            type: string
+          title: Multiple order identifiers to filter for
+          type: array
+        packageId:
+          title: Singular package filter
+          type: string
+        productEditionId:
+          title: Singular product edition filter
+          type: string
+        productId:
+          title: Singular product filter
+          type: string
+        requestedActivation:
+          $ref: '#/components/schemas/v1ListSalesOrderRequestDateRangeFilter'
+        salespersonId:
+          title: 'DEPRECATED: Singular salesperson filter.  Use salesperson_ids instead.  If both are supplied, salesperson_ids
+
+            will be used instead'
+          type: string
+        salespersonIds:
+          items:
+            type: string
+          title: Multiple salesperson filter
+          type: array
+        statuses:
+          items:
+            $ref: '#/components/schemas/salesordersv1Status'
+          title: Multiple status filter
+          type: array
+        tags:
+          items:
+            type: string
+          title: Tags required to be on the order
+          type: array
+        untagged:
+          description: Will filter for orders that don't have tags if true.
+          type: boolean
+      title: Filters to list sales orders based on given filter criterias
+      type: object
+    v1ActivationStatus:
+      default: PENDING
+      description: "- PENDING: The product is in the process of being activated\n - ACTIVATED: The product was successfully activated via the order\n - ERRORED: An error occured while activating the product during the activation step\n - ALREADY_ACTIVATED: The product was already active prior to fulfilling the order\n - IGNORED_ERRORS: An error occurred while activating the product during the activation step but then the item was marked as ignored errors\n - CANCELED: The product was requested to be deactivated at a time in the future (awaiting a deactivation date)\n - DEACTIVATED: The product has been deactivated/turned off\n - UNKNOWN: The product activation status is in an unknown status. Otherwise a client will inaccurately assume the default status is Pending.\n - SCHEDULED: The product activation has been scheduled\n - UNSCHEDULED: The product activation has been unscheduled"
+      enum:
+      - PENDING
+      - ACTIVATED
+      - ERRORED
+      - ALREADY_ACTIVATED
+      - IGNORED_ERRORS
+      - CANCELED
+      - DEACTIVATED
+      - UNKNOWN
+      - SCHEDULED
+      - UNSCHEDULED
+      title: The different statuses representing any given state that a product can be in during the activation process
+      type: string
+    v1Salesperson:
+      description: Details about the salesperson who submitted the order.
+      properties:
+        email:
+          description: Output only. The email address of the salesperson.
+          readOnly: true
+          type: string
+        firstName:
+          description: Output only. The first name of the salesperson.
+          readOnly: true
+          type: string
+        lastName:
+          description: Output only. The last name of the salesperson.
+          readOnly: true
+          type: string
+        phoneNumber:
+          description: Output only. The phone number of the salesperson.
+          readOnly: true
+          type: string
+      title: Salesperson
+      type: object
+    salesordersv1Status:
+      default: SUBMITTED
+      description: "- SUBMITTED: Submitted is the status when an order is ready for admin approval\n - APPROVED: Approved is the status when an order is has been approved by an admin\n - DECLINED: Declined is the status when an order is has been declined by an admin or a smb\n - DRAFTED: Drafted is currently not used but would be the state the order can be created in before it's sent to someone else\n - FULFILLED: Fulfilled is the status when an order has had all of the products activated\n - PROCESSING: Processing is the status when an order is currently activating the products\n - ACTIVATION_ERRORS: ActivationErrors is the status when an order is has encountered an error when activating products\n - ARCHIVED: Archived is the status to use when hiding the orders from the ui unless explicitly asked for\n - SUBMITTED_FOR_CUSTOMER_APPROVAL: SubmittedForCustomerApproval is the status when an order has been sent to a SMB to approve\n - CANCELLATION_REQUESTED: CancellationRequested is the status when a sales person requests to cancel a full order\n - CANCELLED: Cancelled is the status when a after an admin has approved a Cancellation\n - SCHEDULED_ACTIVATION: ScheduledActivation is the status of an order after the admin requests to activate products on the contract start date\n - AWAITING_PAYMENT: AwaitingPayment is the status of a BIY order on creation before we attempt to charge\n - PROCESSING_PAYMENT: ProcessingPayment is the status of a BIY order while waiting on confirmation for the charge\n - RESUBMITTED: Resubmitted is the status of an order when it has been resubmitted for admin approval, after being submitted at least one other time in the past"
+      enum:
+      - SUBMITTED
+      - APPROVED
+      - DECLINED
+      - DRAFTED
+      - FULFILLED
+      - PROCESSING
+      - ACTIVATION_ERRORS
+      - ARCHIVED
+      - SUBMITTED_FOR_CUSTOMER_APPROVAL
+      - CANCELLATION_REQUESTED
+      - CANCELLED
+      - SCHEDULED_ACTIVATION
+      - AWAITING_PAYMENT
+      - PROCESSING_PAYMENT
+      - RESUBMITTED
+      title: The different statuses representing any given state an order can be in
+      type: string
+    v1GetSalesOrderResponse:
+      properties:
+        order:
+          $ref: '#/components/schemas/v1Order'
+      title: Response of getting an order
+      type: object
+    v1Revenue:
+      properties:
+        revenueComponents:
+          items:
+            $ref: '#/components/schemas/v1RevenueComponent'
+          type: array
+      title: Revenue represents the retail price of an order
+      type: object
+    v1Cost:
+      properties:
+        customPrice:
+          format: int64
+          title: The custom price of the order item. Can only be changed if the application supports custom pricing
+          type: string
+      title: Cost represents the wholesale cost of an order
+      type: object
+    v1AddonActivation:
+      description: A single addon and its corresponding activation status within an order.
+      properties:
+        activationStatus:
+          $ref: '#/components/schemas/v1ActivationStatus'
+        addonId:
+          description: Output only. Unique identifier of the addon that is going through the activation process.
+          readOnly: true
+          type: string
+        appId:
+          description: Output only. Unique identifier of the parent app for the addon.
+          readOnly: true
+          type: string
+      title: Addon Activation
+      type: object
+    v1Product:
+      properties:
+        currency:
+          $ref: '#/components/schemas/v1Currency'
+        editionId:
+          title: Optional unique identifier for the edition of the product that will be activated when an order if fulfilled
+          type: string
+        parentProductId:
+          title: Optional unique identifier for the parent of product that will be activated when an order is fulfilled
+          type: string
+        productId:
+          title: Unique identifier of the product that will be activated when an order is fulfilled
+          type: string
+        revenue:
+          $ref: '#/components/schemas/v1Revenue'
+      type: object
+    v1CreateSalesOrderResponse:
+      properties:
+        orderId:
+          title: Unique identifier of an order
+          type: string
+      title: Response of creating an order
       type: object
     v1ListSalesOrderRequest:
       properties:
@@ -1023,21 +986,74 @@ components:
       - DESCENDING
       title: The directions that a result set can be sorted in
       type: string
-    v1Product:
+    LineItemAppKey:
       properties:
+        appId:
+          type: string
+        editionId:
+          type: string
+        packageId:
+          description: A package id is optional, it is used to group line items together in a package.
+          type: string
+        packageInstanceId:
+          description: 'A package instance id keeps track of the package instance that a line item belongs to. For example, if the customer purchases two packages that contain the same product,
+
+            this will identify which package the product belongs to.
+
+
+            This must be provided if a package id is provided, and should not be provided if there is no package id provided. The ID should be a uuid.'
+          type: string
+      type: object
+    v1ListSalesOrderRequestDateRangeFilter:
+      properties:
+        beginRange:
+          format: date-time
+          type: string
+        endRange:
+          format: date-time
+          type: string
+      title: Begin and end of date range
+      type: object
+    salesv1Duration:
+      properties:
+        duration:
+          $ref: '#/components/schemas/v1DurationPeriod'
+        value:
+          description: Value for duration of time of a given operation.
+          format: int64
+          type: string
+      type: object
+    v1Package:
+      properties:
+        addonKeys:
+          items:
+            $ref: '#/components/schemas/v1AddonKey'
+          title: 'DEPRECATED: get the addons that are in a package from marketplace'
+          type: array
         currency:
           $ref: '#/components/schemas/v1Currency'
-        editionId:
-          title: Optional unique identifier for the edition of the product that will be activated when an order if fulfilled
+        customPrices:
+          items:
+            $ref: '#/components/schemas/v1CustomPriceMapping'
+          title: The custom price mapping of the order
+          type: array
+        packageId:
+          title: Unique identifier of a package
           type: string
-        parentProductId:
-          title: Optional unique identifier for the parent of product that will be activated when an order is fulfilled
-          type: string
-        productId:
-          title: Unique identifier of the product that will be activated when an order is fulfilled
+        productIds:
+          items:
+            type: string
+          title: 'List of unique identifiers for the products that belong to the package
+
+            DEPRECATED: get the products that are in a package from marketplace'
+          type: array
+        quantity:
+          format: int64
+          title: How many of the package is being requested
           type: string
         revenue:
           $ref: '#/components/schemas/v1Revenue'
+      title: Representing a package in an order
       type: object
     v1ProductActivation:
       description: A single product and its corresponding activation status within an order.
@@ -1070,14 +1086,69 @@ components:
           type: string
       title: Product Activation
       type: object
-    v1AddonKey:
+    v1ListSalesOrderRequestSortOption:
       properties:
-        addonId:
-          title: Unique identifier of an addon
+        direction:
+          $ref: '#/components/schemas/v1ListSalesOrderRequestSortDirection'
+        field:
+          $ref: '#/components/schemas/v1ListSalesOrderRequestSortField'
+      title: Options for controlling the order of query results
+      type: object
+    v1LineItem:
+      properties:
+        appKey:
+          $ref: '#/components/schemas/LineItemAppKey'
+        autoBillable:
+          title: 'DEPRECATED: use non_billable instead'
+          type: boolean
+        billToRecipientId:
+          description: 'The billing recipient for this line item.
+
+            When set to a partner_id, wholesale billing applies (default behavior).
+
+            When set to an account_group_id, retail billing is triggered for that customer.
+
+            When empty, defaults to the merchant (partner) paying wholesale.'
           type: string
-        appId:
-          title: The parent app for the addon
+        billingPeriod:
+          $ref: '#/components/schemas/v1BillingPeriod'
+        cost:
+          $ref: '#/components/schemas/v1Cost'
+        currency:
+          $ref: '#/components/schemas/v1Currency'
+        currencyCode:
+          description: The 3-letter currency code defined in ISO 4217.
           type: string
+        currentRevenue:
+          $ref: '#/components/schemas/v1Revenue'
+        customPrices:
+          items:
+            $ref: '#/components/schemas/v1CustomPriceMapping'
+          title: The custom price mapping for variable priced products in a package in the order
+          type: array
+        initialRevenue:
+          $ref: '#/components/schemas/v1Revenue'
+        isTrial:
+          title: Only used when AppKey is the identifier
+          type: boolean
+        nonBillable:
+          title: 'Indicates whether this line item should be billable or not
+
+            If true, the item will not be billed'
+          type: boolean
+        packageId:
+          type: string
+        quantity:
+          format: int64
+          type: string
+        retailSubscriptionGroupId:
+          title: The retail subscription group id that this line item belongs to (if any)
+          type: string
+        taxRateIds:
+          items:
+            type: string
+          title: The tax rate ids that apply to this line item
+          type: array
       type: object
     v1StatusHistoryItem:
       description: A record of a status change on an order, including who made the change and when.
@@ -1111,77 +1182,6 @@ components:
           $ref: '#/components/schemas/v1UserRole'
       title: Status History Item
       type: object
-    v1GetSalesOrderResponse:
-      properties:
-        order:
-          $ref: '#/components/schemas/v1Order'
-      title: Response of getting an order
-      type: object
-    v1GetSalesOrderRequest:
-      properties:
-        businessId:
-          title: The business the order belongs to
-          type: string
-        orderId:
-          title: Unique identifier of an order
-          type: string
-        projectionFilter:
-          $ref: '#/components/schemas/v1SalesOrderProjectionFilter'
-      title: Containing information to get an order
-      type: object
-    v1Attachment:
-      description: A file attachment associated with an order.
-      properties:
-        name:
-          description: Required. The name of the attachment.
-          type: string
-        url:
-          description: Required. The URL to the attachment.
-          type: string
-      required:
-      - name
-      - url
-      title: Attachment
-      type: object
-    v1Agreement:
-      description: A terms of service agreement that a customer has accepted or declined on an order.
-      properties:
-        agreed:
-          description: Required. Whether or not the user agreed.
-          type: boolean
-        term:
-          description: Required. The term that the user may have agreed to.
-          type: string
-        userId:
-          description: Required. The user who may have agreed to this agreement.
-          type: string
-      required:
-      - userId
-      - term
-      - agreed
-      title: Agreement
-      type: object
-    v1DurationPeriod:
-      default: UNSPECIFIED
-      enum:
-      - UNSPECIFIED
-      - MONTH
-      - YEAR
-      - DAY
-      - WEEK
-      type: string
-    v1Currency:
-      default: USD
-      description: '- ZAR: Do not add to this list. If more currencies are required currency_code should be used instead'
-      enum:
-      - USD
-      - CAD
-      - EUR
-      - AUD
-      - GBP
-      - NZD
-      - ZAR
-      type: string
   securitySchemes:
     OAuth2:
       flows:

@@ -68,14 +68,89 @@ paths:
       - SocialPostsV2
 components:
   schemas:
-    YoutubeCustomizationV2PrivacyStatusV2:
-      default: YOUTUBE_PRIVACY_STATUS_INVALID
+    v2PostContentV2:
+      description: Contains all the content of a social post including text, media attachments, and links.
+      properties:
+        description:
+          description: Optional. Description for the post, used specifically for LinkedIn.
+          type: string
+        links:
+          description: Optional. Link previews associated with the post.
+          items:
+            $ref: '#/components/schemas/v2LinkV2'
+          type: array
+        medias:
+          description: Optional. All media associated with the post (images, videos, etc.).
+          items:
+            $ref: '#/components/schemas/v2PostMediaV2'
+          type: array
+        postText:
+          description: Required. The text content of the post.
+          type: string
+        title:
+          description: Optional. Title for the post. Not required for all social networks.
+          type: string
+      required:
+      - postText
+      title: PostContentV2
+      type: object
+    v2SocialPostRequest:
+      description: Request message for scheduling one or more social posts.
+      properties:
+        socialPosts:
+          description: Required. List of posts to be created and scheduled.
+          items:
+            $ref: '#/components/schemas/v2SocialPostV2'
+          type: array
+      required:
+      - socialPosts
+      title: SocialPostRequest
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v2MetadataV2:
+      description: A key-value pair used to store generic metadata information associated with a post or media.
+      properties:
+        name:
+          description: Required. The property name or key.
+          type: string
+        value:
+          description: Required. The property value associated with the name/key.
+          type: string
+      required:
+      - name
+      - value
+      title: MetadataV2
+      type: object
+    v2PostTypeV2:
+      default: POST_TYPE_INVALID
       enum:
-      - YOUTUBE_PRIVACY_STATUS_INVALID
-      - YOUTUBE_PRIVACY_STATUS_PUBLIC
-      - YOUTUBE_PRIVACY_STATUS_PRIVATE
-      - YOUTUBE_PRIVACY_STATUS_UNLISTED
+      - POST_TYPE_INVALID
+      - POST_TYPE_IMAGE
+      - POST_TYPE_VIDEO
+      - POST_TYPE_GIF
+      - POST_TYPE_MULTI_MEDIA
+      - POST_TYPE_TEXT
+      - POST_TYPE_STORIES
+      - POST_TYPE_IMAGE_STORY
+      - POST_TYPE_VIDEO_STORY
+      title: Represents the type of a post
       type: string
+    v2SocialPostResponse:
+      description: Response message containing the created or scheduled social posts.
+      properties:
+        socialPosts:
+          description: Output only. List of the created/scheduled posts containing internal identifiers.
+          items:
+            $ref: '#/components/schemas/v2SocialPostOutput'
+          readOnly: true
+          type: array
+      title: SocialPostResponse
+      type: object
     v2SocialPostOutput:
       description: A scheduled or created social post with its internal identifier and status.
       properties:
@@ -98,52 +173,6 @@ components:
           readOnly: true
           type: string
       title: SocialPostOutput
-      type: object
-    v2PostCustomizationV2:
-      description: Extra configurations for a social post, including events and call-to-action settings.
-      properties:
-        action:
-          $ref: '#/components/schemas/v2PostActionV2'
-        event:
-          $ref: '#/components/schemas/v2PostEventV2'
-      title: PostCustomizationV2
-      type: object
-    v2PostMediaV2:
-      description: A single media attachment (image, video, etc.) associated with a social post.
-      properties:
-        containerId:
-          description: Optional. The container identifier, if the network requires it.
-          type: string
-        mediaId:
-          description: Optional. Identifier for this media item.
-          type: string
-        mediaType:
-          description: 'Required. Type of the media: ''IMAGE'' or ''VIDEO'', etc.'
-          type: string
-        mediaUrl:
-          description: Required. The URL where the media is stored.
-          type: string
-        metadata:
-          description: Optional. Metadata associated with this media item.
-          items:
-            $ref: '#/components/schemas/v2MetadataV2'
-          type: array
-      required:
-      - mediaUrl
-      - mediaType
-      title: PostMediaV2
-      type: object
-    googlerpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
       type: object
     v2SocialService:
       description: A social service connection that can be used for posting.
@@ -224,6 +253,14 @@ components:
           type: string
       title: SocialService
       type: object
+    YoutubeCustomizationV2PrivacyStatusV2:
+      default: YOUTUBE_PRIVACY_STATUS_INVALID
+      enum:
+      - YOUTUBE_PRIVACY_STATUS_INVALID
+      - YOUTUBE_PRIVACY_STATUS_PUBLIC
+      - YOUTUBE_PRIVACY_STATUS_PRIVATE
+      - YOUTUBE_PRIVACY_STATUS_UNLISTED
+      type: string
     v2PostEventV2:
       description: An event associated with a social post, typically used for Google My Business event posts.
       properties:
@@ -244,6 +281,18 @@ components:
       - end
       title: PostEventV2
       type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
     v2ListPostableSocialServiceResponse:
       description: Response message containing the list of postable social services.
       properties:
@@ -255,46 +304,14 @@ components:
           type: array
       title: ListPostableSocialServiceResponse
       type: object
-    v2ListPostableSocialServiceRequest:
-      description: Request message for listing postable social services for a business.
+    v2PostCustomizationV2:
+      description: Extra configurations for a social post, including events and call-to-action settings.
       properties:
-        businessId:
-          description: Required. The business id of the account.
-          type: string
-      required:
-      - businessId
-      title: ListPostableSocialServiceRequest
-      type: object
-    v2MetadataV2:
-      description: A key-value pair used to store generic metadata information associated with a post or media.
-      properties:
-        name:
-          description: Required. The property name or key.
-          type: string
-        value:
-          description: Required. The property value associated with the name/key.
-          type: string
-      required:
-      - name
-      - value
-      title: MetadataV2
-      type: object
-    v2SocialPostResponse:
-      description: Response message containing the created or scheduled social posts.
-      properties:
-        socialPosts:
-          description: Output only. List of the created/scheduled posts containing internal identifiers.
-          items:
-            $ref: '#/components/schemas/v2SocialPostOutput'
-          readOnly: true
-          type: array
-      title: SocialPostResponse
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
+        action:
+          $ref: '#/components/schemas/v2PostActionV2'
+        event:
+          $ref: '#/components/schemas/v2PostEventV2'
+      title: PostCustomizationV2
       type: object
     v2TikTokCustomizationV2:
       description: TikTok-specific customization options for video posts, including community interaction and branding settings.
@@ -316,31 +333,55 @@ components:
           type: boolean
       title: TikTokCustomizationV2
       type: object
-    v2PostContentV2:
-      description: Contains all the content of a social post including text, media attachments, and links.
+    v2PostMediaV2:
+      description: A single media attachment (image, video, etc.) associated with a social post.
+      properties:
+        containerId:
+          description: Optional. The container identifier, if the network requires it.
+          type: string
+        mediaId:
+          description: Optional. Identifier for this media item.
+          type: string
+        mediaType:
+          description: 'Required. Type of the media: ''IMAGE'' or ''VIDEO'', etc.'
+          type: string
+        mediaUrl:
+          description: Required. The URL where the media is stored.
+          type: string
+        metadata:
+          description: Optional. Metadata associated with this media item.
+          items:
+            $ref: '#/components/schemas/v2MetadataV2'
+          type: array
+      required:
+      - mediaUrl
+      - mediaType
+      title: PostMediaV2
+      type: object
+    v2LinkV2:
+      description: Link preview information associated with a social post, including URL, title, and preview image.
       properties:
         description:
-          description: Optional. Description for the post, used specifically for LinkedIn.
+          description: Optional. The description of the link.
           type: string
-        links:
-          description: Optional. Link previews associated with the post.
-          items:
-            $ref: '#/components/schemas/v2LinkV2'
-          type: array
-        medias:
-          description: Optional. All media associated with the post (images, videos, etc.).
-          items:
-            $ref: '#/components/schemas/v2PostMediaV2'
-          type: array
-        postText:
-          description: Required. The text content of the post.
+        name:
+          description: Optional. The name of the link preview.
+          type: string
+        picture:
+          description: Optional. The preview image associated with the link.
+          type: string
+        shortcode:
+          description: Optional. The shortcode of the link.
           type: string
         title:
-          description: Optional. Title for the post. Not required for all social networks.
+          description: Optional. The title for the link.
+          type: string
+        url:
+          description: Required. The URL of the link.
           type: string
       required:
-      - postText
-      title: PostContentV2
+      - url
+      title: LinkV2
       type: object
     v2PostStatusV2:
       default: POST_STATUS_INVALID
@@ -350,39 +391,6 @@ components:
       - POST_STATUS_ERROR
       title: Represents the status of a post
       type: string
-    v2PostActionV2:
-      description: A call-to-action (CTA) associated with a social post.
-      properties:
-        linkUrl:
-          description: Required. The link URL where the CTA will lead to.
-          type: string
-        type:
-          description: Required. The type of the CTA (e.g. LEARN_MORE, BOOK, SHOP).
-          type: string
-      required:
-      - type
-      - linkUrl
-      title: PostActionV2
-      type: object
-    v2SocialPostRequest:
-      description: Request message for scheduling one or more social posts.
-      properties:
-        socialPosts:
-          description: Required. List of posts to be created and scheduled.
-          items:
-            $ref: '#/components/schemas/v2SocialPostV2'
-          type: array
-      required:
-      - socialPosts
-      title: SocialPostRequest
-      type: object
-    v2YoutubeCustomizationV2:
-      description: YouTube-specific customization options for video posts, including privacy settings.
-      properties:
-        privacyStatus:
-          $ref: '#/components/schemas/YoutubeCustomizationV2PrivacyStatusV2'
-      title: YoutubeCustomizationV2
-      type: object
     v2SocialPostV2:
       description: Represents a social media post including its content, scheduling, customization, and metadata.
       properties:
@@ -458,44 +466,36 @@ components:
       - partnerId
       title: SocialPostV2
       type: object
-    v2PostTypeV2:
-      default: POST_TYPE_INVALID
-      enum:
-      - POST_TYPE_INVALID
-      - POST_TYPE_IMAGE
-      - POST_TYPE_VIDEO
-      - POST_TYPE_GIF
-      - POST_TYPE_MULTI_MEDIA
-      - POST_TYPE_TEXT
-      - POST_TYPE_STORIES
-      - POST_TYPE_IMAGE_STORY
-      - POST_TYPE_VIDEO_STORY
-      title: Represents the type of a post
-      type: string
-    v2LinkV2:
-      description: Link preview information associated with a social post, including URL, title, and preview image.
+    v2ListPostableSocialServiceRequest:
+      description: Request message for listing postable social services for a business.
       properties:
-        description:
-          description: Optional. The description of the link.
-          type: string
-        name:
-          description: Optional. The name of the link preview.
-          type: string
-        picture:
-          description: Optional. The preview image associated with the link.
-          type: string
-        shortcode:
-          description: Optional. The shortcode of the link.
-          type: string
-        title:
-          description: Optional. The title for the link.
-          type: string
-        url:
-          description: Required. The URL of the link.
+        businessId:
+          description: Required. The business id of the account.
           type: string
       required:
-      - url
-      title: LinkV2
+      - businessId
+      title: ListPostableSocialServiceRequest
+      type: object
+    v2YoutubeCustomizationV2:
+      description: YouTube-specific customization options for video posts, including privacy settings.
+      properties:
+        privacyStatus:
+          $ref: '#/components/schemas/YoutubeCustomizationV2PrivacyStatusV2'
+      title: YoutubeCustomizationV2
+      type: object
+    v2PostActionV2:
+      description: A call-to-action (CTA) associated with a social post.
+      properties:
+        linkUrl:
+          description: Required. The link URL where the CTA will lead to.
+          type: string
+        type:
+          description: Required. The type of the CTA (e.g. LEARN_MORE, BOOK, SHOP).
+          type: string
+      required:
+      - type
+      - linkUrl
+      title: PostActionV2
       type: object
   securitySchemes:
     OAuth2:

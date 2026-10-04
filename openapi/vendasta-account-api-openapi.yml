@@ -577,77 +577,7 @@ paths:
       operationId: getActivationListPending
       x-operation-id-source: derived
 components:
-  requestBodies:
-    Body:
-      content:
-        application/json:
-          schema:
-            type: object
-            required:
-            - title
-            - files
-            properties:
-              title:
-                type: string
-              description:
-                type: string
-              files:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    name:
-                      type: string
-                    url:
-                      type: string
-      required: true
   schemas:
-    file_group:
-      type: object
-      properties:
-        account_id:
-          type: string
-        file_group_id:
-          type: string
-        title:
-          type: string
-        description:
-          type: string
-        created:
-          type: string
-        modified:
-          type: string
-        files:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              url:
-                type: string
-    account_settings:
-      required:
-      - account_id
-      properties:
-        account_id:
-          type: string
-        partner_id:
-          type: string
-        market_id:
-          type: string
-        platform_settings:
-          type: object
-          properties:
-            partner_name:
-              type: string
-            partner_logo_url:
-              type: string
-            partner_primary_branding_hex_color:
-              type: string
-        white_label_active:
-          type: boolean
-      type: object
     pending_activation:
       type: object
       properties:
@@ -661,13 +591,6 @@ components:
         activation_id:
           type: string
         created_date:
-          type: string
-    active_addon:
-      type: object
-      properties:
-        addon_id:
-          type: string
-        activation_id:
           type: string
     account_richdata:
       description: ''
@@ -1176,6 +1099,30 @@ components:
         email:
           type: string
       type: object
+    file_group:
+      type: object
+      properties:
+        account_id:
+          type: string
+        file_group_id:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        created:
+          type: string
+        modified:
+          type: string
+        files:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              url:
+                type: string
     session_transfer_url:
       required:
       - session_transfer_url
@@ -1183,11 +1130,64 @@ components:
         session_transfer_url:
           type: string
       type: object
+    account_settings:
+      required:
+      - account_id
+      properties:
+        account_id:
+          type: string
+        partner_id:
+          type: string
+        market_id:
+          type: string
+        platform_settings:
+          type: object
+          properties:
+            partner_name:
+              type: string
+            partner_logo_url:
+              type: string
+            partner_primary_branding_hex_color:
+              type: string
+        white_label_active:
+          type: boolean
+      type: object
+    active_addon:
+      type: object
+      properties:
+        addon_id:
+          type: string
+        activation_id:
+          type: string
     associated_user:
       type: object
       properties:
         user_id:
           type: string
+  requestBodies:
+    Body:
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+            - title
+            - files
+            properties:
+              title:
+                type: string
+              description:
+                type: string
+              files:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    url:
+                      type: string
+      required: true
   securitySchemes:
     BearerAuth:
       type: http

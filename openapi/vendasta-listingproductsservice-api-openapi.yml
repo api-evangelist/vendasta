@@ -39,18 +39,35 @@ paths:
       - ListingProductsService
 components:
   schemas:
-    v1GetSyncDataResponse:
-      description: Contains sync status and accuracy information for all relevant listing directories for a business.
-      properties:
-        sources:
-          description: 'Output only. An array of directory-specific sync and accuracy data.
+    v1AnchorData:
+      description: 'AnchorData contains the expected business NAP (Name, Address, Phone) data from the business profile.
 
-            Each entry represents one directory where the business has or could have a listing.'
-          items:
-            $ref: '#/components/schemas/v1SyncData'
-          readOnly: true
-          type: array
-      title: GetSyncDataResponse
+        This is the "source of truth" that we compare against what''s live on the directory to determine accuracy.'
+      properties:
+        address:
+          title: address is the expected street address
+          type: string
+        city:
+          title: city is the expected business city
+          type: string
+        companyName:
+          title: company_name is the expected business name
+          type: string
+        country:
+          title: country is the expected country code
+          type: string
+        phone:
+          title: phone is the expected primary phone number
+          type: string
+        state:
+          title: state is the expected state/province
+          type: string
+        website:
+          title: website is the expected business website URL
+          type: string
+        zip:
+          title: zip is the expected postal/zip code
+          type: string
       type: object
     v1SyncStatus:
       default: SYNC_STATUS_UNSET
@@ -66,56 +83,6 @@ components:
       - SYNC_STATUS_SUBMITTED
       - SYNC_STATUS_NOT_CONNECTED
       - SYNC_STATUS_RECONNECT_REQUIRED
-      type: string
-    v1AnchorDataMatches:
-      properties:
-        address:
-          title: 'address is true if the directory''s street address matches the expected address
-
-            Address mismatches prevent customers from finding the business'
-          type: boolean
-        city:
-          title: city is true if the directory's city matches the expected city
-          type: boolean
-        companyName:
-          title: 'company_name is true if the directory''s business name matches the expected name
-
-            Name mismatches are common causes of listing inaccuracy'
-          type: boolean
-        country:
-          title: country is true if the directory's country matches the expected country
-          type: boolean
-        phone:
-          title: 'phone is true if the directory''s phone number matches the expected phone
-
-            Phone mismatches are critical - often the most important field for users'
-          type: boolean
-        state:
-          title: state is true if the directory's state/province matches the expected state
-          type: boolean
-        website:
-          title: website is true if the directory's website matches the expected website
-          type: boolean
-        zip:
-          title: zip is true if the directory's zip code matches the expected zip code
-          type: boolean
-      title: 'AnchorDataMatches contains field-by-field accuracy comparison results.
-
-        Each boolean indicates if the expected value (from AnchorData) matches what''s currently live on the directory.
-
-        True = field is accurate, False = field is inaccurate or missing on the directory.
-
-        This is critical for answering "which specific fields are wrong on this listing?"'
-      type: object
-    v1AccuracyStatus:
-      default: ACCURACY_STATUS_INVALID
-      description: "AccuracyStatus represents the overall accuracy state of a listing on a directory.\nThis is determined by comparing the business profile data against what's actually live on the directory (scraped data).\n\n - ACCURACY_STATUS_INVALID: ACCURACY_STATUS_INVALID means the accuracy data could not be interpreted or there was an error during scraping.\nThis is a technical error, not a listing problem.\n - ACCURACY_STATUS_UNKNOWN: ACCURACY_STATUS_UNKNOWN means either no scraped data was found (listing might not exist yet), or we haven't scraped this source yet.\nCommon for new listings that haven't been indexed by the directory, or directories we don't actively scrape.\n - ACCURACY_STATUS_ACCURATE: ACCURACY_STATUS_ACCURATE means the scraped listing data matches the business profile perfectly.\nAll NAP fields match - the listing is correct and healthy.\n - ACCURACY_STATUS_INACCURATE: ACCURACY_STATUS_INACCURATE means the scraped listing has one or more discrepancies compared to the business profile.\nCheck anchor_data_matches to see exactly which fields don't match.\nUser action: Review and correct the inaccurate fields, then wait for next sync.\n - ACCURACY_STATUS_UNAVAILABLE: ACCURACY_STATUS_UNAVAILABLE means this directory doesn't support accuracy reporting (we don't scrape it).\nCommon for data aggregators (Neustar, Data Axle) that don't have public listing pages to scrape."
-      enum:
-      - ACCURACY_STATUS_INVALID
-      - ACCURACY_STATUS_UNKNOWN
-      - ACCURACY_STATUS_ACCURATE
-      - ACCURACY_STATUS_INACCURATE
-      - ACCURACY_STATUS_UNAVAILABLE
       type: string
     v1ConnectedDirectSyncAccount:
       description: 'ConnectedDirectSyncAccount represents an OAuth-connected account for direct sync sources (Google, Facebook, Apple, Bing).
@@ -169,6 +136,17 @@ components:
           title: username is the display name or email of the connected account (e.g., "john@example.com" for Google)
           type: string
       type: object
+    v1SyncRequirement:
+      default: SYNC_REQUIREMENT_UNSET
+      description: "SyncRequirement specifies what product activation is needed to automatically sync to a directory.\nThis explains why a directory might not be available for a particular business.\n\n - SYNC_REQUIREMENT_UNSET: SYNC_REQUIREMENT_UNSET means no specific requirement (e.g., manual submission via RM, or direct OAuth)\n - SYNC_REQUIREMENT_LSP: SYNC_REQUIREMENT_LSP requires an active Listing Sync Pro subscription (either Yext or Uberall)\n - SYNC_REQUIREMENT_PRO_EDITION: SYNC_REQUIREMENT_PRO_EDITION requires Local SEO Pro edition\n - SYNC_REQUIREMENT_YEXT_LSP: SYNC_REQUIREMENT_YEXT_LSP specifically requires Yext-based Listing Sync Pro\nThis directory is only available through Yext, not Uberall\n - SYNC_REQUIREMENT_UBERALL_LSP: SYNC_REQUIREMENT_UBERALL_LSP specifically requires Uberall-based Listing Sync Pro\nThis directory is only available through Uberall, not Yext\n - SYNC_REQUIREMENT_LSP_OR_PRO_EDITION: SYNC_REQUIREMENT_LSP_OR_PRO_EDITION requires either Listing Sync Pro OR Local SEO Pro"
+      enum:
+      - SYNC_REQUIREMENT_UNSET
+      - SYNC_REQUIREMENT_LSP
+      - SYNC_REQUIREMENT_PRO_EDITION
+      - SYNC_REQUIREMENT_YEXT_LSP
+      - SYNC_REQUIREMENT_UBERALL_LSP
+      - SYNC_REQUIREMENT_LSP_OR_PRO_EDITION
+      type: string
     v1SourceAccuracy:
       properties:
         anchorData:
@@ -189,100 +167,6 @@ components:
 
         This is the key data structure for answering "why is my listing inaccurate?"'
       type: object
-    v1DetailedSyndicationStatusResults:
-      properties:
-        key:
-          title: key identifies the data type category (e.g., "location" for NAP data, "hours" for business hours, "photos" for images)
-          type: string
-        value:
-          $ref: '#/components/schemas/v1DetailedSyndicationStatusResultValue'
-      title: 'DetailedSyndicationStatusResults provides granular sync status for different data types within a sync.
-
-        Key-value pairs where key is the data type (e.g., "location", "hours", "photos")'
-      type: object
-    v1Metadata:
-      description: 'Metadata contains additional key-value information about a sync.
-
-        Contents vary by directory - may include submission IDs, provider-specific status codes, etc.'
-      properties:
-        key:
-          title: key is the metadata field name
-          type: string
-        value:
-          title: value is the metadata field value
-          type: string
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
-    v1EcosystemSource:
-      description: 'EcosystemSource represents a secondary directory that receives data when syncing to a primary aggregator.
-
-        Example: When syncing to Neustar or Data Axle, data flows to dozens of downstream directories.'
-      properties:
-        icon:
-          title: icon is the URL to the directory's logo/icon
-          type: string
-        name:
-          title: name is the human-readable name of the downstream directory (e.g., "TomTom", "Garmin", "MapQuest")
-          type: string
-        sourceId:
-          title: source_id is the numeric ID of the downstream directory
-          type: string
-      type: object
-    v1DetailedSyndicationStatusResultValue:
-      description: 'DetailedSyndicationStatusResultValue contains field-level sync results for a specific data type.
-
-        This shows exactly which fields synced successfully and which failed within a data category.'
-      properties:
-        dataType:
-          title: data_type is the category of data (matches the key in parent message)
-          type: string
-        errorMessage:
-          title: 'error_message contains the specific error for failed fields
-
-            Example: "Phone number format invalid for Bing Places. Must be (XXX) XXX-XXXX"'
-          type: string
-        failedFields:
-          items:
-            type: string
-          title: 'failed_fields lists individual fields that failed to sync
-
-            Example: ["phone"] - this tells you exactly which field is causing the problem'
-          type: array
-        lastSyncTime:
-          format: date-time
-          title: last_sync_time is when this data type was last synced successfully
-          type: string
-        status:
-          title: status is the high-level status for this data type ("success", "failed", "partial")
-          type: string
-        syncedFields:
-          items:
-            type: string
-          title: 'synced_fields lists individual fields that synced successfully
-
-            Example: ["company_name", "address", "city", "state", "zip"]'
-          type: array
-      type: object
-    v1Provider:
-      default: PROVIDER_UNSPECIFIED
-      description: "Provider indicates how listing data is synced to a directory.\nThis is critical for understanding the difference between managed (LSP) and manual (RM) listings.\n\n - PROVIDER_UNSPECIFIED: PROVIDER_UNSPECIFIED means manual submission via Reputation Management (RM).\nThese listings must be manually created and updated by the user.\nThey do NOT automatically sync when the business profile changes.\n - PROVIDER_UBERALL: PROVIDER_UBERALL means synced automatically via Uberall (LSP provider for European/international directories).\nRequires active Listing Sync Pro subscription with Uberall.\n - PROVIDER_YEXT: PROVIDER_YEXT means synced automatically via Yext (LSP provider for North American directories).\nRequires active Listing Sync Pro subscription with Yext.\n - PROVIDER_DIRECT: PROVIDER_DIRECT means synced directly via OAuth (Google, Facebook, Apple, Bing).\nNo LSP subscription required - user just needs to connect their account."
-      enum:
-      - PROVIDER_UNSPECIFIED
-      - PROVIDER_UBERALL
-      - PROVIDER_YEXT
-      - PROVIDER_DIRECT
-      type: string
     v1SyncData:
       description: 'SyncData contains comprehensive sync status and accuracy information for a single directory source.
 
@@ -363,53 +247,154 @@ components:
         syncStatus:
           $ref: '#/components/schemas/v1SyncStatus'
       type: object
+    v1GetSyncDataResponse:
+      description: Contains sync status and accuracy information for all relevant listing directories for a business.
+      properties:
+        sources:
+          description: 'Output only. An array of directory-specific sync and accuracy data.
+
+            Each entry represents one directory where the business has or could have a listing.'
+          items:
+            $ref: '#/components/schemas/v1SyncData'
+          readOnly: true
+          type: array
+      title: GetSyncDataResponse
+      type: object
+    v1Provider:
+      default: PROVIDER_UNSPECIFIED
+      description: "Provider indicates how listing data is synced to a directory.\nThis is critical for understanding the difference between managed (LSP) and manual (RM) listings.\n\n - PROVIDER_UNSPECIFIED: PROVIDER_UNSPECIFIED means manual submission via Reputation Management (RM).\nThese listings must be manually created and updated by the user.\nThey do NOT automatically sync when the business profile changes.\n - PROVIDER_UBERALL: PROVIDER_UBERALL means synced automatically via Uberall (LSP provider for European/international directories).\nRequires active Listing Sync Pro subscription with Uberall.\n - PROVIDER_YEXT: PROVIDER_YEXT means synced automatically via Yext (LSP provider for North American directories).\nRequires active Listing Sync Pro subscription with Yext.\n - PROVIDER_DIRECT: PROVIDER_DIRECT means synced directly via OAuth (Google, Facebook, Apple, Bing).\nNo LSP subscription required - user just needs to connect their account."
+      enum:
+      - PROVIDER_UNSPECIFIED
+      - PROVIDER_UBERALL
+      - PROVIDER_YEXT
+      - PROVIDER_DIRECT
+      type: string
+    v1AnchorDataMatches:
+      properties:
+        address:
+          title: 'address is true if the directory''s street address matches the expected address
+
+            Address mismatches prevent customers from finding the business'
+          type: boolean
+        city:
+          title: city is true if the directory's city matches the expected city
+          type: boolean
+        companyName:
+          title: 'company_name is true if the directory''s business name matches the expected name
+
+            Name mismatches are common causes of listing inaccuracy'
+          type: boolean
+        country:
+          title: country is true if the directory's country matches the expected country
+          type: boolean
+        phone:
+          title: 'phone is true if the directory''s phone number matches the expected phone
+
+            Phone mismatches are critical - often the most important field for users'
+          type: boolean
+        state:
+          title: state is true if the directory's state/province matches the expected state
+          type: boolean
+        website:
+          title: website is true if the directory's website matches the expected website
+          type: boolean
+        zip:
+          title: zip is true if the directory's zip code matches the expected zip code
+          type: boolean
+      title: 'AnchorDataMatches contains field-by-field accuracy comparison results.
+
+        Each boolean indicates if the expected value (from AnchorData) matches what''s currently live on the directory.
+
+        True = field is accurate, False = field is inaccurate or missing on the directory.
+
+        This is critical for answering "which specific fields are wrong on this listing?"'
+      type: object
     protobufAny:
       additionalProperties: {}
       properties:
         '@type':
           type: string
       type: object
-    v1AnchorData:
-      description: 'AnchorData contains the expected business NAP (Name, Address, Phone) data from the business profile.
+    v1Metadata:
+      description: 'Metadata contains additional key-value information about a sync.
 
-        This is the "source of truth" that we compare against what''s live on the directory to determine accuracy.'
+        Contents vary by directory - may include submission IDs, provider-specific status codes, etc.'
       properties:
-        address:
-          title: address is the expected street address
+        key:
+          title: key is the metadata field name
           type: string
-        city:
-          title: city is the expected business city
-          type: string
-        companyName:
-          title: company_name is the expected business name
-          type: string
-        country:
-          title: country is the expected country code
-          type: string
-        phone:
-          title: phone is the expected primary phone number
-          type: string
-        state:
-          title: state is the expected state/province
-          type: string
-        website:
-          title: website is the expected business website URL
-          type: string
-        zip:
-          title: zip is the expected postal/zip code
+        value:
+          title: value is the metadata field value
           type: string
       type: object
-    v1SyncRequirement:
-      default: SYNC_REQUIREMENT_UNSET
-      description: "SyncRequirement specifies what product activation is needed to automatically sync to a directory.\nThis explains why a directory might not be available for a particular business.\n\n - SYNC_REQUIREMENT_UNSET: SYNC_REQUIREMENT_UNSET means no specific requirement (e.g., manual submission via RM, or direct OAuth)\n - SYNC_REQUIREMENT_LSP: SYNC_REQUIREMENT_LSP requires an active Listing Sync Pro subscription (either Yext or Uberall)\n - SYNC_REQUIREMENT_PRO_EDITION: SYNC_REQUIREMENT_PRO_EDITION requires Local SEO Pro edition\n - SYNC_REQUIREMENT_YEXT_LSP: SYNC_REQUIREMENT_YEXT_LSP specifically requires Yext-based Listing Sync Pro\nThis directory is only available through Yext, not Uberall\n - SYNC_REQUIREMENT_UBERALL_LSP: SYNC_REQUIREMENT_UBERALL_LSP specifically requires Uberall-based Listing Sync Pro\nThis directory is only available through Uberall, not Yext\n - SYNC_REQUIREMENT_LSP_OR_PRO_EDITION: SYNC_REQUIREMENT_LSP_OR_PRO_EDITION requires either Listing Sync Pro OR Local SEO Pro"
+    v1DetailedSyndicationStatusResults:
+      properties:
+        key:
+          title: key identifies the data type category (e.g., "location" for NAP data, "hours" for business hours, "photos" for images)
+          type: string
+        value:
+          $ref: '#/components/schemas/v1DetailedSyndicationStatusResultValue'
+      title: 'DetailedSyndicationStatusResults provides granular sync status for different data types within a sync.
+
+        Key-value pairs where key is the data type (e.g., "location", "hours", "photos")'
+      type: object
+    v1AccuracyStatus:
+      default: ACCURACY_STATUS_INVALID
+      description: "AccuracyStatus represents the overall accuracy state of a listing on a directory.\nThis is determined by comparing the business profile data against what's actually live on the directory (scraped data).\n\n - ACCURACY_STATUS_INVALID: ACCURACY_STATUS_INVALID means the accuracy data could not be interpreted or there was an error during scraping.\nThis is a technical error, not a listing problem.\n - ACCURACY_STATUS_UNKNOWN: ACCURACY_STATUS_UNKNOWN means either no scraped data was found (listing might not exist yet), or we haven't scraped this source yet.\nCommon for new listings that haven't been indexed by the directory, or directories we don't actively scrape.\n - ACCURACY_STATUS_ACCURATE: ACCURACY_STATUS_ACCURATE means the scraped listing data matches the business profile perfectly.\nAll NAP fields match - the listing is correct and healthy.\n - ACCURACY_STATUS_INACCURATE: ACCURACY_STATUS_INACCURATE means the scraped listing has one or more discrepancies compared to the business profile.\nCheck anchor_data_matches to see exactly which fields don't match.\nUser action: Review and correct the inaccurate fields, then wait for next sync.\n - ACCURACY_STATUS_UNAVAILABLE: ACCURACY_STATUS_UNAVAILABLE means this directory doesn't support accuracy reporting (we don't scrape it).\nCommon for data aggregators (Neustar, Data Axle) that don't have public listing pages to scrape."
       enum:
-      - SYNC_REQUIREMENT_UNSET
-      - SYNC_REQUIREMENT_LSP
-      - SYNC_REQUIREMENT_PRO_EDITION
-      - SYNC_REQUIREMENT_YEXT_LSP
-      - SYNC_REQUIREMENT_UBERALL_LSP
-      - SYNC_REQUIREMENT_LSP_OR_PRO_EDITION
+      - ACCURACY_STATUS_INVALID
+      - ACCURACY_STATUS_UNKNOWN
+      - ACCURACY_STATUS_ACCURATE
+      - ACCURACY_STATUS_INACCURATE
+      - ACCURACY_STATUS_UNAVAILABLE
       type: string
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1DetailedSyndicationStatusResultValue:
+      description: 'DetailedSyndicationStatusResultValue contains field-level sync results for a specific data type.
+
+        This shows exactly which fields synced successfully and which failed within a data category.'
+      properties:
+        dataType:
+          title: data_type is the category of data (matches the key in parent message)
+          type: string
+        errorMessage:
+          title: 'error_message contains the specific error for failed fields
+
+            Example: "Phone number format invalid for Bing Places. Must be (XXX) XXX-XXXX"'
+          type: string
+        failedFields:
+          items:
+            type: string
+          title: 'failed_fields lists individual fields that failed to sync
+
+            Example: ["phone"] - this tells you exactly which field is causing the problem'
+          type: array
+        lastSyncTime:
+          format: date-time
+          title: last_sync_time is when this data type was last synced successfully
+          type: string
+        status:
+          title: status is the high-level status for this data type ("success", "failed", "partial")
+          type: string
+        syncedFields:
+          items:
+            type: string
+          title: 'synced_fields lists individual fields that synced successfully
+
+            Example: ["company_name", "address", "city", "state", "zip"]'
+          type: array
+      type: object
     v1SyndicationStatus:
       description: 'SyndicationStatus contains detailed sync execution information for a directory.
 
@@ -460,6 +445,21 @@ components:
           description: Output only. When this sync status was last modified.
           format: date-time
           readOnly: true
+          type: string
+      type: object
+    v1EcosystemSource:
+      description: 'EcosystemSource represents a secondary directory that receives data when syncing to a primary aggregator.
+
+        Example: When syncing to Neustar or Data Axle, data flows to dozens of downstream directories.'
+      properties:
+        icon:
+          title: icon is the URL to the directory's logo/icon
+          type: string
+        name:
+          title: name is the human-readable name of the downstream directory (e.g., "TomTom", "Garmin", "MapQuest")
+          type: string
+        sourceId:
+          title: source_id is the numeric ID of the downstream directory
           type: string
       type: object
     v1GetSyncDataRequest:

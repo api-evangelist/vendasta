@@ -215,65 +215,6 @@ paths:
 
         The SCIM standard defines an optional `/Bulk` endpoint for performing multiple operations at the same time. The Vendasta platform does not currently support it.'
 components:
-  parameters:
-    excludedAttributes:
-      name: excludedAttributes
-      in: query
-      required: false
-      schema:
-        type: array
-        items:
-          type: string
-      description: "SCIM service providers MUST support both `attributes` and `excludedAttributes` query parameters. \nClients may optionally send either of them to control which attributes are returned in responses.\n\nWhen `attributes` is provided it overrides the default set.\n\nWhen `excludedAttributes` is provided the listed attributes shall be removed from the default set. \nThis parameter SHALL have no effect on attributes whose schema \"returned\" setting is \"always\".\n\nAttribute names MUST be in standard attribute notation (Section 3.10) form.  See\nrfc7644 Section 3.9 for additional retrieval query parameters."
-    Accept:
-      name: Accept
-      in: header
-      schema:
-        type: string
-        default: application/scim+json
-        enum:
-        - application/scim+json
-        - application/json
-        example: application/scim+json
-      description: Indicates that the response body contains content formated according to SCIM rules
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      schema:
-        type: string
-        example: VUNI
-      description: Currently this must be the id of the partner that you wish to manage users for. In the future we plan to support other types of namespaces such as marketplace apps
-    attributes:
-      name: attributes
-      in: query
-      required: false
-      schema:
-        type: array
-        items:
-          type: string
-      description: "SCIM service providers MUST support both `attributes` and `excludedAttributes` query parameters. \nClients may optionally send either of them to control which attributes are returned in responses.\n\nWhen `attributes` is provided it overrides the default set.\n\nWhen `excludedAttributes` is provided the listed attributes shall be removed from the default set. \nThis parameter SHALL have no effect on attributes whose schema \"returned\" setting is \"always\".\n\nAttribute names MUST be in standard attribute notation (Section 3.10) form.  See\nrfc7644 Section 3.9 for additional retrieval query parameters."
-  headers:
-    Location:
-      required: true
-      schema:
-        type: string
-        format: uri
-        example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
-      description: 'The value in the Location header must exactly match the value in `meta.location`
-
-        It should identify the URI at which this resource may be retrieved from. In the case of the special "/Me" alais, it should return the actual User ID.'
-    Content-Type:
-      required: true
-      schema:
-        type: string
-        default: application/scim+json
-        enum:
-        - application/scim+json; charset=utf-8
-        - application/scim+json
-        - application/json
-        example: application/scim+json
-      description: Indicates that the response body contains content formated according to SCIM rules
   schemas:
     MessageListResponse:
       type: object
@@ -397,62 +338,6 @@ components:
       required:
       - schemas
       - status
-    ResourceResourceType:
-      description: "The \"ResourceType\" schema specifies the metadata about a resource\n  type.  Resource type resources are READ-ONLY and identified using the\n  following schema URI:\n  \"urn:ietf:params:scim:schemas:core:2.0:ResourceType\".  Unlike other\n  core resources, all attributes are REQUIRED unless otherwise\n  specified.  The \"id\" attribute is not required for the resource type\n  resource.\n"
-      title: schemas:core:2.0:ResourceType
-      type: object
-      properties:
-        schemas:
-          type: array
-          items:
-            type: string
-            default: urn:ietf:params:scim:schemas:core:2.0:ResourceType
-            enum:
-            - urn:ietf:params:scim:schemas:core:2.0:ResourceType
-        id:
-          type: string
-          description: "The resource type's server unique id.  This is often the same\n      value as the \"name\" attribute.  OPTIONAL."
-        name:
-          type: string
-          description: "The resource type name.  When applicable, service providers MUST\n      specify the name, e.g., \"User\" or \"Group\".  This name is\n      referenced by the \"meta.resourceType\" attribute in all resources.\n      REQUIRED."
-        description:
-          type: string
-          description: "The resource type's human-readable description.  When applicable,\n      service providers MUST specify the description.  OPTIONAL."
-        endpoint:
-          type: string
-          description: "The resource type's HTTP-addressable endpoint relative to the Base\n      URL of the service provider, e.g., \"Users\".  REQUIRED."
-        schema:
-          type: string
-          description: "The resource type's primary/base schema URI, e.g.,\n      \"urn:ietf:params:scim:schemas:core:2.0:User\".  This MUST be equal\n      to the \"id\" attribute of the associated \"Schema\" resource.\n      REQUIRED."
-        schemaExtensions:
-          type: array
-          description: "A list of URIs of the resource type's schema extensions.\n      OPTIONAL."
-          items:
-            type: object
-            properties:
-              schema:
-                type: string
-                description: "The URI of an extended schema, e.g., \"urn:edu:2.0:Staff\".\n        This MUST be equal to the \"id\" attribute of a \"Schema\"\n        resource.  REQUIRED."
-              required:
-                type: boolean
-                description: "A Boolean value that specifies whether or not the schema\n        extension is required for the resource type.  If true, a\n        resource of this type MUST include this schema extension and\n        also include any attributes declared as required in this schema\n        extension.  If false, a resource of this type MAY omit this\n        schema extension.  REQUIRED."
-            required:
-            - schema
-            - required
-        meta:
-          type: object
-          properties:
-            location:
-              type: string
-            resourceType:
-              type: string
-              example: ResourceType
-      required:
-      - schemas
-      - name
-      - description
-      - endpoint
-      - schema
     SchemaServiceProviderConfig:
       type: object
       x-examples:
@@ -616,6 +501,62 @@ components:
       - sort
       - etag
       - authenticationSchemes
+    ResourceResourceType:
+      description: "The \"ResourceType\" schema specifies the metadata about a resource\n  type.  Resource type resources are READ-ONLY and identified using the\n  following schema URI:\n  \"urn:ietf:params:scim:schemas:core:2.0:ResourceType\".  Unlike other\n  core resources, all attributes are REQUIRED unless otherwise\n  specified.  The \"id\" attribute is not required for the resource type\n  resource.\n"
+      title: schemas:core:2.0:ResourceType
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+            default: urn:ietf:params:scim:schemas:core:2.0:ResourceType
+            enum:
+            - urn:ietf:params:scim:schemas:core:2.0:ResourceType
+        id:
+          type: string
+          description: "The resource type's server unique id.  This is often the same\n      value as the \"name\" attribute.  OPTIONAL."
+        name:
+          type: string
+          description: "The resource type name.  When applicable, service providers MUST\n      specify the name, e.g., \"User\" or \"Group\".  This name is\n      referenced by the \"meta.resourceType\" attribute in all resources.\n      REQUIRED."
+        description:
+          type: string
+          description: "The resource type's human-readable description.  When applicable,\n      service providers MUST specify the description.  OPTIONAL."
+        endpoint:
+          type: string
+          description: "The resource type's HTTP-addressable endpoint relative to the Base\n      URL of the service provider, e.g., \"Users\".  REQUIRED."
+        schema:
+          type: string
+          description: "The resource type's primary/base schema URI, e.g.,\n      \"urn:ietf:params:scim:schemas:core:2.0:User\".  This MUST be equal\n      to the \"id\" attribute of the associated \"Schema\" resource.\n      REQUIRED."
+        schemaExtensions:
+          type: array
+          description: "A list of URIs of the resource type's schema extensions.\n      OPTIONAL."
+          items:
+            type: object
+            properties:
+              schema:
+                type: string
+                description: "The URI of an extended schema, e.g., \"urn:edu:2.0:Staff\".\n        This MUST be equal to the \"id\" attribute of a \"Schema\"\n        resource.  REQUIRED."
+              required:
+                type: boolean
+                description: "A Boolean value that specifies whether or not the schema\n        extension is required for the resource type.  If true, a\n        resource of this type MUST include this schema extension and\n        also include any attributes declared as required in this schema\n        extension.  If false, a resource of this type MAY omit this\n        schema extension.  REQUIRED."
+            required:
+            - schema
+            - required
+        meta:
+          type: object
+          properties:
+            location:
+              type: string
+            resourceType:
+              type: string
+              example: ResourceType
+      required:
+      - schemas
+      - name
+      - description
+      - endpoint
+      - schema
     ResourceSchema:
       title: schema:core:2.0:Schema
       x-stoplight:
@@ -691,6 +632,27 @@ components:
       required:
       - schemas
       - id
+  headers:
+    Location:
+      required: true
+      schema:
+        type: string
+        format: uri
+        example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
+      description: 'The value in the Location header must exactly match the value in `meta.location`
+
+        It should identify the URI at which this resource may be retrieved from. In the case of the special "/Me" alais, it should return the actual User ID.'
+    Content-Type:
+      required: true
+      schema:
+        type: string
+        default: application/scim+json
+        enum:
+        - application/scim+json; charset=utf-8
+        - application/scim+json
+        - application/json
+        example: application/scim+json
+      description: Indicates that the response body contains content formated according to SCIM rules
   responses:
     error:
       description: https://www.rfc-editor.org/rfc/rfc7644#section-3.12 details the expected values along with some tables describing their usage.
@@ -701,6 +663,44 @@ components:
         application/scim+json:
           schema:
             $ref: '#/components/schemas/MessageError'
+  parameters:
+    attributes:
+      name: attributes
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: "SCIM service providers MUST support both `attributes` and `excludedAttributes` query parameters. \nClients may optionally send either of them to control which attributes are returned in responses.\n\nWhen `attributes` is provided it overrides the default set.\n\nWhen `excludedAttributes` is provided the listed attributes shall be removed from the default set. \nThis parameter SHALL have no effect on attributes whose schema \"returned\" setting is \"always\".\n\nAttribute names MUST be in standard attribute notation (Section 3.10) form.  See\nrfc7644 Section 3.9 for additional retrieval query parameters."
+    Accept:
+      name: Accept
+      in: header
+      schema:
+        type: string
+        default: application/scim+json
+        enum:
+        - application/scim+json
+        - application/json
+        example: application/scim+json
+      description: Indicates that the response body contains content formated according to SCIM rules
+    excludedAttributes:
+      name: excludedAttributes
+      in: query
+      required: false
+      schema:
+        type: array
+        items:
+          type: string
+      description: "SCIM service providers MUST support both `attributes` and `excludedAttributes` query parameters. \nClients may optionally send either of them to control which attributes are returned in responses.\n\nWhen `attributes` is provided it overrides the default set.\n\nWhen `excludedAttributes` is provided the listed attributes shall be removed from the default set. \nThis parameter SHALL have no effect on attributes whose schema \"returned\" setting is \"always\".\n\nAttribute names MUST be in standard attribute notation (Section 3.10) form.  See\nrfc7644 Section 3.9 for additional retrieval query parameters."
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      schema:
+        type: string
+        example: VUNI
+      description: Currently this must be the id of the partner that you wish to manage users for. In the future we plan to support other types of namespaces such as marketplace apps
   securitySchemes:
     bearerAuth:
       type: http

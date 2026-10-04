@@ -36,6 +36,48 @@ paths:
       - WordpressPluginService
 components:
   schemas:
+    socialpostsv2Category:
+      properties:
+        id:
+          format: int64
+          title: This is the categoryId
+          type: string
+        name:
+          title: This is the category name
+          type: string
+      type: object
+    v2BlogImage:
+      properties:
+        path:
+          title: The path of the image
+          type: string
+        publicUrl:
+          title: The public url of the image
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    v2PublishPostResponse:
+      description: Response message containing the internal ID of the published blog post.
+      properties:
+        internalPostId:
+          description: Output only. Internal ID of the post.
+          readOnly: true
+          type: string
+      title: PublishPostResponse
+      type: object
+    socialpostsv2Author:
+      properties:
+        id:
+          format: int64
+          type: string
+        name:
+          type: string
+      type: object
     v2BlogVideo:
       properties:
         path:
@@ -44,6 +86,20 @@ components:
         publicUrl:
           title: The public url of the video
           type: string
+      type: object
+    v2MetadataV2:
+      description: A key-value pair used to store generic metadata information associated with a post or media.
+      properties:
+        name:
+          description: Required. The property name or key.
+          type: string
+        value:
+          description: Required. The property value associated with the name/key.
+          type: string
+      required:
+      - name
+      - value
+      title: MetadataV2
       type: object
     googlerpcStatus:
       properties:
@@ -56,33 +112,6 @@ components:
           type: array
         message:
           type: string
-      type: object
-    socialpostsv2Author:
-      properties:
-        id:
-          format: int64
-          type: string
-        name:
-          type: string
-      type: object
-    socialpostsv2Category:
-      properties:
-        id:
-          format: int64
-          title: This is the categoryId
-          type: string
-        name:
-          title: This is the category name
-          type: string
-      type: object
-    v2PublishPostResponse:
-      description: Response message containing the internal ID of the published blog post.
-      properties:
-        internalPostId:
-          description: Output only. Internal ID of the post.
-          readOnly: true
-          type: string
-      title: PublishPostResponse
       type: object
     v2PublishPostRequest:
       description: Request message for publishing a blog post to a WordPress site.
@@ -163,35 +192,6 @@ components:
       - title
       - content
       title: PublishPostRequest
-      type: object
-    v2BlogImage:
-      properties:
-        path:
-          title: The path of the image
-          type: string
-        publicUrl:
-          title: The public url of the image
-          type: string
-      type: object
-    v2MetadataV2:
-      description: A key-value pair used to store generic metadata information associated with a post or media.
-      properties:
-        name:
-          description: Required. The property name or key.
-          type: string
-        value:
-          description: Required. The property value associated with the name/key.
-          type: string
-      required:
-      - name
-      - value
-      title: MetadataV2
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
       type: object
   securitySchemes:
     OAuth2:

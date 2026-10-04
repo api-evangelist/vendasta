@@ -1047,6 +1047,127 @@ paths:
         List CRM contacts, companies or activities records.'
 components:
   schemas:
+    CRMCommunicationActivity:
+      description: CRM Communication Field Schema for AG-L56V52BMMW
+      x-stoplight:
+        id: 6d4b14936d092
+      properties:
+        standard__activity_communication_body:
+          description: Text of the body.
+          title: Communication body
+          type: string
+        standard__activity_communication_channel:
+          description: 'Communication channels different than email, or a call, e.g.: SMS, VENDASTA_INBOX, WHATS_APP, LINKEDIN_MESSAGE, etc…'
+          title: Communication channel
+          type: string
+        standard__activity_communication_date:
+          description: Date and time the activity was made.
+          format: date-time
+          title: Communication date
+          type: string
+        standard__activity_communication_direction:
+          description: 'Direction of the communication activity, e.g.: INBOUND, OUTBOUND, etc…'
+          title: Communication direction
+          type: string
+        standard__activity_communication_from_id:
+          description: If the communication channel has an ID used for sending and receiving it can be recorded here.
+          title: Communication from ID
+          type: string
+        standard__activity_communication_outcome:
+          description: 'Outcome of the communication, e.g.: SCHEDULED, COMPLETED, RESCHEDULED, NO_SHOW, CANCELLED'
+          title: Communication outcome
+          type: string
+        standard__activity_communication_status:
+          description: 'status of the communication, e.g.: DELIVERED, PROCESSED, BOUNCED'
+          title: Communication status
+          type: string
+        standard__activity_communication_to_id:
+          description: If the communication channel has an ID used for sending and receiving it can be recorded here.
+          title: Communication to ID
+          type: string
+        standard__activity_communication_type:
+          description: 'Type of the communication, e.g: General, Campaign, Reputation review request'
+          title: Communication type
+          type: string
+        standard__activity_manually_logged:
+          description: Whether the activity was manually logged
+          format: boolean
+          readOnly: true
+          title: Manually logged
+          type: boolean
+        standard__activity_name:
+          description: Display name used when showing a summary of the activity.
+          title: Name
+          type: string
+        standard__activity_source_drill_1:
+          description: Activity record source drill down 1
+          title: Record source drill down 1
+          type: string
+        standard__activity_source_drill_2:
+          description: Activity record source drill down 2
+          title: Record source drill down 2
+          type: string
+        standard__activity_source_drill_3:
+          description: Activity record source drill down 3
+          title: Record source drill down 3
+          type: string
+        standard__activity_source_name:
+          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__activity_tags:
+          description: List of tags useful for segmentation of activities.
+          title: Tags
+          type: string
+        standard__activity_url:
+          description: Link to more information about the activity.
+          title: URL
+          type: string
+        standard__activity_url_name:
+          description: Name of the link to more information about the activity.
+          title: URL name
+          type: string
+        system__activity_activity_type:
+          description: Type of activity
+          title: Activity type
+          type: string
+        system__activity_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__activity_effective:
+          description: Relevant date for the type
+          format: date-time
+          title: Effective date
+          type: string
+        system__activity_external_id:
+          description: External identifier for the record, optional
+          readOnly: true
+          title: External ID
+          type: string
+        system__activity_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__activity_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__activity_source_id:
+          description: ID in the source system
+          title: Source ID
+          type: string
+        system__activity_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+      title: CRM Communication
+      type: object
     CRMCallActivity:
       description: CRM Call Field Schema for AG-L56V52BMMW
       x-stoplight:
@@ -1170,127 +1291,6 @@ components:
           type: string
       title: CRM Call
       type: object
-    CRMCommunicationActivity:
-      description: CRM Communication Field Schema for AG-L56V52BMMW
-      x-stoplight:
-        id: 6d4b14936d092
-      properties:
-        standard__activity_communication_body:
-          description: Text of the body.
-          title: Communication body
-          type: string
-        standard__activity_communication_channel:
-          description: 'Communication channels different than email, or a call, e.g.: SMS, VENDASTA_INBOX, WHATS_APP, LINKEDIN_MESSAGE, etc…'
-          title: Communication channel
-          type: string
-        standard__activity_communication_date:
-          description: Date and time the activity was made.
-          format: date-time
-          title: Communication date
-          type: string
-        standard__activity_communication_direction:
-          description: 'Direction of the communication activity, e.g.: INBOUND, OUTBOUND, etc…'
-          title: Communication direction
-          type: string
-        standard__activity_communication_from_id:
-          description: If the communication channel has an ID used for sending and receiving it can be recorded here.
-          title: Communication from ID
-          type: string
-        standard__activity_communication_outcome:
-          description: 'Outcome of the communication, e.g.: SCHEDULED, COMPLETED, RESCHEDULED, NO_SHOW, CANCELLED'
-          title: Communication outcome
-          type: string
-        standard__activity_communication_status:
-          description: 'status of the communication, e.g.: DELIVERED, PROCESSED, BOUNCED'
-          title: Communication status
-          type: string
-        standard__activity_communication_to_id:
-          description: If the communication channel has an ID used for sending and receiving it can be recorded here.
-          title: Communication to ID
-          type: string
-        standard__activity_communication_type:
-          description: 'Type of the communication, e.g: General, Campaign, Reputation review request'
-          title: Communication type
-          type: string
-        standard__activity_manually_logged:
-          description: Whether the activity was manually logged
-          format: boolean
-          readOnly: true
-          title: Manually logged
-          type: boolean
-        standard__activity_name:
-          description: Display name used when showing a summary of the activity.
-          title: Name
-          type: string
-        standard__activity_source_drill_1:
-          description: Activity record source drill down 1
-          title: Record source drill down 1
-          type: string
-        standard__activity_source_drill_2:
-          description: Activity record source drill down 2
-          title: Record source drill down 2
-          type: string
-        standard__activity_source_drill_3:
-          description: Activity record source drill down 3
-          title: Record source drill down 3
-          type: string
-        standard__activity_source_name:
-          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__activity_tags:
-          description: List of tags useful for segmentation of activities.
-          title: Tags
-          type: string
-        standard__activity_url:
-          description: Link to more information about the activity.
-          title: URL
-          type: string
-        standard__activity_url_name:
-          description: Name of the link to more information about the activity.
-          title: URL name
-          type: string
-        system__activity_activity_type:
-          description: Type of activity
-          title: Activity type
-          type: string
-        system__activity_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__activity_effective:
-          description: Relevant date for the type
-          format: date-time
-          title: Effective date
-          type: string
-        system__activity_external_id:
-          description: External identifier for the record, optional
-          readOnly: true
-          title: External ID
-          type: string
-        system__activity_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__activity_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__activity_source_id:
-          description: ID in the source system
-          title: Source ID
-          type: string
-        system__activity_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-      title: CRM Communication
-      type: object
     CRMRecordChangeActivity:
       description: CRM RecordChange Field Schema for AG-L56V52BMMW
       properties:
@@ -1388,6 +1388,117 @@ components:
           title: Updated date
           type: string
       title: CRM RecordChange
+      type: object
+    CRMOpportunityChangeActivity:
+      description: CRM OpportunityChange Field Schema for AG-L56V52BMMW
+      properties:
+        standard__activity_manually_logged:
+          description: Whether the activity was manually logged
+          format: boolean
+          readOnly: true
+          title: Manually logged
+          type: boolean
+        standard__activity_name:
+          description: Display name used when showing a summary of the activity.
+          title: Name
+          type: string
+        standard__activity_opportunity_change_id:
+          description: The unique identifier for an Opportunity
+          title: Opportunity ID
+          type: string
+        standard__activity_opportunity_change_last_edit_salesperson_id:
+          description: The ID of the salesperson who last edited the Opportunity
+          title: Last edit salesperson ID
+          type: string
+        standard__activity_opportunity_change_lost_reason:
+          description: Explanation of why the Opportunity was lost
+          title: Lost reason
+          type: string
+        standard__activity_opportunity_change_name:
+          description: The name/title of the Opportunity
+          title: Opportunity name
+          type: string
+        standard__activity_opportunity_change_notes:
+          description: Notes about the Opportunity
+          title: Notes
+          type: string
+        standard__activity_opportunity_change_pipeline_stage:
+          description: The pipeline status of the Opportunity in the pipeline, (closed-won, closed-lost, open, etc)
+          title: Pipeline stage
+          type: string
+        standard__activity_opportunity_change_updated_date:
+          description: The date the Opportunity was last updated
+          format: date
+          title: Updated date
+          type: string
+        standard__activity_source_drill_1:
+          description: Activity record source drill down 1
+          title: Record source drill down 1
+          type: string
+        standard__activity_source_drill_2:
+          description: Activity record source drill down 2
+          title: Record source drill down 2
+          type: string
+        standard__activity_source_drill_3:
+          description: Activity record source drill down 3
+          title: Record source drill down 3
+          type: string
+        standard__activity_source_name:
+          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__activity_tags:
+          description: List of tags useful for segmentation of activities.
+          title: Tags
+          type: string
+        standard__activity_url:
+          description: Link to more information about the activity.
+          title: URL
+          type: string
+        standard__activity_url_name:
+          description: Name of the link to more information about the activity.
+          title: URL name
+          type: string
+        system__activity_activity_type:
+          description: Type of activity
+          title: Activity type
+          type: string
+        system__activity_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__activity_effective:
+          description: Relevant date for the type
+          format: date-time
+          title: Effective date
+          type: string
+        system__activity_external_id:
+          description: External identifier for the record, optional
+          readOnly: true
+          title: External ID
+          type: string
+        system__activity_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__activity_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__activity_source_id:
+          description: ID in the source system
+          title: Source ID
+          type: string
+        system__activity_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+      title: CRM OpportunityChange
       type: object
     CRMMeetingActivity:
       description: CRM Meeting Field Schema for AG-L56V52BMMW
@@ -1552,94 +1663,6 @@ components:
           type: string
       title: CRM Meeting
       type: object
-    CRMNoteActivity:
-      description: CRM Note Field Schema for AG-L56V52BMMW
-      properties:
-        standard__activity_manually_logged:
-          description: Whether the activity was manually logged
-          format: boolean
-          readOnly: true
-          title: Manually logged
-          type: boolean
-        standard__activity_name:
-          description: Display name used when showing a summary of the activity.
-          title: Name
-          type: string
-        standard__activity_note:
-          title: Note
-          type: string
-        standard__activity_note_title:
-          title: Note title
-          type: string
-        standard__activity_source_drill_1:
-          description: Activity record source drill down 1
-          title: Record source drill down 1
-          type: string
-        standard__activity_source_drill_2:
-          description: Activity record source drill down 2
-          title: Record source drill down 2
-          type: string
-        standard__activity_source_drill_3:
-          description: Activity record source drill down 3
-          title: Record source drill down 3
-          type: string
-        standard__activity_source_name:
-          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__activity_tags:
-          description: List of tags useful for segmentation of activities.
-          title: Tags
-          type: string
-        standard__activity_url:
-          description: Link to more information about the activity.
-          title: URL
-          type: string
-        standard__activity_url_name:
-          description: Name of the link to more information about the activity.
-          title: URL name
-          type: string
-        system__activity_activity_type:
-          description: Type of activity
-          title: Activity type
-          type: string
-        system__activity_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__activity_effective:
-          description: Relevant date for the type
-          format: date-time
-          title: Effective date
-          type: string
-        system__activity_external_id:
-          description: External identifier for the record, optional
-          readOnly: true
-          title: External ID
-          type: string
-        system__activity_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__activity_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__activity_source_id:
-          description: ID in the source system
-          title: Source ID
-          type: string
-        system__activity_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-      title: CRM Note
-      type: object
     CRMCustomObject:
       title: CRM Custom Object
       type: object
@@ -1668,681 +1691,6 @@ components:
           type: string
           format: date
           readOnly: true
-    CRMTaskActivity:
-      description: CRM Task Field Schema for AG-L56V52BMMW
-      properties:
-        standard__activity_manually_logged:
-          description: Whether the activity was manually logged
-          format: boolean
-          readOnly: true
-          title: Manually logged
-          type: boolean
-        standard__activity_name:
-          description: Display name used when showing a summary of the activity.
-          title: Name
-          type: string
-        standard__activity_source_drill_1:
-          description: Activity record source drill down 1
-          title: Record source drill down 1
-          type: string
-        standard__activity_source_drill_2:
-          description: Activity record source drill down 2
-          title: Record source drill down 2
-          type: string
-        standard__activity_source_drill_3:
-          description: Activity record source drill down 3
-          title: Record source drill down 3
-          type: string
-        standard__activity_source_name:
-          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__activity_tags:
-          description: List of tags useful for segmentation of activities.
-          title: Tags
-          type: string
-        standard__activity_task_body:
-          description: Notes taken for a task.
-          title: Task body
-          type: string
-        standard__activity_task_due_date:
-          description: Optional date indicating when the task is due for completion
-          format: date-time
-          title: Task due date
-          type: string
-        standard__activity_task_is_overdue:
-          description: Indicates if the task was not completed before the due date
-          format: boolean
-          readOnly: true
-          title: Task is overdue
-          type: boolean
-        standard__activity_task_priority:
-          description: 'Priority for a given task, e.g.: HIGH, MEDIUM, LOW, etc…'
-          title: Task priority
-          type: string
-        standard__activity_task_status:
-          description: 'Status for a given task, e.g.: COMPLETED, NOT_STARTED, IN_PROGRESS, etc…'
-          title: Task status
-          type: string
-        standard__activity_task_type:
-          description: 'Type of task to be executed, e.g.: EMAIL, CALL, TODO, etc…'
-          title: Task type
-          type: string
-        standard__activity_url:
-          description: Link to more information about the activity.
-          title: URL
-          type: string
-        standard__activity_url_name:
-          description: Name of the link to more information about the activity.
-          title: URL name
-          type: string
-        system__activity_activity_type:
-          description: Type of activity
-          title: Activity type
-          type: string
-        system__activity_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__activity_effective:
-          description: Relevant date for the type
-          format: date-time
-          title: Effective date
-          type: string
-        system__activity_external_id:
-          description: External identifier for the record, optional
-          readOnly: true
-          title: External ID
-          type: string
-        system__activity_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__activity_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__activity_source_id:
-          description: ID in the source system
-          title: Source ID
-          type: string
-        system__activity_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-      title: CRM Task
-      type: object
-    CRMEmailActivity:
-      description: CRM Email Field Schema for AG-L56V52BMMW
-      properties:
-        standard__activity_campaign_id:
-          description: An optional ID for the campaign that the email is associated with
-          title: Campaign ID
-          type: string
-        standard__activity_email_body:
-          description: Text or HTML body of the email
-          title: Email body
-          type: string
-        standard__activity_email_date:
-          description: Date and time the email was sent.
-          format: date-time
-          title: Email date
-          type: string
-        standard__activity_email_direction:
-          description: 'The direction the email is going from/to, e.g.: SENT, INCOMING, FORWARDED, etc…'
-          title: Email direction
-          type: string
-        standard__activity_email_headers:
-          description: JSON string of email headers.
-          title: Email headers
-          type: string
-        standard__activity_email_id:
-          description: The ID is a consistent ID for an email across multiple status activities
-          title: Email ID
-          type: string
-        standard__activity_email_status:
-          description: 'Status for the email delivery, e.g.: BOUNCED, FAILED, SCHEDULED, SENDING, SENT, etc…'
-          title: Email status
-          type: string
-        standard__activity_email_subject:
-          description: Subject line of the logged email.
-          title: Email subject
-          type: string
-        standard__activity_email_type:
-          description: 'The email type, e.g.: Marketing, Sales, etc…'
-          title: Email type
-          type: string
-        standard__activity_manually_logged:
-          description: Whether the activity was manually logged
-          format: boolean
-          readOnly: true
-          title: Manually logged
-          type: boolean
-        standard__activity_name:
-          description: Display name used when showing a summary of the activity.
-          title: Name
-          type: string
-        standard__activity_source_drill_1:
-          description: Activity record source drill down 1
-          title: Record source drill down 1
-          type: string
-        standard__activity_source_drill_2:
-          description: Activity record source drill down 2
-          title: Record source drill down 2
-          type: string
-        standard__activity_source_drill_3:
-          description: Activity record source drill down 3
-          title: Record source drill down 3
-          type: string
-        standard__activity_source_name:
-          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__activity_tags:
-          description: List of tags useful for segmentation of activities.
-          title: Tags
-          type: string
-        standard__activity_url:
-          description: Link to more information about the activity.
-          title: URL
-          type: string
-        standard__activity_url_name:
-          description: Name of the link to more information about the activity.
-          title: URL name
-          type: string
-        system__activity_activity_type:
-          description: Type of activity
-          title: Activity type
-          type: string
-        system__activity_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__activity_effective:
-          description: Relevant date for the type
-          format: date-time
-          title: Effective date
-          type: string
-        system__activity_external_id:
-          description: External identifier for the record, optional
-          readOnly: true
-          title: External ID
-          type: string
-        system__activity_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__activity_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__activity_source_id:
-          description: ID in the source system
-          title: Source ID
-          type: string
-        system__activity_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-      title: CRM Email
-      type: object
-    CRMContact:
-      title: CRM Contact
-      type: object
-      description: CRM Contact Field Schema for AG-L56V52BMMW
-      properties:
-        standard__email:
-          format: email
-          title: Email
-          type: string
-        standard__first_name:
-          title: First name
-          type: string
-        standard__last_name:
-          title: Last name
-          type: string
-        standard__contact_additional_team_members:
-          description: Additional team members for contact
-          items:
-            type: string
-          title: Contact additional team members
-          type: array
-        standard__contact_birth_year:
-          description: Contact's birth year. E.g. '1980'
-          title: Birth Year
-          type: string
-        standard__contact_fbclid:
-          description: Facebook click ID used to create the contact
-          readOnly: true
-          title: FBCLID
-          type: string
-        standard__contact_gclid:
-          description: Google click ID used to create the contact
-          readOnly: true
-          title: GCLID
-          type: string
-        standard__contact_gender:
-          description: Gender of the contact. E.g. 'male', 'female', 'other'
-          title: Gender
-          type: string
-        standard__contact_interests:
-          description: Contact's interests. E.g. 'Hiking', 'Skiing', 'Cooking', 'Paintball'
-          items:
-            type: string
-          title: Interests
-          type: array
-        standard__contact_job_title:
-          description: Job title of the contact.
-          title: Job title
-          type: string
-        standard__contact_last_campaign_email_bounced_date:
-          description: Last campaign email bounced for the contact
-          format: date
-          readOnly: true
-          title: Last campaign email bounced date
-          type: string
-        standard__contact_last_campaign_email_clicked_date:
-          description: Last campaign email clicked date for the contact
-          format: date
-          readOnly: true
-          title: Last campaign email clicked date
-          type: string
-        standard__contact_last_campaign_email_open_date:
-          description: Last campaign email open date for the contact
-          format: date
-          readOnly: true
-          title: Last campaign email open date
-          type: string
-        standard__contact_last_campaign_email_sent_date:
-          description: Last campaign email sent for the contact
-          format: date
-          readOnly: true
-          title: Last campaign email sent date
-          type: string
-        standard__contact_last_campaign_email_sent_name:
-          description: Name of last campaign email sent for the contact
-          readOnly: true
-          title: Last campaign email sent name
-          type: string
-        standard__contact_last_campaign_sms_delivered_date:
-          description: Last campaign SMS delivered date for the contact
-          format: date-time
-          readOnly: true
-          title: Last campaign SMS delivered date
-          type: string
-        standard__contact_last_campaign_sms_failed_date:
-          description: Last campaign SMS failed date for the contact
-          format: date-time
-          readOnly: true
-          title: Last campaign SMS failed date
-          type: string
-        standard__contact_last_campaign_sms_sent_date:
-          description: Last campaign SMS sent date for the contact
-          format: date-time
-          readOnly: true
-          title: Last campaign SMS sent date
-          type: string
-        standard__contact_last_campaign_sms_sent_name:
-          description: Name of last campaign SMS sent to the contact
-          readOnly: true
-          title: Last campaign SMS sent name
-          type: string
-        standard__contact_last_campaign_sms_undelivered_date:
-          description: Last campaign SMS undelivered date for the contact
-          format: date-time
-          readOnly: true
-          title: Last campaign SMS undelivered date
-          type: string
-        standard__contact_last_contact_date:
-          description: Date of last contact with the contact
-          format: date
-          readOnly: true
-          title: Last contact date
-          type: string
-        standard__contact_last_engagement_date:
-          description: Date of last engagement with the contact
-          format: date
-          readOnly: true
-          title: Last engagement date
-          type: string
-        standard__contact_last_sales_email_received_date:
-          description: Date of last sales email received for the contact
-          format: date
-          readOnly: true
-          title: Last sales email received date
-          type: string
-        standard__contact_last_sales_email_sent_date:
-          description: Date of last sales email sent for the contact
-          format: date
-          readOnly: true
-          title: Last sales email sent date
-          type: string
-        standard__contact_lead_quality:
-          description: The calculated lead quality of the contact.
-          readOnly: true
-          title: Lead quality
-          type: string
-        standard__contact_lead_score:
-          description: The calculated lead score of the contact.
-          readOnly: true
-          title: Lead score
-        standard__contact_lifecycle_stage:
-          description: Lifecycle stage of the contact. E.g. 'Lead'
-          title: Lifecycle stage
-          type: string
-        standard__contact_linkedin_url:
-          description: URL of the contact's LinkedIn profile.
-          title: LinkedIn URL
-          type: string
-        standard__contact_marketing_email_consent_source:
-          description: The source that updated the marketing email consent field.
-          title: Marketing email consent source
-          type: string
-        standard__contact_marketing_email_consent_status:
-          description: 'The current status for the contact marketing email consent, i.e: "Subscribed", "Unsubscribed", or unset.'
-          title: Marketing email consent
-          type: string
-        standard__contact_marketing_email_consent_timestamp:
-          description: The timestamp in which the marketing email consent was updated.
-          format: date-time
-          title: Marketing email consent timestamp
-          type: string
-        standard__contact_message:
-          description: Message sent from Contact. Commonly input by the contact themselves on an intake form.
-          title: Message
-          type: string
-        standard__contact_mobile_phone_number:
-          description: Additional phone number of the contact.
-          title: Additional phone number
-          type: string
-        standard__contact_msclkid:
-          description: Microsoft click ID used to create the contact
-          readOnly: true
-          title: MSCLKID
-          type: string
-        standard__contact_next_task_due_date:
-          description: Date indicating when the next task of the contact is due for completion
-          format: date-time
-          readOnly: true
-          title: Next task due date
-          type: string
-        standard__contact_next_task_id:
-          description: ID of the next task of the contact
-          readOnly: true
-          title: Next task ID
-          type: string
-        standard__contact_original_source:
-          description: Lead attribution original source
-          title: Original source
-          type: string
-        standard__contact_original_source_drill_1:
-          description: Lead attribution original source drill down level 1
-          title: Original source drill down 1
-          type: string
-        standard__contact_original_source_drill_2:
-          description: Lead attribution original source drill down level 2
-          title: Original source drill down 2
-          type: string
-        standard__contact_pipeline_id:
-          description: The pipeline ID that is associated with the contact.
-          readOnly: true
-          title: Pipeline ID
-          type: string
-        standard__contact_primary_company_id:
-          description: The primary company associated with the contact.
-          readOnly: true
-          title: Primary Company
-          type: string
-        standard__contact_primary_location_city_locality:
-          description: City or locality of the contact's primary location.
-          title: City/locality
-          type: string
-        standard__contact_primary_location_country:
-          description: Country of the contact's primary location.
-          title: Country
-          type: string
-        standard__contact_primary_location_state_province_region:
-          description: State, province, or region of the contact's primary location.
-          title: State/province/region
-          type: string
-        standard__contact_primary_location_street_address_1:
-          description: Street address line 1 of the contact's primary location.
-          title: Street address line 1
-          type: string
-        standard__contact_primary_location_street_address_2:
-          description: Street address line 2 of the contact's primary location.
-          title: Street address line 2
-          type: string
-        standard__contact_primary_location_zip_postal_code:
-          description: Zip or postal code of the contact's primary location.
-          title: Zip/postal code
-          type: string
-        standard__contact_role:
-          description: Role of the contact.
-          title: Role
-          type: string
-        standard__contact_seniority:
-          description: Seniority of the contact.
-          title: Seniority
-          type: string
-        standard__contact_skills:
-          description: Contact's skills. E.g. 'Java', 'Python', 'Javascript'
-          items:
-            type: string
-          title: Skills
-          type: array
-        standard__contact_sms_consent_source:
-          description: The source that updated the SMS consent field.
-          title: SMS consent source
-          type: string
-        standard__contact_sms_consent_status:
-          description: 'The current status for the contact SMS consent, i.e: "Subscribed", "Unsubscribed", or unset.'
-          title: SMS consent
-          type: string
-        standard__contact_source_drill_1:
-          description: Lead attribution record source drill down level 1
-          title: Record source drill down 1
-          type: string
-        standard__contact_source_drill_2:
-          description: Lead attribution record source drill down level 2
-          title: Record source drill down 2
-          type: string
-        standard__contact_source_name:
-          description: Name of the app or external system that created the contact. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__contact_timezone:
-          description: 'Timezone of the contact. This is a string representing the timezone like ''America/New_York''. '
-          title: Timezone
-          type: string
-        standard__contact_utm_campaign:
-          description: The campaign of the UTM parameters for the contact. E.g. 'summer_sale', 'winter_sale', 'spring_sale', 'fall_sale', 'black_friday', 'cyber_monday', 'christmas', 'new_year', 'valentines', 'easter', 'mothers_day', 'fathers_day', 'back_to_school', 'halloween', 'thanksgiving', 'other'
-          title: UTM Campaign
-          type: string
-        standard__contact_utm_content:
-          description: The content of the UTM parameters for the contact. E.g. 'banner', 'sidebar', 'footer', 'header', 'popup', 'overlay', 'slider', 'carousel', 'video', 'audio', 'image', 'text', 'cta', 'form', 'other'
-          title: UTM Content
-          type: string
-        standard__contact_utm_medium:
-          description: The medium of the UTM parameters for the contact. E.g. 'cpc', 'email', 'social', 'organic', 'referral', 'affiliate', 'display', 'video', 'audio', 'sms', 'direct', 'other'
-          title: UTM Medium
-          type: string
-        standard__contact_utm_source:
-          description: The source of the UTM parameters for the contact. E.g. 'google', 'facebook', 'twitter', 'linkedin', 'instagram', 'pinterest', 'youtube', 'tiktok', 'snapchat', 'whatsapp', 'messenger', 'email', 'sms', 'direct', 'other'
-          title: UTM Source
-          type: string
-        standard__contact_utm_term:
-          description: The term of the UTM parameters for the contact. E.g. 'running+shoes', 'black+friday+sale', 'cyber+monday+sale', 'christmas+gifts', 'new+year+resolutions', 'valentines+gifts', 'easter+sale', 'mothers+day+gifts', 'fathers+day+gifts', 'back+to+school+sale', 'halloween+sale', 'thanksgiving+sale', 'other'
-          title: UTM Term
-          type: string
-        standard__phone_number:
-          title: Phone number
-          type: string
-        standard__sms_consent_timestamp:
-          description: The timestamp in which the SMS consent was updated.
-          format: date-time
-          title: SMS consent timestamp
-          type: string
-        standard__tags:
-          description: Descriptive keywords that help you find and segment contacts.
-          title: Tags
-          type: string
-        system__contact_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__contact_external_id:
-          description: External identifier for the record, optional
-          title: External ID
-          type: string
-        system__contact_group_id:
-          description: Market ID for the record, optional. Used for grouping records together, and authorization where users are restricted to selected markets.
-          title: Market ID
-          type: string
-        system__contact_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__contact_last_activity_date:
-          description: Date and time of last activity
-          format: date-time
-          readOnly: true
-          title: Last activity date
-          type: string
-        system__contact_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__contact_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-    CRMOpportunityChangeActivity:
-      description: CRM OpportunityChange Field Schema for AG-L56V52BMMW
-      properties:
-        standard__activity_manually_logged:
-          description: Whether the activity was manually logged
-          format: boolean
-          readOnly: true
-          title: Manually logged
-          type: boolean
-        standard__activity_name:
-          description: Display name used when showing a summary of the activity.
-          title: Name
-          type: string
-        standard__activity_opportunity_change_id:
-          description: The unique identifier for an Opportunity
-          title: Opportunity ID
-          type: string
-        standard__activity_opportunity_change_last_edit_salesperson_id:
-          description: The ID of the salesperson who last edited the Opportunity
-          title: Last edit salesperson ID
-          type: string
-        standard__activity_opportunity_change_lost_reason:
-          description: Explanation of why the Opportunity was lost
-          title: Lost reason
-          type: string
-        standard__activity_opportunity_change_name:
-          description: The name/title of the Opportunity
-          title: Opportunity name
-          type: string
-        standard__activity_opportunity_change_notes:
-          description: Notes about the Opportunity
-          title: Notes
-          type: string
-        standard__activity_opportunity_change_pipeline_stage:
-          description: The pipeline status of the Opportunity in the pipeline, (closed-won, closed-lost, open, etc)
-          title: Pipeline stage
-          type: string
-        standard__activity_opportunity_change_updated_date:
-          description: The date the Opportunity was last updated
-          format: date
-          title: Updated date
-          type: string
-        standard__activity_source_drill_1:
-          description: Activity record source drill down 1
-          title: Record source drill down 1
-          type: string
-        standard__activity_source_drill_2:
-          description: Activity record source drill down 2
-          title: Record source drill down 2
-          type: string
-        standard__activity_source_drill_3:
-          description: Activity record source drill down 3
-          title: Record source drill down 3
-          type: string
-        standard__activity_source_name:
-          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
-          title: Record source
-          type: string
-        standard__activity_tags:
-          description: List of tags useful for segmentation of activities.
-          title: Tags
-          type: string
-        standard__activity_url:
-          description: Link to more information about the activity.
-          title: URL
-          type: string
-        standard__activity_url_name:
-          description: Name of the link to more information about the activity.
-          title: URL name
-          type: string
-        system__activity_activity_type:
-          description: Type of activity
-          title: Activity type
-          type: string
-        system__activity_created:
-          description: When the record was created
-          format: date
-          readOnly: true
-          title: Created date
-          type: string
-        system__activity_effective:
-          description: Relevant date for the type
-          format: date-time
-          title: Effective date
-          type: string
-        system__activity_external_id:
-          description: External identifier for the record, optional
-          readOnly: true
-          title: External ID
-          type: string
-        system__activity_id:
-          description: unique identifier for the record
-          readOnly: true
-          title: ID
-          type: string
-        system__activity_owner_id:
-          description: Owner of the record.
-          title: Owner
-          type: string
-        system__activity_source_id:
-          description: ID in the source system
-          title: Source ID
-          type: string
-        system__activity_updated:
-          description: When the record was last updated
-          format: date
-          readOnly: true
-          title: Updated date
-          type: string
-      title: CRM OpportunityChange
-      type: object
     CRMCompany:
       description: CRM Company Field Schema for AG-L56V52BMMW
       properties:
@@ -2869,6 +2217,549 @@ components:
           type: string
       title: CRM Company
       type: object
+    CRMContact:
+      title: CRM Contact
+      type: object
+      description: CRM Contact Field Schema for AG-L56V52BMMW
+      properties:
+        standard__email:
+          format: email
+          title: Email
+          type: string
+        standard__first_name:
+          title: First name
+          type: string
+        standard__last_name:
+          title: Last name
+          type: string
+        standard__contact_additional_team_members:
+          description: Additional team members for contact
+          items:
+            type: string
+          title: Contact additional team members
+          type: array
+        standard__contact_birth_year:
+          description: Contact's birth year. E.g. '1980'
+          title: Birth Year
+          type: string
+        standard__contact_fbclid:
+          description: Facebook click ID used to create the contact
+          readOnly: true
+          title: FBCLID
+          type: string
+        standard__contact_gclid:
+          description: Google click ID used to create the contact
+          readOnly: true
+          title: GCLID
+          type: string
+        standard__contact_gender:
+          description: Gender of the contact. E.g. 'male', 'female', 'other'
+          title: Gender
+          type: string
+        standard__contact_interests:
+          description: Contact's interests. E.g. 'Hiking', 'Skiing', 'Cooking', 'Paintball'
+          items:
+            type: string
+          title: Interests
+          type: array
+        standard__contact_job_title:
+          description: Job title of the contact.
+          title: Job title
+          type: string
+        standard__contact_last_campaign_email_bounced_date:
+          description: Last campaign email bounced for the contact
+          format: date
+          readOnly: true
+          title: Last campaign email bounced date
+          type: string
+        standard__contact_last_campaign_email_clicked_date:
+          description: Last campaign email clicked date for the contact
+          format: date
+          readOnly: true
+          title: Last campaign email clicked date
+          type: string
+        standard__contact_last_campaign_email_open_date:
+          description: Last campaign email open date for the contact
+          format: date
+          readOnly: true
+          title: Last campaign email open date
+          type: string
+        standard__contact_last_campaign_email_sent_date:
+          description: Last campaign email sent for the contact
+          format: date
+          readOnly: true
+          title: Last campaign email sent date
+          type: string
+        standard__contact_last_campaign_email_sent_name:
+          description: Name of last campaign email sent for the contact
+          readOnly: true
+          title: Last campaign email sent name
+          type: string
+        standard__contact_last_campaign_sms_delivered_date:
+          description: Last campaign SMS delivered date for the contact
+          format: date-time
+          readOnly: true
+          title: Last campaign SMS delivered date
+          type: string
+        standard__contact_last_campaign_sms_failed_date:
+          description: Last campaign SMS failed date for the contact
+          format: date-time
+          readOnly: true
+          title: Last campaign SMS failed date
+          type: string
+        standard__contact_last_campaign_sms_sent_date:
+          description: Last campaign SMS sent date for the contact
+          format: date-time
+          readOnly: true
+          title: Last campaign SMS sent date
+          type: string
+        standard__contact_last_campaign_sms_sent_name:
+          description: Name of last campaign SMS sent to the contact
+          readOnly: true
+          title: Last campaign SMS sent name
+          type: string
+        standard__contact_last_campaign_sms_undelivered_date:
+          description: Last campaign SMS undelivered date for the contact
+          format: date-time
+          readOnly: true
+          title: Last campaign SMS undelivered date
+          type: string
+        standard__contact_last_contact_date:
+          description: Date of last contact with the contact
+          format: date
+          readOnly: true
+          title: Last contact date
+          type: string
+        standard__contact_last_engagement_date:
+          description: Date of last engagement with the contact
+          format: date
+          readOnly: true
+          title: Last engagement date
+          type: string
+        standard__contact_last_sales_email_received_date:
+          description: Date of last sales email received for the contact
+          format: date
+          readOnly: true
+          title: Last sales email received date
+          type: string
+        standard__contact_last_sales_email_sent_date:
+          description: Date of last sales email sent for the contact
+          format: date
+          readOnly: true
+          title: Last sales email sent date
+          type: string
+        standard__contact_lead_quality:
+          description: The calculated lead quality of the contact.
+          readOnly: true
+          title: Lead quality
+          type: string
+        standard__contact_lead_score:
+          description: The calculated lead score of the contact.
+          readOnly: true
+          title: Lead score
+        standard__contact_lifecycle_stage:
+          description: Lifecycle stage of the contact. E.g. 'Lead'
+          title: Lifecycle stage
+          type: string
+        standard__contact_linkedin_url:
+          description: URL of the contact's LinkedIn profile.
+          title: LinkedIn URL
+          type: string
+        standard__contact_marketing_email_consent_source:
+          description: The source that updated the marketing email consent field.
+          title: Marketing email consent source
+          type: string
+        standard__contact_marketing_email_consent_status:
+          description: 'The current status for the contact marketing email consent, i.e: "Subscribed", "Unsubscribed", or unset.'
+          title: Marketing email consent
+          type: string
+        standard__contact_marketing_email_consent_timestamp:
+          description: The timestamp in which the marketing email consent was updated.
+          format: date-time
+          title: Marketing email consent timestamp
+          type: string
+        standard__contact_message:
+          description: Message sent from Contact. Commonly input by the contact themselves on an intake form.
+          title: Message
+          type: string
+        standard__contact_mobile_phone_number:
+          description: Additional phone number of the contact.
+          title: Additional phone number
+          type: string
+        standard__contact_msclkid:
+          description: Microsoft click ID used to create the contact
+          readOnly: true
+          title: MSCLKID
+          type: string
+        standard__contact_next_task_due_date:
+          description: Date indicating when the next task of the contact is due for completion
+          format: date-time
+          readOnly: true
+          title: Next task due date
+          type: string
+        standard__contact_next_task_id:
+          description: ID of the next task of the contact
+          readOnly: true
+          title: Next task ID
+          type: string
+        standard__contact_original_source:
+          description: Lead attribution original source
+          title: Original source
+          type: string
+        standard__contact_original_source_drill_1:
+          description: Lead attribution original source drill down level 1
+          title: Original source drill down 1
+          type: string
+        standard__contact_original_source_drill_2:
+          description: Lead attribution original source drill down level 2
+          title: Original source drill down 2
+          type: string
+        standard__contact_pipeline_id:
+          description: The pipeline ID that is associated with the contact.
+          readOnly: true
+          title: Pipeline ID
+          type: string
+        standard__contact_primary_company_id:
+          description: The primary company associated with the contact.
+          readOnly: true
+          title: Primary Company
+          type: string
+        standard__contact_primary_location_city_locality:
+          description: City or locality of the contact's primary location.
+          title: City/locality
+          type: string
+        standard__contact_primary_location_country:
+          description: Country of the contact's primary location.
+          title: Country
+          type: string
+        standard__contact_primary_location_state_province_region:
+          description: State, province, or region of the contact's primary location.
+          title: State/province/region
+          type: string
+        standard__contact_primary_location_street_address_1:
+          description: Street address line 1 of the contact's primary location.
+          title: Street address line 1
+          type: string
+        standard__contact_primary_location_street_address_2:
+          description: Street address line 2 of the contact's primary location.
+          title: Street address line 2
+          type: string
+        standard__contact_primary_location_zip_postal_code:
+          description: Zip or postal code of the contact's primary location.
+          title: Zip/postal code
+          type: string
+        standard__contact_role:
+          description: Role of the contact.
+          title: Role
+          type: string
+        standard__contact_seniority:
+          description: Seniority of the contact.
+          title: Seniority
+          type: string
+        standard__contact_skills:
+          description: Contact's skills. E.g. 'Java', 'Python', 'Javascript'
+          items:
+            type: string
+          title: Skills
+          type: array
+        standard__contact_sms_consent_source:
+          description: The source that updated the SMS consent field.
+          title: SMS consent source
+          type: string
+        standard__contact_sms_consent_status:
+          description: 'The current status for the contact SMS consent, i.e: "Subscribed", "Unsubscribed", or unset.'
+          title: SMS consent
+          type: string
+        standard__contact_source_drill_1:
+          description: Lead attribution record source drill down level 1
+          title: Record source drill down 1
+          type: string
+        standard__contact_source_drill_2:
+          description: Lead attribution record source drill down level 2
+          title: Record source drill down 2
+          type: string
+        standard__contact_source_name:
+          description: Name of the app or external system that created the contact. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__contact_timezone:
+          description: 'Timezone of the contact. This is a string representing the timezone like ''America/New_York''. '
+          title: Timezone
+          type: string
+        standard__contact_utm_campaign:
+          description: The campaign of the UTM parameters for the contact. E.g. 'summer_sale', 'winter_sale', 'spring_sale', 'fall_sale', 'black_friday', 'cyber_monday', 'christmas', 'new_year', 'valentines', 'easter', 'mothers_day', 'fathers_day', 'back_to_school', 'halloween', 'thanksgiving', 'other'
+          title: UTM Campaign
+          type: string
+        standard__contact_utm_content:
+          description: The content of the UTM parameters for the contact. E.g. 'banner', 'sidebar', 'footer', 'header', 'popup', 'overlay', 'slider', 'carousel', 'video', 'audio', 'image', 'text', 'cta', 'form', 'other'
+          title: UTM Content
+          type: string
+        standard__contact_utm_medium:
+          description: The medium of the UTM parameters for the contact. E.g. 'cpc', 'email', 'social', 'organic', 'referral', 'affiliate', 'display', 'video', 'audio', 'sms', 'direct', 'other'
+          title: UTM Medium
+          type: string
+        standard__contact_utm_source:
+          description: The source of the UTM parameters for the contact. E.g. 'google', 'facebook', 'twitter', 'linkedin', 'instagram', 'pinterest', 'youtube', 'tiktok', 'snapchat', 'whatsapp', 'messenger', 'email', 'sms', 'direct', 'other'
+          title: UTM Source
+          type: string
+        standard__contact_utm_term:
+          description: The term of the UTM parameters for the contact. E.g. 'running+shoes', 'black+friday+sale', 'cyber+monday+sale', 'christmas+gifts', 'new+year+resolutions', 'valentines+gifts', 'easter+sale', 'mothers+day+gifts', 'fathers+day+gifts', 'back+to+school+sale', 'halloween+sale', 'thanksgiving+sale', 'other'
+          title: UTM Term
+          type: string
+        standard__phone_number:
+          title: Phone number
+          type: string
+        standard__sms_consent_timestamp:
+          description: The timestamp in which the SMS consent was updated.
+          format: date-time
+          title: SMS consent timestamp
+          type: string
+        standard__tags:
+          description: Descriptive keywords that help you find and segment contacts.
+          title: Tags
+          type: string
+        system__contact_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__contact_external_id:
+          description: External identifier for the record, optional
+          title: External ID
+          type: string
+        system__contact_group_id:
+          description: Market ID for the record, optional. Used for grouping records together, and authorization where users are restricted to selected markets.
+          title: Market ID
+          type: string
+        system__contact_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__contact_last_activity_date:
+          description: Date and time of last activity
+          format: date-time
+          readOnly: true
+          title: Last activity date
+          type: string
+        system__contact_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__contact_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+    CRMNoteActivity:
+      description: CRM Note Field Schema for AG-L56V52BMMW
+      properties:
+        standard__activity_manually_logged:
+          description: Whether the activity was manually logged
+          format: boolean
+          readOnly: true
+          title: Manually logged
+          type: boolean
+        standard__activity_name:
+          description: Display name used when showing a summary of the activity.
+          title: Name
+          type: string
+        standard__activity_note:
+          title: Note
+          type: string
+        standard__activity_note_title:
+          title: Note title
+          type: string
+        standard__activity_source_drill_1:
+          description: Activity record source drill down 1
+          title: Record source drill down 1
+          type: string
+        standard__activity_source_drill_2:
+          description: Activity record source drill down 2
+          title: Record source drill down 2
+          type: string
+        standard__activity_source_drill_3:
+          description: Activity record source drill down 3
+          title: Record source drill down 3
+          type: string
+        standard__activity_source_name:
+          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__activity_tags:
+          description: List of tags useful for segmentation of activities.
+          title: Tags
+          type: string
+        standard__activity_url:
+          description: Link to more information about the activity.
+          title: URL
+          type: string
+        standard__activity_url_name:
+          description: Name of the link to more information about the activity.
+          title: URL name
+          type: string
+        system__activity_activity_type:
+          description: Type of activity
+          title: Activity type
+          type: string
+        system__activity_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__activity_effective:
+          description: Relevant date for the type
+          format: date-time
+          title: Effective date
+          type: string
+        system__activity_external_id:
+          description: External identifier for the record, optional
+          readOnly: true
+          title: External ID
+          type: string
+        system__activity_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__activity_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__activity_source_id:
+          description: ID in the source system
+          title: Source ID
+          type: string
+        system__activity_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+      title: CRM Note
+      type: object
+    CRMEmailActivity:
+      description: CRM Email Field Schema for AG-L56V52BMMW
+      properties:
+        standard__activity_campaign_id:
+          description: An optional ID for the campaign that the email is associated with
+          title: Campaign ID
+          type: string
+        standard__activity_email_body:
+          description: Text or HTML body of the email
+          title: Email body
+          type: string
+        standard__activity_email_date:
+          description: Date and time the email was sent.
+          format: date-time
+          title: Email date
+          type: string
+        standard__activity_email_direction:
+          description: 'The direction the email is going from/to, e.g.: SENT, INCOMING, FORWARDED, etc…'
+          title: Email direction
+          type: string
+        standard__activity_email_headers:
+          description: JSON string of email headers.
+          title: Email headers
+          type: string
+        standard__activity_email_id:
+          description: The ID is a consistent ID for an email across multiple status activities
+          title: Email ID
+          type: string
+        standard__activity_email_status:
+          description: 'Status for the email delivery, e.g.: BOUNCED, FAILED, SCHEDULED, SENDING, SENT, etc…'
+          title: Email status
+          type: string
+        standard__activity_email_subject:
+          description: Subject line of the logged email.
+          title: Email subject
+          type: string
+        standard__activity_email_type:
+          description: 'The email type, e.g.: Marketing, Sales, etc…'
+          title: Email type
+          type: string
+        standard__activity_manually_logged:
+          description: Whether the activity was manually logged
+          format: boolean
+          readOnly: true
+          title: Manually logged
+          type: boolean
+        standard__activity_name:
+          description: Display name used when showing a summary of the activity.
+          title: Name
+          type: string
+        standard__activity_source_drill_1:
+          description: Activity record source drill down 1
+          title: Record source drill down 1
+          type: string
+        standard__activity_source_drill_2:
+          description: Activity record source drill down 2
+          title: Record source drill down 2
+          type: string
+        standard__activity_source_drill_3:
+          description: Activity record source drill down 3
+          title: Record source drill down 3
+          type: string
+        standard__activity_source_name:
+          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__activity_tags:
+          description: List of tags useful for segmentation of activities.
+          title: Tags
+          type: string
+        standard__activity_url:
+          description: Link to more information about the activity.
+          title: URL
+          type: string
+        standard__activity_url_name:
+          description: Name of the link to more information about the activity.
+          title: URL name
+          type: string
+        system__activity_activity_type:
+          description: Type of activity
+          title: Activity type
+          type: string
+        system__activity_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__activity_effective:
+          description: Relevant date for the type
+          format: date-time
+          title: Effective date
+          type: string
+        system__activity_external_id:
+          description: External identifier for the record, optional
+          readOnly: true
+          title: External ID
+          type: string
+        system__activity_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__activity_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__activity_source_id:
+          description: ID in the source system
+          title: Source ID
+          type: string
+        system__activity_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+      title: CRM Email
+      type: object
     CRMObject:
       title: CRMObject
       x-stoplight:
@@ -2905,6 +2796,115 @@ components:
       - $ref: '#/components/schemas/CRMCustomObject'
         x-stoplight:
           id: 8216ee28ad244
+    CRMTaskActivity:
+      description: CRM Task Field Schema for AG-L56V52BMMW
+      properties:
+        standard__activity_manually_logged:
+          description: Whether the activity was manually logged
+          format: boolean
+          readOnly: true
+          title: Manually logged
+          type: boolean
+        standard__activity_name:
+          description: Display name used when showing a summary of the activity.
+          title: Name
+          type: string
+        standard__activity_source_drill_1:
+          description: Activity record source drill down 1
+          title: Record source drill down 1
+          type: string
+        standard__activity_source_drill_2:
+          description: Activity record source drill down 2
+          title: Record source drill down 2
+          type: string
+        standard__activity_source_drill_3:
+          description: Activity record source drill down 3
+          title: Record source drill down 3
+          type: string
+        standard__activity_source_name:
+          description: Name of the app or external system that created the activity. E.g. 'Salesforce', 'Hubspot', 'Gmail'
+          title: Record source
+          type: string
+        standard__activity_tags:
+          description: List of tags useful for segmentation of activities.
+          title: Tags
+          type: string
+        standard__activity_task_body:
+          description: Notes taken for a task.
+          title: Task body
+          type: string
+        standard__activity_task_due_date:
+          description: Optional date indicating when the task is due for completion
+          format: date-time
+          title: Task due date
+          type: string
+        standard__activity_task_is_overdue:
+          description: Indicates if the task was not completed before the due date
+          format: boolean
+          readOnly: true
+          title: Task is overdue
+          type: boolean
+        standard__activity_task_priority:
+          description: 'Priority for a given task, e.g.: HIGH, MEDIUM, LOW, etc…'
+          title: Task priority
+          type: string
+        standard__activity_task_status:
+          description: 'Status for a given task, e.g.: COMPLETED, NOT_STARTED, IN_PROGRESS, etc…'
+          title: Task status
+          type: string
+        standard__activity_task_type:
+          description: 'Type of task to be executed, e.g.: EMAIL, CALL, TODO, etc…'
+          title: Task type
+          type: string
+        standard__activity_url:
+          description: Link to more information about the activity.
+          title: URL
+          type: string
+        standard__activity_url_name:
+          description: Name of the link to more information about the activity.
+          title: URL name
+          type: string
+        system__activity_activity_type:
+          description: Type of activity
+          title: Activity type
+          type: string
+        system__activity_created:
+          description: When the record was created
+          format: date
+          readOnly: true
+          title: Created date
+          type: string
+        system__activity_effective:
+          description: Relevant date for the type
+          format: date-time
+          title: Effective date
+          type: string
+        system__activity_external_id:
+          description: External identifier for the record, optional
+          readOnly: true
+          title: External ID
+          type: string
+        system__activity_id:
+          description: unique identifier for the record
+          readOnly: true
+          title: ID
+          type: string
+        system__activity_owner_id:
+          description: Owner of the record.
+          title: Owner
+          type: string
+        system__activity_source_id:
+          description: ID in the source system
+          title: Source ID
+          type: string
+        system__activity_updated:
+          description: When the record was last updated
+          format: date
+          readOnly: true
+          title: Updated date
+          type: string
+      title: CRM Task
+      type: object
   securitySchemes:
     OAuth2Demo:
       type: oauth2

@@ -100,51 +100,14 @@ paths:
       - ConversationService
 components:
   schemas:
-    googlerpcStatus:
+    v1ListCommunicationChannelsInfoResponse:
       properties:
-        code:
-          format: int32
-          type: integer
-        details:
+        communicationInfo:
           items:
-            $ref: '#/components/schemas/protobufAny'
+            $ref: '#/components/schemas/v1CommunicationInfo'
+          title: The list of communication info for this account
           type: array
-        message:
-          type: string
-      type: object
-    v1ListCommunicationChannelsInfoRequest:
-      properties:
-        accountGroupId:
-          title: The account group ID to look up communication info for
-          type: string
-      title: Request to list communication channel info for a business
-      type: object
-    v1ListWidgetsResponse:
-      properties:
-        pagingMetadata:
-          $ref: '#/components/schemas/conversationv1PagedResponseMetadata'
-        widgets:
-          items:
-            $ref: '#/components/schemas/v1Widget'
-          title: The list of widgets
-          type: array
-      type: object
-    v1WidgetPosition:
-      default: WIDGET_POSITION_UNSPECIFIED
-      description: "- WIDGET_POSITION_UNSPECIFIED: Unspecified widget position\n - WIDGET_POSITION_RIGHT: Widget position on the right side of the page\n - WIDGET_POSITION_LEFT: Widget position on the left side of the page"
-      enum:
-      - WIDGET_POSITION_UNSPECIFIED
-      - WIDGET_POSITION_RIGHT
-      - WIDGET_POSITION_LEFT
-      type: string
-    v1CommunicationInfo:
-      properties:
-        channel:
-          $ref: '#/components/schemas/v1CommunicationChannelType'
-        identifier:
-          title: The identifier for this channel (phone number, email, etc.)
-          type: string
-      title: Information about a communication channel
+      title: Response containing communication channel information
       type: object
     protobufAny:
       additionalProperties: {}
@@ -152,27 +115,6 @@ components:
         '@type':
           type: string
       type: object
-    conversationv1PagedResponseMetadata:
-      properties:
-        hasMore:
-          title: Whether or not more results exist
-          type: boolean
-        nextCursor:
-          title: A cursor that can be provided to retrieve the next page of results
-          type: string
-        totalResults:
-          format: int64
-          title: Total number of results
-          type: string
-      type: object
-    v1CommunicationChannelType:
-      default: COMMUNICATION_CHANNEL_TYPE_UNDEFINED
-      enum:
-      - COMMUNICATION_CHANNEL_TYPE_UNDEFINED
-      - COMMUNICATION_CHANNEL_TYPE_SMS
-      - COMMUNICATION_CHANNEL_TYPE_VOICE
-      title: Channel types for communication info
-      type: string
     v1Widget:
       properties:
         accentColor:
@@ -258,15 +200,73 @@ components:
             ''group'' is a multi-location widget scoped to a brand (G-xxx) namespace.'
           type: string
       type: object
-    v1ListCommunicationChannelsInfoResponse:
+    v1WidgetPosition:
+      default: WIDGET_POSITION_UNSPECIFIED
+      description: "- WIDGET_POSITION_UNSPECIFIED: Unspecified widget position\n - WIDGET_POSITION_RIGHT: Widget position on the right side of the page\n - WIDGET_POSITION_LEFT: Widget position on the left side of the page"
+      enum:
+      - WIDGET_POSITION_UNSPECIFIED
+      - WIDGET_POSITION_RIGHT
+      - WIDGET_POSITION_LEFT
+      type: string
+    v1CommunicationInfo:
       properties:
-        communicationInfo:
-          items:
-            $ref: '#/components/schemas/v1CommunicationInfo'
-          title: The list of communication info for this account
-          type: array
-      title: Response containing communication channel information
+        channel:
+          $ref: '#/components/schemas/v1CommunicationChannelType'
+        identifier:
+          title: The identifier for this channel (phone number, email, etc.)
+          type: string
+      title: Information about a communication channel
       type: object
+    v1ListWidgetsResponse:
+      properties:
+        pagingMetadata:
+          $ref: '#/components/schemas/conversationv1PagedResponseMetadata'
+        widgets:
+          items:
+            $ref: '#/components/schemas/v1Widget'
+          title: The list of widgets
+          type: array
+      type: object
+    conversationv1PagedResponseMetadata:
+      properties:
+        hasMore:
+          title: Whether or not more results exist
+          type: boolean
+        nextCursor:
+          title: A cursor that can be provided to retrieve the next page of results
+          type: string
+        totalResults:
+          format: int64
+          title: Total number of results
+          type: string
+      type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1ListCommunicationChannelsInfoRequest:
+      properties:
+        accountGroupId:
+          title: The account group ID to look up communication info for
+          type: string
+      title: Request to list communication channel info for a business
+      type: object
+    v1CommunicationChannelType:
+      default: COMMUNICATION_CHANNEL_TYPE_UNDEFINED
+      enum:
+      - COMMUNICATION_CHANNEL_TYPE_UNDEFINED
+      - COMMUNICATION_CHANNEL_TYPE_SMS
+      - COMMUNICATION_CHANNEL_TYPE_VOICE
+      title: Channel types for communication info
+      type: string
   securitySchemes:
     OAuth2:
       flows:

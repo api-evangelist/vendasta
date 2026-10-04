@@ -389,57 +389,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    sort_options:
-      type: object
-      description: Optionally specify a field to sort the results by and a direction
-      properties:
-        field:
-          type: string
-          description: Which field should the list be sorted on?
-          enum:
-          - Name
-          - Created
-          - FirstName
-          - LastName
-        direction:
-          type: string
-          description: What direction should the field be sorted in?
-          enum:
-          - Ascending
-          - Descending
-      required:
-      - field
-      - direction
-    customer:
-      required:
-      - account_id
-      - customer_id
-      properties:
-        city:
-          type: string
-        first_name:
-          type: string
-        last_name:
-          type: string
-        account_id:
-          type: string
-        country:
-          type: string
-        customer_id:
-          type: string
-        phone:
-          items:
-            type: string
-          type: array
-        state:
-          type: string
-        address:
-          type: string
-        email:
-          items:
-            type: string
-          type: array
-      type: object
     return_customer:
       type: object
       properties:
@@ -492,6 +441,57 @@ components:
         deleted:
           type: string
           format: date-time
+    customer:
+      required:
+      - account_id
+      - customer_id
+      properties:
+        city:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        account_id:
+          type: string
+        country:
+          type: string
+        customer_id:
+          type: string
+        phone:
+          items:
+            type: string
+          type: array
+        state:
+          type: string
+        address:
+          type: string
+        email:
+          items:
+            type: string
+          type: array
+      type: object
+    sort_options:
+      type: object
+      description: Optionally specify a field to sort the results by and a direction
+      properties:
+        field:
+          type: string
+          description: Which field should the list be sorted on?
+          enum:
+          - Name
+          - Created
+          - FirstName
+          - LastName
+        direction:
+          type: string
+          description: What direction should the field be sorted in?
+          enum:
+          - Ascending
+          - Descending
+      required:
+      - field
+      - direction
     filters:
       type: object
       properties:
