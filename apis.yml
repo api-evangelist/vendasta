@@ -51,7 +51,7 @@ accessModel:
   method: derived
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-08-13'
+modified: '2026-10-06'
 image: https://www.vendasta.com/wp-content/uploads/2021/03/vendasta-logo.png
 tags:
 - Company
@@ -1015,6 +1015,10 @@ apis:
   - type: OpenAPI
     url: openapi/vendasta-social-posts-api-openapi.yml
 common:
+- url: https://www.vendasta.com/newsroom/
+  type: Blog
+- url: https://www.vendasta.com/feed/
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/vendasta-capability-edges.yml
   name: Vendasta Business Capability Map
