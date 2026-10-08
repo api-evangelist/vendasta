@@ -84,3 +84,34 @@ plans:
   overage: []
   sales_contact: https://www.vendasta.com/pricing/
 checked: '2026-08-13'
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  units: []
+  plans:
+  - name: Starter
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods: []
+  - name: Professional
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods: []
+  - name: Premium
+    access: other
+    model: metered
+    model_how: derived
+    units: []
+    periods: []
+  - name: Custom Enterprise
+    access: other
+    model: unstated
+    model_how: derived
+    units: []
+    periods: []
