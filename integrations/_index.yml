@@ -187,7 +187,6 @@
   arazzo: null
 - slug: vendasta-clicksend-sms
   label: ClickSend SMS
-  partner: clicksend
   partner_name: ClickSend SMS
   category: Phone & SMS
   type: marketplace
@@ -195,7 +194,7 @@
   channel: ipaas-usage
   evidence: https://zapier.com/apps/vendasta/integrations/clicksend
   source: edge
-  status: pending-generation
+  status: pending-partner-spec
   arazzo: null
 - slug: vendasta-elfsight-forms
   label: Elfsight Forms
@@ -345,4 +344,29 @@
   evidence: https://zapier.com/apps/vendasta/integrations/boomtown
   source: edge
   status: pending-partner-spec
+  arazzo: null
+- slug: vendasta-zapier
+  label: Zapier
+  partner: zapier
+  partner_name: Zapier
+  type: marketplace
+  marketplace: zapier-directory
+  channel: ipaas-listing
+  evidence: https://zapier.com/apps/vendasta/integrations
+  source: edge
+  relationship: ipaas-bridge
+  contract_reference:
+    register: Zapier app directory (zapier.com/api/v4/apps)
+    spec_file: null
+    role: ipaas-connector:zapier
+    registered_name: Vendasta
+    matched_domain: vendasta.com
+    matched_by: domain
+    detected_by: sweep-workflow-automation.py
+    detected: '2026-10-15'
+    signal_note: one edge per (provider, platform); actions, triggers and usage counts are context, never read
+    app_slug: vendasta
+    beta: false
+    builder: unknown (not in the directory record)
+  status: pending-generation
   arazzo: null
