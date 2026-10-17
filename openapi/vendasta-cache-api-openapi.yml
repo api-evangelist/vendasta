@@ -36,6 +36,12 @@ paths:
       - Cache
 components:
   schemas:
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
     rpcStatus:
       properties:
         code:
@@ -46,12 +52,6 @@ components:
             $ref: '#/components/schemas/protobufAny'
           type: array
         message:
-          type: string
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
           type: string
       type: object
     v1InvalidateCacheRequest:

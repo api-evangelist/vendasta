@@ -432,6 +432,95 @@ components:
         id:
           type: string
       type: object
+    Meta:
+      type: object
+      properties:
+        resourceType:
+          type: string
+          example: User
+        created:
+          type: string
+          format: date-time
+          example: '2010-01-23T04:56:22Z'
+        lastModified:
+          type: string
+          format: date-time
+          example: '2011-05-13T04:42:34Z'
+        version:
+          type: string
+          description: 'The version of the resource being returned.  This value
+
+            must be the same as the entity-tag (ETag) HTTP response header.
+
+            This attribute has "caseExact" as "true".  Service provider support for this
+
+            attribute is optional and subject to the service provider''s
+
+            support for versioning.  If a
+
+            service provider provides "version" (entity-tag) for a
+
+            representation and the generation of that entity-tag does not
+
+            satisfy all of the characteristics of a strong validator, then the origin server MUST mark the
+
+            "version" (entity-tag) as weak by prefixing its opaque value
+
+            with "W/" (case sensitive).'
+          example: W/"3694e05e9dff591"
+        location:
+          type: string
+          example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
+    Address:
+      type: object
+      properties:
+        type:
+          type: string
+          example: work
+        streetAddress:
+          type: string
+          example: 100 Universal City Plaza
+        locality:
+          type: string
+          example: Hollywood
+          x-stoplight:
+            id: ho5pd2iv86rrw
+        region:
+          type: string
+          pattern: ^[A-Z]{2}-[\w]{1,3}$
+          description: 'The code for the top level subdivision within the country (state/province). For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
+
+
+            Examples: CA-SK, US-FL, AG-08, AU-NSW'
+          example: CA-SK
+        postalCode:
+          type: string
+          example: '91608'
+        country:
+          type: string
+          pattern: ^[A-Z]{2}$
+          description: 'The two letter country code. For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
+
+
+            Examples: CA, US, AU'
+          example: CA
+        formatted:
+          type: string
+          example: 100 Universal City Plaza\nHollywood, CA-SK 91608 CA
+        primary:
+          type: boolean
+    Email:
+      type: object
+      properties:
+        value:
+          type: string
+          format: email
+          example: bjensen@example.com
+        type:
+          type: string
+          example: work
+        primary:
+          type: boolean
     ListResponseUsers:
       type: object
       properties:
@@ -458,53 +547,6 @@ components:
         totalResults:
           type: number
           description: The total number of results returned by the list or query operation
-    Operation:
-      type: object
-      properties:
-        op:
-          type: string
-          example: Replace
-        path:
-          type: string
-          example: emails[type eq "work"].value
-        value:
-          type: string
-          example: updatedEmail@mail.com
-    Member:
-      type: object
-      properties:
-        value:
-          type: string
-          example: 2819c223-7f76-453a-919d-413861904646
-        $ref:
-          type: string
-          format: uri
-          example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
-        display:
-          type: string
-          example: Babs Jensen
-    Email:
-      type: object
-      properties:
-        value:
-          type: string
-          format: email
-          example: bjensen@example.com
-        type:
-          type: string
-          example: work
-        primary:
-          type: boolean
-    PhoneNumber:
-      type: object
-      properties:
-        value:
-          type: string
-          example: +1-306-555-1234
-          description: phone number format should match the region / country given in address against the type
-        type:
-          type: string
-          example: work
     Name:
       type: object
       properties:
@@ -532,6 +574,29 @@ components:
           description: <b>This field currently NOT SUPPORTED</b>
       required:
       - givenName
+    PhoneNumber:
+      type: object
+      properties:
+        value:
+          type: string
+          example: +1-306-555-1234
+          description: phone number format should match the region / country given in address against the type
+        type:
+          type: string
+          example: work
+    PatchOp:
+      type: object
+      properties:
+        schemas:
+          type: array
+          items:
+            type: string
+          example:
+          - urn:ietf:params:scim:api:messages:2.0:PatchOp
+        Operations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Operation'
     User:
       type: object
       properties:
@@ -642,96 +707,31 @@ components:
       - userName
       - name
       - emails
-    Address:
+    Operation:
       type: object
       properties:
-        type:
+        op:
           type: string
-          example: work
-        streetAddress:
+          example: Replace
+        path:
           type: string
-          example: 100 Universal City Plaza
-        locality:
+          example: emails[type eq "work"].value
+        value:
           type: string
-          example: Hollywood
-          x-stoplight:
-            id: ho5pd2iv86rrw
-        region:
-          type: string
-          pattern: ^[A-Z]{2}-[\w]{1,3}$
-          description: 'The code for the top level subdivision within the country (state/province). For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
-
-
-            Examples: CA-SK, US-FL, AG-08, AU-NSW'
-          example: CA-SK
-        postalCode:
-          type: string
-          example: '91608'
-        country:
-          type: string
-          pattern: ^[A-Z]{2}$
-          description: 'The two letter country code. For more info see the [Addresses guide](https://developers.vendasta.com/platform/1ljuzmi2uboim-addresses)
-
-
-            Examples: CA, US, AU'
-          example: CA
-        formatted:
-          type: string
-          example: 100 Universal City Plaza\nHollywood, CA-SK 91608 CA
-        primary:
-          type: boolean
-    PatchOp:
+          example: updatedEmail@mail.com
+    Member:
       type: object
       properties:
-        schemas:
-          type: array
-          items:
-            type: string
-          example:
-          - urn:ietf:params:scim:api:messages:2.0:PatchOp
-        Operations:
-          type: array
-          items:
-            $ref: '#/components/schemas/Operation'
-    Meta:
-      type: object
-      properties:
-        resourceType:
+        value:
           type: string
-          example: User
-        created:
+          example: 2819c223-7f76-453a-919d-413861904646
+        $ref:
           type: string
-          format: date-time
-          example: '2010-01-23T04:56:22Z'
-        lastModified:
-          type: string
-          format: date-time
-          example: '2011-05-13T04:42:34Z'
-        version:
-          type: string
-          description: 'The version of the resource being returned.  This value
-
-            must be the same as the entity-tag (ETag) HTTP response header.
-
-            This attribute has "caseExact" as "true".  Service provider support for this
-
-            attribute is optional and subject to the service provider''s
-
-            support for versioning.  If a
-
-            service provider provides "version" (entity-tag) for a
-
-            representation and the generation of that entity-tag does not
-
-            satisfy all of the characteristics of a strong validator, then the origin server MUST mark the
-
-            "version" (entity-tag) as weak by prefixing its opaque value
-
-            with "W/" (case sensitive).'
-          example: W/"3694e05e9dff591"
-        location:
-          type: string
+          format: uri
           example: https://example.com/v2/Users/2819c223-7f76-453a-919d-413861904646
+        display:
+          type: string
+          example: Babs Jensen
   parameters:
     accept-charset-scim:
       name: Accept-Charset

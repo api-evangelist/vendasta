@@ -46,6 +46,24 @@ components:
           title: This is the category name
           type: string
       type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
     v2BlogImage:
       properties:
         path:
@@ -53,38 +71,6 @@ components:
           type: string
         publicUrl:
           title: The public url of the image
-          type: string
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
-      type: object
-    v2PublishPostResponse:
-      description: Response message containing the internal ID of the published blog post.
-      properties:
-        internalPostId:
-          description: Output only. Internal ID of the post.
-          readOnly: true
-          type: string
-      title: PublishPostResponse
-      type: object
-    socialpostsv2Author:
-      properties:
-        id:
-          format: int64
-          type: string
-        name:
-          type: string
-      type: object
-    v2BlogVideo:
-      properties:
-        path:
-          title: The path of the video
-          type: string
-        publicUrl:
-          title: The public url of the video
           type: string
       type: object
     v2MetadataV2:
@@ -101,16 +87,30 @@ components:
       - value
       title: MetadataV2
       type: object
-    googlerpcStatus:
+    v2PublishPostResponse:
+      description: Response message containing the internal ID of the published blog post.
       properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
+        internalPostId:
+          description: Output only. Internal ID of the post.
+          readOnly: true
+          type: string
+      title: PublishPostResponse
+      type: object
+    v2BlogVideo:
+      properties:
+        path:
+          title: The path of the video
+          type: string
+        publicUrl:
+          title: The public url of the video
+          type: string
+      type: object
+    socialpostsv2Author:
+      properties:
+        id:
+          format: int64
+          type: string
+        name:
           type: string
       type: object
     v2PublishPostRequest:

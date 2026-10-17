@@ -155,6 +155,12 @@ paths:
       - SiteManager
 components:
   schemas:
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
     v1ListPluginsRequest:
       description: ListPluginsRequest is the request message for ListPlugins.
       properties:
@@ -171,22 +177,69 @@ components:
       required:
       - siteId
       type: object
-    v1GetSiteResourceUsagesRequest:
-      description: GetSiteResourceUsagesRequest is the request message for GetSiteResourceUsagesSummary.
+    v1GetSiteResourceUsagesResponse:
+      description: GetSiteResourceUsagesResponse is the response message for GetSiteResourceUsagesSummary.
       properties:
-        monthYear:
-          description: Optional. The month and year to get resource usage for (e.g., "2024-01").
-          type: string
+        siteResourceUsages:
+          $ref: '#/components/schemas/v1SiteResourceUsages'
+      type: object
+    v1ActivatePluginRequest:
+      description: ActivatePluginRequest is the request message for ActivatePlugin.
+      properties:
+        pluginIds:
+          description: Required. The list of plugin IDs to activate.
+          items:
+            type: string
+          type: array
         siteId:
           description: Required. The unique identifier of the site.
           type: string
       required:
       - siteId
+      - pluginIds
       type: object
-    protobufAny:
-      additionalProperties: {}
+    v1Plugin:
+      description: Plugin represents a WordPress plugin installed on a site.
       properties:
-        '@type':
+        id:
+          description: Output only. The unique identifier of the WordPress plugin.
+          readOnly: true
+          type: string
+        name:
+          description: Output only. The display name of the WordPress plugin.
+          readOnly: true
+          type: string
+        status:
+          description: Output only. The status of the plugin (active or inactive).
+          readOnly: true
+          type: string
+        version:
+          description: Output only. The version of the plugin currently installed.
+          readOnly: true
+          type: string
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
+    v1SiteResourceUsages:
+      description: SiteResourceUsages contains resource usage data for a WordPress site.
+      properties:
+        bandwidth:
+          description: Output only. The bandwidth usage of the site.
+          readOnly: true
+          type: string
+        visitors:
+          description: Output only. The visitor count for the site.
+          readOnly: true
           type: string
       type: object
     v1DeactivatePluginRequest:
@@ -213,33 +266,6 @@ components:
       required:
       - text
       type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
-    v1ActivatePluginRequest:
-      description: ActivatePluginRequest is the request message for ActivatePlugin.
-      properties:
-        pluginIds:
-          description: Required. The list of plugin IDs to activate.
-          items:
-            type: string
-          type: array
-        siteId:
-          description: Required. The unique identifier of the site.
-          type: string
-      required:
-      - siteId
-      - pluginIds
-      type: object
     v1ChatCompletionResponse:
       description: ChatCompletionResponse is the response message for ChatCompletion.
       properties:
@@ -248,11 +274,17 @@ components:
           readOnly: true
           type: string
       type: object
-    v1GetSiteResourceUsagesResponse:
-      description: GetSiteResourceUsagesResponse is the response message for GetSiteResourceUsagesSummary.
+    v1GetSiteResourceUsagesRequest:
+      description: GetSiteResourceUsagesRequest is the request message for GetSiteResourceUsagesSummary.
       properties:
-        siteResourceUsages:
-          $ref: '#/components/schemas/v1SiteResourceUsages'
+        monthYear:
+          description: Optional. The month and year to get resource usage for (e.g., "2024-01").
+          type: string
+        siteId:
+          description: Required. The unique identifier of the site.
+          type: string
+      required:
+      - siteId
       type: object
     v1ListPluginsResponse:
       description: ListPluginsResponse is the response message for ListPlugins.
@@ -271,38 +303,6 @@ components:
             $ref: '#/components/schemas/v1Plugin'
           readOnly: true
           type: array
-      type: object
-    v1Plugin:
-      description: Plugin represents a WordPress plugin installed on a site.
-      properties:
-        id:
-          description: Output only. The unique identifier of the WordPress plugin.
-          readOnly: true
-          type: string
-        name:
-          description: Output only. The display name of the WordPress plugin.
-          readOnly: true
-          type: string
-        status:
-          description: Output only. The status of the plugin (active or inactive).
-          readOnly: true
-          type: string
-        version:
-          description: Output only. The version of the plugin currently installed.
-          readOnly: true
-          type: string
-      type: object
-    v1SiteResourceUsages:
-      description: SiteResourceUsages contains resource usage data for a WordPress site.
-      properties:
-        bandwidth:
-          description: Output only. The bandwidth usage of the site.
-          readOnly: true
-          type: string
-        visitors:
-          description: Output only. The visitor count for the site.
-          readOnly: true
-          type: string
       type: object
   securitySchemes:
     OAuth2:

@@ -442,126 +442,53 @@ paths:
       - Orders
 components:
   schemas:
-    orders:
-      title: Order
+    lineItem:
+      title: lineItem
+      x-stoplight:
+        id: 19w8f2ir7f1s9
       type: object
-      x-lifecycle:
-        status: trustedTester
-      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
-
-
-        An order records a sale to a business location. For example requests see the [Sales guide](../../../../../../docs/Guides/Sell/Overview.md).'
+      description: Represents an item that is being bought/sold
       x-tags:
       - Orders
+      - Proposals
       properties:
-        id:
+        sku:
           type: string
-          example: AG-1234:ORD-1234567
-          readOnly: true
+          description: The unique identifier of a product, product edition or package. It can be obtained by following [this guide](https://docs.apigateway.co/docs/openapi-specs/docs/Guides/Sell/FindSKU.md).
+          example: A-123
+          default: ''
         type:
           type: string
-          default: orders
+          default: lineItem
+          example: lineItem
+        quantity:
+          type: integer
+          description: The number of units to ordered
+          default: 1
+        amount:
+          type: integer
+          description: The unit price in cents. If not provided the default price for this sku in the marketplace will be used.
+          default: 0
+        intervalCode:
+          type: string
           enum:
-          - orders
-        attributes:
-          type: object
-          properties:
-            currencyCode:
-              type: string
-              minLength: 3
-              maxLength: 3
-              example: CAD
-              description: The 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
-            lineItems:
-              type: array
-              items:
-                $ref: '#/components/schemas/lineItem'
-            statusCode:
-              type: string
-              default: processing
-              enum:
-              - draft
-              - submitted
-              - processing
-              - declined
-              - fulfilled
-              - error
-              - archived
-              - NotReady
-              description: 'The status of the order will be automatically set to one of the following by the system:
-
-                - `draft`: The order has not yet been sent for approval
-
-                - `submitted`: The order is ready for approval
-
-                - `processing`: The order and its items are being processed
-
-                - `declined`: The order has been declined by an admin or a customer
-
-                - `fulfilled`: The order and its items have been successfully processed. This includes activating the products with the vendor(s).
-
-                - `error`: One or more of the orders items failed to be processed
-
-                - `archived`: The order has been marked as archived
-
-                - `NotReady`: The order could not be created as a dependent resource is not yet ready to be used'
-            tags:
-              type: array
-              maxItems: 30
-              description: A tag is a label that can be used for grouping and filtering your list of orders. They may be any string upto 30 characters in length.
-              items:
-                type: string
-                maxLength: 30
-                minLength: 1
-            notes:
-              type: string
-              description: Free-text notes associated with the order.
-        relationships:
-          type: object
-          properties:
-            businessLocation:
-              type: object
-              description: 'Required during creation: The business location the order is for'
-              required:
-              - data
-              properties:
-                data:
-                  type: object
-                  required:
-                  - id
-                  - type
-                  properties:
-                    id:
-                      type: string
-                      example: AG-1234567
-                    type:
-                      type: string
-                      default: businessLocations
-                      enum:
-                      - businessLocations
-            salesPerson:
-              type: object
-              description: 'The user who will be credited with the sale. Used to associate orders with salespersons in reports.
-
-
-                Note the user must have the salesperson role.'
-              required:
-              - data
-              properties:
-                data:
-                  type: object
-                  required:
-                  - id
-                  - type
-                  properties:
-                    id:
-                      type: string
-                      example: U-1234567
-                    type:
-                      type: string
-                      enum:
-                      - users
-                      default: users
+          - onetime
+          - monthly
+          - yearly
+          - ''
+          description: The billing frequency
+        isPackage:
+          type: boolean
+          description: Indicates if this lineitem is a package instead of a product or an addon.
+          readOnly: true
+        containedInPackage:
+          type: string
+          description: Holds the SKU of the package that this lineitem is part of. Products inside of a package do not have pricing so refer to the lineitem of the package SKU to find the price.
+          default: ''
+          example: MP-123:EDITION-123
+          readOnly: true
+      required:
+      - sku
     orderCustomFields:
       title: Order Custom Fields
       type: object
@@ -763,53 +690,126 @@ components:
       required:
       - id
       - type
-    lineItem:
-      title: lineItem
-      x-stoplight:
-        id: 19w8f2ir7f1s9
+    orders:
+      title: Order
       type: object
-      description: Represents an item that is being bought/sold
+      x-lifecycle:
+        status: trustedTester
+      description: '[Status](https://developers.vendasta.com/platform/ZG9jOjEwMTU2NTYy-versioning): `Trusted Tester`
+
+
+        An order records a sale to a business location. For example requests see the [Sales guide](../../../../../../docs/Guides/Sell/Overview.md).'
       x-tags:
       - Orders
-      - Proposals
       properties:
-        sku:
+        id:
           type: string
-          description: The unique identifier of a product, product edition or package. It can be obtained by following [this guide](https://docs.apigateway.co/docs/openapi-specs/docs/Guides/Sell/FindSKU.md).
-          example: A-123
-          default: ''
+          example: AG-1234:ORD-1234567
+          readOnly: true
         type:
           type: string
-          default: lineItem
-          example: lineItem
-        quantity:
-          type: integer
-          description: The number of units to ordered
-          default: 1
-        amount:
-          type: integer
-          description: The unit price in cents. If not provided the default price for this sku in the marketplace will be used.
-          default: 0
-        intervalCode:
-          type: string
+          default: orders
           enum:
-          - onetime
-          - monthly
-          - yearly
-          - ''
-          description: The billing frequency
-        isPackage:
-          type: boolean
-          description: Indicates if this lineitem is a package instead of a product or an addon.
-          readOnly: true
-        containedInPackage:
-          type: string
-          description: Holds the SKU of the package that this lineitem is part of. Products inside of a package do not have pricing so refer to the lineitem of the package SKU to find the price.
-          default: ''
-          example: MP-123:EDITION-123
-          readOnly: true
-      required:
-      - sku
+          - orders
+        attributes:
+          type: object
+          properties:
+            currencyCode:
+              type: string
+              minLength: 3
+              maxLength: 3
+              example: CAD
+              description: The 3 letter currency code as defined by [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217)
+            lineItems:
+              type: array
+              items:
+                $ref: '#/components/schemas/lineItem'
+            statusCode:
+              type: string
+              default: processing
+              enum:
+              - draft
+              - submitted
+              - processing
+              - declined
+              - fulfilled
+              - error
+              - archived
+              - NotReady
+              description: 'The status of the order will be automatically set to one of the following by the system:
+
+                - `draft`: The order has not yet been sent for approval
+
+                - `submitted`: The order is ready for approval
+
+                - `processing`: The order and its items are being processed
+
+                - `declined`: The order has been declined by an admin or a customer
+
+                - `fulfilled`: The order and its items have been successfully processed. This includes activating the products with the vendor(s).
+
+                - `error`: One or more of the orders items failed to be processed
+
+                - `archived`: The order has been marked as archived
+
+                - `NotReady`: The order could not be created as a dependent resource is not yet ready to be used'
+            tags:
+              type: array
+              maxItems: 30
+              description: A tag is a label that can be used for grouping and filtering your list of orders. They may be any string upto 30 characters in length.
+              items:
+                type: string
+                maxLength: 30
+                minLength: 1
+            notes:
+              type: string
+              description: Free-text notes associated with the order.
+        relationships:
+          type: object
+          properties:
+            businessLocation:
+              type: object
+              description: 'Required during creation: The business location the order is for'
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - id
+                  - type
+                  properties:
+                    id:
+                      type: string
+                      example: AG-1234567
+                    type:
+                      type: string
+                      default: businessLocations
+                      enum:
+                      - businessLocations
+            salesPerson:
+              type: object
+              description: 'The user who will be credited with the sale. Used to associate orders with salespersons in reports.
+
+
+                Note the user must have the salesperson role.'
+              required:
+              - data
+              properties:
+                data:
+                  type: object
+                  required:
+                  - id
+                  - type
+                  properties:
+                    id:
+                      type: string
+                      example: U-1234567
+                    type:
+                      type: string
+                      enum:
+                      - users
+                      default: users
   securitySchemes:
     JWT:
       type: http

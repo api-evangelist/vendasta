@@ -230,24 +230,6 @@ components:
           type: string
       title: Site
       type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
     v1SubsiteInfo:
       description: Information about a subsite within a WordPress multisite installation.
       properties:
@@ -281,6 +263,24 @@ components:
           readOnly: true
           type: string
       title: SubsiteInfo
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
       type: object
     v1ListRequest:
       description: Request to list WordPress sites with pagination support.

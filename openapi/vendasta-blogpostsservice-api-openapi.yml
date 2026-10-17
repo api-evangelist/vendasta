@@ -62,15 +62,6 @@ paths:
       - BlogPostsService
 components:
   schemas:
-    v2UpdateBlogPostRequest:
-      description: Request message for updating an existing blog post.
-      properties:
-        blogPost:
-          $ref: '#/components/schemas/v2BlogPost'
-      required:
-      - blogPost
-      title: UpdateBlogPostRequest
-      type: object
     v2DeleteBlogPostRequest:
       description: Request message for deleting a blog post.
       properties:
@@ -88,6 +79,34 @@ components:
       - internalPostId
       title: DeleteBlogPostRequest
       type: object
+    socialpostsv2Category:
+      properties:
+        id:
+          format: int64
+          title: This is the categoryId
+          type: string
+        name:
+          title: This is the category name
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
+    googlerpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
+      type: object
     v2MediaProperty:
       properties:
         path:
@@ -97,19 +116,14 @@ components:
           title: Public Url for the blog media
           type: string
       type: object
-    protobufAny:
-      additionalProperties: {}
+    v2UpdateBlogPostRequest:
+      description: Request message for updating an existing blog post.
       properties:
-        '@type':
-          type: string
-      type: object
-    socialpostsv2Author:
-      properties:
-        id:
-          format: int64
-          type: string
-        name:
-          type: string
+        blogPost:
+          $ref: '#/components/schemas/v2BlogPost'
+      required:
+      - blogPost
+      title: UpdateBlogPostRequest
       type: object
     v2MetadataV2:
       description: A key-value pair used to store generic metadata information associated with a post or media.
@@ -125,26 +139,12 @@ components:
       - value
       title: MetadataV2
       type: object
-    googlerpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
-      type: object
-    socialpostsv2Category:
+    socialpostsv2Author:
       properties:
         id:
           format: int64
-          title: This is the categoryId
           type: string
         name:
-          title: This is the category name
           type: string
       type: object
     v2BlogPost:

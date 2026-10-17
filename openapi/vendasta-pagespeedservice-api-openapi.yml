@@ -62,12 +62,6 @@ components:
         message:
           type: string
       type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
-      type: object
     v1GetScoreResponse:
       description: Response containing the Google Page Speed score and raw API response.
       properties:
@@ -80,6 +74,12 @@ components:
           readOnly: true
           type: boolean
       title: GetScoreResponse
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
       type: object
   securitySchemes:
     OAuth2:

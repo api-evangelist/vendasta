@@ -65,16 +65,6 @@ paths:
       - Monitor
 components:
   schemas:
-    v1UptimeSearchRequest:
-      description: Request to search for WordPress site uptime data for a partner.
-      properties:
-        partnerId:
-          description: Required. The partner ID to search uptime data for.
-          type: string
-      required:
-      - partnerId
-      title: UptimeSearchRequest
-      type: object
     v1UptimeSearchResponse:
       description: Response containing uptime and health data for WordPress sites.
       properties:
@@ -91,22 +81,24 @@ components:
           type: string
       title: UptimeSearchResponse
       type: object
+    v1UptimeEvent:
+      description: A single uptime event data point with timestamp and value.
+      properties:
+        dateTime:
+          description: Output only. The date and time of the uptime event.
+          format: date-time
+          readOnly: true
+          type: string
+        value:
+          description: Output only. The uptime value at this point in time.
+          readOnly: true
+          type: string
+      title: UptimeEvent
+      type: object
     protobufAny:
       additionalProperties: {}
       properties:
         '@type':
-          type: string
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
           type: string
       type: object
     v1FetchUptimeDataRequest:
@@ -126,6 +118,37 @@ components:
       required:
       - accountId
       title: FetchUptimeDataRequest
+      type: object
+    v1FetchUptimeDataResponse:
+      description: Response containing uptime events and uptime percentages for the requested period.
+      properties:
+        currentUptime:
+          description: Output only. The current uptime percentage for the requested period.
+          format: int32
+          readOnly: true
+          type: integer
+        events:
+          description: Output only. The list of uptime events within the requested date range.
+          items:
+            $ref: '#/components/schemas/v1UptimeEvent'
+          readOnly: true
+          type: array
+        previousUptime:
+          description: Output only. The previous uptime percentage for comparison.
+          format: int32
+          readOnly: true
+          type: integer
+      title: FetchUptimeDataResponse
+      type: object
+    v1UptimeSearchRequest:
+      description: Request to search for WordPress site uptime data for a partner.
+      properties:
+        partnerId:
+          description: Required. The partner ID to search uptime data for.
+          type: string
+      required:
+      - partnerId
+      title: UptimeSearchRequest
       type: object
     v1SiteHealths:
       description: Health and uptime status information for a WordPress site.
@@ -172,40 +195,17 @@ components:
           type: string
       title: SiteHealths
       type: object
-    v1UptimeEvent:
-      description: A single uptime event data point with timestamp and value.
+    rpcStatus:
       properties:
-        dateTime:
-          description: Output only. The date and time of the uptime event.
-          format: date-time
-          readOnly: true
-          type: string
-        value:
-          description: Output only. The uptime value at this point in time.
-          readOnly: true
-          type: string
-      title: UptimeEvent
-      type: object
-    v1FetchUptimeDataResponse:
-      description: Response containing uptime events and uptime percentages for the requested period.
-      properties:
-        currentUptime:
-          description: Output only. The current uptime percentage for the requested period.
+        code:
           format: int32
-          readOnly: true
           type: integer
-        events:
-          description: Output only. The list of uptime events within the requested date range.
+        details:
           items:
-            $ref: '#/components/schemas/v1UptimeEvent'
-          readOnly: true
+            $ref: '#/components/schemas/protobufAny'
           type: array
-        previousUptime:
-          description: Output only. The previous uptime percentage for comparison.
-          format: int32
-          readOnly: true
-          type: integer
-      title: FetchUptimeDataResponse
+        message:
+          type: string
       type: object
   securitySchemes:
     OAuth2:

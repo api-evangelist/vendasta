@@ -134,6 +134,25 @@ paths:
       description: Localhost
 components:
   schemas:
+    v1HistoricalCitationsDataPoint:
+      properties:
+        date:
+          description: Output only. Date of the data point.
+          format: date-time
+          readOnly: true
+          type: string
+        value:
+          description: Output only. Total citations found up to this date.
+          format: int64
+          readOnly: true
+          type: string
+      type: object
+    protobufAny:
+      additionalProperties: {}
+      properties:
+        '@type':
+          type: string
+      type: object
     v1CitationsByDomain:
       properties:
         citations:
@@ -180,6 +199,18 @@ components:
           readOnly: true
           type: string
       title: GetCitationDataResponse
+      type: object
+    rpcStatus:
+      properties:
+        code:
+          format: int32
+          type: integer
+        details:
+          items:
+            $ref: '#/components/schemas/protobufAny'
+          type: array
+        message:
+          type: string
       type: object
     v1Citation:
       description: Citation contains details for a citation.
@@ -237,37 +268,6 @@ components:
       required:
       - businessId
       title: GetCitationDataRequest
-      type: object
-    protobufAny:
-      additionalProperties: {}
-      properties:
-        '@type':
-          type: string
-      type: object
-    v1HistoricalCitationsDataPoint:
-      properties:
-        date:
-          description: Output only. Date of the data point.
-          format: date-time
-          readOnly: true
-          type: string
-        value:
-          description: Output only. Total citations found up to this date.
-          format: int64
-          readOnly: true
-          type: string
-      type: object
-    rpcStatus:
-      properties:
-        code:
-          format: int32
-          type: integer
-        details:
-          items:
-            $ref: '#/components/schemas/protobufAny'
-          type: array
-        message:
-          type: string
       type: object
     citations:
       title: Citations
