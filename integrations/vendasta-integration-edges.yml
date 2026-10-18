@@ -8,6 +8,7 @@ checked:
 - https://n8n.io/integrations/vendasta/
 - https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/vendasta/integrations
+- zoom/integrations/zoom-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -387,6 +388,23 @@ edges:
     builder: unknown (not in the directory record)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: Zoom (own)
+  partner: zoom
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.zoom.us/apps/U09j5PgdTTOt-sOhxQD05w
+  mirror_of: zoom/integrations/zoom-integration-edges.yml
+  apps:
+  - Meeting Launcher
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Zoom app
 templates:
 - title: Create or update Vendasta contacts from new Google Ads lead form entries
   url: https://zapier.com/apps/google-ads/integrations/vendasta/255596282/create-or-update-vendasta-contacts-from-new-google-ads-lead-form-entries

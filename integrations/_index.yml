@@ -370,3 +370,16 @@
     builder: unknown (not in the directory record)
   status: not-a-workflow
   arazzo: null
+- slug: vendasta-zoom-own
+  label: Zoom (own)
+  partner: zoom
+  partner_name: Zoom (own)
+  category: Zoom app
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.zoom.us/apps/U09j5PgdTTOt-sOhxQD05w
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
