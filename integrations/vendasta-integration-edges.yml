@@ -3,9 +3,16 @@ method: searched
 source:
 - https://zapier.com/apps/vendasta/integrations
 checked:
+- https://api.nuget.org/v3
 - https://composio.dev/toolkits/vendasta
+- https://crates.io/api/v1
 - https://monid.ai/tools/vendasta
 - https://n8n.io/integrations/vendasta/
+- https://proxy.golang.org
+- https://pypi.org/pypi
+- https://registry.npmjs.org
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/vendasta/integrations
 - zoom/integrations/zoom-integration-edges.yml
@@ -405,6 +412,72 @@ edges:
   detected: '2026-10-18'
   detected_by: mirror-platform-listings.py
   category: Zoom app
+- partner_name: Maven Central
+  partner: maven-central
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Java/JVM)
+  evidence: https://central.sonatype.com/artifact/com.vendasta/accounts.v1
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: com.vendasta:accounts.v1
+      version: 4.0.0
+      released: '2026-07-24'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.vendasta/accounts.v1
+      repo_leg: github-org:vendasta
+      publisher_leg: groupId:vendasta.com
+      matched_by: domain
+    - name: com.vendasta:business.v1
+      version: 3.2.0
+      released: '2020-05-02'
+      released_field: lastUpdated
+      lapsed: true
+      page: https://central.sonatype.com/artifact/com.vendasta/business.v1
+      repo_leg: github-org:vendasta
+      publisher_leg: groupId:vendasta.com
+      matched_by: domain
+    - name: com.vendasta:socialposts.v1
+      version: 6.1.1
+      released: '2020-06-24'
+      released_field: lastUpdated
+      lapsed: true
+      page: https://central.sonatype.com/artifact/com.vendasta/socialposts.v1
+      repo_leg: github-org:vendasta
+      publisher_leg: groupId:vendasta.com
+      matched_by: domain
+    - name: com.vendasta:sso.v1
+      version: 2.5.0
+      released: '2021-03-02'
+      released_field: lastUpdated
+      lapsed: true
+      page: https://central.sonatype.com/artifact/com.vendasta/sso.v1
+      repo_leg: github-org:vendasta
+      publisher_leg: groupId:vendasta.com
+      matched_by: domain
+    - name: com.vendasta:vax.v1
+      version: 1.0.0
+      released: '2025-09-17'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.vendasta/vax.v1
+      repo_leg: github-org:vendasta
+      publisher_leg: groupId:vendasta.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
 templates:
 - title: Create or update Vendasta contacts from new Google Ads lead form entries
   url: https://zapier.com/apps/google-ads/integrations/vendasta/255596282/create-or-update-vendasta-contacts-from-new-google-ads-lead-form-entries

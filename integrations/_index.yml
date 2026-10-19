@@ -383,3 +383,70 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: vendasta-maven-central
+  label: Maven Central
+  partner: maven-central
+  partner_name: Maven Central
+  category: official SDK (Java/JVM)
+  type: register
+  channel: package-registry
+  evidence: https://central.sonatype.com/artifact/com.vendasta/accounts.v1
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: com.vendasta:accounts.v1
+      version: 4.0.0
+      released: '2026-07-24'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.vendasta/accounts.v1
+      repo_leg: github-org:vendasta
+      publisher_leg: groupId:vendasta.com
+      matched_by: domain
+    - name: com.vendasta:business.v1
+      version: 3.2.0
+      released: '2020-05-02'
+      released_field: lastUpdated
+      lapsed: true
+      page: https://central.sonatype.com/artifact/com.vendasta/business.v1
+      repo_leg: github-org:vendasta
+      publisher_leg: groupId:vendasta.com
+      matched_by: domain
+    - name: com.vendasta:socialposts.v1
+      version: 6.1.1
+      released: '2020-06-24'
+      released_field: lastUpdated
+      lapsed: true
+      page: https://central.sonatype.com/artifact/com.vendasta/socialposts.v1
+      repo_leg: github-org:vendasta
+      publisher_leg: groupId:vendasta.com
+      matched_by: domain
+    - name: com.vendasta:sso.v1
+      version: 2.5.0
+      released: '2021-03-02'
+      released_field: lastUpdated
+      lapsed: true
+      page: https://central.sonatype.com/artifact/com.vendasta/sso.v1
+      repo_leg: github-org:vendasta
+      publisher_leg: groupId:vendasta.com
+      matched_by: domain
+    - name: com.vendasta:vax.v1
+      version: 1.0.0
+      released: '2025-09-17'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.vendasta/vax.v1
+      repo_leg: github-org:vendasta
+      publisher_leg: groupId:vendasta.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  status: not-a-workflow
+  arazzo: null
