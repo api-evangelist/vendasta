@@ -1,4 +1,4 @@
-generated: '2026-10-12'
+generated: '2026-10-20'
 method: searched
 source:
 - https://zapier.com/apps/vendasta/integrations
@@ -40,336 +40,6 @@ marketplace_apps:
     label: Create or Update Contact
   searches: []
 edges:
-- partner_name: Google Calendar
-  partner: google-calendar
-  partner_match: name-exact
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/google-calendar
-  direction: third-party
-  category: Calendar
-  partner_url: https://calendar.google.com/
-- partner_name: Dialpad
-  partner: dialpad
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/dialpad
-  direction: third-party
-  category: Phone & SMS
-  partner_url: https://www.dialpad.com/
-- partner_name: Business App
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/business-app
-  direction: third-party
-  category: Sales & CRM
-  partner_url: https://businessapp.io/
-- partner_name: Apollo
-  partner: apollo
-  partner_match: name-exact
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/apollo
-  direction: third-party
-  category: Sales & CRM
-  partner_url: https://www.apollo.io/
-- partner_name: Facebook Conversions
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/facebook-conversions
-  direction: third-party
-  category: Ads & Conversion
-  partner_url: https://developers.facebook.com/docs/marketing-api/server-side-api/guides/zapier-integration
-- partner_name: Visual Visitor
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/visual-visitor
-  direction: third-party
-  category: Website Builders
-  partner_url: https://app.visualvisitor.com/
-- partner_name: Granola
-  partner: granola
-  partner_match: name-exact
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/granola
-  direction: third-party
-  category: AI Assistants
-  partner_url: https://granola.so/
-- partner_name: FareHarbor
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/fareharbor
-  direction: third-party
-  category: Scheduling & Booking
-  partner_url: https://fareharbor.com/
-- partner_name: WhatsApp Notifications
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/whatsapp-notifications
-  direction: third-party
-  category: Communication
-  partner_url: null
-- partner_name: TeamUp
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/teamup
-  direction: third-party
-  category: Fitness
-  partner_url: https://goteamup.com/
-- partner_name: Tactiq
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/tactiq
-  direction: third-party
-  category: AI Meeting Assistants
-  partner_url: https://tactiq.io/
-- partner_name: Postal.io
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/postalio
-  direction: third-party
-  category: Marketing
-  partner_url: https://postal.io/
-- partner_name: Constant Contact
-  partner: constant-contact
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/constant-contact
-  direction: third-party
-  category: Email Newsletters
-  partner_url: http://www.constantcontact.com/signup.jsp?pn=zapier
-- partner_name: Lead Updates
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/lead-updates
-  direction: third-party
-  category: Marketing Automation
-  partner_url: https://lead-updates.com/
-- partner_name: Google Contacts
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/google-contacts
-  direction: third-party
-  category: Contact Management
-  partner_url: https://www.google.com/contacts/
-- partner_name: PandaDoc
-  partner: pandadoc
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/pandadoc
-  direction: third-party
-  category: Documents
-  partner_url: https://www.pandadoc.com/integrations/zapier/?utm_source=zapier-marketplace&utm_medium=partner&utm_campaign=2020-11-inbd-marketplace-websitevisit-pandadoc-zapier-integration
-- partner_name: ClickSend SMS
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/clicksend
-  direction: third-party
-  category: Phone & SMS
-  partner_url: https://www.clicksend.com/?utm_source=zapier&utm_medium=referral&utm_campaign=sms-app&utm_term=sms&utm_content=listing
-- partner_name: Elfsight Forms
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/elfsight-forms
-  direction: third-party
-  category: Forms & Surveys
-  partner_url: https://elfsight.com/widgets/?category=forms
-- partner_name: Autotask
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/autotask
-  direction: third-party
-  category: CRM (Customer Relationship Management)
-  partner_url: http://www.autotask.com/
-- partner_name: Moverbase
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/moverbase
-  direction: third-party
-  category: CRM (Customer Relationship Management)
-  partner_url: http://www.moverbase.com/
-- partner_name: Stacker Classic
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/stacker-classic
-  direction: third-party
-  category: App Builder
-  partner_url: https://www.stackerhq.com/
-- partner_name: Outscraper
-  partner: outscraper
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/outscraper-ca1391
-  direction: third-party
-  category: Databases
-  partner_url: https://outscraper.com/
-- partner_name: TikTok Lead Generation
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/tiktok-lead-generation
-  direction: third-party
-  category: Ads & Conversion
-  partner_url: https://ads.tiktok.com/
-- partner_name: Wave
-  partner: wave-financial
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/wave
-  direction: third-party
-  category: Accounting
-  partner_url: https://www.waveapps.com/
-- partner_name: Cal.com
-  partner: cal-com
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/calcom
-  direction: third-party
-  category: Scheduling & Booking
-  partner_url: http://go.cal.com/zapier
-- partner_name: Apify
-  partner: apify
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/apify
-  direction: third-party
-  category: AI Web Scraping
-  partner_url: https://www.apify.com/
-- partner_name: Snapchat Lead Generation
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/snapchat-lead-generation
-  direction: third-party
-  category: Ads & Conversion
-  partner_url: https://forbusiness.snapchat.com/
-- partner_name: Donorbox
-  partner: donorbox
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/donorbox
-  direction: third-party
-  category: Fundraising
-  partner_url: https://donorbox.org/
-- partner_name: Guesty
-  partner: guesty
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/guesty
-  direction: third-party
-  category: Scheduling & Booking
-  partner_url: https://www.guesty.com/
-- partner_name: BoomTown
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/vendasta/integrations/boomtown
-  direction: third-party
-  category: CRM (Customer Relationship Management)
-  partner_url: http://www.boomtownroi.com/
 - partner_name: Zapier
   partner: zapier
   partner_match: aggregator
@@ -478,6 +148,366 @@ edges:
     detected: '2026-10-18'
   detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
+- partner_name: Google Calendar
+  partner: google-calendar
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/google-calendar
+  direction: third-party
+  category: Calendar
+  partner_url: https://calendar.google.com/
+- partner_name: Dialpad
+  partner: dialpad
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/dialpad
+  direction: third-party
+  category: Phone & SMS
+  partner_url: https://www.dialpad.com/
+- partner_name: Business App
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/business-app
+  direction: third-party
+  category: Sales & CRM
+  partner_url: https://businessapp.io/
+- partner_name: Apollo
+  partner: apollo-io
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/apollo
+  direction: third-party
+  category: Sales & CRM
+  partner_url: https://www.apollo.io/
+- partner_name: Facebook Conversions
+  partner: facebook
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/facebook-conversions
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://developers.facebook.com/docs/marketing-api/server-side-api/guides/zapier-integration
+- partner_name: Visual Visitor
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/visual-visitor
+  direction: third-party
+  category: Website Builders
+  partner_url: https://app.visualvisitor.com/
+- partner_name: Granola
+  partner: granola
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/granola
+  direction: third-party
+  category: AI Assistants
+  partner_url: https://granola.so/
+- partner_name: FareHarbor
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/fareharbor
+  direction: third-party
+  category: Scheduling & Booking
+  partner_url: https://fareharbor.com/
+- partner_name: WhatsApp Notifications
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/whatsapp-notifications
+  direction: third-party
+  category: Communication
+  partner_url: null
+- partner_name: TeamUp
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/teamup
+  direction: third-party
+  category: Fitness
+  partner_url: https://goteamup.com/
+- partner_name: Tactiq
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/tactiq
+  direction: third-party
+  category: AI Meeting Assistants
+  partner_url: https://tactiq.io/
+- partner_name: Postal.io
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/postalio
+  direction: third-party
+  category: Marketing
+  partner_url: https://postal.io/
+- partner_name: Constant Contact
+  partner: constant-contact
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/constant-contact
+  direction: third-party
+  category: Email Newsletters
+  partner_url: http://www.constantcontact.com/signup.jsp?pn=zapier
+- partner_name: Lead Updates
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/lead-updates
+  direction: third-party
+  category: Marketing Automation
+  partner_url: https://lead-updates.com/
+- partner_name: Google Contacts
+  partner: google
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/google-contacts
+  direction: third-party
+  category: Contact Management
+  partner_url: https://www.google.com/contacts/
+- partner_name: PandaDoc
+  partner: pandadoc
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/pandadoc
+  direction: third-party
+  category: Documents
+  partner_url: https://www.pandadoc.com/integrations/zapier/?utm_source=zapier-marketplace&utm_medium=partner&utm_campaign=2020-11-inbd-marketplace-websitevisit-pandadoc-zapier-integration
+- partner_name: ClickSend SMS
+  partner: clicksend
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/clicksend
+  direction: third-party
+  category: Phone & SMS
+  partner_url: https://www.clicksend.com/?utm_source=zapier&utm_medium=referral&utm_campaign=sms-app&utm_term=sms&utm_content=listing
+- partner_name: Elfsight Forms
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/elfsight-forms
+  direction: third-party
+  category: Forms & Surveys
+  partner_url: https://elfsight.com/widgets/?category=forms
+- partner_name: Autotask
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/autotask
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: http://www.autotask.com/
+- partner_name: Moverbase
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/moverbase
+  direction: third-party
+  category: CRM (Customer Relationship Management)
+  partner_url: http://www.moverbase.com/
+- partner_name: Stacker Classic
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/stacker-classic
+  direction: third-party
+  category: App Builder
+  partner_url: https://www.stackerhq.com/
+- partner_name: Allo
+  partner: null
+  partner_match: null
+  partner_candidate: the-mobile-first-company
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/allo
+  direction: third-party
+  category: AI Assistants
+  partner_url: https://www.withallo.com/
+- partner_name: Outscraper
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/outscraper-ca1391
+  direction: third-party
+  category: Databases
+  partner_url: https://outscraper.com/
+- partner_name: 800.com
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/800com
+  direction: third-party
+  category: Call Tracking
+  partner_url: https://www.800.com/
+- partner_name: TikTok Lead Generation
+  partner: tiktok
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/tiktok-lead-generation
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://ads.tiktok.com/
+- partner_name: Wave
+  partner: wave-financial
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/wave
+  direction: third-party
+  category: Accounting
+  partner_url: https://www.waveapps.com/
+- partner_name: Cal.com
+  partner: cal-com
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/calcom
+  direction: third-party
+  category: Scheduling & Booking
+  partner_url: http://go.cal.com/zapier
+- partner_name: Apify
+  partner: apify
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/apify
+  direction: third-party
+  category: AI Web Scraping
+  partner_url: https://www.apify.com/
+- partner_name: Snapchat Lead Generation
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/snapchat-lead-generation
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://forbusiness.snapchat.com/
+- partner_name: Donorbox
+  partner: donorbox
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/vendasta/integrations/donorbox
+  direction: third-party
+  category: Fundraising
+  partner_url: https://donorbox.org/
 templates:
 - title: Create or update Vendasta contacts from new Google Ads lead form entries
   url: https://zapier.com/apps/google-ads/integrations/vendasta/255596282/create-or-update-vendasta-contacts-from-new-google-ads-lead-form-entries
