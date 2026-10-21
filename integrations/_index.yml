@@ -482,3 +482,40 @@
   relationship: ipaas-bridge
   status: pending-generation
   arazzo: null
+- slug: vendasta-amazon-ads-partner-directory
+  label: Amazon Ads Partner Directory
+  partner: amazon
+  partner_name: Amazon Ads Partner Directory
+  category: Amazon Ads partner (services)
+  type: register
+  channel: standard-directory
+  evidence: https://advertising.amazon.com/partners/directory
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: Amazon Ads Partner Directory (advertising.amazon.com/partners/directory, GetPartners)
+    registered_name: Vendasta Technologies Inc
+    register_id: amzn1.ads1.ma1.32448f4hmxetk1fovrerfq3u8
+    matched_domain: vendasta.com
+    matched_by: domain
+    services:
+    - AUDIENCE_AND_TARGETING
+    - BUSINESS_AND_MARKETING_INTELLIGENCE_TOOLS
+    - CAMPAIGN_MANAGEMENT
+    - CAMPAIGN_MONITORING
+    - CAMPAIGN_REPORTING
+    - CAMPAIGN_SETUP
+    - CUSTOMER_DATA_PLATFORM
+    - MULTI_TOUCH_ATTRIBUTION
+    - REPORTING_AND_ANALYTICS
+    ads_products:
+    - AMAZON_DSP
+    - SPONSORED_DISPLAY
+    service_models:
+    - SERVICE
+    signal_note: listing = participation; accreditation recorded as partner_tier; ads_certifications are Amazon
+      Ads LEARNING certifications held by staff, not product conformance, never certified_products
+    detected_by: sweep-amazon-sp-api-appstore.py
+    detected: '2026-10-21'
+  status: not-a-workflow
+  arazzo: null
