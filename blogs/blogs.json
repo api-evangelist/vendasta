@@ -12,7 +12,7 @@
       "source": "https://www.vendasta.com/blog/",
       "feed_url": "https://www.vendasta.com/blog/feed/",
       "title": "",
-      "saved": 10,
+      "saved": 0,
       "method": "discovered"
     },
     {
@@ -23,12 +23,20 @@
       "method": "feed"
     },
     {
-      "source": "https://support.vendasta.com/",
-      "feed_url": "",
+      "source": "https://www.vendasta.com/newsroom/feed/",
+      "feed_url": "https://www.vendasta.com/newsroom/feed/",
+      "title": "",
       "saved": 0,
-      "skipped": "community-shaped; a vendor feed already saved this run (roadmap#239)"
+      "method": "feed"
+    },
+    {
+      "source": "https://www.vendasta.com/blog/feed/",
+      "feed_url": "https://www.vendasta.com/blog/feed/",
+      "title": "",
+      "saved": 0,
+      "method": "feed"
     }
   ],
-  "post_count": 10,
-  "fetched": "2026-10-10T13:15:00Z"
+  "post_count": 30,
+  "fetched": "2026-10-17T14:53:57Z"
 }
